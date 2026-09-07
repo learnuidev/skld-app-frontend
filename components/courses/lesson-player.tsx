@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { RotateCcw, Volume2, X, Zap } from "lucide-react";
 
+import { Abacus } from "@/components/abacus/abacus";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,19 +24,27 @@ import {
 } from "@/components/abacus/practice";
 import { flattenCourse, lessonUrl, nodeKey } from "@/modules/course/utils";
 import { readProgress, writeProgress } from "@/modules/course/progress";
-import type { Course, LessonBlock } from "@/modules/course/types";
+import type {
+  Course,
+  LessonBlock,
+  LessonExplanation,
+} from "@/modules/course/types";
 
 function BlockContent({
   block,
   solved,
+  attempted,
   taskRef,
   onHasSelection,
 }: {
   block: LessonBlock;
   solved: boolean;
+  attempted: boolean;
   taskRef: RefObject<TaskHandle | null>;
   onHasSelection: (has: boolean) => void;
 }) {
+  const locked = solved || attempted;
+
   switch (block.type) {
     case "heading":
       return (
@@ -78,6 +87,7 @@ function BlockContent({
           target={block.target}
           rods={block.rods ?? 2}
           solved={solved}
+          locked={locked}
           onHasSelection={onHasSelection}
         />
       );
@@ -89,6 +99,7 @@ function BlockContent({
           digits={block.digits}
           choices={block.choices}
           solved={solved}
+          locked={locked}
           onHasSelection={onHasSelection}
         />
       );
@@ -100,12 +111,92 @@ function BlockContent({
           choices={block.choices}
           answer={block.answer}
           solved={solved}
+          locked={locked}
           onHasSelection={onHasSelection}
         />
       );
     default:
       return null;
   }
+}
+
+function ExplanationDialog({
+  explanation,
+  onClose,
+}: {
+  explanation: LessonExplanation;
+  onClose: () => void;
+}) {
+  return (
+    <Dialog open onOpenChange={(open) => !open && onClose()}>
+      <DialogContent
+        showCloseButton={false}
+        className="max-w-md rounded-3xl p-0 text-center"
+      >
+        <DialogHeader className="gap-2 px-8 pt-8">
+          <DialogTitle className="text-center text-2xl font-bold">
+            Explanation
+          </DialogTitle>
+        </DialogHeader>
+
+        {explanation.visual ? (
+          explanation.visual.kind === "abacus" ? (
+            <div className="flex justify-center py-2">
+              <Abacus
+                digits={explanation.visual.digits}
+                readOnly
+                scale={0.8}
+                label="Explanation"
+              />
+            </div>
+          ) : explanation.visual.kind === "image" ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={explanation.visual.src}
+              alt={explanation.visual.alt ?? "Explanation"}
+              className="mx-auto max-h-64 rounded-2xl"
+            />
+          ) : null
+        ) : null}
+
+        <DialogDescription className="px-8 text-center text-base leading-relaxed text-foreground/85">
+          {explanation.text}
+        </DialogDescription>
+
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close explanation"
+          className="absolute right-4 top-4 flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        >
+          <X className="size-4" />
+        </button>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+function TaskExplainer({
+  task,
+  onShow,
+}: {
+  task: LessonBlock & {
+    type: "build" | "read" | "quiz";
+    explanation?: LessonExplanation;
+  };
+  onShow: () => void;
+}) {
+  if (!task.explanation) return null;
+  return (
+    <Button
+      variant="outline"
+      size="lg"
+      onClick={onShow}
+      className="min-w-24 px-8 py-4 text-base"
+    >
+      Why?
+    </Button>
+  );
 }
 
 export default function LessonPlayer({
@@ -134,9 +225,13 @@ export default function LessonPlayer({
 
   const [current, setCurrent] = useState(0);
   const [solved, setSolved] = useState(false);
+  const [attempted, setAttempted] = useState(false);
   const [hasSel, setHasSel] = useState(false);
   const [resetKey, setResetKey] = useState(0);
   const [showQuit, setShowQuit] = useState(false);
+  const [explanation, setExplanation] = useState<LessonExplanation | null>(
+    null,
+  );
   const taskRef = useRef<TaskHandle | null>(null);
 
   const total = blocks.length;
@@ -144,7 +239,8 @@ export default function LessonPlayer({
   const isLast = current === total - 1;
   const isTask =
     block?.type === "build" || block?.type === "read" || block?.type === "quiz";
-  const ready = isTask ? solved : block !== undefined;
+  const answered = isTask ? attempted : true;
+  const ready = answered;
   const progress = total === 0 ? 0 : Math.round(((current + 1) / total) * 100);
 
   const coursePath = `/courses/${course.slug}`;
@@ -162,6 +258,7 @@ export default function LessonPlayer({
     if (!ready) return;
     if (current < total - 1) {
       setSolved(false);
+      setAttempted(false);
       setHasSel(false);
       setCurrent((c) => c + 1);
     } else if (next) {
@@ -172,7 +269,8 @@ export default function LessonPlayer({
   };
 
   const handleButton = () => {
-    if (isTask && !solved) {
+    if (isTask && !attempted) {
+      setAttempted(true);
       if (taskRef.current?.check()) setSolved(true);
       return;
     }
@@ -182,6 +280,14 @@ export default function LessonPlayer({
   const startOver = () => {
     setCurrent(0);
     setSolved(false);
+    setAttempted(false);
+    setHasSel(false);
+    setResetKey((k) => k + 1);
+  };
+
+  const retryTask = () => {
+    setSolved(false);
+    setAttempted(false);
     setHasSel(false);
     setResetKey((k) => k + 1);
   };
@@ -189,6 +295,12 @@ export default function LessonPlayer({
   if (!block) {
     return null;
   }
+
+  const taskBlock =
+    isTask &&
+    (block.type === "build" || block.type === "read" || block.type === "quiz")
+      ? block
+      : null;
 
   return (
     <div className="flex min-h-screen flex-col bg-card">
@@ -242,6 +354,7 @@ export default function LessonPlayer({
             <BlockContent
               block={block}
               solved={solved}
+              attempted={attempted}
               taskRef={taskRef}
               onHasSelection={setHasSel}
             />
@@ -260,22 +373,63 @@ export default function LessonPlayer({
             <RotateCcw className="size-4" />
             Start over
           </button>
-          <Button
-            size="lg"
-            disabled={isTask && !hasSel && !solved}
-            onClick={handleButton}
-            className="min-w-64 px-12 py-4 text-base shadow-sm"
-          >
-            {isTask && !solved
-              ? "Check"
-              : isLast && ready
-                ? next
-                  ? "Next lesson"
-                  : "Finish course"
-                : "Continue"}
-          </Button>
+
+          <div className="flex w-full items-center justify-between gap-3">
+            <div className="flex min-w-24 shrink-0 items-center">
+              {isTask && attempted ? (
+                solved ? (
+                  <span className="font-semibold text-emerald-600">
+                    Correct
+                  </span>
+                ) : (
+                  <span className="font-semibold text-red-600">Incorrect</span>
+                )
+              ) : null}
+            </div>
+
+            <div className="flex items-center gap-3">
+              {isTask && attempted && taskBlock?.explanation ? (
+                <TaskExplainer
+                  task={taskBlock}
+                  onShow={() => setExplanation(taskBlock.explanation!)}
+                />
+              ) : null}
+              {isTask && attempted && !solved ? (
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  onClick={retryTask}
+                  className="min-w-24 px-6 py-4 text-base"
+                >
+                  Try again
+                </Button>
+              ) : null}
+              <Button
+                size="lg"
+                disabled={isTask && !attempted && !hasSel}
+                onClick={handleButton}
+                className="min-w-64 px-12 py-4 text-base shadow-sm"
+              >
+                {isTask && !attempted
+                  ? "Check"
+                  : isLast && ready
+                    ? next
+                      ? "Next lesson"
+                      : "Finish course"
+                    : "Continue"}
+              </Button>
+            </div>
+          </div>
         </div>
       </footer>
+
+      {/* Explanation dialog */}
+      {explanation ? (
+        <ExplanationDialog
+          explanation={explanation}
+          onClose={() => setExplanation(null)}
+        />
+      ) : null}
 
       {/* Quit confirmation */}
       <Dialog open={showQuit} onOpenChange={setShowQuit}>
@@ -291,9 +445,9 @@ export default function LessonPlayer({
               If you quit, you will lose your progress and XP.
             </DialogDescription>
           </DialogHeader>
-          <div className="flex flex-row gap-3 p-6">
+          <div className="flex flex-col gap-3 p-6">
             <Button
-              className="w-full py-4 h-12 flex-1"
+              className="w-full py-4 h-12"
               onClick={() => setShowQuit(false)}
             >
               Keep learning
@@ -302,7 +456,7 @@ export default function LessonPlayer({
               variant={"outline"}
               type="button"
               onClick={() => router.push(coursePath)}
-              className="w-full py-4 h-12 text-destructive flex-1"
+              className="w-full py-4 h-12 text-destructive"
             >
               Quit
             </Button>

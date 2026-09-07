@@ -75,9 +75,10 @@ export const BuildTask = forwardRef<
     target: number;
     rods?: number;
     solved: boolean;
+    locked?: boolean;
     onHasSelection: (has: boolean) => void;
   }
->(function BuildTask({ prompt, target, rods = 2, solved, onHasSelection }, ref) {
+>(function BuildTask({ prompt, target, rods = 2, solved, locked = false, onHasSelection }, ref) {
   const [digits, setDigits] = useState<number[]>(() => clearDigits(rods));
   const [wrong, setWrong] = useState(false);
   const shown = digitsToValue(digits);
@@ -103,7 +104,7 @@ export const BuildTask = forwardRef<
   return (
     <div className="flex flex-col items-center gap-6">
       <p className="text-center text-lg font-semibold">{prompt}</p>
-      <Abacus digits={digits} onChange={change} readOnly={solved} label="Your abacus" />
+      <Abacus digits={digits} onChange={change} readOnly={solved || locked} label="Your abacus" />
       <div className="flex h-10 items-center">
         {wrong ? (
           <p className="rounded-2xl bg-orange-50 px-4 py-3 text-sm font-medium text-orange-700">
