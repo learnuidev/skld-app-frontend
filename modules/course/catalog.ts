@@ -1,4 +1,6 @@
 import { understandingAbacusCourse } from "./understanding-abacus";
+import { anzanCourse } from "./anzan";
+import { zhuxinsuanCourse } from "./zhuxinsuan";
 import type { Course, CourseSummary } from "./types";
 
 export const courseCatalog: CourseSummary[] = [
@@ -16,6 +18,36 @@ export const courseCatalog: CourseSummary[] = [
     heroAccent: understandingAbacusCourse.heroAccent,
     status: "available",
     sample: [4, 3, 2, 1],
+  },
+  {
+    slug: anzanCourse.slug,
+    title: anzanCourse.title,
+    tagline: anzanCourse.tagline,
+    description: anzanCourse.description,
+    subject: "Abacus",
+    levelCount: anzanCourse.levels.length,
+    lessonCount: anzanCourse.lessonCount,
+    exerciseCount: anzanCourse.exerciseCount,
+    lessonMinutes: anzanCourse.lessonMinutes,
+    accent: anzanCourse.accent,
+    heroAccent: anzanCourse.heroAccent,
+    status: "available",
+    sample: anzanCourse.sample ?? [0, 7, 5, 2],
+  },
+  {
+    slug: zhuxinsuanCourse.slug,
+    title: zhuxinsuanCourse.title,
+    tagline: zhuxinsuanCourse.tagline,
+    description: zhuxinsuanCourse.description,
+    subject: "Abacus",
+    levelCount: zhuxinsuanCourse.levels.length,
+    lessonCount: zhuxinsuanCourse.lessonCount,
+    exerciseCount: zhuxinsuanCourse.exerciseCount,
+    lessonMinutes: zhuxinsuanCourse.lessonMinutes,
+    accent: zhuxinsuanCourse.accent,
+    heroAccent: zhuxinsuanCourse.heroAccent,
+    status: "available",
+    sample: zhuxinsuanCourse.sample ?? [6, 1, 4, 2],
   },
   {
     slug: "math-fundamentals",
@@ -61,21 +93,6 @@ export const courseCatalog: CourseSummary[] = [
     heroAccent: "from-rose-400 via-red-300 to-orange-200",
     status: "coming-soon",
     sample: [8, 2, 6, 3],
-  },
-  {
-    slug: "anzan-mental-math",
-    title: "Anzan: Mental Math",
-    tagline: "Calculate in your mind's eye.",
-    description: "Run abacus computations on an imaginary board, no frame needed.",
-    subject: "Abacus",
-    levelCount: 4,
-    lessonCount: 16,
-    exerciseCount: 90,
-    lessonMinutes: 60,
-    accent: "bg-gradient-to-br from-violet-100 to-purple-100",
-    heroAccent: "from-violet-400 via-purple-300 to-fuchsia-200",
-    status: "coming-soon",
-    sample: [0, 7, 5, 2],
   },
   {
     slug: "scientific-thinking",
@@ -127,6 +144,12 @@ export const courseCatalog: CourseSummary[] = [
 export function getCourseBySlug(slug: string): Course | undefined {
   if (slug === understandingAbacusCourse.slug) {
     return understandingAbacusCourse;
+  }
+  if (slug === anzanCourse.slug) {
+    return anzanCourse;
+  }
+  if (slug === zhuxinsuanCourse.slug) {
+    return zhuxinsuanCourse;
   }
   return undefined;
 }

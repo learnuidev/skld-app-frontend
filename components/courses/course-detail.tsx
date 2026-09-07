@@ -7,7 +7,7 @@ import { ArrowRight, Award, Check, Lock, Play, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Abacus } from "@/components/abacus/abacus";
-import { flattenCourse, nodeKey } from "@/modules/course/understanding-abacus";
+import { flattenCourse, nodeKey } from "@/modules/course/utils";
 import { clearProgress, readProgress, writeProgress } from "@/modules/course/progress";
 import type { Course } from "@/modules/course/types";
 
@@ -88,7 +88,12 @@ export default function CourseExplorer({ course }: { course: Course }) {
 
           <div className="hidden justify-center lg:flex">
             <div className="rotate-2 rounded-3xl bg-white/70 p-4 shadow-2xl backdrop-blur">
-              <Abacus digits={[4, 3, 2, 1]} readOnly scale={0.75} label="Abacus course preview" />
+              <Abacus
+                digits={course.sample ?? [4, 3, 2, 1]}
+                readOnly
+                scale={0.75}
+                label={`${course.title} course preview`}
+              />
             </div>
           </div>
         </div>
@@ -137,9 +142,10 @@ export default function CourseExplorer({ course }: { course: Course }) {
         <div className="mt-8 flex items-center gap-4 rounded-3xl border border-emerald-200 bg-emerald-50 p-6">
           <Award className="size-8 shrink-0 text-emerald-600" />
           <div>
-            <h3 className="font-bold text-emerald-800">You finished Understanding Abacus</h3>
+            <h3 className="font-bold text-emerald-800">You finished {course.title}</h3>
             <p className="text-sm text-emerald-700">
-              Next stop: Anzan — mental math. Keep moving those beads in your mind.
+              Beautiful work. Every master started with a single bead — keep practising and your
+              mental board will only get faster.
             </p>
           </div>
         </div>

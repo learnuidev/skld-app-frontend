@@ -1,14 +1,8 @@
-export type LessonBlock =
-  | { type: "heading"; text: string }
-  | { type: "paragraph"; text: string }
-  | { type: "list"; items: string[] }
-  | { type: "explore"; label: string; rods: number; initial: number[] }
-  | { type: "build"; prompt: string; target: number; rods?: number }
-  | { type: "read"; prompt: string; digits: number[]; choices: number[] };
+import type { CourseContentMap, LessonBlock } from "./types";
 
-export type LessonContent = LessonBlock[];
+export type { LessonBlock };
 
-export const understandingAbacusContent: Record<string, Record<string, LessonContent>> = {
+export const understandingAbacusContent: CourseContentMap = {
   "meet-the-soroban": {
     "what-is-an-abacus": [
       { type: "heading", text: "What is an abacus?" },

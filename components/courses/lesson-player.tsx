@@ -5,18 +5,20 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { AbacusExplorer, BuildTask, ReadTask } from "@/components/abacus/practice";
+import { AbacusExplorer, BuildTask, QuizTask, ReadTask } from "@/components/abacus/practice";
 import { cn } from "@/lib/utils";
-import { flattenCourse, nodeKey } from "@/modules/course/understanding-abacus";
+import { flattenCourse, nodeKey } from "@/modules/course/utils";
 import { readProgress, writeProgress } from "@/modules/course/progress";
-import type { Course } from "@/modules/course/types";
-import type { LessonBlock } from "@/modules/course/understanding-abacus-content";
+import type { Course, LessonBlock } from "@/modules/course/types";
 
-function TaskAware({ block, onSolved }: { block: Extract<LessonBlock, { type: "build" | "read" }>; onSolved: () => void }) {
+function TaskAware({ block, onSolved }: { block: Extract<LessonBlock, { type: "build" | "read" | "quiz" }>; onSolved: () => void }) {
   if (block.type === "build") {
     return <BuildTask prompt={block.prompt} target={block.target} rods={block.rods ?? 2} onSolved={onSolved} />;
   }
-  return <ReadTask prompt={block.prompt} digits={block.digits} choices={block.choices} onSolved={onSolved} />;
+  if (block.type === "read") {
+    return <ReadTask prompt={block.prompt} digits={block.digits} choices={block.choices} onSolved={onSolved} />;
+  }
+  return <QuizTask prompt={block.prompt} choices={block.choices} answer={block.answer} onSolved={onSolved} />;
 }
 
 export default function LessonPlayer({
@@ -38,7 +40,7 @@ export default function LessonPlayer({
   const lesson = nodes[currentIndex]?.lesson;
 
   const taskIndexes = useMemo(
-    () => blocks.map((b, i) => ({ i, isTask: b.type === "build" || b.type === "read" })).filter((x) => x.isTask).map((x) => x.i),
+    () => blocks.map((b, i) => ({ i, isTask: b.type === "build" || b.type === "read" || b.type === "quiz" })).filter((x) => x.isTask).map((x) => x.i),
     [blocks],
   );
   const [solved, setSolved] = useState<number[]>([]);

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Clock, Lock, Play } from "lucide-react";
+import { ArrowRight, Clock, Lock, Play } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { SiteNav } from "@/components/site-nav";
@@ -53,8 +53,9 @@ function FeaturedCard({ course }: { course: CourseSummary }) {
 }
 
 function TeaserCard({ course }: { course: CourseSummary }) {
-  return (
-    <div className="group relative overflow-hidden rounded-3xl border border-border bg-white shadow-sm transition-shadow hover:shadow-lg">
+  const available = course.status === "available";
+  const card = (
+    <div className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-sm transition-shadow hover:shadow-lg">
       <div
         className={`relative flex h-40 items-center justify-center overflow-hidden bg-gradient-to-br ${course.heroAccent} opacity-90`}
       >
@@ -70,24 +71,52 @@ function TeaserCard({ course }: { course: CourseSummary }) {
         <span className="absolute left-3 top-3 rounded-full bg-white/80 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-gray-700 backdrop-blur">
           {course.subject}
         </span>
-        <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3 py-1 text-xs font-bold text-white backdrop-blur">
-          <Lock className="size-3.5" />
-          Coming soon
-        </span>
+        {available ? (
+          <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black px-3 py-1 text-xs font-bold text-white">
+            <Play className="size-3.5" />
+            Available
+          </span>
+        ) : (
+          <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3 py-1 text-xs font-bold text-white backdrop-blur">
+            <Lock className="size-3.5" />
+            Coming soon
+          </span>
+        )}
       </div>
-      <div className="flex flex-col gap-2 p-6">
+      <div className="flex flex-1 flex-col gap-2 p-6">
         <h3 className="text-xl font-bold tracking-tight">{course.title}</h3>
         <p className="text-sm font-medium text-muted-foreground">{course.tagline}</p>
         <p className="mt-1 text-sm leading-relaxed text-muted-foreground/80">{course.description}</p>
-        <p className="mt-3 text-xs font-medium text-muted-foreground">{meta(course)}</p>
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-4">
+          <p className="text-xs font-medium text-muted-foreground">{meta(course)}</p>
+          {available ? (
+            <span className="inline-flex items-center gap-1.5 text-sm font-bold text-amber-700">
+              Start learning
+              <ArrowRight className="size-4" />
+            </span>
+          ) : (
+            <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground/70">
+              Coming soon
+            </span>
+          )}
+        </div>
       </div>
     </div>
+  );
+  return available ? (
+    <Link href={`/courses/${course.slug}`} className="block h-full">
+      {card}
+    </Link>
+  ) : (
+    card
   );
 }
 
 export default function CoursesPage() {
-  const featured = courseCatalog.find((course) => course.status === "available");
+  const available = courseCatalog.filter((course) => course.status === "available");
   const teasers = courseCatalog.filter((course) => course.status === "coming-soon");
+  const featured = available[0];
+  const moreAvailable = available.slice(1);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -105,6 +134,20 @@ export default function CoursesPage() {
         </div>
 
         {featured ? <FeaturedCard course={featured} /> : null}
+
+        {moreAvailable.length > 0 ? (
+          <section className="mt-16">
+            <h2 className="mb-2 font-serif text-3xl font-bold tracking-tight">More available now</h2>
+            <p className="mb-6 max-w-2xl text-muted-foreground">
+              The abacus path continues: sharpen your beadwork into a mental superpower.
+            </p>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {moreAvailable.map((course) => (
+                <TeaserCard key={course.slug} course={course} />
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         {teasers.length > 0 ? (
           <section className="mt-16">

@@ -101,22 +101,3 @@ export const understandingAbacusCourse: Course = {
   accent: "bg-gradient-to-br from-orange-100 to-amber-100",
   heroAccent: "from-orange-400 via-amber-300 to-yellow-200",
 };
-
-export function flattenCourse(course: Course) {
-  const nodes: Array<{
-    level: CourseLevel;
-    levelIndex: number;
-    lesson: CourseLesson;
-    lessonIndex: number;
-  }> = [];
-  course.levels.forEach((lvl, levelIndex) => {
-    lvl.lessons.forEach((l, lessonIndex) => {
-      nodes.push({ level: lvl, levelIndex, lesson: l, lessonIndex });
-    });
-  });
-  return nodes;
-}
-
-export function nodeKey(level: CourseLevel, lesson: CourseLesson) {
-  return `${level.slug}:${lesson.slug}`;
-}

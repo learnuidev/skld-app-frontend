@@ -194,3 +194,66 @@ export function ReadTask({
     </div>
   );
 }
+
+export function QuizTask({
+  prompt,
+  choices,
+  answer,
+  onSolved,
+}: {
+  prompt: string;
+  choices: number[];
+  answer: number;
+  onSolved: () => void;
+}) {
+  const [picked, setPicked] = useState<number | null>(null);
+  const [wrong, setWrong] = useState<Set<number>>(new Set());
+
+  const solved = picked === answer;
+
+  const choose = (option: number) => {
+    if (option === answer) {
+      setPicked(option);
+      onSolved();
+    } else {
+      setWrong((prev) => new Set(prev).add(option));
+    }
+  };
+
+  return (
+    <div className={cn("rounded-3xl border p-6 sm:p-8", solved ? "border-emerald-300 bg-emerald-50" : "bg-white")}>
+      <div className="flex items-start justify-between gap-4">
+        <p className="text-lg font-semibold">{prompt}</p>
+        {solved ? <span className="rounded-full bg-emerald-600 px-3 py-1 text-xs font-bold text-white">Solved</span> : null}
+      </div>
+
+      <div className="mt-6">
+        <div className="grid max-w-md gap-2 sm:grid-cols-2">
+          {choices.map((option) => {
+            const isWrong = wrong.has(option);
+            const isRight = solved && option === answer;
+            return (
+              <button
+                key={option}
+                type="button"
+                disabled={solved || isWrong}
+                onClick={() => choose(option)}
+                className={cn(
+                  "rounded-2xl border px-5 py-3 text-left text-lg font-semibold transition-colors",
+                  isRight
+                    ? "border-emerald-300 bg-emerald-100 text-emerald-800"
+                    : isWrong
+                      ? "border-red-200 bg-red-50 text-red-400 line-through"
+                      : "border-border bg-white hover:bg-muted",
+                )}
+              >
+                {placeLabel(option)}
+              </button>
+            );
+          })}
+        </div>
+        {solved && <p className="mt-3 text-sm font-medium text-emerald-700">That&apos;s {placeLabel(answer)}!</p>}
+      </div>
+    </div>
+  );
+}

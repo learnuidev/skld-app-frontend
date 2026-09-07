@@ -4,8 +4,8 @@ import { notFound } from "next/navigation";
 import { SiteNav } from "@/components/site-nav";
 import LessonPlayer from "@/components/courses/lesson-player";
 import { getCourseBySlug } from "@/modules/course/catalog";
-import { understandingAbacusContent, type LessonBlock } from "@/modules/course/understanding-abacus-content";
-import type { CourseLesson } from "@/modules/course/types";
+import { getLessonContent } from "@/modules/course/content";
+import type { CourseLesson, LessonBlock } from "@/modules/course/types";
 
 function fallbackContent(lesson: CourseLesson): LessonBlock[] {
   return [
@@ -46,7 +46,7 @@ export default async function LessonPage(props: {
   const lesson = level.lessons.find((l) => l.slug === lessonSlug);
   if (!lesson) notFound();
 
-  const blocks = understandingAbacusContent[level.slug]?.[lesson.slug] ?? fallbackContent(lesson);
+  const blocks = getLessonContent(course.slug, level.slug, lesson.slug) ?? fallbackContent(lesson);
 
   return (
     <div className="min-h-screen bg-gray-100">

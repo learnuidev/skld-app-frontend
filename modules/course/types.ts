@@ -29,7 +29,23 @@ export interface Course {
   lessonMinutes: number;
   accent: string;
   heroAccent: string;
+  /** Optional abacus digits shown in the course hero preview. */
+  sample?: number[];
 }
+
+export type LessonBlock =
+  | { type: "heading"; text: string }
+  | { type: "paragraph"; text: string }
+  | { type: "list"; items: string[] }
+  | { type: "explore"; label: string; rods: number; initial: number[] }
+  | { type: "build"; prompt: string; target: number; rods?: number }
+  | { type: "read"; prompt: string; digits: number[]; choices: number[] }
+  | { type: "quiz"; prompt: string; choices: number[]; answer: number };
+
+export type LessonContent = LessonBlock[];
+
+/** Content for one course: level slug -> lesson slug -> lesson blocks. */
+export type CourseContentMap = Record<string, Record<string, LessonContent>>;
 
 export interface CourseSummary {
   slug: string;
