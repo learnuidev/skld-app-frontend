@@ -33,14 +33,25 @@ export interface Course {
   sample?: number[];
 }
 
+/** An optional visual shown inside an explanation dialog. */
+export type ExplanationVisual =
+  | { kind: "abacus"; digits: number[] }
+  | { kind: "image"; src: string; alt?: string };
+
+/** Optional per-exercise explanation revealed by the "Why?" button. */
+export interface LessonExplanation {
+  text: string;
+  visual?: ExplanationVisual;
+}
+
 export type LessonBlock =
   | { type: "heading"; text: string }
   | { type: "paragraph"; text: string }
   | { type: "list"; items: string[] }
   | { type: "explore"; label: string; rods: number; initial: number[] }
-  | { type: "build"; prompt: string; target: number; rods?: number }
-  | { type: "read"; prompt: string; digits: number[]; choices: number[] }
-  | { type: "quiz"; prompt: string; choices: number[]; answer: number };
+  | { type: "build"; prompt: string; target: number; rods?: number; explanation?: LessonExplanation }
+  | { type: "read"; prompt: string; digits: number[]; choices: number[]; explanation?: LessonExplanation }
+  | { type: "quiz"; prompt: string; choices: number[]; answer: number; explanation?: LessonExplanation };
 
 export type LessonContent = LessonBlock[];
 

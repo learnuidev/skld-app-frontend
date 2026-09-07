@@ -72,6 +72,33 @@ const levels: CourseLevel[] = [
       minutes: 5,
     }),
   ]),
+  level("multiplication", "Multiplication (乘法)", "Turn repeated addition into the 九九表, then set products on the 算盘.", [
+    lesson("九九乘法: The Multiplication Table", "multiplication-table", "The 九九 table and the 口诀 that make products instant."),
+    lesson("Multiply on the 算盘", "multiply-on-board", "Set a product by multiplying rod by rod."),
+    lesson("Two-Digit 乘法", "multi-digit-multiply", "Multiply a two-digit number by one digit, place by place."),
+    lesson("Level Check", "multiplication-check", "Level check: products small and large.", {
+      kind: "level_check",
+      minutes: 5,
+    }),
+  ]),
+  level("division", "Division (除法)", "Group, share, and divide with the 口诀 — then find remainders.", [
+    lesson("Division as Grouping", "division-meaning", "Division shares a total into equal groups."),
+    lesson("Divide on the 算盘", "divide-on-board", "Use the 口诀 to divide and set the quotient."),
+    lesson("Leftovers: Remainders", "remainders", "When a division doesn't come out even."),
+    lesson("Level Check", "division-check", "Level check: division with and without remainders.", {
+      kind: "level_check",
+      minutes: 5,
+    }),
+  ]),
+  level("square-roots", "Square Roots (开方)", "Undo a square and find the root — and spot perfect squares instantly.", [
+    lesson("What Is a Square Root?", "square-root-meaning", "The number that, times itself, makes a perfect square."),
+    lesson("Perfect Squares", "perfect-squares", "Memorize the squares under 100 and read the root at a glance."),
+    lesson("Between Two Roots", "estimate-roots", "Nestle non-perfect roots between their neighbours."),
+    lesson("Level Check", "square-root-check", "Level check: read, build and estimate roots.", {
+      kind: "level_check",
+      minutes: 5,
+    }),
+  ]),
   level("mental-beadwork", "Abacus in the Mind (珠心算)", "Leave the real board behind with 看心算, 听心算 and a grading challenge.", [
     lesson("Picture Your 算盘", "imagined-abacus", "Carry the five-bead board into your mind."),
     lesson("看心算: Visual Mental Math", "kan-xinsuan", "Run written problems on your inner 算盘."),
@@ -98,6 +125,9 @@ export const zhuxinsuanCourse: Course = {
     "直加直减 · direct addition",
     "满五加 · friends of five",
     "进位退位 · carry & borrow",
+    "乘法 · multiplication",
+    "除法 · division",
+    "开方 · square roots",
     "听心算 & 看心算",
   ],
   levels,

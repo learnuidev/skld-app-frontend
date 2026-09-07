@@ -124,9 +124,10 @@ export const ReadTask = forwardRef<
     digits: number[];
     choices: number[];
     solved: boolean;
+    locked?: boolean;
     onHasSelection: (has: boolean) => void;
   }
->(function ReadTask({ prompt, digits, choices, solved, onHasSelection }, ref) {
+>(function ReadTask({ prompt, digits, choices, solved, locked = false, onHasSelection }, ref) {
   const [picked, setPicked] = useState<number | null>(null);
   const [wrong, setWrong] = useState<Set<number>>(new Set());
   const answer = digitsToValue(digits);
@@ -156,7 +157,7 @@ export const ReadTask = forwardRef<
             <button
               key={option}
               type="button"
-              disabled={solved || isWrong}
+              disabled={locked || isWrong}
               onClick={() => {
                 setPicked(option);
                 onHasSelection(true);
@@ -191,9 +192,10 @@ export const QuizTask = forwardRef<
     choices: number[];
     answer: number;
     solved: boolean;
+    locked?: boolean;
     onHasSelection: (has: boolean) => void;
   }
->(function QuizTask({ prompt, choices, answer, solved, onHasSelection }, ref) {
+>(function QuizTask({ prompt, choices, answer, solved, locked = false, onHasSelection }, ref) {
   const [picked, setPicked] = useState<number | null>(null);
   const [wrong, setWrong] = useState<Set<number>>(new Set());
 
@@ -221,7 +223,7 @@ export const QuizTask = forwardRef<
             <button
               key={option}
               type="button"
-              disabled={solved || isWrong}
+              disabled={locked || isWrong}
               onClick={() => {
                 setPicked(option);
                 onHasSelection(true);

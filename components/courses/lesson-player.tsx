@@ -14,7 +14,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { AbacusExplorer, BuildTask, QuizTask, ReadTask, type TaskHandle } from "@/components/abacus/practice";
+import {
+  AbacusExplorer,
+  BuildTask,
+  QuizTask,
+  ReadTask,
+  type TaskHandle,
+} from "@/components/abacus/practice";
 import { flattenCourse, lessonUrl, nodeKey } from "@/modules/course/utils";
 import { readProgress, writeProgress } from "@/modules/course/progress";
 import type { Course, LessonBlock } from "@/modules/course/types";
@@ -33,7 +39,9 @@ function BlockContent({
   switch (block.type) {
     case "heading":
       return (
-        <h2 className="text-center text-3xl font-bold tracking-tight sm:text-4xl">{block.text}</h2>
+        <h2 className="text-center text-3xl font-bold tracking-tight sm:text-4xl">
+          {block.text}
+        </h2>
       );
     case "paragraph":
       return (
@@ -45,7 +53,10 @@ function BlockContent({
       return (
         <ul className="mx-auto max-w-xl space-y-4">
           {block.items.map((item) => (
-            <li key={item} className="flex items-start gap-3 text-lg leading-relaxed">
+            <li
+              key={item}
+              className="flex items-start gap-3 text-lg leading-relaxed"
+            >
               <span className="mt-2.5 size-2 shrink-0 rounded-full bg-amber-500" />
               <span className="text-foreground/85">{item}</span>
             </li>
@@ -110,8 +121,13 @@ export default function LessonPlayer({
 }) {
   const router = useRouter();
   const nodes = useMemo(() => flattenCourse(course), [course]);
-  const currentGlobal = nodes.findIndex((n) => n.level.slug === levelSlug && n.lesson.slug === lessonSlug);
-  const next = currentGlobal >= 0 && currentGlobal < nodes.length - 1 ? nodes[currentGlobal + 1] : null;
+  const currentGlobal = nodes.findIndex(
+    (n) => n.level.slug === levelSlug && n.lesson.slug === lessonSlug,
+  );
+  const next =
+    currentGlobal >= 0 && currentGlobal < nodes.length - 1
+      ? nodes[currentGlobal + 1]
+      : null;
   const progressKey = nodes[currentGlobal]
     ? nodeKey(nodes[currentGlobal].level, nodes[currentGlobal].lesson)
     : `${levelSlug}:${lessonSlug}`;
@@ -126,7 +142,8 @@ export default function LessonPlayer({
   const total = blocks.length;
   const block = blocks[current];
   const isLast = current === total - 1;
-  const isTask = block?.type === "build" || block?.type === "read" || block?.type === "quiz";
+  const isTask =
+    block?.type === "build" || block?.type === "read" || block?.type === "quiz";
   const ready = isTask ? solved : block !== undefined;
   const progress = total === 0 ? 0 : Math.round(((current + 1) / total) * 100);
 
@@ -134,7 +151,9 @@ export default function LessonPlayer({
 
   const completeAndGo = (path: string) => {
     const existing = readProgress(course.slug);
-    const nextCompleted = existing.includes(progressKey) ? existing : [...existing, progressKey];
+    const nextCompleted = existing.includes(progressKey)
+      ? existing
+      : [...existing, progressKey];
     writeProgress(course.slug, nextCompleted);
     router.push(path);
   };
@@ -260,24 +279,33 @@ export default function LessonPlayer({
 
       {/* Quit confirmation */}
       <Dialog open={showQuit} onOpenChange={setShowQuit}>
-        <DialogContent showCloseButton={false} className="max-w-sm rounded-3xl p-0 text-center">
+        <DialogContent
+          showCloseButton={false}
+          className="max-w-sm rounded-3xl p-0 text-center"
+        >
           <DialogHeader className="gap-2 p-6 pb-0">
-            <DialogTitle className="text-center text-xl font-bold">Are you sure?</DialogTitle>
+            <DialogTitle className="text-center text-xl font-bold">
+              Are you sure?
+            </DialogTitle>
             <DialogDescription className="text-center">
               If you quit, you will lose your progress and XP.
             </DialogDescription>
           </DialogHeader>
-          <div className="flex flex-col gap-3 p-6">
-            <Button className="w-full py-3" onClick={() => setShowQuit(false)}>
+          <div className="flex flex-row gap-3 p-6">
+            <Button
+              className="w-full py-4 h-12 flex-1"
+              onClick={() => setShowQuit(false)}
+            >
               Keep learning
             </Button>
-            <button
+            <Button
+              variant={"outline"}
               type="button"
               onClick={() => router.push(coursePath)}
-              className="px-2 py-1 text-sm font-semibold text-red-600 transition-colors hover:text-red-700"
+              className="w-full py-4 h-12 text-destructive flex-1"
             >
               Quit
-            </button>
+            </Button>
           </div>
         </DialogContent>
       </Dialog>

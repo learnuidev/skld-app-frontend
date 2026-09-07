@@ -776,6 +776,410 @@ export const zhuxinsuanContent: CourseContentMap = {
     ],
   },
 
+  "multiplication": {
+    "multiplication-table": [
+      { type: "heading", text: "乘法 — the 九九 table" },
+      {
+        type: "paragraph",
+        text: "乘法 (chéng fǎ) is fast repeated addition: 4 × 3 means 4 + 4 + 4. In 珠算, products come from the 九九乘法表 (jiǔ jiǔ chéng fǎ biǎo) — the 'nine-nine table' — a set of 口诀 like 三七二十一 (three-sevens twenty-one).",
+      },
+      {
+        type: "paragraph",
+        text: "The table's power is that you don't add four times over: you say 四六二十四 (four-six twenty-four) and the product is already there.",
+      },
+      {
+        type: "quiz",
+        prompt: "四七二十八 — 4 × 7 = ?",
+        choices: [28, 24, 32, 21],
+        answer: 28,
+      },
+      {
+        type: "quiz",
+        prompt: "6 × 8 = ?",
+        choices: [48, 42, 56, 54],
+        answer: 48,
+      },
+      {
+        type: "quiz",
+        prompt: "9 × 7 = ?",
+        choices: [63, 72, 56, 54],
+        answer: 63,
+      },
+      {
+        type: "build",
+        prompt: "Set the product 4 × 5 = 20 on the 算盘.",
+        target: 20,
+        rods: 2,
+      },
+    ],
+    "multiply-on-board": [
+      { type: "heading", text: "Multiply on the 算盘" },
+      {
+        type: "paragraph",
+        text: "To multiply on the board you can push the multiplicand's beads, or set the product directly using the 口诀. The simplest path for a beginner: multiply the digits, then set the product on the correct 档.",
+      },
+      {
+        type: "paragraph",
+        text: "Keep the place straight: 5 × 8 = 40 is four tens, so it lives on the tens 档. Say the 口诀 — 五八四十 — and the beads arrange themselves.",
+      },
+      {
+        type: "quiz",
+        prompt: "五八四十 — 5 × 8 = ?",
+        choices: [40, 45, 35, 32],
+        answer: 40,
+      },
+      {
+        type: "quiz",
+        prompt: "6 × 6 = ?",
+        choices: [36, 30, 42, 40],
+        answer: 36,
+      },
+      {
+        type: "quiz",
+        prompt: "7 × 4 = ?",
+        choices: [28, 24, 32, 21],
+        answer: 28,
+      },
+      {
+        type: "build",
+        prompt: "Set 6 × 7 = 42 on the 算盘.",
+        target: 42,
+        rods: 2,
+      },
+    ],
+    "multi-digit-multiply": [
+      { type: "heading", text: "Two-digit 乘法" },
+      {
+        type: "paragraph",
+        text: "Multiply a two-digit number one place at a time. For 12 × 3: the ones give 3 × 2 = 6, the tens give 3 × 1 = 3 tens, so the product is 36.",
+      },
+      {
+        type: "paragraph",
+        text: "Do it rod by rod on your 算盘: multiply the tens first, then the ones, and set each part on its 档.",
+      },
+      {
+        type: "quiz",
+        prompt: "12 × 3 = ?",
+        choices: [36, 33, 39, 46],
+        answer: 36,
+      },
+      {
+        type: "quiz",
+        prompt: "23 × 4 = ?",
+        choices: [92, 82, 96, 72],
+        answer: 92,
+      },
+      {
+        type: "quiz",
+        prompt: "14 × 2 = ?",
+        choices: [28, 24, 34, 26],
+        answer: 28,
+      },
+      {
+        type: "build",
+        prompt: "Set 15 × 3 = 45 on the 算盘.",
+        target: 45,
+        rods: 2,
+      },
+    ],
+    "multiplication-check": [
+      { type: "heading", text: "Level check — 乘法" },
+      { type: "paragraph", text: "Say the 口诀, set the product, and finish the level." },
+      {
+        type: "quiz",
+        prompt: "6 × 8 = ?",
+        choices: [48, 42, 56, 40],
+        answer: 48,
+      },
+      {
+        type: "quiz",
+        prompt: "9 × 7 = ?",
+        choices: [63, 56, 72, 54],
+        answer: 63,
+      },
+      {
+        type: "build",
+        prompt: "Set 13 × 3 = 39 on the 算盘.",
+        target: 39,
+        rods: 2,
+      },
+      {
+        type: "quiz",
+        prompt: "24 × 4 = ?",
+        choices: [96, 86, 104, 94],
+        answer: 96,
+      },
+    ],
+  },
+
+  "division": {
+    "division-meaning": [
+      { type: "heading", text: "除法 — division" },
+      {
+        type: "paragraph",
+        text: "除法 (chú fǎ) shares a total into equal groups: 12 ÷ 3 asks how many groups of 3 fit in 12. It's the inverse of multiplication — 12 ÷ 3 = 4 because 3 × 4 = 12.",
+      },
+      {
+        type: "paragraph",
+        text: "珠算 division uses its own 口诀 family, like 二一添作五. Start by reading the division as 'how many times does the divisor fit?'",
+      },
+      {
+        type: "quiz",
+        prompt: "12 ÷ 3 = ?",
+        choices: [4, 3, 6, 5],
+        answer: 4,
+      },
+      {
+        type: "quiz",
+        prompt: "20 ÷ 5 = ?",
+        choices: [4, 5, 3, 6],
+        answer: 4,
+      },
+      {
+        type: "quiz",
+        prompt: "24 ÷ 8 = ?",
+        choices: [3, 4, 6, 2],
+        answer: 3,
+      },
+      {
+        type: "build",
+        prompt: "Set the quotient of 12 ÷ 4 on the 算盘.",
+        target: 3,
+        rods: 1,
+      },
+    ],
+    "divide-on-board": [
+      { type: "heading", text: "Divide on the 算盘" },
+      {
+        type: "paragraph",
+        text: "To divide, ask 'how many times does the divisor go in?', set that quotient, and check it against the dividend. For 42 ÷ 7: 7 fits 6 times, so the quotient is 6.",
+      },
+      {
+        type: "paragraph",
+        text: "With the 口诀 you can say the answer before the beads move — 六八四十八 tells you 48 ÷ 8 = 6 instantly.",
+      },
+      {
+        type: "quiz",
+        prompt: "45 ÷ 9 = ?",
+        choices: [5, 6, 4, 9],
+        answer: 5,
+      },
+      {
+        type: "quiz",
+        prompt: "36 ÷ 6 = ?",
+        choices: [6, 5, 7, 4],
+        answer: 6,
+      },
+      {
+        type: "quiz",
+        prompt: "56 ÷ 8 = ?",
+        choices: [7, 6, 8, 9],
+        answer: 7,
+      },
+      {
+        type: "build",
+        prompt: "Set the quotient of 42 ÷ 7 on the 算盘.",
+        target: 6,
+        rods: 1,
+      },
+    ],
+    "remainders": [
+      { type: "heading", text: "Leftovers — remainders" },
+      {
+        type: "paragraph",
+        text: "Division doesn't always come out even. 13 ÷ 5 gives 2 with 3 left over — the leftover is the remainder. On the 算盘 you set the 2 and 'read off' the 3 that couldn't be shared.",
+      },
+      {
+        type: "quiz",
+        prompt: "19 ÷ 4 — what is the remainder?",
+        choices: [3, 4, 2, 5],
+        answer: 3,
+      },
+      {
+        type: "quiz",
+        prompt: "17 ÷ 5 — what is the remainder?",
+        choices: [2, 3, 1, 4],
+        answer: 2,
+      },
+      {
+        type: "quiz",
+        prompt: "22 ÷ 6 — what is the remainder?",
+        choices: [4, 2, 3, 5],
+        answer: 4,
+      },
+      {
+        type: "build",
+        prompt: "Set the quotient of 13 ÷ 5 (quotient 2) on the 算盘.",
+        target: 2,
+        rods: 1,
+      },
+    ],
+    "division-check": [
+      { type: "heading", text: "Level check — 除法" },
+      { type: "paragraph", text: "Divide, spot the remainder, and finish the level." },
+      {
+        type: "quiz",
+        prompt: "42 ÷ 7 = ?",
+        choices: [6, 7, 5, 8],
+        answer: 6,
+      },
+      {
+        type: "quiz",
+        prompt: "81 ÷ 9 = ?",
+        choices: [9, 8, 7, 6],
+        answer: 9,
+      },
+      {
+        type: "build",
+        prompt: "Set the quotient of 64 ÷ 8 on the 算盘.",
+        target: 8,
+        rods: 1,
+      },
+      {
+        type: "quiz",
+        prompt: "26 ÷ 8 — what is the remainder?",
+        choices: [2, 3, 4, 1],
+        answer: 2,
+      },
+    ],
+  },
+
+  "square-roots": {
+    "square-root-meaning": [
+      { type: "heading", text: "开方 — square roots" },
+      {
+        type: "paragraph",
+        text: "Finding a square root (开方, kāi fāng) undoes squaring: 9's root is 3 because 3 × 3 = 9. The symbol is √, and the number under it is the perfect square.",
+      },
+      {
+        type: "paragraph",
+        text: "Think of it as asking 'what number, times itself, makes this?' — 开方 is the reverse of 乘法 for equal factors.",
+      },
+      {
+        type: "quiz",
+        prompt: "√9 = ?",
+        choices: [3, 2, 6, 4],
+        answer: 3,
+      },
+      {
+        type: "quiz",
+        prompt: "√16 = ?",
+        choices: [4, 8, 2, 5],
+        answer: 4,
+      },
+      {
+        type: "quiz",
+        prompt: "√25 = ?",
+        choices: [5, 10, 4, 6],
+        answer: 5,
+      },
+      {
+        type: "build",
+        prompt: "Set √9 = 3 on the 算盘.",
+        target: 3,
+        rods: 1,
+      },
+    ],
+    "perfect-squares": [
+      { type: "heading", text: "Perfect squares" },
+      {
+        type: "paragraph",
+        text: "The squares under 100 are worth memorising: 1, 4, 9, 16, 25, 36, 49, 64, 81, 100. Learn them two ways — the square, and the root that built it.",
+      },
+      {
+        type: "paragraph",
+        text: "珠算 students train these until √ is just another 口诀: 六六三十六 and 八八六十四 tell you the roots instantly.",
+      },
+      {
+        type: "quiz",
+        prompt: "√36 = ?",
+        choices: [6, 7, 9, 5],
+        answer: 6,
+      },
+      {
+        type: "quiz",
+        prompt: "√64 = ?",
+        choices: [8, 6, 9, 7],
+        answer: 8,
+      },
+      {
+        type: "quiz",
+        prompt: "√100 = ?",
+        choices: [10, 20, 50, 9],
+        answer: 10,
+      },
+      {
+        type: "build",
+        prompt: "Set √49 = 7 on the 算盘.",
+        target: 7,
+        rods: 1,
+      },
+    ],
+    "estimate-roots": [
+      { type: "heading", text: "Between two roots" },
+      {
+        type: "paragraph",
+        text: "Not every root is a whole number. √50 isn't perfect — but 49's root is 7 and 64's root is 8, so √50 lives between 7 and 8, closer to 7.",
+      },
+      {
+        type: "paragraph",
+        text: "Find the two perfect squares the number sits between, take their roots, and you've boxed the answer.",
+      },
+      {
+        type: "quiz",
+        prompt: "√50 is between 49 and 64. Which whole number is it closer to?",
+        choices: [7, 8, 6, 9],
+        answer: 7,
+      },
+      {
+        type: "quiz",
+        prompt: "√30 is between 25 and 36. Which whole number is it closer to?",
+        choices: [5, 6, 4, 7],
+        answer: 5,
+      },
+      {
+        type: "quiz",
+        prompt: "√90 is between 81 and 100. Which whole number is it closer to?",
+        choices: [9, 10, 8, 11],
+        answer: 9,
+      },
+      {
+        type: "build",
+        prompt: "Set √81 = 9 on the 算盘.",
+        target: 9,
+        rods: 1,
+      },
+    ],
+    "square-root-check": [
+      { type: "heading", text: "Level check — 开方" },
+      { type: "paragraph", text: "Read the root, set it on the 算盘, and finish the level." },
+      {
+        type: "quiz",
+        prompt: "√49 = ?",
+        choices: [7, 6, 8, 9],
+        answer: 7,
+      },
+      {
+        type: "quiz",
+        prompt: "√81 = ?",
+        choices: [9, 8, 7, 10],
+        answer: 9,
+      },
+      {
+        type: "build",
+        prompt: "Set √100 = 10 on the 算盘.",
+        target: 10,
+        rods: 2,
+      },
+      {
+        type: "quiz",
+        prompt: "√121 = ?",
+        choices: [11, 12, 10, 9],
+        answer: 11,
+      },
+    ],
+  },
+
   "mental-beadwork": {
     "imagined-abacus": [
       { type: "heading", text: "Picture your 算盘" },
