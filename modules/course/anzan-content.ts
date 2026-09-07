@@ -63,28 +63,50 @@ export const anzanContent: CourseContentMap = {
         prompt: "Snap a photo of this rod. What number is it?",
         digits: [8],
         choices: [8, 5, 3, 6],
-        explanation: { text: "A heaven bead touching the beam gives you 5, and three earth beads under it add 3 more - the rod is showing 8." },
+        explanation: {
+          steps: [
+            { text: "A heaven bead touching the beam is worth 5." },
+            { text: "Three earth beads under it add 3 more, so the rod shows 8." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "One more photo. What number does this board show?",
         digits: [6, 2],
         choices: [26, 62, 20, 24],
-        explanation: { text: "Read left to right: the first rod is 6 and the second is 2, so the board shows 62." },
+        explanation: {
+          steps: [
+            { text: "Read the rods left to right: the first rod shows 6." },
+            { text: "The second rod shows 2, so the board reads 62." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Now close your eyes, picture that board, and rebuild 26 from memory.",
         target: 26,
         rods: 2,
-        explanation: { text: "You just photographed 26, so rebuild it the same way: two earth beads on the tens rod and a heaven bead plus one earth bead on the ones." },
+        explanation: {
+          steps: [
+            { text: "Rebuild 26 the way you photographed it: 2 tens and 6 ones." },
+            { text: "Set 2 earth beads on the tens rod." },
+            { text: "On the ones rod, drop a heaven bead and raise one earth bead for 6." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "You photograph a rod showing 9, then clear the board. What number are you holding in your mind?",
         choices: [9, 5, 0, 4],
         answer: 9,
-        explanation: { text: "The photo lives in your mind, not on the board, so clearing the physical beads does not erase the 9 you are holding." },
+        explanation: {
+          steps: [
+            { text: "You photograph the rod showing 9." },
+            { text: "Clearing the physical board does not touch your mental picture." },
+            { text: "So you are still holding 9 in your mind." },
+          ],
+        },
       },
     ],
     "image-to-number": [
@@ -98,28 +120,49 @@ export const anzanContent: CourseContentMap = {
         prompt: "Read the number your mental board is showing.",
         digits: [5, 1],
         choices: [15, 51, 12, 10],
-        explanation: { text: "Left to right: a 5 on the tens rod and a 1 on the ones rod make 51." },
+        explanation: {
+          steps: [
+            { text: "Read the tens rod first: a heaven bead there is 5 tens." },
+            { text: "The ones rod shows 1, so the number is 51." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "What about this one?",
         digits: [0, 3],
         choices: [30, 3, 33, 300],
-        explanation: { text: "The left rod is empty, so that leading zero is only a place holder - the ones rod shows 3, so the number is 3." },
+        explanation: {
+          steps: [
+            { text: "The left rod is empty, so its leading zero is only a place holder." },
+            { text: "The ones rod shows 3, so the number is 3." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "Now read a three-rod board.",
         digits: [2, 4, 7],
         choices: [742, 247, 724, 274],
-        explanation: { text: "Read each rod left to right: 2 hundreds, 4 tens, and 7 ones make 247." },
+        explanation: {
+          steps: [
+            { text: "Read the hundreds rod first: 2." },
+            { text: "Then the tens rod gives 4, and the ones rod gives 7." },
+            { text: "Together that makes 247." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "Your mental board shows only a heaven bead on the tens rod. What number is that?",
         choices: [50, 5, 10, 15],
         answer: 50,
-        explanation: { text: "A single heaven bead on the tens rod means 5 tens, which is 50." },
+        explanation: {
+          steps: [
+            { text: "A single heaven bead on the tens rod counts as 5 tens." },
+            { text: "Five tens is 50." },
+          ],
+        },
       },
     ],
     "picture-the-soroban-check": [
@@ -133,28 +176,49 @@ export const anzanContent: CourseContentMap = {
         prompt: "What number is your mental board showing?",
         digits: [6],
         choices: [6, 5, 4, 7],
-        explanation: { text: "One heaven bead (5) plus one earth bead (1) touching the beam on the units rod is 6." },
+        explanation: {
+          steps: [
+            { text: "One heaven bead on the units rod is 5." },
+            { text: "One earth bead touching the beam adds 1, so the rod shows 6." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "And this one?",
         digits: [0, 4],
         choices: [40, 4, 44, 400],
-        explanation: { text: "The left rod is empty, so the 4 on the ones rod is the whole number - 4." },
+        explanation: {
+          steps: [
+            { text: "The left rod is empty, so it is just a leading zero." },
+            { text: "The ones rod shows 4, which is the whole number." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Picture 71, then show it on your abacus.",
         target: 71,
         rods: 2,
-        explanation: { text: "71 is 7 tens and 1 one, so build a heaven bead plus two earth beads on the tens rod and one earth bead on the ones." },
+        explanation: {
+          steps: [
+            { text: "71 is 7 tens and 1 one." },
+            { text: "Build a heaven bead plus two earth beads on the tens rod for 7." },
+            { text: "Set one earth bead on the ones rod for 1." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "You hold 84 in mind. What does the tens rod of your picture show?",
         choices: [8, 4, 80, 84],
         answer: 8,
-        explanation: { text: "84 has 8 in the tens place, so the tens rod of your picture shows 8." },
+        explanation: {
+          steps: [
+            { text: "84 has 8 in the tens place." },
+            { text: "So the tens rod of your picture shows 8." },
+          ],
+        },
       },
     ],
   },
@@ -175,21 +239,37 @@ export const anzanContent: CourseContentMap = {
         prompt: "2 + 1 = ?",
         choices: [3, 2, 4, 5],
         answer: 3,
-        explanation: { text: "Slide one more earth bead up to the two already on the rod, and your board shows 3." },
+        explanation: {
+          steps: [
+            { text: "Start with 2 on the ones rod." },
+            { text: "Slide one more earth bead toward the beam." },
+            { text: "The board shows 3." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "12 + 31 = ?",
         choices: [43, 34, 42, 53],
         answer: 43,
-        explanation: { text: "Add rod by rod: 1 ten + 3 tens is 4 tens, and 2 + 1 is 3 ones - so 43." },
+        explanation: {
+          steps: [
+            { text: "Add the tens: 1 ten plus 3 tens is 4 tens." },
+            { text: "Add the ones: 2 plus 1 is 3, so the board shows 43." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Check your mental picture: show 12 + 31 = 43 on the abacus.",
         target: 43,
         rods: 2,
-        explanation: { text: "12 + 31 really is 43, so build 4 tens and 3 ones to confirm your mental addition." },
+        explanation: {
+          steps: [
+            { text: "12 plus 31 is 43." },
+            { text: "Build 4 tens on the tens rod and 3 ones on the ones rod." },
+          ],
+        },
       },
     ],
     "five-friends": [
@@ -207,21 +287,37 @@ export const anzanContent: CourseContentMap = {
         prompt: "3 + 4 = ?",
         choices: [7, 6, 5, 9],
         answer: 7,
-        explanation: { text: "There are not four free earth beads, so use friends of five: drop the heaven bead (5) and take away 4's friend, 1 - leaving 7." },
+        explanation: {
+          steps: [
+            { text: "There are not four free earth beads, so use friends of five." },
+            { text: "Drop the heaven bead for 5, then take away 4's friend, 1." },
+            { text: "The board settles on 7." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "4 + 4 + 4 = ?",
         choices: [12, 10, 14, 11],
         answer: 12,
-        explanation: { text: "4 + 4 is 8, and one more 4 makes 12 - your running board settles on 12." },
+        explanation: {
+          steps: [
+            { text: "Add the first two: 4 plus 4 is 8." },
+            { text: "Add the last 4: 8 plus 4 is 12." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "2 + 3 + 4 = ?",
         choices: [9, 8, 10, 7],
         answer: 9,
-        explanation: { text: "2 + 3 is 5, then add 4 more to land on 9." },
+        explanation: {
+          steps: [
+            { text: "Run one total: 2 plus 3 is 5." },
+            { text: "Then add 4 more to land on 9." },
+          ],
+        },
       },
     ],
     "carry-in-your-head": [
@@ -239,28 +335,51 @@ export const anzanContent: CourseContentMap = {
         prompt: "8 + 5 = ?",
         choices: [13, 12, 15, 11],
         answer: 13,
-        explanation: { text: "8 needs 2 more to fill the ones rod, so you carry one ten and leave 3 - the answer is 13." },
+        explanation: {
+          steps: [
+            { text: "Start at 8 on the ones rod." },
+            { text: "Add 5: you carry one ten and leave 3 ones." },
+            { text: "The board shows 13." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "9 + 9 = ?",
         choices: [18, 17, 19, 16],
         answer: 18,
-        explanation: { text: "Each 9 needs just 1 more to carry a ten, so 9 + 9 fills the ones rod and leaves 1 ten and 8 ones - 18." },
+        explanation: {
+          steps: [
+            { text: "Start with 9 on the ones rod." },
+            { text: "Adding 9: the rod can't hold it, so carry one ten and leave 8." },
+            { text: "One ten and 8 ones is 18." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "7 + 8 = ?",
         choices: [15, 14, 16, 13],
         answer: 15,
-        explanation: { text: "7 needs 3 to fill the ones rod, so 8 carries one ten and leaves 5 ones - the board shows 15." },
+        explanation: {
+          steps: [
+            { text: "Start at 7 on the ones rod." },
+            { text: "Add 8: the rod fills to 10 at 3, so carry one ten and leave 5." },
+            { text: "The board shows 15." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 8 + 5 = 13 on the abacus to confirm your mental carry.",
         target: 13,
         rods: 2,
-        explanation: { text: "8 + 5 really is 13, so build 1 ten and 3 ones to confirm the carry you just did in your head." },
+        explanation: {
+          steps: [
+            { text: "8 plus 5 is 13." },
+            { text: "Build 1 ten on the tens rod and 3 ones on the ones rod." },
+          ],
+        },
       },
     ],
     "two-digit-mental-add": [
@@ -274,28 +393,51 @@ export const anzanContent: CourseContentMap = {
         prompt: "27 + 15 = ?",
         choices: [42, 32, 52, 43],
         answer: 42,
-        explanation: { text: "Tens first: 2 + 1 is 3 tens. Ones: 7 + 5 is 12, which carries to 4 tens and leaves 2 ones - 42." },
+        explanation: {
+          steps: [
+            { text: "Add the tens: 2 tens plus 1 ten is 3 tens." },
+            { text: "Ones: 7 plus 5 is 12, which carries to 4 tens and leaves 2 ones." },
+            { text: "The board shows 42." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "34 + 26 = ?",
         choices: [60, 50, 70, 56],
         answer: 60,
-        explanation: { text: "3 tens + 2 tens is 5 tens. Ones: 4 + 6 is 10, which carries to 6 tens and 0 ones - 60." },
+        explanation: {
+          steps: [
+            { text: "Tens: 3 tens plus 2 tens is 5 tens." },
+            { text: "Ones: 4 plus 6 is 10, which carries to 6 tens and 0 ones." },
+            { text: "The board shows 60." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "58 + 27 = ?",
         choices: [85, 75, 95, 84],
         answer: 85,
-        explanation: { text: "5 tens + 2 tens is 7 tens. Ones: 8 + 7 is 15, which carries to 8 tens and leaves 5 ones - 85." },
+        explanation: {
+          steps: [
+            { text: "Tens: 5 tens plus 2 tens is 7 tens." },
+            { text: "Ones: 8 plus 7 is 15, which carries to 8 tens and leaves 5 ones." },
+            { text: "The board shows 85." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 58 + 27 = 85 to verify your mental carries.",
         target: 85,
         rods: 2,
-        explanation: { text: "58 + 27 really is 85, so build 8 tens and 5 ones to verify your carrying." },
+        explanation: {
+          steps: [
+            { text: "58 plus 27 is 85." },
+            { text: "Build 8 tens on the tens rod and 5 ones on the ones rod." },
+          ],
+        },
       },
     ],
     "mental-add-string": [
@@ -309,21 +451,36 @@ export const anzanContent: CourseContentMap = {
         prompt: "3 + 6 + 4 = ?",
         choices: [13, 12, 14, 11],
         answer: 13,
-        explanation: { text: "Keep one running total: 3 + 6 is 9, then +4 is 13." },
+        explanation: {
+          steps: [
+            { text: "Keep one running total: 3 plus 6 is 9." },
+            { text: "Then add 4 more to reach 13." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "8 + 5 + 7 = ?",
         choices: [20, 19, 21, 18],
         answer: 20,
-        explanation: { text: "8 + 5 is 13 (carry a ten), then +7 brings the running total to 20." },
+        explanation: {
+          steps: [
+            { text: "Run one total: 8 plus 5 is 13, carrying a ten." },
+            { text: "Then add 7 more to bring the total to 20." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "12 + 9 + 14 = ?",
         choices: [35, 33, 36, 34],
         answer: 35,
-        explanation: { text: "12 + 9 is 21, then +14 gives 35 - just keep adding to the total." },
+        explanation: {
+          steps: [
+            { text: "12 plus 9 is 21." },
+            { text: "Then add 14 to the running total to reach 35." },
+          ],
+        },
       },
     ],
     "mental-addition-check": [
@@ -334,28 +491,50 @@ export const anzanContent: CourseContentMap = {
         prompt: "5 + 6 = ?",
         choices: [11, 10, 12, 13],
         answer: 11,
-        explanation: { text: "5 needs 5 to fill, and 6 gives it 5 plus 1 - the ones rod carries and you see 11 (1 ten and 1 one)." },
+        explanation: {
+          steps: [
+            { text: "Set 5 on the ones rod; it needs 5 more to fill." },
+            { text: "6 fills the rod with 5 and has 1 extra, so carry one ten and leave 1." },
+            { text: "One ten and 1 one is 11." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "27 + 19 = ?",
         choices: [46, 44, 45, 47],
         answer: 46,
-        explanation: { text: "2 tens + 1 ten is 3 tens. Ones: 7 + 9 is 16, which carries to 4 tens and leaves 6 ones - 46." },
+        explanation: {
+          steps: [
+            { text: "Tens: 2 tens plus 1 ten is 3 tens." },
+            { text: "Ones: 7 plus 9 is 16, which carries to 4 tens and leaves 6 ones." },
+            { text: "The board shows 46." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "4 + 7 + 8 + 6 = ?",
         choices: [25, 24, 26, 23],
         answer: 25,
-        explanation: { text: "Run a single total: 4 + 7 is 11, +8 is 19, +6 is 25." },
+        explanation: {
+          steps: [
+            { text: "Run one total: 4 plus 7 is 11." },
+            { text: "Add 8 to reach 19, then add 6 to land on 25." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show the answer to 8 + 9 = 17 on the beads.",
         target: 17,
         rods: 2,
-        explanation: { text: "8 + 9 really is 17, so build 1 ten and 7 ones on the board." },
+        explanation: {
+          steps: [
+            { text: "8 plus 9 is 17." },
+            { text: "Build 1 ten on the tens rod and 7 ones on the ones rod." },
+          ],
+        },
       },
     ],
   },
@@ -372,21 +551,38 @@ export const anzanContent: CourseContentMap = {
         prompt: "9 − 3 = ?",
         choices: [6, 5, 7, 8],
         answer: 6,
-        explanation: { text: "Take three earth beads away from the 9 on your rod, and 6 stay touching the beam." },
+        explanation: {
+          steps: [
+            { text: "Set 9 on the ones rod." },
+            { text: "Slide 3 earth beads away from the beam." },
+            { text: "6 beads stay touching the beam, so the answer is 6." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "7 − 2 = ?",
         choices: [5, 4, 6, 3],
         answer: 5,
-        explanation: { text: "With 7 on the rod, slide two earth beads away and the heaven bead alone is left - 5." },
+        explanation: {
+          steps: [
+            { text: "Set 7 on the ones rod: a heaven bead and two earth beads." },
+            { text: "Slide the two earth beads away, leaving the heaven bead alone." },
+            { text: "The heaven bead alone is 5." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 9 − 3 = 6 on the rod.",
         target: 6,
         rods: 1,
-        explanation: { text: "9 - 3 is 6, so rebuild the rod with one heaven bead (5) and one earth bead (1)." },
+        explanation: {
+          steps: [
+            { text: "9 minus 3 is 6." },
+            { text: "Build the rod with a heaven bead (5) and one earth bead (1)." },
+          ],
+        },
       },
     ],
     "break-five": [
@@ -404,21 +600,39 @@ export const anzanContent: CourseContentMap = {
         prompt: "6 − 3 = ?",
         choices: [3, 2, 4, 5],
         answer: 3,
-        explanation: { text: "You cannot take 3 earth beads straight off a 6, so break the five: drop the heaven bead (-5) and add back 3's friend of five (+2) - leaving 3." },
+        explanation: {
+          steps: [
+            { text: "A 6 has only one earth bead, so you cannot remove 3 straight." },
+            { text: "Break the five: drop the heaven bead (-5) and add back 3's friend, 2 (+2)." },
+            { text: "6 minus 5 plus 2 leaves 3." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "8 − 4 = ?",
         choices: [4, 3, 5, 6],
         answer: 4,
-        explanation: { text: "8 is heaven plus three earths, so to remove 4 you break the five: take off the 5 and add back 4's friend of five (1) - leaving 4." },
+        explanation: {
+          steps: [
+            { text: "8 is a heaven bead plus three earth beads, but not four to remove." },
+            { text: "Break the five: take the heaven bead off (-5) and add back 4's friend, 1." },
+            { text: "8 minus 5 plus 1 leaves 4." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 7 − 2 = 5. Which bead do you break?",
         target: 5,
         rods: 1,
-        explanation: { text: "7 - 2 is 5, so from the 7 (heaven plus two earths) take two earth beads away and only the heaven bead is left - no break is needed." },
+        explanation: {
+          steps: [
+            { text: "7 minus 2 is 5." },
+            { text: "From the 7 (heaven plus two earths), slide two earth beads away." },
+            { text: "Only the heaven bead is left, which is 5 - no break is needed." },
+          ],
+        },
       },
     ],
     "borrow-in-your-head": [
@@ -436,28 +650,51 @@ export const anzanContent: CourseContentMap = {
         prompt: "13 − 5 = ?",
         choices: [8, 7, 9, 6],
         answer: 8,
-        explanation: { text: "Borrow a ten so the ones rod holds 10 + 3 = 13, then subtract 5 to leave 8." },
+        explanation: {
+          steps: [
+            { text: "The ones can't lose 5 from 3, so borrow one ten." },
+            { text: "The ones rod now holds 10 plus 3 is 13." },
+            { text: "13 minus 5 is 8." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "12 − 7 = ?",
         choices: [5, 6, 4, 7],
         answer: 5,
-        explanation: { text: "Borrow a ten so the ones become 10 + 2 = 12, then 12 - 7 leaves 5 in the ones." },
+        explanation: {
+          steps: [
+            { text: "The ones can't lose 7 from 2, so borrow one ten." },
+            { text: "The ones rod now holds 10 plus 2 is 12." },
+            { text: "12 minus 7 leaves 5 in the ones." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "20 − 6 = ?",
         choices: [14, 13, 15, 12],
         answer: 14,
-        explanation: { text: "Borrow a ten off the 20 so the ones rod gets 10; 10 - 6 is 4, and one ten remains - 14." },
+        explanation: {
+          steps: [
+            { text: "The ones rod is empty, so borrow one ten from the 20." },
+            { text: "That gives the ones rod 10, and 10 minus 6 is 4." },
+            { text: "One ten is left, so the answer is 14." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 13 − 5 = 8 on the abacus.",
         target: 8,
         rods: 2,
-        explanation: { text: "13 - 5 is 8, so build 8 on the ones rod (a heaven bead and three earths) and leave the tens rod empty." },
+        explanation: {
+          steps: [
+            { text: "13 minus 5 is 8." },
+            { text: "Build 8 on the ones rod - a heaven bead and three earths - and leave the tens rod empty." },
+          ],
+        },
       },
     ],
     "two-digit-mental-sub": [
@@ -471,28 +708,51 @@ export const anzanContent: CourseContentMap = {
         prompt: "52 − 28 = ?",
         choices: [24, 34, 26, 14],
         answer: 24,
-        explanation: { text: "Borrow a ten so the ones become 12; 12 - 8 is 4, and the tens go 4 - 2 after the borrow - 24." },
+        explanation: {
+          steps: [
+            { text: "The ones can't lose 8 from 2, so borrow one ten." },
+            { text: "The ones rod becomes 12, and 12 minus 8 is 4." },
+            { text: "The tens go from 5 to 4, and 4 minus 2 is 2 - so 24." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "81 − 36 = ?",
         choices: [45, 55, 35, 46],
         answer: 45,
-        explanation: { text: "Borrow a ten so the ones become 11; 11 - 6 is 5, and the tens go 7 - 3 - 45." },
+        explanation: {
+          steps: [
+            { text: "The ones can't lose 6 from 1, so borrow one ten." },
+            { text: "The ones rod becomes 11, and 11 minus 6 is 5." },
+            { text: "The tens go from 8 to 7, and 7 minus 3 is 4 - so 45." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "64 − 27 = ?",
         choices: [37, 47, 36, 27],
         answer: 37,
-        explanation: { text: "Borrow a ten so the ones become 14; 14 - 7 is 7, and the tens go 5 - 2 - 37." },
+        explanation: {
+          steps: [
+            { text: "The ones can't lose 7 from 4, so borrow one ten." },
+            { text: "The ones rod becomes 14, and 14 minus 7 is 7." },
+            { text: "The tens go from 6 to 5, and 5 minus 2 is 3 - so 37." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 81 − 36 = 45 on the abacus.",
         target: 45,
         rods: 2,
-        explanation: { text: "81 - 36 is 45, so build 4 tens and 5 ones on the board." },
+        explanation: {
+          steps: [
+            { text: "81 minus 36 is 45." },
+            { text: "Build 4 tens on the tens rod and 5 ones on the ones rod." },
+          ],
+        },
       },
     ],
     "mental-subtraction-check": [
@@ -503,28 +763,50 @@ export const anzanContent: CourseContentMap = {
         prompt: "15 − 8 = ?",
         choices: [7, 6, 8, 9],
         answer: 7,
-        explanation: { text: "Borrow a ten so the ones become 15, then 15 - 8 leaves 7." },
+        explanation: {
+          steps: [
+            { text: "The ones can't lose 8 from 5, so borrow one ten." },
+            { text: "The ones rod becomes 15." },
+            { text: "15 minus 8 leaves 7." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "70 − 25 = ?",
         choices: [45, 55, 35, 44],
         answer: 45,
-        explanation: { text: "Borrow a ten so the ones become 10; 10 - 5 is 5, and the tens go 6 - 2 - 45." },
+        explanation: {
+          steps: [
+            { text: "The ones rod is empty, so borrow one ten." },
+            { text: "The ones rod gets 10, and 10 minus 5 is 5." },
+            { text: "The tens go from 7 to 6, and 6 minus 2 is 4 - so 45." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "11 − 4 − 3 = ?",
         choices: [4, 5, 6, 3],
         answer: 4,
-        explanation: { text: "Take it in two steps: 11 - 4 is 7, then subtract 3 more to get 4." },
+        explanation: {
+          steps: [
+            { text: "Run one total: 11 minus 4 is 7." },
+            { text: "Subtract 3 more to land on 4." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 62 − 27 = 35 on the abacus.",
         target: 35,
         rods: 2,
-        explanation: { text: "62 - 27 is 35, so build 3 tens and 5 ones." },
+        explanation: {
+          steps: [
+            { text: "62 minus 27 is 35." },
+            { text: "Build 3 tens on the tens rod and 5 ones on the ones rod." },
+          ],
+        },
       },
     ],
   },
@@ -541,21 +823,36 @@ export const anzanContent: CourseContentMap = {
         prompt: "Start at 0. Add 15, then 20, then 5. What is the total?",
         choices: [40, 35, 45, 30],
         answer: 40,
-        explanation: { text: "Run the total: 0 + 15 is 15, +20 is 35, +5 is 40." },
+        explanation: {
+          steps: [
+            { text: "Start at 0 and add 15 to get 15." },
+            { text: "Add 20 to reach 35, then add 5 to land on 40." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "25 + 30 + 12 + 8 = ?",
         choices: [75, 65, 85, 74],
         answer: 75,
-        explanation: { text: "Keep going: 25 + 30 is 55, +12 is 67, +8 is 75." },
+        explanation: {
+          steps: [
+            { text: "25 plus 30 is 55." },
+            { text: "Add 12 to reach 67, then add 8 to land on 75." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "Start at 40, add 16, then 24. Total?",
         choices: [80, 70, 90, 76],
         answer: 80,
-        explanation: { text: "40 + 16 is 56, then +24 brings the total to 80." },
+        explanation: {
+          steps: [
+            { text: "Start at 40 and add 16 to get 56." },
+            { text: "Add 24 more to bring the total to 80." },
+          ],
+        },
       },
     ],
     "spot-the-carry": [
@@ -573,21 +870,39 @@ export const anzanContent: CourseContentMap = {
         prompt: "38 + 7 = ?",
         choices: [45, 44, 46, 43],
         answer: 45,
-        explanation: { text: "38's ones rod needs 2 to fill, so 7 carries: 38 + 2 is 40, then +5 more is 45." },
+        explanation: {
+          steps: [
+            { text: "38's ones rod needs just 2 more to fill." },
+            { text: "So 7 carries: 38 plus 2 is 40, then add the remaining 5." },
+            { text: "The board shows 45." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "46 + 8 = ?",
         choices: [54, 53, 55, 52],
         answer: 54,
-        explanation: { text: "46 needs 4 to fill, so 8 carries: 46 + 4 is 50, then +4 more is 54." },
+        explanation: {
+          steps: [
+            { text: "46's ones rod needs 4 more to fill." },
+            { text: "So 8 carries: 46 plus 4 is 50, then add the remaining 4." },
+            { text: "The board shows 54." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "75 + 9 = ?",
         choices: [84, 83, 85, 82],
         answer: 84,
-        explanation: { text: "75 needs 5 to fill, so 9 carries: 75 + 5 is 80, then +4 more is 84." },
+        explanation: {
+          steps: [
+            { text: "75's ones rod needs 5 more to fill." },
+            { text: "So 9 carries: 75 plus 5 is 80, then add the remaining 4." },
+            { text: "The board shows 84." },
+          ],
+        },
       },
     ],
     "two-rods-at-once": [
@@ -601,28 +916,48 @@ export const anzanContent: CourseContentMap = {
         prompt: "34 + 21 = ?",
         choices: [55, 65, 54, 45],
         answer: 55,
-        explanation: { text: "3 tens + 2 tens is 5 tens, and 4 ones + 1 one is 5 - so 55." },
+        explanation: {
+          steps: [
+            { text: "Add the tens: 3 tens plus 2 tens is 5 tens." },
+            { text: "Add the ones: 4 plus 1 is 5, so the board shows 55." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "26 + 43 = ?",
         choices: [69, 79, 68, 59],
         answer: 69,
-        explanation: { text: "2 tens + 4 tens is 6 tens, and 6 ones + 3 ones is 9 - so 69." },
+        explanation: {
+          steps: [
+            { text: "Add the tens: 2 tens plus 4 tens is 6 tens." },
+            { text: "Add the ones: 6 plus 3 is 9, so the board shows 69." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "51 + 38 = ?",
         choices: [89, 99, 88, 79],
         answer: 89,
-        explanation: { text: "5 tens + 3 tens is 8 tens, and 1 one + 8 ones is 9 - so 89." },
+        explanation: {
+          steps: [
+            { text: "Add the tens: 5 tens plus 3 tens is 8 tens." },
+            { text: "Add the ones: 1 plus 8 is 9, so the board shows 89." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 51 + 38 = 89 on the abacus.",
         target: 89,
         rods: 2,
-        explanation: { text: "51 + 38 is 89, so build 8 tens and 9 ones." },
+        explanation: {
+          steps: [
+            { text: "51 plus 38 is 89." },
+            { text: "Build 8 tens on the tens rod and 9 ones on the ones rod." },
+          ],
+        },
       },
     ],
     "flash-anzan": [
@@ -648,14 +983,24 @@ export const anzanContent: CourseContentMap = {
         prompt: "A quick warm-up string: 14, then 23, then 12. Total?",
         choices: [49, 48, 50, 47],
         answer: 49,
-        explanation: { text: "14 + 23 is 37, then +12 is 49 - add each flashed number to the running total." },
+        explanation: {
+          steps: [
+            { text: "14 plus 23 is 37." },
+            { text: "Add the flashed 12 to the running total and it lands on 49." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "Now a longer string: 31, 25, 44. Total?",
         choices: [100, 99, 101, 110],
         answer: 100,
-        explanation: { text: "31 + 25 is 56, then +44 is 100 - the total rolls over into a full hundred." },
+        explanation: {
+          steps: [
+            { text: "31 plus 25 is 56." },
+            { text: "Add 44 to the running total to reach 100." },
+          ],
+        },
       },
     ],
     "strings-speed-check": [
@@ -666,28 +1011,48 @@ export const anzanContent: CourseContentMap = {
         prompt: "12 + 15 + 8 = ?",
         choices: [35, 33, 36, 34],
         answer: 35,
-        explanation: { text: "12 + 15 is 27, then +8 is 35." },
+        explanation: {
+          steps: [
+            { text: "12 plus 15 is 27." },
+            { text: "Add 8 more to land on 35." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "30 + 22 + 18 = ?",
         choices: [70, 60, 72, 68],
         answer: 70,
-        explanation: { text: "30 + 22 is 52, then +18 is 70." },
+        explanation: {
+          steps: [
+            { text: "30 plus 22 is 52." },
+            { text: "Add 18 more to land on 70." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "46 + 17 + 9 = ?",
         choices: [72, 71, 73, 62],
         answer: 72,
-        explanation: { text: "46 + 17 is 63, then +9 is 72." },
+        explanation: {
+          steps: [
+            { text: "46 plus 17 is 63." },
+            { text: "Add 9 more to land on 72." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show the string 31 + 25 + 44 = 100 on the abacus.",
         target: 100,
         rods: 3,
-        explanation: { text: "31 + 25 + 44 really is 100, so build 1 on the hundreds rod and leave the tens and ones rods empty." },
+        explanation: {
+          steps: [
+            { text: "31 plus 25 plus 44 is 100." },
+            { text: "Build 1 on the hundreds rod and leave the tens and ones rods empty." },
+          ],
+        },
       },
     ],
   },
@@ -704,28 +1069,51 @@ export const anzanContent: CourseContentMap = {
         prompt: "123 + 456 = ?",
         choices: [579, 569, 589, 578],
         answer: 579,
-        explanation: { text: "Place by place: hundreds 1 + 4 is 5, tens 2 + 5 is 7, ones 3 + 6 is 9 - 579." },
+        explanation: {
+          steps: [
+            { text: "Add the hundreds: 1 plus 4 is 5." },
+            { text: "Add the tens: 2 plus 5 is 7." },
+            { text: "Add the ones: 3 plus 6 is 9 - the board shows 579." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "456 + 789 = ?",
         choices: [1245, 1244, 1135, 1255],
         answer: 1245,
-        explanation: { text: "Ones: 6 + 9 is 15 (write 5, carry 1). Tens: 5 + 8 + 1 is 14 (write 4, carry 1). Hundreds: 4 + 7 + 1 is 12, giving 1245." },
+        explanation: {
+          steps: [
+            { text: "Ones: 6 plus 9 is 15, so write 5 and carry 1." },
+            { text: "Tens: 5 plus 8 plus 1 is 14, so write 4 and carry 1." },
+            { text: "Hundreds: 4 plus 7 plus 1 is 12, giving 1245." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "345 + 278 = ?",
         choices: [623, 613, 633, 622],
         answer: 623,
-        explanation: { text: "Ones: 5 + 8 is 13 (carry 1). Tens: 4 + 7 + 1 is 12 (carry 1). Hundreds: 3 + 2 + 1 is 6 - 623." },
+        explanation: {
+          steps: [
+            { text: "Ones: 5 plus 8 is 13, so write 3 and carry 1." },
+            { text: "Tens: 4 plus 7 plus 1 is 12, so write 2 and carry 1." },
+            { text: "Hundreds: 3 plus 2 plus 1 is 6 - the answer is 623." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 345 + 278 = 623 on the abacus.",
         target: 623,
         rods: 3,
-        explanation: { text: "345 + 278 really is 623, so build 6 hundreds, 2 tens, and 3 ones." },
+        explanation: {
+          steps: [
+            { text: "345 plus 278 is 623." },
+            { text: "Build 6 hundreds, 2 tens, and 3 ones." },
+          ],
+        },
       },
     ],
     "three-digit-sub": [
@@ -739,28 +1127,51 @@ export const anzanContent: CourseContentMap = {
         prompt: "652 − 231 = ?",
         choices: [421, 431, 411, 321],
         answer: 421,
-        explanation: { text: "Place by place: hundreds 6 - 2 is 4, tens 5 - 3 is 2, ones 2 - 1 is 1 - 421." },
+        explanation: {
+          steps: [
+            { text: "Subtract the hundreds: 6 minus 2 is 4." },
+            { text: "Subtract the tens: 5 minus 3 is 2." },
+            { text: "Subtract the ones: 2 minus 1 is 1 - the board shows 421." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "800 − 356 = ?",
         choices: [444, 454, 434, 544],
         answer: 444,
-        explanation: { text: "800 has no ones and no tens, so borrow across: ones 10 - 6 is 4, tens 9 - 5 is 4, hundreds 7 - 3 is 4 - 444." },
+        explanation: {
+          steps: [
+            { text: "800 has no ones or tens, so borrow across from the hundreds." },
+            { text: "Ones: 10 minus 6 is 4; tens: 9 minus 5 is 4." },
+            { text: "Hundreds: 7 minus 3 is 4 - the answer is 444." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "923 − 468 = ?",
         choices: [455, 465, 445, 555],
         answer: 455,
-        explanation: { text: "Borrow for the ones: 13 - 8 is 5. Tens: borrow so 11 - 6 is 5. Hundreds: 8 - 4 is 4 - 455." },
+        explanation: {
+          steps: [
+            { text: "Borrow for the ones: 13 minus 8 is 5." },
+            { text: "Borrow for the tens: 11 minus 6 is 5." },
+            { text: "Hundreds: 8 minus 4 is 4 - the answer is 455." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 800 − 356 = 444 on the abacus.",
         target: 444,
         rods: 3,
-        explanation: { text: "800 - 356 really is 444, so build 4 hundreds, 4 tens, and 4 ones." },
+        explanation: {
+          steps: [
+            { text: "800 minus 356 is 444." },
+            { text: "Build 4 hundreds, 4 tens, and 4 ones." },
+          ],
+        },
       },
     ],
     "decimals-money": [
@@ -778,21 +1189,37 @@ export const anzanContent: CourseContentMap = {
         prompt: "$4.50 + $2.25 = ?",
         choices: [6.75, 6.25, 7.75, 5.75],
         answer: 6.75,
-        explanation: { text: "Treat the money as cents: 450 + 225 is 675, which you read back as $6.75." },
+        explanation: {
+          steps: [
+            { text: "Fix the decimal point and treat cents as ones: 450 plus 225." },
+            { text: "450 plus 225 is 675." },
+            { text: "Read it back as $6.75." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "$1.99 + $2.01 = ?",
         choices: [4, 4.5, 3.99, 3.9],
         answer: 4,
-        explanation: { text: "0.99 and 0.01 make one whole dollar, so $1.99 + $2.01 is exactly $4.00." },
+        explanation: {
+          steps: [
+            { text: "The cents add up: 0.99 plus 0.01 makes one whole dollar." },
+            { text: "So $1.99 plus $2.01 is exactly $4.00." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "0.70 + 0.80 = ?",
         choices: [1.5, 1.4, 0.15, 1.05],
         answer: 1.5,
-        explanation: { text: "7 tenths plus 8 tenths is 15 tenths - which carries to 1 whole and 5 tenths, or 1.5." },
+        explanation: {
+          steps: [
+            { text: "Work in tenths: 7 tenths plus 8 tenths is 15 tenths." },
+            { text: "15 tenths carries to 1 whole and 5 tenths, or 1.5." },
+          ],
+        },
       },
     ],
     "mixed-operations": [
@@ -806,28 +1233,48 @@ export const anzanContent: CourseContentMap = {
         prompt: "20 + 15 − 8 = ?",
         choices: [27, 25, 28, 26],
         answer: 27,
-        explanation: { text: "Keep one running total: 20 + 15 is 35, then -8 is 27." },
+        explanation: {
+          steps: [
+            { text: "Run one total: 20 plus 15 is 35." },
+            { text: "Subtract 8 to land on 27." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "50 − 12 + 7 = ?",
         choices: [45, 44, 46, 55],
         answer: 45,
-        explanation: { text: "50 - 12 is 38, then +7 is 45." },
+        explanation: {
+          steps: [
+            { text: "Run one total: 50 minus 12 is 38." },
+            { text: "Add 7 to land on 45." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "100 − 35 − 18 = ?",
         choices: [47, 48, 46, 57],
         answer: 47,
-        explanation: { text: "100 - 35 is 65, then -18 is 47." },
+        explanation: {
+          steps: [
+            { text: "Start at 100 and subtract 35 to get 65." },
+            { text: "Subtract 18 more to land on 47." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 50 − 12 + 7 = 45 on the abacus.",
         target: 45,
         rods: 2,
-        explanation: { text: "50 - 12 + 7 really is 45, so build 4 tens and 5 ones." },
+        explanation: {
+          steps: [
+            { text: "50 minus 12 plus 7 is 45." },
+            { text: "Build 4 tens and 5 ones." },
+          ],
+        },
       },
     ],
     "big-numbers-check": [
@@ -838,28 +1285,51 @@ export const anzanContent: CourseContentMap = {
         prompt: "268 + 174 = ?",
         choices: [442, 432, 452, 342],
         answer: 442,
-        explanation: { text: "Ones: 8 + 4 is 12 (carry 1). Tens: 6 + 7 + 1 is 14 (carry 1). Hundreds: 2 + 1 + 1 is 4 - 442." },
+        explanation: {
+          steps: [
+            { text: "Ones: 8 plus 4 is 12, so write 2 and carry 1." },
+            { text: "Tens: 6 plus 7 plus 1 is 14, so write 4 and carry 1." },
+            { text: "Hundreds: 2 plus 1 plus 1 is 4 - the answer is 442." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "900 − 268 = ?",
         choices: [632, 642, 622, 732],
         answer: 632,
-        explanation: { text: "Borrow across: ones 10 - 8 is 2, tens 9 - 6 is 3, hundreds 8 - 2 is 6 - 632." },
+        explanation: {
+          steps: [
+            { text: "900 has no ones or tens, so borrow across from the hundreds." },
+            { text: "Ones: 10 minus 8 is 2; tens: 9 minus 6 is 3." },
+            { text: "Hundreds: 8 minus 2 is 6 - the answer is 632." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "$3.50 + $2.75 = ?",
         choices: [6.25, 6.75, 6.5, 5.75],
         answer: 6.25,
-        explanation: { text: "As cents: 350 + 275 is 625, which you read back as $6.25." },
+        explanation: {
+          steps: [
+            { text: "Treat the cents as ones: 350 plus 275." },
+            { text: "350 plus 275 is 625." },
+            { text: "Read it back as $6.25." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 268 + 174 = 442 on the abacus.",
         target: 442,
         rods: 3,
-        explanation: { text: "268 + 174 really is 442, so build 4 hundreds, 4 tens, and 2 ones." },
+        explanation: {
+          steps: [
+            { text: "268 plus 174 is 442." },
+            { text: "Build 4 hundreds, 4 tens, and 2 ones." },
+          ],
+        },
       },
     ],
   },
@@ -884,7 +1354,12 @@ export const anzanContent: CourseContentMap = {
         prompt: "Warm-up check: 18 + 25 = ?",
         choices: [43, 42, 44, 53],
         answer: 43,
-        explanation: { text: "Ones: 8 + 5 is 13 (carry 1). Tens: 1 + 2 + 1 is 4 - 43." },
+        explanation: {
+          steps: [
+            { text: "Ones: 8 plus 5 is 13, so write 3 and carry 1." },
+            { text: "Tens: 1 plus 2 plus 1 is 4 - the answer is 43." },
+          ],
+        },
       },
     ],
     "stronger-images": [
@@ -902,14 +1377,26 @@ export const anzanContent: CourseContentMap = {
         prompt: "Refresh drill: 4 + 9 = ?",
         choices: [13, 12, 14, 15],
         answer: 13,
-        explanation: { text: "9 needs 1 more to fill the ones rod, so it carries - 4 + 9 leaves 1 ten and 3 ones, or 13." },
+        explanation: {
+          steps: [
+            { text: "Set 4 on the ones rod, then add 9." },
+            { text: "The rod can't hold 13, so carry one ten and leave 3 ones." },
+            { text: "One ten and 3 ones is 13." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "Hold 56 in mind, then subtract 19. What do you see?",
         choices: [37, 36, 38, 47],
         answer: 37,
-        explanation: { text: "Borrow a ten so the ones become 16; 16 - 9 is 7, and the tens go 4 - 1 - 37." },
+        explanation: {
+          steps: [
+            { text: "Borrow one ten so the ones rod becomes 16." },
+            { text: "16 minus 9 is 7." },
+            { text: "The tens go from 5 to 4, and 4 minus 1 is 3 - the answer is 37." },
+          ],
+        },
       },
     ],
     "ten-number-sprint": [
@@ -927,14 +1414,25 @@ export const anzanContent: CourseContentMap = {
         prompt: "What is the running total after that whole sprint list?",
         choices: [125, 120, 118, 132],
         answer: 125,
-        explanation: { text: "Add the whole sprint 6 + 14 + 9 + 21 + 7 + 13 + 18 + 5 + 22 + 10 to one running total and it lands on 125." },
+        explanation: {
+          steps: [
+            { text: "Start the running total at 6, then add 14, 9, 21, and 7 to reach 57." },
+            { text: "Keep adding 13, 18, 5, 22, and 10, and the total lands on 125." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "Shorter sprint: 12 + 8 + 15 + 5 + 20 = ?",
         choices: [60, 55, 62, 58],
         answer: 60,
-        explanation: { text: "12 + 8 is 20, +15 is 35, +5 is 40, +20 is 60." },
+        explanation: {
+          steps: [
+            { text: "12 plus 8 is 20." },
+            { text: "Add 15 to reach 35, then 5 to reach 40." },
+            { text: "Add 20 more to land on 60." },
+          ],
+        },
       },
     ],
     "anzan-mastery-check": [
@@ -945,35 +1443,61 @@ export const anzanContent: CourseContentMap = {
         prompt: "34 + 27 = ?",
         choices: [61, 60, 62, 51],
         answer: 61,
-        explanation: { text: "Ones: 4 + 7 is 11 (carry 1). Tens: 3 + 2 + 1 is 6 - 61." },
+        explanation: {
+          steps: [
+            { text: "Ones: 4 plus 7 is 11, so write 1 and carry 1." },
+            { text: "Tens: 3 plus 2 plus 1 is 6 - the answer is 61." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "100 − 47 + 12 = ?",
         choices: [65, 64, 66, 55],
         answer: 65,
-        explanation: { text: "100 - 47 is 53, then +12 is 65." },
+        explanation: {
+          steps: [
+            { text: "Start at 100 and subtract 47 to get 53." },
+            { text: "Add 12 to land on 65." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "A string: 5 + 18 + 24 + 6 = ?",
         choices: [53, 52, 54, 43],
         answer: 53,
-        explanation: { text: "5 + 18 is 23, +24 is 47, +6 is 53." },
+        explanation: {
+          steps: [
+            { text: "5 plus 18 is 23." },
+            { text: "Add 24 to reach 47, then add 6 to land on 53." },
+          ],
+        },
       },
       {
         type: "quiz",
         prompt: "$12.40 + $8.60 = ?",
         choices: [21, 20.4, 21.4, 20],
         answer: 21,
-        explanation: { text: "As cents: 1240 + 860 is 2100, which you read back as $21.00." },
+        explanation: {
+          steps: [
+            { text: "Treat the cents as ones: 1240 plus 860." },
+            { text: "1240 plus 860 is 2100." },
+            { text: "Read it back as $21.00." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show the final sprint result: 6 + 14 + 9 + 21 + 7 + 13 + 18 + 5 + 22 + 10 = 125.",
         target: 125,
         rods: 3,
-        explanation: { text: "The sprint 6 + 14 + 9 + 21 + 7 + 13 + 18 + 5 + 22 + 10 really totals 125, so build 1 hundred, 2 tens, and 5 ones." },
+        explanation: {
+          steps: [
+            { text: "The sprint 6 + 14 + 9 + 21 + 7 + 13 + 18 + 5 + 22 + 10 totals 125." },
+            { text: "Build 1 hundred, 2 tens, and 5 ones." },
+          ],
+        },
       },
     ],
   },

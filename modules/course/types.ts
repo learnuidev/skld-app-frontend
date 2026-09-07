@@ -38,9 +38,18 @@ export type ExplanationVisual =
   | { kind: "abacus"; digits: number[] }
   | { kind: "image"; src: string; alt?: string };
 
-/** Optional per-exercise explanation revealed by the "Why?" button. */
-export interface LessonExplanation {
+/** One animated step of an explanation walkthrough. */
+export interface ExplanationStep {
   text: string;
+  visual?: ExplanationVisual;
+}
+
+/** Optional per-exercise explanation revealed by the "Why?" button. When `steps` is set it renders an animated, navigable walkthrough; otherwise it falls back to a single step built from `text`/`visual`. */
+export interface LessonExplanation {
+  /** Short summary; used as the single step when `steps` is absent. */
+  text?: string;
+  /** Ordered steps for an animated back/forward walkthrough. */
+  steps?: ExplanationStep[];
   visual?: ExplanationVisual;
 }
 

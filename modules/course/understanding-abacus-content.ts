@@ -52,21 +52,37 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "Which number is this abacus showing?",
         digits: [1],
         choices: [1, 2, 5, 10],
-        explanation: { text: "One earth bead is touching the beam, and each earth bead counts as 1, so the rod shows 1." },
+        explanation: {
+          steps: [
+            { text: "One earth bead is touching the beam." },
+            { text: "Each earth bead counts as 1, so the rod shows 1." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "What about this one?",
         digits: [5],
         choices: [5, 1, 4, 10],
-        explanation: { text: "Only the heaven bead touches the beam, and a single heaven bead is worth 5, so the rod shows 5." },
+        explanation: {
+          steps: [
+            { text: "Only the heaven bead is touching the beam." },
+            { text: "A single heaven bead is worth 5, so the rod shows 5." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "This rod uses both kinds of beads. What number is it?",
         digits: [6],
         choices: [6, 5, 4, 7],
-        explanation: { text: "The heaven bead is worth 5 and the one earth bead is worth 1, so 5 + 1 = 6." },
+        explanation: {
+          steps: [
+            { text: "The heaven bead touching the beam is worth 5." },
+            { text: "The one earth bead touching the beam is worth 1." },
+            { text: "5 + 1 = 6, so the rod shows 6." },
+          ],
+        },
       },
     ],
     "reset-and-clean": [
@@ -84,7 +100,12 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "Both rods are cleared. Which number does this abacus show?",
         digits: [0, 0],
         choices: [0, 11, 1, 5],
-        explanation: { text: "With no bead touching the beam, every rod reads 0, so 0 tens and 0 ones make 0." },
+        explanation: {
+          steps: [
+            { text: "No bead is touching the beam on either rod." },
+            { text: "So the tens rod shows 0 and the ones rod shows 0, making 0." },
+          ],
+        },
       },
     ],
     "meet-the-soroban-check": [
@@ -98,21 +119,38 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "Which number is shown?",
         digits: [3],
         choices: [3, 5, 2, 4],
-        explanation: { text: "Three earth beads are touching the beam, and each counts as 1, so the rod shows 3." },
+        explanation: {
+          steps: [
+            { text: "Three earth beads are touching the beam." },
+            { text: "Each counts as 1, so the rod shows 3." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Slide the beads to show 7.",
         target: 7,
         rods: 1,
-        explanation: { text: "To show 7, slide the heaven bead down for 5, then push up two earth beads for the extra 2." },
+        explanation: {
+          steps: [
+            { text: "7 is a heaven bead (5) plus two earth beads (2)." },
+            { text: "Slide the heaven bead down to the beam for 5." },
+            { text: "Push up two earth beads to add the extra 2, showing 7." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Now show 9 on the rod.",
         target: 9,
         rods: 1,
-        explanation: { text: "To show 9, slide the heaven bead down (5) and push all four earth beads up (4), making 5 + 4 = 9." },
+        explanation: {
+          steps: [
+            { text: "9 is a heaven bead (5) plus four earth beads (4)." },
+            { text: "Slide the heaven bead down to the beam for 5." },
+            { text: "Push all four earth beads up to add 4, showing 9." },
+          ],
+        },
       },
     ],
   },
@@ -129,14 +167,24 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "Slide the beads to show 4.",
         target: 4,
         rods: 1,
-        explanation: { text: "Four earth beads each count 1, so push all four up to the beam to show 4." },
+        explanation: {
+          steps: [
+            { text: "4 needs four earth beads, each worth 1." },
+            { text: "Push all four earth beads up to the beam to show 4." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "Which number is this rod showing?",
         digits: [2],
         choices: [2, 4, 1, 6],
-        explanation: { text: "Two earth beads are by the beam and each counts 1, so together the rod shows 2." },
+        explanation: {
+          steps: [
+            { text: "Two earth beads are touching the beam." },
+            { text: "Each counts as 1, so the rod shows 2." },
+          ],
+        },
       },
     ],
     "five-and-friends": [
@@ -154,14 +202,26 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "Heaven plus one earth. What number is this?",
         digits: [6],
         choices: [6, 5, 1, 9],
-        explanation: { text: "The heaven bead is 5 and the one earth bead is 1, so 5 + 1 = 6." },
+        explanation: {
+          steps: [
+            { text: "The heaven bead is worth 5." },
+            { text: "The one earth bead is worth 1." },
+            { text: "5 + 1 = 6, so the rod shows 6." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "Heaven plus all four earth beads. What number is this?",
         digits: [9],
         choices: [9, 4, 6, 8],
-        explanation: { text: "The heaven bead is 5 and four earth beads are 4, so 5 + 4 = 9." },
+        explanation: {
+          steps: [
+            { text: "The heaven bead is worth 5." },
+            { text: "The four earth beads are worth 4 in total." },
+            { text: "5 + 4 = 9, so the rod shows 9." },
+          ],
+        },
       },
     ],
     "read-any-number": [
@@ -175,21 +235,38 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "Heaven bead down, three earth beads up. What number?",
         digits: [8],
         choices: [8, 3, 5, 4],
-        explanation: { text: "The heaven bead is 5 and the three earth beads are 3, so 5 + 3 = 8." },
+        explanation: {
+          steps: [
+            { text: "The heaven bead is worth 5." },
+            { text: "The three earth beads are worth 3." },
+            { text: "5 + 3 = 8, so the rod shows 8." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "No heaven bead, four earth beads up. What number?",
         digits: [4],
         choices: [4, 5, 9, 1],
-        explanation: { text: "With no heaven bead, only the four earth beads count, and each is 1, so the rod shows 4." },
+        explanation: {
+          steps: [
+            { text: "There is no heaven bead, so the rod has no 5." },
+            { text: "Four earth beads, each worth 1, show 4." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "Heaven bead down, two earth beads up. What number?",
         digits: [7],
         choices: [7, 2, 5, 9],
-        explanation: { text: "The heaven bead is 5 and the two earth beads are 2, so 5 + 2 = 7." },
+        explanation: {
+          steps: [
+            { text: "The heaven bead is worth 5." },
+            { text: "The two earth beads are worth 2." },
+            { text: "5 + 2 = 7, so the rod shows 7." },
+          ],
+        },
       },
     ],
     "build-a-number": [
@@ -198,9 +275,31 @@ export const understandingAbacusContent: CourseContentMap = {
         type: "paragraph",
         text: "Building is reading in reverse: figure out how many earth beads and whether you need the heaven bead, then slide them to the beam.",
       },
-      { type: "build", prompt: "Show 5 on the rod.", target: 5, rods: 1, explanation: { text: "5 needs only the heaven bead, so slide it down to the beam and leave the earth beads down." } },
-      { type: "build", prompt: "Show 8 on the rod.", target: 8, rods: 1, explanation: { text: "8 is 5 plus 3, so slide the heaven bead down and push up three earth beads to the beam." } },
-      { type: "build", prompt: "Show 6 on the rod.", target: 6, rods: 1, explanation: { text: "6 is the heaven bead (5) plus one earth bead (1), so slide both to the beam." } },
+      { type: "build", prompt: "Show 5 on the rod.", target: 5, rods: 1,
+        explanation: {
+          steps: [
+            { text: "5 needs only the heaven bead, worth 5 on its own." },
+            { text: "Slide it down to the beam and leave the earth beads down." },
+          ],
+        },
+      },
+      { type: "build", prompt: "Show 8 on the rod.", target: 8, rods: 1,
+        explanation: {
+          steps: [
+            { text: "8 is 5 plus 3." },
+            { text: "Slide the heaven bead down for the 5." },
+            { text: "Push three earth beads up to add the 3." },
+          ],
+        },
+      },
+      { type: "build", prompt: "Show 6 on the rod.", target: 6, rods: 1,
+        explanation: {
+          steps: [
+            { text: "6 is the heaven bead (5) plus one earth bead (1)." },
+            { text: "Slide both to the beam to show 6." },
+          ],
+        },
+      },
     ],
     "counting-with-beads-check": [
       { type: "heading", text: "Level check" },
@@ -210,21 +309,38 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "What number is this rod showing?",
         digits: [7],
         choices: [7, 2, 6, 5],
-        explanation: { text: "The heaven bead is 5 and the two earth beads are 2, so the rod shows 5 + 2 = 7." },
+        explanation: {
+          steps: [
+            { text: "The heaven bead is worth 5." },
+            { text: "The two earth beads are worth 2." },
+            { text: "5 + 2 = 7, so the rod shows 7." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 3 on the rod.",
         target: 3,
         rods: 1,
-        explanation: { text: "Three earth beads each count 1, so push three beads up to the beam to show 3." },
+        explanation: {
+          steps: [
+            { text: "3 needs three earth beads, each worth 1." },
+            { text: "Push three beads up to the beam to show 3." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Show 9 on the rod.",
         target: 9,
         rods: 1,
-        explanation: { text: "9 is 5 plus 4, so slide the heaven bead down and push all four earth beads up to show 9." },
+        explanation: {
+          steps: [
+            { text: "9 is 5 plus 4." },
+            { text: "Slide the heaven bead down for the 5." },
+            { text: "Push all four earth beads up to add the 4." },
+          ],
+        },
       },
     ],
   },
@@ -245,14 +361,25 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "4 ones and 2 tens. What number is this abacus showing?",
         digits: [4, 2],
         choices: [24, 42, 6, 204],
-        explanation: { text: "The tens rod shows 2 (which is 20) and the ones rod shows 4, so 20 + 4 = 24." },
+        explanation: {
+          steps: [
+            { text: "The tens rod shows 2, which is worth 20." },
+            { text: "The ones rod shows 4." },
+            { text: "20 + 4 = 24, so the abacus shows 24." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "No ones and 3 tens. What number is this?",
         digits: [0, 3],
         choices: [30, 3, 33, 300],
-        explanation: { text: "Three tens are worth 30 and there are no ones, so the number is 30." },
+        explanation: {
+          steps: [
+            { text: "Three tens are worth 30." },
+            { text: "There are no ones, so the number is 30." },
+          ],
+        },
       },
     ],
     "building-two-digit": [
@@ -266,21 +393,39 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "Build 23 on the abacus.",
         target: 23,
         rods: 2,
-        explanation: { text: "23 is 2 tens and 3 ones, so put 2 on the tens rod and 3 on the ones rod." },
+        explanation: {
+          steps: [
+            { text: "23 is 2 tens and 3 ones." },
+            { text: "Put 2 on the tens rod." },
+            { text: "Put 3 on the ones rod, and the abacus shows 23." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Build 47 on the abacus.",
         target: 47,
         rods: 2,
-        explanation: { text: "47 is 4 tens and 7 ones, so put 4 on the tens rod and 7 on the ones rod." },
+        explanation: {
+          steps: [
+            { text: "47 is 4 tens and 7 ones." },
+            { text: "Put 4 on the tens rod." },
+            { text: "Put 7 on the ones rod, and the abacus shows 47." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Build 52 on the abacus.",
         target: 52,
         rods: 2,
-        explanation: { text: "52 is 5 tens and 2 ones, so show 5 on the tens rod and 2 on the ones rod." },
+        explanation: {
+          steps: [
+            { text: "52 is 5 tens and 2 ones." },
+            { text: "Show 5 on the tens rod using the heaven bead." },
+            { text: "Show 2 on the ones rod, and the abacus shows 52." },
+          ],
+        },
       },
     ],
     "zeros-matter": [
@@ -294,21 +439,36 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "1 ten and 0 ones. What number is this?",
         digits: [0, 1],
         choices: [10, 1, 11, 100],
-        explanation: { text: "One ten is 10 and zero ones add nothing, so the abacus shows 10." },
+        explanation: {
+          steps: [
+            { text: "One ten is worth 10." },
+            { text: "Zero ones add nothing, so the abacus shows 10." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "7 tens and 0 ones. What number is this?",
         digits: [0, 7],
         choices: [70, 7, 77, 700],
-        explanation: { text: "Seven tens are 70 and zero ones add nothing, so the abacus shows 70." },
+        explanation: {
+          steps: [
+            { text: "Seven tens are worth 70." },
+            { text: "Zero ones add nothing, so the abacus shows 70." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Build 40 on the abacus.",
         target: 40,
         rods: 2,
-        explanation: { text: "40 is 4 tens and 0 ones, so show 4 on the tens rod and leave the ones rod empty." },
+        explanation: {
+          steps: [
+            { text: "40 is 4 tens and 0 ones." },
+            { text: "Show 4 on the tens rod and leave the ones rod empty." },
+          ],
+        },
       },
     ],
     "reading-big-numbers": [
@@ -322,21 +482,38 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "2 hundreds, 3 tens, 4 ones. What number is this?",
         digits: [4, 3, 2],
         choices: [234, 432, 204, 2340],
-        explanation: { text: "2 hundreds (200), 3 tens (30), and 4 ones make 234." },
+        explanation: {
+          steps: [
+            { text: "The hundreds rod shows 2, worth 200." },
+            { text: "The tens rod shows 3 (30) and the ones rod shows 4." },
+            { text: "200 + 30 + 4 = 234." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "0 ones, 0 tens, 4 hundreds. What number is this?",
         digits: [0, 0, 4],
         choices: [400, 4, 44, 444],
-        explanation: { text: "Four hundreds are 400, and the empty tens and ones places add nothing." },
+        explanation: {
+          steps: [
+            { text: "The hundreds rod shows 4, worth 400." },
+            { text: "The tens and ones rods are empty, so the number is 400." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Build 305 on the abacus.",
         target: 305,
         rods: 3,
-        explanation: { text: "305 is 3 hundreds, 0 tens, and 5 ones, so show 3 on the hundreds rod, leave the tens rod empty, and show 5 on the ones rod." },
+        explanation: {
+          steps: [
+            { text: "305 is 3 hundreds, 0 tens, and 5 ones." },
+            { text: "Show 3 on the hundreds rod and leave the tens rod empty." },
+            { text: "Show 5 on the ones rod to finish 305." },
+          ],
+        },
       },
     ],
     "tens-and-beyond-check": [
@@ -347,21 +524,38 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "Build 57 on the abacus.",
         target: 57,
         rods: 2,
-        explanation: { text: "57 is 5 tens and 7 ones, so show 5 on the tens rod and 7 on the ones rod." },
+        explanation: {
+          steps: [
+            { text: "57 is 5 tens and 7 ones." },
+            { text: "Show 5 on the tens rod using the heaven bead." },
+            { text: "Show 7 on the ones rod, and the abacus shows 57." },
+          ],
+        },
       },
       {
         type: "read",
         prompt: "4 hundreds, 0 tens, 5 ones. What number is this?",
         digits: [5, 0, 4],
         choices: [405, 54, 450, 45],
-        explanation: { text: "4 hundreds (400), 0 tens, and 5 ones make 405." },
+        explanation: {
+          steps: [
+            { text: "The hundreds rod shows 4, worth 400." },
+            { text: "The tens rod is empty and the ones rod shows 5, so the number is 405." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Build 120 on the abacus.",
         target: 120,
         rods: 3,
-        explanation: { text: "120 is 1 hundred, 2 tens, and 0 ones, so show 1 on the hundreds rod, 2 on the tens rod, and leave the ones rod empty." },
+        explanation: {
+          steps: [
+            { text: "120 is 1 hundred, 2 tens, and 0 ones." },
+            { text: "Show 1 on the hundreds rod and 2 on the tens rod." },
+            { text: "Leave the ones rod empty to finish 120." },
+          ],
+        },
       },
     ],
   },
@@ -382,14 +576,26 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "12 + 13. Slide the beads to show the sum.",
         target: 25,
         rods: 2,
-        explanation: { text: "12 + 13 is 25, so show 2 tens and 5 ones; the ones place needs the heaven bead plus one earth bead." },
+        explanation: {
+          steps: [
+            { text: "12 + 13 = 25, so show 2 tens and 5 ones." },
+            { text: "Set 2 on the tens rod using two earth beads." },
+            { text: "Set 5 on the ones rod using the heaven bead." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "31 + 22. Show the sum on the abacus.",
         target: 53,
         rods: 2,
-        explanation: { text: "31 + 22 is 53, so show 5 tens and 3 ones on the rods." },
+        explanation: {
+          steps: [
+            { text: "31 + 22 = 53, so show 5 tens and 3 ones." },
+            { text: "Set 5 on the tens rod using the heaven bead." },
+            { text: "Set 3 on the ones rod using three earth beads." },
+          ],
+        },
       },
     ],
     "friends-of-five": [
@@ -407,14 +613,24 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "2 + 4 = 6. Slide the beads to show the sum.",
         target: 6,
         rods: 1,
-        explanation: { text: "2 + 4 = 6, and 6 is the heaven bead (5) plus one earth bead (1)." },
+        explanation: {
+          steps: [
+            { text: "2 + 4 = 6, so the rod must show 6." },
+            { text: "Show 6 as the heaven bead (5) plus one earth bead (1)." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "4 + 4 + 4 = 12. Show the total on the abacus.",
         target: 12,
         rods: 2,
-        explanation: { text: "Four added three times is 12, so show 1 ten and 2 ones on the rods." },
+        explanation: {
+          steps: [
+            { text: "4 + 4 + 4 = 12, so show 1 ten and 2 ones." },
+            { text: "Set 1 on the tens rod and 2 on the ones rod." },
+          ],
+        },
       },
     ],
     carrying: [
@@ -432,14 +648,26 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "8 + 5. Show the sum on the abacus.",
         target: 13,
         rods: 2,
-        explanation: { text: "8 + 5 is 13, so show 1 ten and 3 ones; the ones rod fills past 9 so you carry 1 to the tens rod." },
+        explanation: {
+          steps: [
+            { text: "8 + 5 = 13, so show 1 ten and 3 ones." },
+            { text: "The ones rod fills past 9, so you carry 1 to the tens rod." },
+            { text: "Set the carried 1 on the tens rod and 3 on the ones rod." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "9 + 9 = 18. Show the sum on the abacus.",
         target: 18,
         rods: 2,
-        explanation: { text: "9 + 9 is 18, so show 1 ten and 8 ones; the extra ten is the carry from the full ones rod." },
+        explanation: {
+          steps: [
+            { text: "9 + 9 = 18, so show 1 ten and 8 ones." },
+            { text: "The ones rod is full, so the extra 10 carries over." },
+            { text: "Set the carried 1 on the tens rod and 8 on the ones rod." },
+          ],
+        },
       },
     ],
     "add-two-digit": [
@@ -453,14 +681,26 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "27 + 15 = 42. Show the sum on the abacus.",
         target: 42,
         rods: 2,
-        explanation: { text: "27 + 15 is 42, so show 4 tens and 2 ones after carrying from the ones place." },
+        explanation: {
+          steps: [
+            { text: "27 + 15 = 42, so show 4 tens and 2 ones." },
+            { text: "The ones add up past 9, so carry 1 to the tens place." },
+            { text: "Set 4 on the tens rod and 2 on the ones rod." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "58 + 27. Show the sum on the abacus.",
         target: 85,
         rods: 2,
-        explanation: { text: "58 + 27 is 85, so show 8 tens and 5 ones after carrying." },
+        explanation: {
+          steps: [
+            { text: "58 + 27 = 85, so show 8 tens and 5 ones." },
+            { text: "The ones add past 9, so carry 1 to the tens place." },
+            { text: "Set 8 on the tens rod and 5 on the ones rod." },
+          ],
+        },
       },
     ],
     "adding-on-the-beads-check": [
@@ -471,21 +711,38 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "3 + 8. Show the sum on the abacus.",
         target: 11,
         rods: 2,
-        explanation: { text: "3 + 8 is 11, so show 1 ten and 1 one; the ones rod fills past 9 and the extra ten carries." },
+        explanation: {
+          steps: [
+            { text: "3 + 8 = 11, so show 1 ten and 1 one." },
+            { text: "The ones rod fills past 9, so the extra ten carries." },
+            { text: "Set the carried 1 on the tens rod and 1 on the ones rod." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "4 + 5 + 6. Show the total on the abacus.",
         target: 15,
         rods: 2,
-        explanation: { text: "4 + 5 + 6 is 15, so show 1 ten and 5 ones." },
+        explanation: {
+          steps: [
+            { text: "4 + 5 + 6 = 15, so show 1 ten and 5 ones." },
+            { text: "Set 1 on the tens rod and 5 on the ones rod." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "18 + 8. Show the sum on the abacus.",
         target: 26,
         rods: 2,
-        explanation: { text: "18 + 8 is 26, so show 2 tens and 6 ones; the ones rod fills past 9 and the extra ten carries." },
+        explanation: {
+          steps: [
+            { text: "18 + 8 = 26, so show 2 tens and 6 ones." },
+            { text: "The ones rod fills past 9, so the extra ten carries." },
+            { text: "Set 2 on the tens rod and 6 on the ones rod." },
+          ],
+        },
       },
     ],
   },
@@ -502,14 +759,25 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "9 − 3. Slide the beads to show the difference.",
         target: 6,
         rods: 1,
-        explanation: { text: "9 take away 3 is 6, so slide three earth beads away from the beam and the heaven bead remains." },
+        explanation: {
+          steps: [
+            { text: "9 take away 3 is 6." },
+            { text: "Slide three earth beads away from the beam to remove the 3." },
+            { text: "The heaven bead plus one remaining earth bead shows 6." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "7 − 2. Show the difference on the rod.",
         target: 5,
         rods: 1,
-        explanation: { text: "7 take away 2 is 5, so slide two earth beads away and the heaven bead alone shows 5." },
+        explanation: {
+          steps: [
+            { text: "7 take away 2 is 5." },
+            { text: "Slide two earth beads away, leaving the heaven bead alone to show 5." },
+          ],
+        },
       },
     ],
     borrowing: [
@@ -527,14 +795,26 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "13 − 5. Show the difference on the abacus.",
         target: 8,
         rods: 2,
-        explanation: { text: "13 take away 5 is 8; you borrow 1 ten from the tens rod and the ones rod can then lose 5." },
+        explanation: {
+          steps: [
+            { text: "13 take away 5: the ones rod only has 3, not enough for 5." },
+            { text: "Borrow 1 ten from the tens rod, leaving the tens rod empty." },
+            { text: "Now the ones rod has 13, and 13 - 5 = 8." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "12 − 7. Show the difference on the abacus.",
         target: 5,
         rods: 2,
-        explanation: { text: "12 take away 7 is 5; borrow 1 ten so the ones rod has 12, then 12 − 7 leaves 5." },
+        explanation: {
+          steps: [
+            { text: "12 take away 7: the ones rod only has 2, not enough for 7." },
+            { text: "Borrow 1 ten, so the ones rod has 12." },
+            { text: "12 - 7 = 5, so the abacus shows 5." },
+          ],
+        },
       },
     ],
     "subtract-two-digit": [
@@ -548,14 +828,26 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "52 − 28. Show the difference on the abacus.",
         target: 24,
         rods: 2,
-        explanation: { text: "52 take away 28 is 24; borrow from the tens rod and subtract place by place." },
+        explanation: {
+          steps: [
+            { text: "52 take away 28: the ones can't lose 8, so borrow from the tens rod." },
+            { text: "Borrow 1 ten, turning the ones into 12 and the tens into 4." },
+            { text: "12 - 8 = 4 ones and 4 - 2 = 2 tens, giving 24." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "81 − 36. Show the difference on the abacus.",
         target: 45,
         rods: 2,
-        explanation: { text: "81 take away 36 is 45; borrow from the tens rod and subtract place by place." },
+        explanation: {
+          steps: [
+            { text: "81 take away 36: the ones can't lose 6, so borrow from the tens rod." },
+            { text: "Borrow 1 ten, turning the ones into 11 and the tens into 7." },
+            { text: "11 - 6 = 5 ones and 7 - 3 = 4 tens, giving 45." },
+          ],
+        },
       },
     ],
     "subtracting-on-the-beads-check": [
@@ -566,14 +858,26 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "34 − 15. Show the difference on the abacus.",
         target: 19,
         rods: 2,
-        explanation: { text: "34 take away 15 is 19; borrow 1 ten from the tens rod and subtract place by place." },
+        explanation: {
+          steps: [
+            { text: "34 take away 15: the ones can't lose 5, so borrow from the tens rod." },
+            { text: "Borrow 1 ten, turning the ones into 14 and the tens into 2." },
+            { text: "14 - 5 = 9 ones and 2 - 1 = 1 ten, giving 19." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "40 − 6. Show the difference on the abacus.",
         target: 34,
         rods: 2,
-        explanation: { text: "40 take away 6 is 34; borrow 1 ten so the ones rod has 10, then 10 − 6 leaves 4." },
+        explanation: {
+          steps: [
+            { text: "40 take away 6: the ones rod is empty, so borrow from the tens rod." },
+            { text: "Borrow 1 ten, turning the ones into 10 and the tens into 3." },
+            { text: "10 - 6 = 4 ones, and the 3 tens remain, giving 34." },
+          ],
+        },
       },
     ],
   },
@@ -594,7 +898,12 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "Add 23 + 41 in your mind, then show your answer on the abacus.",
         target: 64,
         rods: 2,
-        explanation: { text: "23 + 41 is 64, so show 6 tens and 4 ones on the rods." },
+        explanation: {
+          steps: [
+            { text: "23 + 41 = 64, so show 6 tens and 4 ones." },
+            { text: "Set 6 on the tens rod and 4 on the ones rod." },
+          ],
+        },
       },
     ],
     "speed-and-focus": [
@@ -612,14 +921,26 @@ export const understandingAbacusContent: CourseContentMap = {
         prompt: "Warm up: what number is on the board?",
         digits: [5, 7, 3],
         choices: [375, 573, 357, 735],
-        explanation: { text: "Read the rods left to right: 3 hundreds, 7 tens, and 5 ones make 375." },
+        explanation: {
+          steps: [
+            { text: "The hundreds rod has 3 beads up, worth 300." },
+            { text: "The tens rod has 7 beads up, worth 70." },
+            { text: "The ones rod has 5 beads up, so 300 + 70 + 5 = 375." },
+          ],
+        },
       },
       {
         type: "build",
         prompt: "Final drill: build 246 on the abacus.",
         target: 246,
         rods: 3,
-        explanation: { text: "246 is 2 hundreds, 4 tens, and 6 ones, so show each digit on its own rod left to right." },
+        explanation: {
+          steps: [
+            { text: "246 is 2 hundreds, 4 tens, and 6 ones." },
+            { text: "Show 2 on the hundreds rod and 4 on the tens rod." },
+            { text: "Show 6 on the ones rod to finish 246." },
+          ],
+        },
       },
     ],
   },

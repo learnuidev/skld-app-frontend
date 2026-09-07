@@ -132,6 +132,22 @@ function ExplanationDialog({
   explanation: LessonExplanation;
   onClose: () => void;
 }) {
+  const steps = useMemo(
+    () =>
+      explanation.steps && explanation.steps.length > 0
+        ? explanation.steps
+        : [{ text: explanation.text ?? "", visual: explanation.visual }],
+    [explanation],
+  );
+  const total = steps.length;
+  const [idx, setIdx] = useState(0);
+  const current = Math.min(idx, total - 1);
+  const step = steps[current];
+  const visual = step?.visual;
+
+  const goPrev = () => setIdx((i) => Math.max(0, i - 1));
+  const goNext = () => setIdx((i) => Math.min(total - 1, i + 1));
+
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
       <DialogContent
@@ -150,29 +166,70 @@ function ExplanationDialog({
           </button>
         </div>
 
-        <div className="mt-6 flex justify-center">
-          {explanation.visual ? (
-            explanation.visual.kind === "abacus" ? (
-              <Abacus
-                digits={explanation.visual.digits}
-                readOnly
-                scale={0.8}
-                label="Explanation"
-              />
-            ) : explanation.visual.kind === "image" ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={explanation.visual.src}
-                alt={explanation.visual.alt ?? "Explanation"}
-                className="max-h-64 rounded-2xl"
-              />
-            ) : null
-          ) : null}
+        {visual?.kind === "abacus" ? (
+          <div className="mt-6 flex justify-center">
+            <Abacus
+              digits={visual.digits}
+              readOnly
+              scale={0.8}
+              label="Explanation"
+            />
+          </div>
+        ) : visual?.kind === "image" ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={visual.src}
+            alt={visual.alt ?? "Explanation"}
+            className="mx-auto mt-6 max-h-64 rounded-2xl"
+          />
+        ) : null}
+
+        <div className="relative mt-6 min-h-20">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={current}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="text-base leading-relaxed text-foreground/85"
+            >
+              {step?.text}
+            </motion.p>
+          </AnimatePresence>
         </div>
 
-        <DialogDescription className="mt-6 text-base leading-relaxed text-foreground/85">
-          {explanation.text}
-        </DialogDescription>
+        {total > 1 ? (
+          <div className="mt-6 flex items-center justify-between gap-3">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={goPrev}
+              disabled={current === 0}
+            >
+              Back
+            </Button>
+            <div className="flex items-center gap-1.5">
+              {steps.map((_, i) => (
+                <span
+                  key={i}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === current ? "w-5 bg-foreground" : "w-1.5 bg-muted-foreground/30"
+                  }`}
+                />
+              ))}
+            </div>
+            {current < total - 1 ? (
+              <Button variant="outline" size="sm" onClick={goNext}>
+                Next
+              </Button>
+            ) : (
+              <Button size="sm" onClick={onClose}>
+                Done
+              </Button>
+            )}
+          </div>
+        ) : null}
       </DialogContent>
     </Dialog>
   );
