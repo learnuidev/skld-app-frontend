@@ -71,7 +71,7 @@ function BlockContent({
       if (block.demo) {
         return (
           <div className="grid gap-6 sm:grid-cols-2 sm:items-center sm:gap-8 lg:gap-16">
-            <p className="mx-auto max-w-3xl text-center text-lg leading-relaxed text-foreground/85 sm:mx-0 sm:max-w-none sm:text-left">
+            <p className="mx-auto max-w-4xl text-center text-lg leading-relaxed text-foreground/85 sm:mx-0 sm:max-w-none sm:text-left">
               {block.text}
             </p>
             <DemoPanel
@@ -208,7 +208,7 @@ function ExplanationDialog({
               captions={visual.captions}
               label={visual.label ?? "Example"}
               scale={0.75}
-              controls={false}
+              controls={true}
               showCaption={false}
             />
           </div>
@@ -528,7 +528,7 @@ export default function LessonPlayer({
           </div>
           <div className="h-2 w-full max-w-xl overflow-hidden rounded-full bg-muted">
             <div
-              className="h-full rounded-full bg-black transition-all duration-500"
+              className="h-full rounded-full bg-emerald-500 transition-all duration-500"
               style={{ width: `${progress}%` }}
             />
           </div>
@@ -560,7 +560,7 @@ export default function LessonPlayer({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="w-full max-w-2xl"
+            className="w-full max-w-3xl"
           >
             <BlockContent
               block={block}

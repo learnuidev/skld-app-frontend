@@ -142,7 +142,12 @@ export function DemoPanel({
   };
 
   return (
-    <div className={cn("flex flex-col items-center gap-3", className)}>
+    <div
+      className={cn(
+        "flex flex-col items-center gap-3 bg-gray-50 p-4 rounded-2xl w-full",
+        className,
+      )}
+    >
       <DemoScene
         frames={safeFrames}
         captions={captions}
@@ -168,7 +173,7 @@ export function DemoPanel({
             ))}
           </div>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1.5 mt-4">
             <button
               type="button"
               onClick={() => stepTo(-1)}
@@ -199,14 +204,14 @@ export function DemoPanel({
             >
               <SkipForward className="size-4" />
             </button>
-            <button
+            {/* <button
               type="button"
               onClick={restart}
               aria-label="Replay"
               className={CONTROL_BUTTON}
             >
               <RotateCcw className="size-4" />
-            </button>
+            </button> */}
           </div>
         </div>
       ) : null}
