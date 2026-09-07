@@ -18,8 +18,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Peony | Your personal tutor for math and coding",
-  description: "Your personal tutor for math and coding",
+  title: "Peony | Learn math, abacus, coding & more",
+  description:
+    "Peony is your personal tutor for math, the abacus, coding, and science — bite-size interactive courses that make you think.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

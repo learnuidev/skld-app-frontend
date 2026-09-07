@@ -1,4 +1,4 @@
-const mockCourse = {
+export const mockCourse = {
   __typename: "Course",
   id: "ZokqoDVlDocAriapm",
   description:
