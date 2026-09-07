@@ -15,7 +15,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import {
   AbacusExplorer,
   BuildTask,
@@ -190,7 +194,7 @@ function TaskExplainer({
       variant="outline"
       size="lg"
       onClick={onShow}
-      className="min-w-24 px-8 py-4 text-base"
+      className="min-w-24 px-8 py-4 text-base h-12"
     >
       Why?
     </Button>
@@ -377,18 +381,12 @@ export default function LessonPlayer({
       <footer className="px-4 pb-10">
         <div className="mx-auto flex w-full max-w-2xl">
           <div className="relative flex w-full items-center justify-center gap-3">
-            {isTask && attempted && taskBlock?.explanation ? (
-              <TaskExplainer
-                task={taskBlock}
-                onShow={() => setExplanation(taskBlock.explanation!)}
-              />
-            ) : null}
             {isTask && attempted && !solved ? (
               <Button
                 variant="ghost"
                 size="lg"
                 onClick={retryTask}
-                className="min-w-24 px-6 py-4 text-base"
+                className="min-w-24 px-6 py-4 text-base h-12"
               >
                 Try again
               </Button>
@@ -397,7 +395,7 @@ export default function LessonPlayer({
               size="lg"
               disabled={isTask && !attempted && !hasSel}
               onClick={handleButton}
-              className="min-w-64 px-12 py-4 text-base shadow-sm"
+              className="min-w-64 px-12 py-4 text-base shadow-sm h-12"
             >
               {isTask && !attempted
                 ? "Check"
@@ -407,6 +405,13 @@ export default function LessonPlayer({
                     : "Finish course"
                   : "Continue"}
             </Button>
+
+            {isTask && attempted && taskBlock?.explanation ? (
+              <TaskExplainer
+                task={taskBlock}
+                onShow={() => setExplanation(taskBlock.explanation!)}
+              />
+            ) : null}
           </div>
         </div>
       </footer>
