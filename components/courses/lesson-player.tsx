@@ -131,46 +131,43 @@ function ExplanationDialog({
     <Dialog open onOpenChange={(open) => !open && onClose()}>
       <DialogContent
         showCloseButton={false}
-        className="max-w-md rounded-3xl p-0 text-center"
+        className="max-w-md rounded-3xl bg-card p-6 gap-0 sm:p-7"
       >
-        <DialogHeader className="gap-2 px-8 pt-8">
-          <DialogTitle className="text-center text-2xl font-bold">
-            Explanation
-          </DialogTitle>
-        </DialogHeader>
+        <div className="flex items-start justify-between gap-4">
+          <DialogTitle className="text-xl font-bold">Explanation</DialogTitle>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close explanation"
+            className="-mr-1 -mt-1 flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <X className="size-5" />
+          </button>
+        </div>
 
-        {explanation.visual ? (
-          explanation.visual.kind === "abacus" ? (
-            <div className="flex justify-center py-2">
+        <div className="mt-6 flex justify-center">
+          {explanation.visual ? (
+            explanation.visual.kind === "abacus" ? (
               <Abacus
                 digits={explanation.visual.digits}
                 readOnly
                 scale={0.8}
                 label="Explanation"
               />
-            </div>
-          ) : explanation.visual.kind === "image" ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={explanation.visual.src}
-              alt={explanation.visual.alt ?? "Explanation"}
-              className="mx-auto max-h-64 rounded-2xl"
-            />
-          ) : null
-        ) : null}
+            ) : explanation.visual.kind === "image" ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={explanation.visual.src}
+                alt={explanation.visual.alt ?? "Explanation"}
+                className="max-h-64 rounded-2xl"
+              />
+            ) : null
+          ) : null}
+        </div>
 
-        <DialogDescription className="px-8 text-center text-base leading-relaxed text-foreground/85">
+        <DialogDescription className="mt-6 text-base leading-relaxed text-foreground/85">
           {explanation.text}
         </DialogDescription>
-
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close explanation"
-          className="absolute right-4 top-4 flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-        >
-          <X className="size-4" />
-        </button>
       </DialogContent>
     </Dialog>
   );
