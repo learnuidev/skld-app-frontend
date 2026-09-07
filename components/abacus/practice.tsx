@@ -49,7 +49,7 @@ export function AbacusExplorer({
       />
       <div className="w-full max-w-60 sm:pt-2">
         {prompt ? <p className="mb-3 text-sm text-muted-foreground">{prompt}</p> : null}
-        <div className="flex items-end gap-2 rounded-2xl border bg-white p-4 shadow-sm">
+        <div className="flex items-end gap-2 rounded-2xl border bg-card p-4 shadow-sm">
           <span className="text-4xl font-bold tabular-nums">{placeLabel(value)}</span>
         </div>
         <p className="mt-3 text-xs text-muted-foreground">
@@ -168,8 +168,8 @@ export const ReadTask = forwardRef<
                   : isWrong
                     ? "border-red-200 bg-red-50 text-red-400 line-through"
                     : picked === option
-                      ? "border-foreground bg-white"
-                      : "border-border bg-white hover:bg-muted",
+                      ? "border-foreground bg-card"
+                      : "border-border bg-card hover:bg-muted",
               )}
             >
               {placeLabel(option)}
@@ -233,8 +233,8 @@ export const QuizTask = forwardRef<
                   : isWrong
                     ? "border-red-200 bg-red-50 text-red-400 line-through"
                     : picked === option
-                      ? "border-foreground bg-white"
-                      : "border-border bg-white hover:bg-muted",
+                      ? "border-foreground bg-card"
+                      : "border-border bg-card hover:bg-muted",
               )}
             >
               {placeLabel(option)}

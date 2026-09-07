@@ -62,7 +62,7 @@ export default function LearningPath({
     : `/courses/${courses[0]?.slug ?? ""}`;
 
   return (
-    <section className="rounded-3xl border border-border bg-white p-5 shadow-sm sm:p-7">
+    <section className="rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-7">
       {/* Path header */}
       <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
         <div
@@ -96,7 +96,7 @@ export default function LearningPath({
         </div>
 
         <div className="flex shrink-0 flex-wrap items-center gap-2 sm:flex-col sm:items-end">
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
             {started ? (
               <>
                 <PlayCircle className="size-3.5 text-emerald-600" />
@@ -116,7 +116,7 @@ export default function LearningPath({
       </div>
 
       {/* Course modules */}
-      <div className="mt-6 overflow-x-auto rounded-2xl bg-gray-50 p-4">
+      <div className="mt-6 overflow-x-auto rounded-2xl bg-muted p-4">
         <div className="flex items-start">
           {courses.map((course, index) => (
             <div key={course.slug} className="flex shrink-0 items-start">

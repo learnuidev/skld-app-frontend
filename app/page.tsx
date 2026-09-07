@@ -35,7 +35,7 @@ function findTile(subject: string): CourseSummary | undefined {
 function Tile({ course }: { course: CourseSummary }) {
   const available = course.status === "available";
   const inner = (
-    <div className="flex h-full flex-col gap-2 rounded-3xl border border-border bg-white p-6 shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:shadow-md">
+    <div className="flex h-full flex-col gap-2 rounded-3xl border border-border bg-card p-6 shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:shadow-md">
       <div className="flex items-center justify-between gap-2">
         <span
           className={`inline-flex w-fit items-center gap-1.5 rounded-full bg-gradient-to-br px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-gray-800 ${course.heroAccent}`}
@@ -65,14 +65,14 @@ export default function Home() {
   const spotlight = courseCatalog.find((course) => course.status === "available");
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-muted">
       <SiteNav className="lg:px-10" />
 
       <main>
         {/* Hero */}
         <section className="mx-auto grid max-w-6xl gap-12 px-4 pt-14 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16 lg:pt-20">
           <div>
-            <p className="inline-block rounded-full bg-white px-4 py-1.5 text-sm font-bold text-amber-700 shadow-sm">
+            <p className="inline-block rounded-full bg-card px-4 py-1.5 text-sm font-bold text-amber-700 shadow-sm">
               Math · Abacus · Coding · Science
             </p>
             <h1 className="mt-6 font-serif text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
@@ -93,7 +93,7 @@ export default function Home() {
               <Button
                 size="lg"
                 variant="outline"
-                className="px-8 py-6 text-lg text-gray-600 shadow-sm"
+                className="px-8 py-6 text-lg text-muted-foreground shadow-sm"
                 onClick={() => router.push("/welcome?persona=learner")}
               >
                 I&apos;m a learner
@@ -105,7 +105,7 @@ export default function Home() {
           </div>
 
           <div className="flex justify-center lg:justify-end">
-            <div className="w-full max-w-lg rounded-[2.5rem] bg-white p-6 shadow-2xl sm:p-8">
+            <div className="w-full max-w-lg rounded-[2.5rem] bg-card p-6 shadow-2xl sm:p-8">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="inline-block rounded-full bg-black px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-white">
@@ -164,7 +164,7 @@ export default function Home() {
                 What will you learn next?
               </h2>
             </div>
-            <Button asChild variant="outline" className="text-gray-700">
+            <Button asChild variant="outline" className="text-muted-foreground">
               <Link href="/courses">
                 See all courses
                 <ArrowRight data-icon="inline-end" />
@@ -195,7 +195,7 @@ export default function Home() {
               <Button
                 size="lg"
                 variant="outline"
-                className="bg-white/60 px-8 py-6 text-lg text-gray-700 backdrop-blur"
+                className="bg-white/60 px-8 py-6 text-lg text-muted-foreground backdrop-blur"
                 onClick={() => router.push("/welcome?persona=parent_teacher")}
               >
                 I&apos;m a parent or teacher

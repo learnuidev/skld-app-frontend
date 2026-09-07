@@ -172,7 +172,7 @@ export default function LessonPlayer({
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <div className="flex min-h-screen flex-col bg-card">
       {/* Top bar */}
       <header className="flex items-center gap-3 px-4 py-4 sm:px-8">
         <button
@@ -184,7 +184,7 @@ export default function LessonPlayer({
           <X className="size-5" />
         </button>
         <div className="flex flex-1 justify-center">
-          <div className="h-2 w-full max-w-xl overflow-hidden rounded-full bg-gray-100">
+          <div className="h-2 w-full max-w-xl overflow-hidden rounded-full bg-muted">
             <div
               className="h-full rounded-full bg-emerald-500 transition-all duration-500"
               style={{ width: `${progress}%` }}

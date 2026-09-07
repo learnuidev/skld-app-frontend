@@ -41,7 +41,7 @@ export function Segmented({
   onChange: (next: string) => void;
 }) {
   return (
-    <div className="inline-flex rounded-full bg-gray-100 p-1">
+    <div className="inline-flex rounded-full bg-muted p-1">
       {options.map((option) => (
         <button
           key={option}
@@ -50,7 +50,7 @@ export function Segmented({
           className={cn(
             "rounded-full px-4 py-1.5 text-sm font-semibold transition-colors",
             value === option
-              ? "bg-white text-foreground shadow-sm"
+              ? "bg-white text-foreground shadow-sm dark:bg-white/15"
               : "text-muted-foreground hover:text-foreground",
           )}
         >
@@ -63,7 +63,7 @@ export function Segmented({
 
 export function RowsList({ children }: { children: ReactNode }) {
   return (
-    <div className="divide-y divide-border rounded-2xl border border-border bg-white">
+    <div className="divide-y divide-border rounded-2xl border border-border bg-card">
       {children}
     </div>
   );
@@ -105,7 +105,7 @@ export function TextInput({
       onChange={onChange ? (e) => onChange(e.target.value) : undefined}
       readOnly={!onChange}
       className={cn(
-        "w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-foreground",
+        "w-full rounded-xl border border-border bg-card px-4 py-3 text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-foreground",
         className,
       )}
     />
@@ -125,7 +125,7 @@ export function InfoBox({
     <div
       className={cn(
         "flex items-start gap-3 rounded-2xl border p-4 text-sm leading-relaxed",
-        tone === "blue" ? "border-blue-200 bg-blue-50 text-blue-900" : "border-border bg-gray-50 text-muted-foreground",
+        tone === "blue" ? "border-blue-200 bg-blue-50 text-blue-900" : "border-border bg-muted text-muted-foreground",
       )}
     >
       {icon ? <span className="mt-0.5 shrink-0 text-current">{icon}</span> : null}

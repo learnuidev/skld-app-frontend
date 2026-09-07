@@ -111,7 +111,7 @@ export default function CourseExplorer({ course }: { course: Course }) {
       </div>
 
       {/* Progress */}
-      <div className="mt-8 rounded-3xl border border-border bg-white p-6 shadow-sm">
+      <div className="mt-8 rounded-3xl border border-border bg-card p-6 shadow-sm">
         <div className="flex items-center justify-between gap-4">
           <div>
             <h2 className="text-lg font-bold">Your progress</h2>
@@ -157,7 +157,7 @@ export default function CourseExplorer({ course }: { course: Course }) {
           return (
             <section
               key={level.slug}
-              className="overflow-hidden rounded-3xl border border-border bg-white shadow-sm"
+              className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm"
             >
               <div className="flex flex-wrap items-start justify-between gap-4 border-b border-border/70 bg-gradient-to-r from-gray-50 to-transparent px-6 py-5 sm:px-8">
                 <div>

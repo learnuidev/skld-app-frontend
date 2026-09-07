@@ -21,7 +21,7 @@ const TABS: Array<{ id: Tab; label: string }> = [
 
 function PremiumPanel() {
   return (
-    <div className="rounded-3xl border border-border bg-white p-8 shadow-sm">
+    <div className="rounded-3xl border border-border bg-card p-8 shadow-sm">
       <div className="flex size-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-300 to-yellow-200">
         <Crown className="size-6 text-amber-900" />
       </div>
@@ -49,13 +49,13 @@ export default function SettingsPage({ initialTab }: { initialTab: Tab }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-muted">
       <SiteNav className="lg:px-10" />
       <main className="mx-auto max-w-6xl px-4 pb-24 pt-10 sm:px-6">
         {user ? (
           <div className="grid gap-8 lg:grid-cols-[220px_1fr]">
             {/* Sidebar */}
-            <nav className="h-fit rounded-2xl bg-white p-2 shadow-sm">
+            <nav className="h-fit rounded-2xl bg-card p-2 shadow-sm">
               {TABS.map((item) => (
                 <button
                   key={item.id}
@@ -63,7 +63,7 @@ export default function SettingsPage({ initialTab }: { initialTab: Tab }) {
                   onClick={() => select(item.id)}
                   className={cn(
                     "block w-full rounded-xl px-4 py-2.5 text-left text-sm font-semibold transition-colors",
-                    tab === item.id ? "bg-gray-100 text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                    tab === item.id ? "bg-muted text-foreground" : "text-muted-foreground hover:bg-muted hover:text-foreground",
                   )}
                 >
                   {item.label}
@@ -77,11 +77,11 @@ export default function SettingsPage({ initialTab }: { initialTab: Tab }) {
             </div>
           </div>
         ) : loading ? (
-          <div className="mx-auto max-w-md rounded-3xl border border-border bg-white p-8 text-center shadow-sm">
+          <div className="mx-auto max-w-md rounded-3xl border border-border bg-card p-8 text-center shadow-sm">
             <p className="text-sm font-semibold text-muted-foreground">Loading…</p>
           </div>
         ) : (
-          <div className="mx-auto max-w-md rounded-3xl border border-border bg-white p-8 text-center shadow-sm">
+          <div className="mx-auto max-w-md rounded-3xl border border-border bg-card p-8 text-center shadow-sm">
             <h1 className="text-xl font-bold">Log in to manage settings</h1>
             <p className="mt-2 text-sm text-muted-foreground">
               Click <span className="font-semibold">Login</span> in the header to get started.

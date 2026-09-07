@@ -81,7 +81,7 @@ export function SiteNav({ className }: { className?: string }) {
   };
 
   return (
-    <header className={cn("sticky top-0 z-40 border-b border-border/60 bg-white/90 backdrop-blur", className)}>
+    <header className={cn("sticky top-0 z-40 border-b border-border/60 bg-background/90 backdrop-blur", className)}>
       <nav className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-4 sm:px-6">
         <Link href="/" className="shrink-0 text-2xl font-bold tracking-tight">
           peony
@@ -121,7 +121,7 @@ export function SiteNav({ className }: { className?: string }) {
                   onClick={() => setMenuOpen((o) => !o)}
                   aria-haspopup="menu"
                   aria-expanded={menuOpen}
-                  className="flex h-10 items-center gap-1 rounded-full border border-border bg-white pl-1.5 pr-2.5 shadow-sm transition-colors hover:bg-muted"
+                  className="flex h-10 items-center gap-1 rounded-full border border-border bg-card pl-1.5 pr-2.5 shadow-sm transition-colors hover:bg-muted"
                 >
                   <span className="flex size-7 items-center justify-center rounded-full bg-black text-white">
                     <User className="size-3.5" />
@@ -132,7 +132,7 @@ export function SiteNav({ className }: { className?: string }) {
                 {menuOpen ? (
                   <>
                     <div className="fixed inset-0 z-30" onClick={() => setMenuOpen(false)} />
-                    <div className="absolute right-0 z-40 mt-2 w-60 rounded-2xl border border-border bg-white p-2 shadow-xl">
+                    <div className="absolute right-0 z-40 mt-2 w-60 rounded-2xl border border-border bg-card p-2 shadow-xl">
                       <div className="px-3 py-2">
                         <p className="text-sm font-bold">{user.name}</p>
                         {user.email ? (

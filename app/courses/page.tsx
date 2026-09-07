@@ -8,7 +8,7 @@ import type { Course, CourseSummary } from "@/modules/course/types";
 
 function ComingSoonCard({ course }: { course: CourseSummary }) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-sm">
+    <div className="flex flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
       <div
         className={`relative flex h-28 items-center justify-center bg-gradient-to-br ${course.heroAccent}`}
       >
@@ -18,7 +18,7 @@ function ComingSoonCard({ course }: { course: CourseSummary }) {
         <span className="absolute left-4 top-3 rounded-full bg-black/60 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-white backdrop-blur">
           {course.subject}
         </span>
-        <span className="absolute right-4 top-3 inline-flex items-center gap-1 rounded-full bg-white/80 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-gray-700 backdrop-blur">
+        <span className="absolute right-4 top-3 inline-flex items-center gap-1 rounded-full bg-white/80 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-muted-foreground backdrop-blur">
           <Lock className="size-3" />
           Coming soon
         </span>
@@ -43,7 +43,7 @@ export default function CoursesPage() {
     .filter((course): course is Course => Boolean(course));
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-muted">
       <SiteNav className="lg:px-10" />
       <main className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
         {/* Page header */}
@@ -55,7 +55,7 @@ export default function CoursesPage() {
               lessons that make you think.
             </p>
           </div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-white py-1.5 pl-4 pr-1.5 shadow-sm">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card py-1.5 pl-4 pr-1.5 shadow-sm">
             <Search className="size-4 text-muted-foreground" />
             <input
               type="text"

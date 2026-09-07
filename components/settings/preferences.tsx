@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTheme } from "@/components/theme-provider";
 import {
   RowsList,
   SectionTitle,
@@ -13,7 +14,6 @@ import {
 const PREFS_KEY = "peony.preferences";
 
 interface Prefs {
-  colorMode: string;
   reduceMotion: string;
   narration: boolean;
   soundEffects: boolean;
@@ -24,7 +24,6 @@ interface Prefs {
 }
 
 const DEFAULTS: Prefs = {
-  colorMode: "Light",
   reduceMotion: "Auto",
   narration: false,
   soundEffects: false,
@@ -53,6 +52,7 @@ function save(prefs: Prefs) {
 }
 
 export default function Preferences() {
+  const { theme, setTheme } = useTheme();
   const [prefs, setPrefs] = useState<Prefs>(DEFAULTS);
 
   useEffect(() => {
@@ -67,6 +67,8 @@ export default function Preferences() {
       return next;
     });
 
+  const colorMode = theme === "dark" ? "Dark" : theme === "light" ? "Light" : "Auto";
+
   return (
     <div>
       <SectionTitle>Appearance</SectionTitle>
@@ -75,8 +77,10 @@ export default function Preferences() {
           <SettingRow label="Choose your preferred color mode">
             <Segmented
               options={["Auto", "Light", "Dark"]}
-              value={prefs.colorMode}
-              onChange={(colorMode) => set({ colorMode })}
+              value={colorMode}
+              onChange={(mode) =>
+                setTheme(mode === "Dark" ? "dark" : mode === "Light" ? "light" : "system")
+              }
             />
           </SettingRow>
           <SettingRow label="Reduce motion">
