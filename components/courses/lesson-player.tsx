@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
+  RefreshCw,
   RotateCcw,
   Volume2,
   X,
@@ -287,7 +288,6 @@ export default function LessonPlayer({
     currentGlobal >= 0 && currentGlobal < nodes.length - 1
       ? nodes[currentGlobal + 1]
       : null;
-  const prev = currentGlobal > 0 ? nodes[currentGlobal - 1] : null;
   const progressKey = nodes[currentGlobal]
     ? nodeKey(nodes[currentGlobal].level, nodes[currentGlobal].lesson)
     : `${levelSlug}:${lessonSlug}`;
@@ -346,20 +346,77 @@ export default function LessonPlayer({
     advance();
   };
 
-  const startOver = () => {
+  const startOver = useCallback(() => {
     setCurrent(0);
     setSolved(false);
     setAttempted(false);
     setHasSel(false);
     setResetKey((k) => k + 1);
-  };
+  }, []);
 
-  const retryTask = () => {
+  const goPrevStep = useCallback(() => {
+    if (current <= 0) return;
+    setSolved(false);
+    setAttempted(false);
+    setHasSel(false);
+    setCurrent((c) => c - 1);
+  }, [current]);
+
+  const goNextStep = useCallback(() => {
+    if (current >= total - 1) return;
+    setSolved(false);
+    setAttempted(false);
+    setHasSel(false);
+    setCurrent((c) => c + 1);
+  }, [current, total]);
+
+  const retryTask = useCallback(() => {
     setSolved(false);
     setAttempted(false);
     setHasSel(false);
     setResetKey((k) => k + 1);
-  };
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (showQuit || explanation) return;
+      const el = e.target as HTMLElement | null;
+      if (
+        el &&
+        (el.tagName === "INPUT" ||
+          el.tagName === "TEXTAREA" ||
+          el.isContentEditable)
+      ) {
+        return;
+      }
+      const key = e.key.toLowerCase();
+      if (key === "p") {
+        e.preventDefault();
+        goPrevStep();
+      } else if (key === "n") {
+        e.preventDefault();
+        goNextStep();
+      } else if (key === "r") {
+        e.preventDefault();
+        retryTask();
+      } else if (key === "s") {
+        e.preventDefault();
+        startOver();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [
+    showQuit,
+    explanation,
+    current,
+    total,
+    goPrevStep,
+    goNextStep,
+    retryTask,
+    startOver,
+  ]);
 
   if (!block) {
     return null;
@@ -389,20 +446,15 @@ export default function LessonPlayer({
               <TooltipTrigger asChild>
                 <button
                   type="button"
-                  onClick={() =>
-                    prev &&
-                    router.push(
-                      lessonUrl(course, prev.level.slug, prev.lesson.slug),
-                    )
-                  }
-                  disabled={!prev}
-                  aria-label="Previous lesson"
+                  onClick={goPrevStep}
+                  disabled={current === 0}
+                  aria-label="Previous step"
                   className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <ChevronLeft className="size-4" />
                 </button>
               </TooltipTrigger>
-              <TooltipContent>Previous lesson</TooltipContent>
+              <TooltipContent>Previous step</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -421,20 +473,28 @@ export default function LessonPlayer({
               <TooltipTrigger asChild>
                 <button
                   type="button"
-                  onClick={() =>
-                    next &&
-                    completeAndGo(
-                      lessonUrl(course, next.level.slug, next.lesson.slug),
-                    )
-                  }
-                  disabled={!next}
-                  aria-label="Next lesson"
+                  onClick={retryTask}
+                  aria-label="Restart step"
+                  className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                >
+                  <RefreshCw className="size-4" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>Restart step</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={goNextStep}
+                  disabled={current === total - 1}
+                  aria-label="Next step"
                   className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   <ChevronRight className="size-4" />
                 </button>
               </TooltipTrigger>
-              <TooltipContent>Next lesson</TooltipContent>
+              <TooltipContent>Next step</TooltipContent>
             </Tooltip>
           </div>
           <div className="h-2 w-full max-w-xl overflow-hidden rounded-full bg-muted">
