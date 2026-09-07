@@ -6,6 +6,58 @@ import { Pause, Play, RotateCcw, SkipBack, SkipForward } from "lucide-react";
 import { Abacus, digitsToValue } from "./abacus";
 import { cn } from "@/lib/utils";
 
+function displayValue(digits: number[]): string {
+  return digitsToValue(digits).toLocaleString("en-US");
+}
+
+export interface DemoSceneProps {
+  /** Ordered abacus states; frames[0] is the units rod. Each frame is one step. */
+  frames: number[][];
+  /** Optional caption per frame. */
+  captions?: string[];
+  /** Which frame to render. */
+  index: number;
+  label?: string;
+  scale?: number;
+  /** Show the per-step caption (or the current value). */
+  showCaption?: boolean;
+  className?: string;
+}
+
+/**
+ * A presentational abacus snapshot for one step of a demonstration. It does not
+ * own playback state — the parent (or `AnimatedAbacus`) drives `index`.
+ */
+export function DemoScene({
+  frames,
+  captions,
+  index,
+  label = "Example",
+  scale = 0.7,
+  showCaption = true,
+  className,
+}: DemoSceneProps) {
+  const safeFrames = frames && frames.length > 0 ? frames : [[0]];
+  const current = Math.min(Math.max(index, 0), safeFrames.length - 1);
+  const digits = safeFrames[current] ?? [];
+  const caption = captions?.[current];
+
+  return (
+    <div className={cn("flex flex-col items-center gap-3", className)}>
+      <Abacus digits={digits} readOnly scale={scale} label={label} />
+      {showCaption ? (
+        <p className="max-w-[280px] text-center text-sm leading-snug text-foreground/80">
+          {caption ?? displayValue(digits)}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+const CONTROL_BUTTON =
+  "flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors " +
+  "hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-35";
+
 export interface AnimatedAbacusProps {
   /** Ordered abacus states; frames[0] is the units rod. Each frame is one step. */
   frames: number[][];
@@ -19,26 +71,28 @@ export interface AnimatedAbacusProps {
   loop?: boolean;
   /** Begin playing as soon as the component mounts. */
   autoPlay?: boolean;
+  /** Show the play/step/replay controls. Set false to play silently on its own. */
+  controls?: boolean;
+  /** Show the per-step caption (or current value). */
+  showCaption?: boolean;
   className?: string;
 }
 
-function displayValue(digits: number[]): string {
-  return digitsToValue(digits).toLocaleString("en-US");
-}
-
 /**
- * An abacus that plays through a sequence of bead states, animating the move
- * between each frame. Used to illustrate an explanation: the beads slide toward
- * and away from the beam so the learner can see what a step actually does.
+ * An abacus that plays through a sequence of bead states on its own, animating
+ * the move between each frame. Used for auto-playing demonstrations (e.g. the
+ * "Why?" dialog). For step-by-step control, drive `DemoScene` yourself.
  */
 export function AnimatedAbacus({
   frames,
   captions,
   label = "Example",
-  scale = 0.8,
-  interval = 1300,
+  scale = 0.7,
+  interval = 1400,
   loop = false,
   autoPlay = true,
+  controls = false,
+  showCaption = true,
   className,
 }: AnimatedAbacusProps) {
   const safeFrames = useMemo(
@@ -49,12 +103,10 @@ export function AnimatedAbacus({
   const [idx, setIdx] = useState(0);
   const [playing, setPlaying] = useState(autoPlay);
   const current = Math.min(Math.max(idx, 0), total - 1);
-  const digits = safeFrames[current] ?? [];
-  const caption = captions?.[current];
+  const single = total === 1;
 
-  // Auto-advance while playing; stop (or loop) at the last frame.
   useEffect(() => {
-    if (!playing) return;
+    if (!playing || single) return;
     const t = window.setTimeout(() => {
       if (current < total - 1) {
         setIdx((i) => Math.min(total - 1, i + 1));
@@ -65,7 +117,7 @@ export function AnimatedAbacus({
       }
     }, interval);
     return () => window.clearTimeout(t);
-  }, [playing, current, total, interval, loop]);
+  }, [playing, current, total, interval, loop, single]);
 
   const restart = () => {
     setIdx(0);
@@ -87,71 +139,68 @@ export function AnimatedAbacus({
   };
 
   return (
-    <div className={cn("flex flex-col items-center gap-4", className)}>
-      <Abacus digits={digits} readOnly scale={scale} label={label} />
+    <div className={cn("flex flex-col items-center gap-3", className)}>
+      <DemoScene
+        frames={safeFrames}
+        captions={captions}
+        index={current}
+        label={label}
+        scale={scale}
+        showCaption={showCaption}
+      />
 
-      <div className="flex flex-col items-center gap-3">
-        <div className="flex items-center gap-1.5" aria-hidden>
-          {safeFrames.map((_, i) => (
-            <span
-              key={i}
-              className={cn(
-                "h-1.5 rounded-full transition-all duration-300",
-                i === current ? "w-5 bg-foreground" : "w-1.5 bg-muted-foreground/30",
-              )}
-            />
-          ))}
-        </div>
+      {controls && !single ? (
+        <div className="flex flex-col items-center gap-3">
+          <div className="flex items-center gap-1.5" aria-hidden>
+            {safeFrames.map((_, i) => (
+              <span
+                key={i}
+                className={cn(
+                  "h-1.5 rounded-full transition-all duration-300",
+                  i === current ? "w-5 bg-foreground" : "w-1.5 bg-muted-foreground/30",
+                )}
+              />
+            ))}
+          </div>
 
-        <div className="flex items-center gap-1.5">
-          <button
-            type="button"
-            onClick={() => stepTo(-1)}
-            disabled={current === 0}
-            aria-label="Previous frame"
-            className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            <SkipBack className="size-4" />
-          </button>
-          <button
-            type="button"
-            onClick={toggle}
-            aria-label={playing ? "Pause animation" : "Play animation"}
-            className="flex size-10 items-center justify-center rounded-full bg-foreground text-background transition-colors hover:opacity-90"
-          >
-            {playing ? <Pause className="size-4" /> : <Play className="size-4 translate-x-[1px]" />}
-          </button>
-          <button
-            type="button"
-            onClick={() => stepTo(1)}
-            disabled={current === total - 1}
-            aria-label="Next frame"
-            className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            <SkipForward className="size-4" />
-          </button>
-          <button
-            type="button"
-            onClick={restart}
-            aria-label="Replay"
-            className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          >
-            <RotateCcw className="size-4" />
-          </button>
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={() => stepTo(-1)}
+              disabled={current === 0}
+              aria-label="Previous step"
+              className={CONTROL_BUTTON}
+            >
+              <SkipBack className="size-4" />
+            </button>
+            <button
+              type="button"
+              onClick={toggle}
+              aria-label={playing ? "Pause" : "Play"}
+              className="flex size-9 shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-transform hover:scale-105"
+            >
+              {playing ? <Pause className="size-4" /> : <Play className="size-4 translate-x-[1px]" />}
+            </button>
+            <button
+              type="button"
+              onClick={() => stepTo(1)}
+              disabled={current === total - 1}
+              aria-label="Next step"
+              className={CONTROL_BUTTON}
+            >
+              <SkipForward className="size-4" />
+            </button>
+            <button
+              type="button"
+              onClick={restart}
+              aria-label="Replay"
+              className={CONTROL_BUTTON}
+            >
+              <RotateCcw className="size-4" />
+            </button>
+          </div>
         </div>
-
-        <div className="text-center">
-          <p className="text-sm font-semibold tabular-nums">
-            {displayValue(digits)}
-            <span className="font-normal text-muted-foreground">
-              {" · "}Step {current + 1} of {total}
-            </span>
-          </p>
-          {caption ? (
-            <p className="mt-1 max-w-xs text-sm leading-relaxed text-muted-foreground">{caption}</p>
-          ) : null}
-        </div>
-      </div>
+      ) : null}
     </div>
   );
 }

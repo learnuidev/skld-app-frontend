@@ -7,15 +7,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
+  Pause,
+  Play,
   RefreshCw,
   RotateCcw,
+  SkipBack,
+  SkipForward,
   Volume2,
   X,
   Zap,
 } from "lucide-react";
 
 import { Abacus } from "@/components/abacus/abacus";
-import { AnimatedAbacus } from "@/components/abacus/animated-abacus";
+import { AnimatedAbacus, DemoScene } from "@/components/abacus/animated-abacus";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -50,12 +54,16 @@ function BlockContent({
   attempted,
   taskRef,
   onHasSelection,
+  demoVisible,
+  demoIndex,
 }: {
   block: LessonBlock;
   solved: boolean;
   attempted: boolean;
   taskRef: RefObject<TaskHandle | null>;
   onHasSelection: (has: boolean) => void;
+  demoVisible?: boolean;
+  demoIndex?: number;
 }) {
   const locked = solved || attempted;
 
@@ -68,16 +76,16 @@ function BlockContent({
       );
     case "paragraph":
       return (
-        <div className="flex flex-col items-center gap-6">
+        <div className="flex flex-col items-center gap-4">
           <p className="mx-auto max-w-xl text-center text-lg leading-relaxed text-foreground/85">
             {block.text}
           </p>
-          {block.demo ? (
-            <AnimatedAbacus
+          {block.demo && demoVisible ? (
+            <DemoScene
               frames={block.demo.frames}
               captions={block.demo.captions}
+              index={demoIndex ?? 0}
               label={block.demo.label ?? "Example"}
-              scale={0.8}
             />
           ) : null}
         </div>
@@ -201,7 +209,9 @@ function ExplanationDialog({
               frames={visual.frames}
               captions={visual.captions}
               label={visual.label ?? "Example"}
-              scale={0.8}
+              scale={0.75}
+              controls={false}
+              showCaption={false}
             />
           </div>
         ) : visual?.kind === "image" ? (
@@ -289,6 +299,59 @@ function TaskExplainer({
   );
 }
 
+function DemoControls({
+  index,
+  total,
+  playing,
+  onStep,
+  onToggle,
+  onReplay,
+}: {
+  index: number;
+  total: number;
+  playing: boolean;
+  onStep: (dir: -1 | 1) => void;
+  onToggle: () => void;
+  onReplay: () => void;
+}) {
+  const btn =
+    "flex size-12 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors " +
+    "hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-35";
+  return (
+    <div className="flex items-center gap-2">
+      <button
+        type="button"
+        onClick={() => onStep(-1)}
+        disabled={index === 0}
+        aria-label="Previous step"
+        className={btn}
+      >
+        <SkipBack className="size-5" />
+      </button>
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-label={playing ? "Pause" : "Play"}
+        className="flex size-12 shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-transform hover:scale-105"
+      >
+        {playing ? <Pause className="size-5" /> : <Play className="size-5 translate-x-[1px]" />}
+      </button>
+      <button
+        type="button"
+        onClick={() => onStep(1)}
+        disabled={index === total - 1}
+        aria-label="Next step"
+        className={btn}
+      >
+        <SkipForward className="size-5" />
+      </button>
+      <button type="button" onClick={onReplay} aria-label="Replay" className={btn}>
+        <RotateCcw className="size-5" />
+      </button>
+    </div>
+  );
+}
+
 export default function LessonPlayer({
   course,
   levelSlug,
@@ -322,6 +385,9 @@ export default function LessonPlayer({
   const [explanation, setExplanation] = useState<LessonExplanation | null>(
     null,
   );
+  const [showDemo, setShowDemo] = useState(false);
+  const [demoIdx, setDemoIdx] = useState(0);
+  const [demoPlaying, setDemoPlaying] = useState(true);
   const taskRef = useRef<TaskHandle | null>(null);
 
   const total = blocks.length;
@@ -329,6 +395,9 @@ export default function LessonPlayer({
   const isLast = current === total - 1;
   const isTask =
     block?.type === "build" || block?.type === "read" || block?.type === "quiz";
+  const demo = block?.type === "paragraph" ? block.demo : undefined;
+  const hasDemo = Boolean(demo);
+  const demoTot = demo?.frames.length ?? 0;
   const answered = isTask ? attempted : true;
   const ready = answered;
   const progress = total === 0 ? 0 : Math.round(((current + 1) / total) * 100);
@@ -344,12 +413,30 @@ export default function LessonPlayer({
     router.push(path);
   };
 
+  const resetDemo = () => {
+    setShowDemo(false);
+    setDemoIdx(0);
+    setDemoPlaying(true);
+  };
+
+  const revealDemo = () => {
+    setShowDemo(true);
+    setDemoIdx(0);
+    setDemoPlaying(true);
+  };
+
+  // Reveals the animation first, then advances past the step.
   const advance = () => {
+    if (hasDemo && !showDemo) {
+      revealDemo();
+      return;
+    }
     if (!ready) return;
     if (current < total - 1) {
       setSolved(false);
       setAttempted(false);
       setHasSel(false);
+      resetDemo();
       setCurrent((c) => c + 1);
     } else if (next) {
       completeAndGo(lessonUrl(course, next.level.slug, next.lesson.slug));
@@ -372,6 +459,9 @@ export default function LessonPlayer({
     setSolved(false);
     setAttempted(false);
     setHasSel(false);
+    setShowDemo(false);
+    setDemoIdx(0);
+    setDemoPlaying(true);
     setResetKey((k) => k + 1);
   }, []);
 
@@ -380,16 +470,28 @@ export default function LessonPlayer({
     setSolved(false);
     setAttempted(false);
     setHasSel(false);
+    setShowDemo(false);
+    setDemoIdx(0);
+    setDemoPlaying(true);
     setCurrent((c) => c - 1);
   }, [current]);
 
   const goNextStep = useCallback(() => {
+    if (hasDemo && !showDemo) {
+      setShowDemo(true);
+      setDemoIdx(0);
+      setDemoPlaying(true);
+      return;
+    }
     if (current >= total - 1) return;
     setSolved(false);
     setAttempted(false);
     setHasSel(false);
+    setShowDemo(false);
+    setDemoIdx(0);
+    setDemoPlaying(true);
     setCurrent((c) => c + 1);
-  }, [current, total]);
+  }, [current, total, hasDemo, showDemo]);
 
   const retryTask = useCallback(() => {
     setSolved(false);
@@ -397,6 +499,19 @@ export default function LessonPlayer({
     setHasSel(false);
     setResetKey((k) => k + 1);
   }, []);
+
+  // Auto-advance the revealed demonstration while it is playing.
+  useEffect(() => {
+    if (!hasDemo || !showDemo || !demoPlaying || demoTot <= 1) return;
+    const t = window.setTimeout(() => {
+      if (demoIdx < demoTot - 1) {
+        setDemoIdx((i) => Math.min(demoTot - 1, i + 1));
+      } else {
+        setDemoPlaying(false);
+      }
+    }, 1400);
+    return () => window.clearTimeout(t);
+  }, [hasDemo, showDemo, demoPlaying, demoIdx, demoTot]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -560,6 +675,8 @@ export default function LessonPlayer({
               attempted={attempted}
               taskRef={taskRef}
               onHasSelection={setHasSel}
+              demoVisible={showDemo}
+              demoIndex={demoIdx}
             />
           </motion.div>
         </AnimatePresence>
@@ -579,6 +696,29 @@ export default function LessonPlayer({
                 Try again
               </Button>
             ) : null}
+            {hasDemo && showDemo ? (
+              <DemoControls
+                index={demoIdx}
+                total={demoTot}
+                playing={demoPlaying}
+                onStep={(dir) => {
+                  setDemoPlaying(false);
+                  setDemoIdx((i) => Math.min(demoTot - 1, Math.max(0, i + dir)));
+                }}
+                onToggle={() => {
+                  if (!demoPlaying && demoIdx >= demoTot - 1) {
+                    setDemoIdx(0);
+                    setDemoPlaying(true);
+                    return;
+                  }
+                  setDemoPlaying((p) => !p);
+                }}
+                onReplay={() => {
+                  setDemoIdx(0);
+                  setDemoPlaying(true);
+                }}
+              />
+            ) : null}
             <Button
               size="lg"
               disabled={isTask && !attempted && !hasSel}
@@ -587,10 +727,12 @@ export default function LessonPlayer({
             >
               {isTask && !attempted
                 ? "Check"
-                : isLast && ready
-                  ? next
-                    ? "Next lesson"
-                    : "Finish course"
+                : hasDemo && !showDemo
+                  ? "Next"
+                  : isLast && ready
+                    ? next
+                      ? "Next lesson"
+                      : "Finish course"
                   : "Continue"}
             </Button>
 
