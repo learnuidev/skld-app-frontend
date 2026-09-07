@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ChevronDown, HelpCircle, Info, LogOut, Settings, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -25,7 +25,7 @@ function NavLink({
       className={cn(
         "rounded-full px-4 py-2 text-sm font-semibold transition-colors",
         active
-          ? "bg-black text-white"
+          ? "bg-foreground/10 text-foreground"
           : "text-muted-foreground hover:bg-muted hover:text-foreground",
       )}
     >
@@ -62,6 +62,7 @@ function MenuItem({
 
 export function SiteNav({ className }: { className?: string }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { user, loading, login, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -88,9 +89,15 @@ export function SiteNav({ className }: { className?: string }) {
         </Link>
 
         <div className="hidden items-center gap-1 md:flex">
-          <NavLink href="/">Home</NavLink>
-          <NavLink href="/courses">Courses</NavLink>
-          <NavLink href="/you">You</NavLink>
+          <NavLink href="/" active={pathname === "/"}>
+            Home
+          </NavLink>
+          <NavLink href="/courses" active={pathname === "/courses" || pathname.startsWith("/courses/")}>
+            Courses
+          </NavLink>
+          <NavLink href="/you" active={pathname === "/you" || pathname.startsWith("/you/")}>
+            You
+          </NavLink>
         </div>
 
         <div className="ml-auto flex items-center gap-3">
