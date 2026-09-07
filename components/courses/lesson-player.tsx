@@ -4,7 +4,14 @@ import { useMemo, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
-import { RotateCcw, Volume2, X, Zap } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  RotateCcw,
+  Volume2,
+  X,
+  Zap,
+} from "lucide-react";
 
 import { Abacus } from "@/components/abacus/abacus";
 import { Button } from "@/components/ui/button";
@@ -214,7 +221,9 @@ function ExplanationDialog({
                 <span
                   key={i}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === current ? "w-5 bg-foreground" : "w-1.5 bg-muted-foreground/30"
+                    i === current
+                      ? "w-5 bg-foreground"
+                      : "w-1.5 bg-muted-foreground/30"
                   }`}
                 />
               ))}
@@ -278,6 +287,7 @@ export default function LessonPlayer({
     currentGlobal >= 0 && currentGlobal < nodes.length - 1
       ? nodes[currentGlobal + 1]
       : null;
+  const prev = currentGlobal > 0 ? nodes[currentGlobal - 1] : null;
   const progressKey = nodes[currentGlobal]
     ? nodeKey(nodes[currentGlobal].level, nodes[currentGlobal].lesson)
     : `${levelSlug}:${lessonSlug}`;
@@ -364,7 +374,7 @@ export default function LessonPlayer({
   return (
     <div className="flex min-h-screen flex-col bg-card">
       {/* Top bar */}
-      <header className="flex items-center gap-3 px-4 py-4 sm:px-8">
+      <header className="group flex items-center gap-3 px-4 py-4 sm:px-8">
         <button
           type="button"
           onClick={() => setShowQuit(true)}
@@ -374,19 +384,59 @@ export default function LessonPlayer({
           <X className="size-5" />
         </button>
         <div className="flex flex-1 items-center justify-center gap-3">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                onClick={startOver}
-                aria-label="Start over"
-                className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              >
-                <RotateCcw className="size-4" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>Start over</TooltipContent>
-          </Tooltip>
+          <div className="flex items-center gap-1 opacity-0 pointer-events-none transition-opacity duration-200 group-hover:opacity-100 group-hover:pointer-events-auto">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={() =>
+                    prev &&
+                    router.push(
+                      lessonUrl(course, prev.level.slug, prev.lesson.slug),
+                    )
+                  }
+                  disabled={!prev}
+                  aria-label="Previous lesson"
+                  className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <ChevronLeft className="size-4" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>Previous lesson</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={startOver}
+                  aria-label="Start over"
+                  className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                >
+                  <RotateCcw className="size-4" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>Start over</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={() =>
+                    next &&
+                    completeAndGo(
+                      lessonUrl(course, next.level.slug, next.lesson.slug),
+                    )
+                  }
+                  disabled={!next}
+                  aria-label="Next lesson"
+                  className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <ChevronRight className="size-4" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>Next lesson</TooltipContent>
+            </Tooltip>
+          </div>
           <div className="h-2 w-full max-w-xl overflow-hidden rounded-full bg-muted">
             <div
               className="h-full rounded-full bg-emerald-500 transition-all duration-500"
