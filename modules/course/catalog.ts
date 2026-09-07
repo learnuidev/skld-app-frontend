@@ -1,6 +1,7 @@
 import { understandingAbacusCourse } from "./understanding-abacus";
 import { anzanCourse } from "./anzan";
 import { zhuxinsuanCourse } from "./zhuxinsuan";
+import { chineseNumbersCourse } from "./chinese-numbers";
 import type { Course, CourseSummary } from "./types";
 
 export const courseCatalog: CourseSummary[] = [
@@ -48,6 +49,21 @@ export const courseCatalog: CourseSummary[] = [
     heroAccent: zhuxinsuanCourse.heroAccent,
     status: "available",
     sample: zhuxinsuanCourse.sample ?? [6, 1, 4, 2],
+  },
+  {
+    slug: chineseNumbersCourse.slug,
+    title: chineseNumbersCourse.title,
+    tagline: chineseNumbersCourse.tagline,
+    description: chineseNumbersCourse.description,
+    subject: "Abacus",
+    levelCount: chineseNumbersCourse.levels.length,
+    lessonCount: chineseNumbersCourse.lessonCount,
+    exerciseCount: chineseNumbersCourse.exerciseCount,
+    lessonMinutes: chineseNumbersCourse.lessonMinutes,
+    accent: chineseNumbersCourse.accent,
+    heroAccent: chineseNumbersCourse.heroAccent,
+    status: "available",
+    sample: chineseNumbersCourse.sample ?? [4, 3, 2, 1],
   },
   {
     slug: "math-fundamentals",
@@ -150,6 +166,9 @@ export function getCourseBySlug(slug: string): Course | undefined {
   }
   if (slug === zhuxinsuanCourse.slug) {
     return zhuxinsuanCourse;
+  }
+  if (slug === chineseNumbersCourse.slug) {
+    return chineseNumbersCourse;
   }
   return undefined;
 }
