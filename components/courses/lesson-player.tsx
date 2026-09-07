@@ -73,20 +73,27 @@ function BlockContent({
         </h2>
       );
     case "paragraph":
-      return (
-        <div className="flex flex-col items-center gap-4">
-          <p className="mx-auto max-w-xl text-center text-lg leading-relaxed text-foreground/85">
-            {block.text}
-          </p>
-          {block.demo ? (
+      // With an example animation, split into two columns: text | animation.
+      if (block.demo) {
+        return (
+          <div className="grid gap-6 sm:grid-cols-2 sm:items-center sm:gap-8">
+            <p className="mx-auto max-w-xl text-center text-lg leading-relaxed text-foreground/85 sm:mx-0 sm:max-w-none sm:text-left">
+              {block.text}
+            </p>
             <DemoScene
               frames={block.demo.frames}
               captions={block.demo.captions}
               index={demoIndex ?? 0}
               label={block.demo.label ?? "Example"}
+              scale={0.75}
             />
-          ) : null}
-        </div>
+          </div>
+        );
+      }
+      return (
+        <p className="mx-auto max-w-xl text-center text-lg leading-relaxed text-foreground/85">
+          {block.text}
+        </p>
       );
     case "list":
       return (
