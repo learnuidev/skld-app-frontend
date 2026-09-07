@@ -92,7 +92,7 @@ export default function LessonPlayer({
         ) : null}
       </div>
 
-      <h1 className="mt-2 font-serif text-4xl font-bold tracking-tight sm:text-5xl">{lesson.title}</h1>
+      <h1 className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">{lesson.title}</h1>
 
       {totalTasks > 0 ? (
         <div className="mt-5 flex items-center gap-3">
@@ -112,7 +112,7 @@ export default function LessonPlayer({
         {blocks.map((block, index) => {
           if (block.type === "heading") {
             return (
-              <h2 key={index} className="font-serif text-2xl font-bold tracking-tight">
+              <h2 key={index} className="text-2xl font-bold tracking-tight">
                 {block.text}
               </h2>
             );

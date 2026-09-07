@@ -7,13 +7,9 @@ import { ArrowRight, Award, Check, Lock, Play, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Abacus } from "@/components/abacus/abacus";
-import { flattenCourse, nodeKey } from "@/modules/course/utils";
+import { flattenCourse, lessonUrl, nodeKey } from "@/modules/course/utils";
 import { clearProgress, readProgress, writeProgress } from "@/modules/course/progress";
 import type { Course } from "@/modules/course/types";
-
-export function lessonUrl(course: Course, levelSlug: string, lessonSlug: string) {
-  return `/courses/${course.slug}/${levelSlug}/${lessonSlug}`;
-}
 
 export default function CourseExplorer({ course }: { course: Course }) {
   const nodes = useMemo(() => flattenCourse(course), [course]);
@@ -71,7 +67,7 @@ export default function CourseExplorer({ course }: { course: Course }) {
               <ArrowRight className="size-4 rotate-180" />
               All courses
             </Link>
-            <h1 className="mt-4 font-serif text-4xl font-bold tracking-tight sm:text-6xl">{course.title}</h1>
+            <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">{course.title}</h1>
             <p className="mt-3 text-lg font-medium text-muted-foreground">{course.tagline}</p>
             <p className="mt-6 max-w-xl leading-relaxed text-foreground/80">{course.introText}</p>
             <div className="mt-6 flex flex-wrap gap-2">

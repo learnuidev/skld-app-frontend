@@ -21,6 +21,32 @@ export function nodeKey(level: CourseLevel, lesson: CourseLesson) {
   return `${level.slug}:${lesson.slug}`;
 }
 
+export function lessonUrl(course: Course, levelSlug: string, lessonSlug: string) {
+  return `/courses/${course.slug}/${levelSlug}/${lessonSlug}`;
+}
+
+/** The first lesson that is not yet complete and is unlocked, or null when the course is finished. */
+export function getContinueTarget(course: Course, completed: string[]): CourseNode | null {
+  const nodes = flattenCourse(course);
+  const completedSet = new Set(completed);
+  return (
+    nodes.find((node, index) => {
+      const done = completedSet.has(nodeKey(node.level, node.lesson));
+      const unlocked =
+        done ||
+        index === 0 ||
+        nodes.slice(0, index).every((n) => completedSet.has(nodeKey(n.level, n.lesson)));
+      return !done && unlocked;
+    }) ?? null
+  );
+}
+
+/** URL of the next lesson to continue, or the course overview when nothing is next. */
+export function continueHref(course: Course, completed: string[]): string {
+  const target = getContinueTarget(course, completed);
+  return target ? lessonUrl(course, target.level.slug, target.lesson.slug) : `/courses/${course.slug}`;
+}
+
 /** Number of interactive tasks (build/read/quiz) authored across a course's content. */
 export function countLevelExercises(levels: CourseLevel[], content: CourseContentMap): number {
   return levels.reduce((total, level) => {
