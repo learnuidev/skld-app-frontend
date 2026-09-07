@@ -28,6 +28,31 @@ export const chineseNumbersContent: CourseContentMap = {
         rods: 2,
         initial: [0, 0],
       },
+      {
+        type: "read",
+        prompt: "Read the rod.",
+        digits: [7],
+        choices: [7, 2, 5, 4],
+        explanation: {
+          steps: [
+            { text: "The heaven bead is worth 五 (5)." },
+            { text: "Two earth beads add 二 (2)." },
+            { text: "5 + 2 = 七 (7)." },
+          ],
+        },
+      },
+      {
+        type: "build",
+        prompt: "Show 八 (8) on the rod.",
+        target: 8,
+        rods: 1,
+        explanation: {
+          steps: [
+            { text: "八 (8) is the heaven bead (五) plus three earth beads (三)." },
+            { text: "Slide the heaven bead down, then push three earth beads up." },
+          ],
+        },
+      },
     ],
     "read-the-rods": [
       { type: "heading", text: "Read the Rods" },
@@ -737,6 +762,30 @@ export const chineseNumbersContent: CourseContentMap = {
           ],
         },
       },
+      {
+        type: "read",
+        prompt: "Read the number on these five rods.",
+        digits: [9, 9, 9, 9, 9],
+        choices: [99999, 9999, 999, 999999],
+        explanation: {
+          steps: [
+            { text: "Every rod is full: 九万九千九百九十九 (99,999)." },
+            { text: "Keep sliding to the left and the rods name 十万, 百万, 千万, then 亿." },
+          ],
+        },
+      },
+      {
+        type: "build",
+        prompt: "Build 五万 (50,000).",
+        target: 50000,
+        rods: 5,
+        explanation: {
+          steps: [
+            { text: "50,000 is 5 on the 万 rod." },
+            { text: "That's 五万 — and the same pattern continues to the left up to 亿." },
+          ],
+        },
+      },
     ],
     zhao: [
       { type: "heading", text: "兆 · One Trillion" },
@@ -788,6 +837,32 @@ export const chineseNumbersContent: CourseContentMap = {
           ],
         },
       },
+      {
+        type: "read",
+        prompt: "Read the number on these five rods.",
+        digits: [8, 7, 6, 5, 4],
+        choices: [45678, 87654, 4567, 456789],
+        explanation: {
+          steps: [
+            { text: "The 万 rod shows 4 → 四万." },
+            { text: "The rest, 5678, reads 五千六百七十八." },
+            { text: "Together: 四万五千六百七十八 (45,678)." },
+          ],
+        },
+      },
+      {
+        type: "build",
+        prompt: "Build 九万八千七百六十五 (98,765).",
+        target: 98765,
+        rods: 5,
+        explanation: {
+          steps: [
+            { text: "98,765 splits as 9 万 + 8765." },
+            { text: "Put 9 on the 万 rod, then 8765 on the four lower rods." },
+            { text: "Keep going left by groups of four and you reach 兆." },
+          ],
+        },
+      },
     ],
     ladder: [
       { type: "heading", text: "The 万进 Ladder" },
@@ -832,6 +907,30 @@ export const chineseNumbersContent: CourseContentMap = {
           steps: [
             { text: "兆 = 10,000 × 亿." },
             { text: "亿 = 10⁸, so 兆 = 10⁴ × 10⁸ = 10¹²." },
+          ],
+        },
+      },
+      {
+        type: "read",
+        prompt: "Read the number on these five rods.",
+        digits: [0, 0, 0, 1, 0],
+        choices: [1000, 10000, 100, 100000],
+        explanation: {
+          steps: [
+            { text: "One bead is on the 4th rod (千)." },
+            { text: "So the number is 一千 (10³ = 1,000)." },
+          ],
+        },
+      },
+      {
+        type: "build",
+        prompt: "Build 一万 (10,000) — the 万进 leap.",
+        target: 10000,
+        rods: 5,
+        explanation: {
+          steps: [
+            { text: "10,000 is one bead on the 5th rod (万)." },
+            { text: "Moving from the 4th rod (千) to the 5th rod (万) is the ×10,000 leap of 万进." },
           ],
         },
       },
@@ -935,6 +1034,31 @@ export const chineseNumbersContent: CourseContentMap = {
           steps: [
             { text: "Each 万-unit spans 4 digits." },
             { text: "That's why Chinese groups by four, not three." },
+          ],
+        },
+      },
+      {
+        type: "read",
+        prompt: "Read this five-rod number and spot the group split.",
+        digits: [5, 4, 3, 2, 1],
+        choices: [12345, 54321, 1234, 10234],
+        explanation: {
+          steps: [
+            { text: "The 万 rod holds 1 → 一万." },
+            { text: "The four rods to its right hold 2345." },
+            { text: "So the number splits 1 | 2345 = 一万二千三百四十五 (12,345)." },
+          ],
+        },
+      },
+      {
+        type: "build",
+        prompt: "Build 二万三千四百五十六 (23,456) and mark the group split.",
+        target: 23456,
+        rods: 5,
+        explanation: {
+          steps: [
+            { text: "23,456 splits at the 万 rod: 2 | 3456." },
+            { text: "Put 2 on the 万 rod, then 3456 on the four rods to its right." },
           ],
         },
       },
