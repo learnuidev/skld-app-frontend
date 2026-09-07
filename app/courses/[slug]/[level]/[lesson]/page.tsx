@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { SiteNav } from "@/components/site-nav";
 import LessonPlayer from "@/components/courses/lesson-player";
 import { getCourseBySlug } from "@/modules/course/catalog";
 import { getLessonContent } from "@/modules/course/content";
@@ -49,9 +48,6 @@ export default async function LessonPage(props: {
   const blocks = getLessonContent(course.slug, level.slug, lesson.slug) ?? fallbackContent(lesson);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <SiteNav className="lg:px-10" />
-      <LessonPlayer course={course} levelSlug={level.slug} lessonSlug={lesson.slug} blocks={blocks} />
-    </div>
+    <LessonPlayer course={course} levelSlug={level.slug} lessonSlug={lesson.slug} blocks={blocks} />
   );
 }

@@ -2,23 +2,69 @@
 
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { RotateCcw, Volume2, X, Zap } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { AbacusExplorer, BuildTask, QuizTask, ReadTask } from "@/components/abacus/practice";
-import { cn } from "@/lib/utils";
-import { flattenCourse, nodeKey } from "@/modules/course/utils";
+import { flattenCourse, lessonUrl, nodeKey } from "@/modules/course/utils";
 import { readProgress, writeProgress } from "@/modules/course/progress";
 import type { Course, LessonBlock } from "@/modules/course/types";
 
-function TaskAware({ block, onSolved }: { block: Extract<LessonBlock, { type: "build" | "read" | "quiz" }>; onSolved: () => void }) {
-  if (block.type === "build") {
-    return <BuildTask prompt={block.prompt} target={block.target} rods={block.rods ?? 2} onSolved={onSolved} />;
+function BlockContent({
+  block,
+  onSolved,
+}: {
+  block: LessonBlock;
+  onSolved: () => void;
+}) {
+  switch (block.type) {
+    case "heading":
+      return (
+        <h2 className="text-center text-3xl font-bold tracking-tight sm:text-4xl">{block.text}</h2>
+      );
+    case "paragraph":
+      return (
+        <p className="mx-auto max-w-xl text-center text-lg leading-relaxed text-foreground/85">
+          {block.text}
+        </p>
+      );
+    case "list":
+      return (
+        <ul className="mx-auto max-w-xl space-y-4">
+          {block.items.map((item) => (
+            <li key={item} className="flex items-start gap-3 text-lg leading-relaxed">
+              <span className="mt-2.5 size-2 shrink-0 rounded-full bg-amber-500" />
+              <span className="text-foreground/85">{item}</span>
+            </li>
+          ))}
+        </ul>
+      );
+    case "explore":
+      return (
+        <div className="flex flex-col items-center gap-5">
+          <p className="text-center text-lg font-semibold">{block.label}</p>
+          <AbacusExplorer rods={block.rods} initial={block.initial} />
+        </div>
+      );
+    case "build":
+      return (
+        <BuildTask prompt={block.prompt} target={block.target} rods={block.rods ?? 2} onSolved={onSolved} />
+      );
+    case "read":
+      return <ReadTask prompt={block.prompt} digits={block.digits} choices={block.choices} onSolved={onSolved} />;
+    case "quiz":
+      return <QuizTask prompt={block.prompt} choices={block.choices} answer={block.answer} onSolved={onSolved} />;
+    default:
+      return null;
   }
-  if (block.type === "read") {
-    return <ReadTask prompt={block.prompt} digits={block.digits} choices={block.choices} onSolved={onSolved} />;
-  }
-  return <QuizTask prompt={block.prompt} choices={block.choices} answer={block.answer} onSolved={onSolved} />;
 }
 
 export default function LessonPlayer({
@@ -33,172 +79,161 @@ export default function LessonPlayer({
   blocks: LessonBlock[];
 }) {
   const router = useRouter();
-
   const nodes = useMemo(() => flattenCourse(course), [course]);
-  const currentIndex = nodes.findIndex((n) => n.level.slug === levelSlug && n.lesson.slug === lessonSlug);
-  const level = nodes[currentIndex]?.level;
-  const lesson = nodes[currentIndex]?.lesson;
+  const currentGlobal = nodes.findIndex((n) => n.level.slug === levelSlug && n.lesson.slug === lessonSlug);
+  const next = currentGlobal >= 0 && currentGlobal < nodes.length - 1 ? nodes[currentGlobal + 1] : null;
+  const progressKey = nodes[currentGlobal]
+    ? nodeKey(nodes[currentGlobal].level, nodes[currentGlobal].lesson)
+    : `${levelSlug}:${lessonSlug}`;
 
-  const taskIndexes = useMemo(
-    () => blocks.map((b, i) => ({ i, isTask: b.type === "build" || b.type === "read" || b.type === "quiz" })).filter((x) => x.isTask).map((x) => x.i),
-    [blocks],
-  );
-  const [solved, setSolved] = useState<number[]>([]);
-  const solvedCount = solved.length;
-  const totalTasks = taskIndexes.length;
-  const ready = totalTasks === 0 || solvedCount === totalTasks;
+  const [current, setCurrent] = useState(0);
+  const [solved, setSolved] = useState(false);
+  const [resetKey, setResetKey] = useState(0);
+  const [showQuit, setShowQuit] = useState(false);
 
-  if (!level || !lesson) {
-    return null;
-  }
+  const total = blocks.length;
+  const block = blocks[current];
+  const isLast = current === total - 1;
+  const isTask = block?.type === "build" || block?.type === "read" || block?.type === "quiz";
+  const ready = isTask ? solved : block !== undefined;
+  const progress = total === 0 ? 0 : Math.round(((current + 1) / total) * 100);
 
   const coursePath = `/courses/${course.slug}`;
-  const key = nodeKey(level, lesson);
-  const next = currentIndex >= 0 && currentIndex < nodes.length - 1 ? nodes[currentIndex + 1] : null;
-  const lessonNumber = currentIndex + 1;
-  const totalLessons = nodes.length;
 
   const completeAndGo = (path: string) => {
     const existing = readProgress(course.slug);
-    const nextCompleted = existing.includes(key) ? existing : [...existing, key];
+    const nextCompleted = existing.includes(progressKey) ? existing : [...existing, progressKey];
     writeProgress(course.slug, nextCompleted);
     router.push(path);
   };
 
+  const advance = () => {
+    if (!ready) return;
+    if (current < total - 1) {
+      setSolved(false);
+      setCurrent((c) => c + 1);
+    } else if (next) {
+      completeAndGo(lessonUrl(course, next.level.slug, next.lesson.slug));
+    } else {
+      completeAndGo(coursePath);
+    }
+  };
+
+  const startOver = () => {
+    setCurrent(0);
+    setSolved(false);
+    setResetKey((k) => k + 1);
+  };
+
+  if (!block) {
+    return null;
+  }
+
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 pb-24 sm:px-6">
-      <div className="flex items-center justify-between gap-4 pt-8">
+    <div className="flex min-h-screen flex-col bg-white">
+      {/* Top bar */}
+      <header className="flex items-center gap-3 px-4 py-4 sm:px-8">
         <button
           type="button"
-          onClick={() => router.push(coursePath)}
-          className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition-colors hover:text-foreground"
+          onClick={() => setShowQuit(true)}
+          aria-label="Exit lesson"
+          className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
-          <ArrowLeft className="size-4" />
-          Back to course
+          <X className="size-5" />
         </button>
-        <span className="text-sm font-semibold text-muted-foreground">
-          {lessonNumber} of {totalLessons}
-        </span>
-      </div>
-
-      <div className="mt-6 flex flex-wrap items-center gap-3">
-        <p className="text-xs font-bold uppercase tracking-widest text-amber-700">
-          Level {nodes[currentIndex].levelIndex + 1} · {level.name}
-        </p>
-        {lesson.kind === "level_check" ? (
-          <span className="rounded-full bg-violet-100 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-violet-700">
-            Level check
-          </span>
-        ) : null}
-      </div>
-
-      <h1 className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">{lesson.title}</h1>
-
-      {totalTasks > 0 ? (
-        <div className="mt-5 flex items-center gap-3">
-          <div className="h-2 flex-1 overflow-hidden rounded-full bg-muted">
+        <div className="flex flex-1 justify-center">
+          <div className="h-2 w-full max-w-xl overflow-hidden rounded-full bg-gray-100">
             <div
-              className="h-full rounded-full bg-emerald-500 transition-all duration-300"
-              style={{ width: `${(solvedCount / totalTasks) * 100}%` }}
+              className="h-full rounded-full bg-emerald-500 transition-all duration-500"
+              style={{ width: `${progress}%` }}
             />
           </div>
-          <span className="text-sm font-semibold text-muted-foreground">
-            {solvedCount} of {totalTasks} solved
-          </span>
         </div>
-      ) : null}
+        <div className="flex shrink-0 items-center gap-1 text-muted-foreground">
+          <button
+            type="button"
+            aria-label="Audio"
+            className="flex size-9 items-center justify-center rounded-full transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <Volume2 className="size-5" />
+          </button>
+          <button
+            type="button"
+            aria-label="Streak"
+            className="flex size-9 items-center justify-center rounded-full transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <Zap className="size-5" />
+          </button>
+        </div>
+      </header>
 
-      <div className="mt-10 space-y-8">
-        {blocks.map((block, index) => {
-          if (block.type === "heading") {
-            return (
-              <h2 key={index} className="text-2xl font-bold tracking-tight">
-                {block.text}
-              </h2>
-            );
-          }
-          if (block.type === "paragraph") {
-            return (
-              <p key={index} className="text-lg leading-relaxed text-foreground/85">
-                {block.text}
-              </p>
-            );
-          }
-          if (block.type === "list") {
-            return (
-              <ul key={index} className="space-y-3">
-                {block.items.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-lg leading-relaxed">
-                    <span className="mt-2.5 size-2 shrink-0 rounded-full bg-amber-500" />
-                    <span className="text-foreground/85">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            );
-          }
-          if (block.type === "explore") {
-            return (
-              <div key={index} className="rounded-3xl border border-border bg-white p-6 shadow-sm sm:p-8">
-                <p className="mb-6 text-lg font-semibold">{block.label}</p>
-                <AbacusExplorer rods={block.rods} initial={block.initial} />
-              </div>
-            );
-          }
-          return (
-            <TaskAware
-              key={index}
-              block={block}
-              onSolved={() => {
-                setSolved((prev) => (prev.includes(index) ? prev : [...prev, index]));
-              }}
-            />
-          );
-        })}
-      </div>
+      {/* Content */}
+      <main className="flex flex-1 items-center justify-center px-4 pb-8">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${current}-${resetKey}`}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="w-full max-w-2xl"
+          >
+            <BlockContent block={block} onSolved={() => setSolved(true)} />
+          </motion.div>
+        </AnimatePresence>
+      </main>
 
-      <div
-        className={cn(
-          "mt-12 flex flex-col items-center gap-4 rounded-3xl border p-6",
-          ready ? "border-emerald-200 bg-emerald-50/70" : "border-border bg-white",
-        )}
-      >
-        {ready ? (
-          <div className="flex items-center gap-2 font-semibold text-emerald-800">
-            <span className="flex size-7 items-center justify-center rounded-full bg-emerald-500 text-white">
-              <Check className="size-4" />
-            </span>
-            {totalTasks === 0 ? "Nice work — you're ready to continue." : "All practice solved!"}
+      {/* Bottom controls */}
+      <footer className="px-4 pb-10">
+        <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-4">
+          <button
+            type="button"
+            onClick={startOver}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <RotateCcw className="size-4" />
+            Start over
+          </button>
+          <Button
+            size="lg"
+            disabled={!ready}
+            onClick={advance}
+            className="min-w-64 px-12 py-4 text-base shadow-sm"
+          >
+            {isLast && ready
+              ? next
+                ? "Next lesson"
+                : "Finish course"
+              : !ready
+                ? "Check"
+                : "Continue"}
+          </Button>
+        </div>
+      </footer>
+
+      {/* Quit confirmation */}
+      <Dialog open={showQuit} onOpenChange={setShowQuit}>
+        <DialogContent showCloseButton={false} className="max-w-sm rounded-3xl p-0 text-center">
+          <DialogHeader className="gap-2 p-6 pb-0">
+            <DialogTitle className="text-center text-xl font-bold">Are you sure?</DialogTitle>
+            <DialogDescription className="text-center">
+              If you quit, you will lose your progress and XP.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-3 p-6">
+            <Button className="w-full py-3" onClick={() => setShowQuit(false)}>
+              Keep learning
+            </Button>
+            <button
+              type="button"
+              onClick={() => router.push(coursePath)}
+              className="px-2 py-1 text-sm font-semibold text-red-600 transition-colors hover:text-red-700"
+            >
+              Quit
+            </button>
           </div>
-        ) : (
-          <p className="text-center text-sm font-medium text-muted-foreground">
-            Solve the practice above to unlock the next lesson. (You can reveal answers if you get
-            stuck.)
-          </p>
-        )}
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          {next ? (
-            <Button
-              size="lg"
-              className="px-6 py-5 text-base shadow-md"
-              disabled={!ready}
-              onClick={() => completeAndGo(`/courses/${course.slug}/${next.level.slug}/${next.lesson.slug}`)}
-            >
-              {ready ? (next.lesson.kind === "level_check" ? "Next: Level check" : "Next lesson") : "Almost there"}
-              <ArrowRight data-icon="inline-end" />
-            </Button>
-          ) : (
-            <Button
-              size="lg"
-              className="px-6 py-5 text-base shadow-md"
-              disabled={!ready}
-              onClick={() => completeAndGo(coursePath)}
-            >
-              {ready ? "Finish course" : "Almost there"}
-              <ArrowRight data-icon="inline-end" />
-            </Button>
-          )}
-        </div>
-      </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
