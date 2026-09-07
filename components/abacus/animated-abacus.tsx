@@ -26,7 +26,7 @@ export interface DemoSceneProps {
 
 /**
  * A presentational abacus snapshot for one step of a demonstration. It does not
- * own playback state — the parent (or `AnimatedAbacus`) drives `index`.
+ * own playback state — the parent drives `index`.
  */
 export function DemoScene({
   frames,
@@ -58,7 +58,7 @@ const CONTROL_BUTTON =
   "flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors " +
   "hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-35";
 
-export interface AnimatedAbacusProps {
+export interface DemoPanelProps {
   /** Ordered abacus states; frames[0] is the units rod. Each frame is one step. */
   frames: number[][];
   /** Optional caption per frame. */
@@ -79,24 +79,27 @@ export interface AnimatedAbacusProps {
 }
 
 /**
- * An abacus that plays through a sequence of bead states on its own, animating
- * the move between each frame. Used for auto-playing demonstrations (e.g. the
- * "Why?" dialog). For step-by-step control, drive `DemoScene` yourself.
+ * A self-contained animated abacus demonstration. It plays through a sequence of
+ * bead states on its own, showing the abacus, its per-step caption, and the
+ * playback controls beneath. Used inline to illustrate an explanation.
  */
-export function AnimatedAbacus({
+export function DemoPanel({
   frames,
   captions,
   label = "Example",
-  scale = 0.7,
+  scale = 0.75,
   interval = 1400,
   loop = false,
   autoPlay = true,
-  controls = false,
+  controls = true,
   showCaption = true,
   className,
-}: AnimatedAbacusProps) {
+}: DemoPanelProps) {
   const safeFrames = useMemo(
-    () => (frames && frames.length > 0 ? frames : [Array.from({ length: 1 }, () => 0)]),
+    () =>
+      frames && frames.length > 0
+        ? frames
+        : [Array.from({ length: 1 }, () => 0)],
     [frames],
   );
   const total = safeFrames.length;
@@ -150,14 +153,16 @@ export function AnimatedAbacus({
       />
 
       {controls && !single ? (
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex flex-col items-center gap-3 mt-4">
           <div className="flex items-center gap-1.5" aria-hidden>
             {safeFrames.map((_, i) => (
               <span
                 key={i}
                 className={cn(
                   "h-1.5 rounded-full transition-all duration-300",
-                  i === current ? "w-5 bg-foreground" : "w-1.5 bg-muted-foreground/30",
+                  i === current
+                    ? "w-5 bg-foreground"
+                    : "w-1.5 bg-muted-foreground/30",
                 )}
               />
             ))}
@@ -179,7 +184,11 @@ export function AnimatedAbacus({
               aria-label={playing ? "Pause" : "Play"}
               className="flex size-9 shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-transform hover:scale-105"
             >
-              {playing ? <Pause className="size-4" /> : <Play className="size-4 translate-x-[1px]" />}
+              {playing ? (
+                <Pause className="size-4" />
+              ) : (
+                <Play className="size-4 translate-x-[1px]" />
+              )}
             </button>
             <button
               type="button"
