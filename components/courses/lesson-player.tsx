@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import type { RefObject } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { RotateCcw, Volume2, X, Zap } from "lucide-react";
@@ -13,17 +14,21 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { AbacusExplorer, BuildTask, QuizTask, ReadTask } from "@/components/abacus/practice";
+import { AbacusExplorer, BuildTask, QuizTask, ReadTask, type TaskHandle } from "@/components/abacus/practice";
 import { flattenCourse, lessonUrl, nodeKey } from "@/modules/course/utils";
 import { readProgress, writeProgress } from "@/modules/course/progress";
 import type { Course, LessonBlock } from "@/modules/course/types";
 
 function BlockContent({
   block,
-  onSolved,
+  solved,
+  taskRef,
+  onHasSelection,
 }: {
   block: LessonBlock;
-  onSolved: () => void;
+  solved: boolean;
+  taskRef: RefObject<TaskHandle | null>;
+  onHasSelection: (has: boolean) => void;
 }) {
   switch (block.type) {
     case "heading":
@@ -56,12 +61,37 @@ function BlockContent({
       );
     case "build":
       return (
-        <BuildTask prompt={block.prompt} target={block.target} rods={block.rods ?? 2} onSolved={onSolved} />
+        <BuildTask
+          ref={taskRef}
+          prompt={block.prompt}
+          target={block.target}
+          rods={block.rods ?? 2}
+          solved={solved}
+          onHasSelection={onHasSelection}
+        />
       );
     case "read":
-      return <ReadTask prompt={block.prompt} digits={block.digits} choices={block.choices} onSolved={onSolved} />;
+      return (
+        <ReadTask
+          ref={taskRef}
+          prompt={block.prompt}
+          digits={block.digits}
+          choices={block.choices}
+          solved={solved}
+          onHasSelection={onHasSelection}
+        />
+      );
     case "quiz":
-      return <QuizTask prompt={block.prompt} choices={block.choices} answer={block.answer} onSolved={onSolved} />;
+      return (
+        <QuizTask
+          ref={taskRef}
+          prompt={block.prompt}
+          choices={block.choices}
+          answer={block.answer}
+          solved={solved}
+          onHasSelection={onHasSelection}
+        />
+      );
     default:
       return null;
   }
@@ -88,8 +118,10 @@ export default function LessonPlayer({
 
   const [current, setCurrent] = useState(0);
   const [solved, setSolved] = useState(false);
+  const [hasSel, setHasSel] = useState(false);
   const [resetKey, setResetKey] = useState(0);
   const [showQuit, setShowQuit] = useState(false);
+  const taskRef = useRef<TaskHandle | null>(null);
 
   const total = blocks.length;
   const block = blocks[current];
@@ -111,6 +143,7 @@ export default function LessonPlayer({
     if (!ready) return;
     if (current < total - 1) {
       setSolved(false);
+      setHasSel(false);
       setCurrent((c) => c + 1);
     } else if (next) {
       completeAndGo(lessonUrl(course, next.level.slug, next.lesson.slug));
@@ -119,9 +152,18 @@ export default function LessonPlayer({
     }
   };
 
+  const handleButton = () => {
+    if (isTask && !solved) {
+      if (taskRef.current?.check()) setSolved(true);
+      return;
+    }
+    advance();
+  };
+
   const startOver = () => {
     setCurrent(0);
     setSolved(false);
+    setHasSel(false);
     setResetKey((k) => k + 1);
   };
 
@@ -178,7 +220,12 @@ export default function LessonPlayer({
             transition={{ duration: 0.25, ease: "easeOut" }}
             className="w-full max-w-2xl"
           >
-            <BlockContent block={block} onSolved={() => setSolved(true)} />
+            <BlockContent
+              block={block}
+              solved={solved}
+              taskRef={taskRef}
+              onHasSelection={setHasSel}
+            />
           </motion.div>
         </AnimatePresence>
       </main>
@@ -196,16 +243,16 @@ export default function LessonPlayer({
           </button>
           <Button
             size="lg"
-            disabled={!ready}
-            onClick={advance}
+            disabled={isTask && !hasSel && !solved}
+            onClick={handleButton}
             className="min-w-64 px-12 py-4 text-base shadow-sm"
           >
-            {isLast && ready
-              ? next
-                ? "Next lesson"
-                : "Finish course"
-              : !ready
-                ? "Check"
+            {isTask && !solved
+              ? "Check"
+              : isLast && ready
+                ? next
+                  ? "Next lesson"
+                  : "Finish course"
                 : "Continue"}
           </Button>
         </div>
