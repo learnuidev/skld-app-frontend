@@ -7,15 +7,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
+  Monitor,
+  Moon,
   RefreshCw,
   RotateCcw,
-  Volume2,
+  Sun,
   X,
-  Zap,
 } from "lucide-react";
 
 import { Abacus } from "@/components/abacus/abacus";
 import { DemoPanel } from "@/components/abacus/animated-abacus";
+import { useTheme } from "@/components/theme-provider";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -297,6 +300,57 @@ function TaskExplainer({
   );
 }
 
+function ThemeSelector() {
+  const { theme, setTheme } = useTheme();
+  const [open, setOpen] = useState(false);
+  const mode = theme === "dark" ? "Dark" : theme === "light" ? "Light" : "Auto";
+  const Icon = theme === "dark" ? Moon : theme === "light" ? Sun : Monitor;
+  const options = ["Auto", "Light", "Dark"] as const;
+
+  const choose = (option: (typeof options)[number]) => {
+    setTheme(option === "Dark" ? "dark" : option === "Light" ? "light" : "system");
+    setOpen(false);
+  };
+
+  return (
+    <div className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label="Theme"
+        className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+      >
+        <Icon className="size-5" />
+      </button>
+
+      {open ? (
+        <>
+          <div className="fixed inset-0 z-30" onClick={() => setOpen(false)} />
+          <div className="absolute right-0 z-40 mt-2 w-36 rounded-2xl border border-border bg-card p-1.5 shadow-xl">
+            {options.map((option) => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => choose(option)}
+                className={cn(
+                  "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-semibold transition-colors",
+                  mode === option
+                    ? "bg-muted text-foreground"
+                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                )}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </>
+      ) : null}
+    </div>
+  );
+}
+
 export default function LessonPlayer({
   course,
   levelSlug,
@@ -533,21 +587,8 @@ export default function LessonPlayer({
             />
           </div>
         </div>
-        <div className="flex shrink-0 items-center gap-1 text-muted-foreground">
-          <button
-            type="button"
-            aria-label="Audio"
-            className="flex size-9 items-center justify-center rounded-full transition-colors hover:bg-muted hover:text-foreground"
-          >
-            <Volume2 className="size-5" />
-          </button>
-          <button
-            type="button"
-            aria-label="Streak"
-            className="flex size-9 items-center justify-center rounded-full transition-colors hover:bg-muted hover:text-foreground"
-          >
-            <Zap className="size-5" />
-          </button>
+        <div className="flex shrink-0 items-center">
+          <ThemeSelector />
         </div>
       </header>
 
