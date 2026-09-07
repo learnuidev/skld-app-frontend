@@ -528,7 +528,7 @@ export default function LessonPlayer({
           </div>
           <div className="h-2 w-full max-w-xl overflow-hidden rounded-full bg-muted">
             <div
-              className="h-full rounded-full bg-emerald-500 transition-all duration-500"
+              className="h-full rounded-full bg-black transition-all duration-500"
               style={{ width: `${progress}%` }}
             />
           </div>
