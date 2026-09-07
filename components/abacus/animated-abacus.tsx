@@ -204,14 +204,14 @@ export function DemoPanel({
             >
               <SkipForward className="size-4" />
             </button>
-            {/* <button
+            <button
               type="button"
               onClick={restart}
               aria-label="Replay"
               className={CONTROL_BUTTON}
             >
               <RotateCcw className="size-4" />
-            </button> */}
+            </button>
           </div>
         </div>
       ) : null}

@@ -308,7 +308,9 @@ function ThemeSelector() {
   const options = ["Auto", "Light", "Dark"] as const;
 
   const choose = (option: (typeof options)[number]) => {
-    setTheme(option === "Dark" ? "dark" : option === "Light" ? "light" : "system");
+    setTheme(
+      option === "Dark" ? "dark" : option === "Light" ? "light" : "system",
+    );
     setOpen(false);
   };
 
@@ -524,7 +526,7 @@ export default function LessonPlayer({
           <X className="size-5" />
         </button>
         <div className="flex flex-1 items-center justify-center gap-3">
-          <div className="flex items-center gap-1 opacity-0 pointer-events-none transition-opacity duration-200 group-hover:opacity-100 group-hover:pointer-events-auto">
+          {/* <div className="flex items-center gap-1 opacity-0 pointer-events-none transition-opacity duration-200 group-hover:opacity-100 group-hover:pointer-events-auto">
             <Tooltip>
               <TooltipTrigger asChild>
                 <button
@@ -579,10 +581,10 @@ export default function LessonPlayer({
               </TooltipTrigger>
               <TooltipContent>Next step</TooltipContent>
             </Tooltip>
-          </div>
+          </div> */}
           <div className="h-2 w-full max-w-xl overflow-hidden rounded-full bg-muted">
             <div
-              className="h-full rounded-full bg-emerald-500 transition-all duration-500"
+              className="h-full rounded-full bg-black dark:bg-white transition-all duration-500"
               style={{ width: `${progress}%` }}
             />
           </div>
