@@ -34,6 +34,10 @@ export const chineseNumbersContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "Reading a rod is two quick questions: is the heaven bead on the beam (that's 5)? And how many earth beads are touching it? Add the two to get your digit.",
+        demo: {
+          frames: [[5], [6], [8]],
+          captions: ["五 (5): the heaven bead alone", "六 (6): heaven + one earth", "八 (8): heaven + three earth"],
+        },
       },
       {
         type: "read",
@@ -91,6 +95,10 @@ export const chineseNumbersContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "To build a number, split it into a heaven bead (5) and a handful of earth beads (1). Slide the heaven bead down for the 5, then push up the earth beads you need.",
+        demo: {
+          frames: [[0], [5], [7]],
+          captions: ["0 = 零", "五: slide the heaven bead down", "七: push two earth beads up"],
+        },
       },
       {
         type: "build",
@@ -509,6 +517,10 @@ export const chineseNumbersContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "Once 万 is your unit, the family is easy: 一万 (10,000), 十万 (100,000), 一百万 (1,000,000), 一千万 (10,000,000). The same digits 一, 十, 百, 千 come first, and 万 comes last as the unit.",
+        demo: {
+          frames: [[0, 0, 0, 0, 0], [0, 0, 0, 0, 1], [0, 0, 0, 0, 2], [0, 0, 0, 0, 3]],
+          captions: ["0 = 零", "一万 (10,000): one bead on the 万 rod", "二万 (20,000)", "三万 (30,000)"],
+        },
       },
       {
         type: "list",
@@ -679,6 +691,10 @@ export const chineseNumbersContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "亿 (yì) is 100,000,000 — a group of ten thousand 万. It arrives on the ninth rod: 个, 十, 百, 千, 万, 十万, 百万, 千万, 亿.",
+        demo: {
+          frames: [[0, 0, 0, 0, 0], [0, 0, 0, 0, 1], [0, 0, 0, 0, 9]],
+          captions: ["0 = 零", "一万: one bead on the 万 rod", "九万 — keep sliding left and you reach 亿, the ninth rod"],
+        },
       },
       {
         type: "paragraph",
@@ -731,6 +747,10 @@ export const chineseNumbersContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "On the number line, 亿 is at 10⁸ and 兆 is at 10¹² — exactly four more places, the next group of four. Read from the biggest unit down: 兆, then 亿, then 万, then the rest.",
+        demo: {
+          frames: [[0, 0, 0, 0, 0], [0, 0, 0, 0, 1], [0, 0, 0, 0, 2]],
+          captions: ["0 = 零", "一万: the 万 rod", "二万 — jump left by groups of four to reach 亿, then 兆"],
+        },
       },
       {
         type: "quiz",
@@ -774,6 +794,10 @@ export const chineseNumbersContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "Here is the rule that builds the whole ladder: after 千, every next big unit is ten thousand times the one before it. This is called 万进 (wàn jìn) — \"myriad progression\".",
+        demo: {
+          frames: [[0, 0, 0, 0, 0], [0, 0, 0, 1, 0], [0, 0, 0, 0, 1]],
+          captions: ["0 = 零", "一千 (10³): the 4th rod", "一万 (10⁴): the 5th rod — the ×10,000 leap of 万进"],
+        },
       },
       {
         type: "list",
@@ -872,6 +896,10 @@ export const chineseNumbersContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "Because Chinese leaps by 万 (10⁴), you read a big number by marking off every four digits from the right. The first four are plain (个 十 百 千); the next group gets 万; then 亿; then 兆.",
+        demo: {
+          frames: [[0, 0, 0, 0, 0], [5, 4, 3, 2, 1]],
+          captions: ["0 = 零", "12,345: the rightmost four rods are one group, the 万 rod starts the next"],
+        },
       },
       {
         type: "list",
@@ -916,6 +944,10 @@ export const chineseNumbersContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "Read a big number in layers, biggest unit first: say the 兆 group (tag 兆), then the 亿 group (tag 亿), then the 万 group (tag 万), then whatever is left. Each group is read like a normal four-digit number, with its unit tagged on.",
+        demo: {
+          frames: [[0, 0, 0, 0, 0], [9, 8, 7, 6, 5]],
+          captions: ["0 = 零", "五万六千七百八十九 (56,789): read the 万 group first, then the rest"],
+        },
       },
       {
         type: "paragraph",
@@ -963,6 +995,10 @@ export const chineseNumbersContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "Each group is read like its own four-digit number, so the 零 rule works the same way inside a group. If a group's middle is empty, write 零. If a whole group is empty, skip it entirely.",
+        demo: {
+          frames: [[0, 0, 0, 0, 0], [1, 0, 0, 0, 1]],
+          captions: ["0 = 零", "一万零一 (10,001): the empty rods in the middle are the 零"],
+        },
       },
       {
         type: "paragraph",
@@ -1013,6 +1049,10 @@ export const chineseNumbersContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "Every rod on the abacus is one place: 个 十 百 千 万 十万 百万 千万 亿 十亿 百亿 千亿 兆. The abacus is purely positional — the beads have no idea which unit they are, you read them by their rod.",
+        demo: {
+          frames: [[0, 0, 0, 0, 0], [0, 0, 0, 0, 1]],
+          captions: ["0 = 零", "One bead on the fifth rod = 万 — every fourth rod is a new unit"],
+        },
       },
       {
         type: "paragraph",
