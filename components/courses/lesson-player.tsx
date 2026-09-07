@@ -15,6 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   AbacusExplorer,
   BuildTask,
@@ -312,14 +313,19 @@ export default function LessonPlayer({
           <X className="size-5" />
         </button>
         <div className="flex flex-1 items-center justify-center gap-3">
-          <button
-            type="button"
-            onClick={startOver}
-            className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <RotateCcw className="size-4" />
-            Start over
-          </button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                onClick={startOver}
+                aria-label="Start over"
+                className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              >
+                <RotateCcw className="size-4" />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>Start over</TooltipContent>
+          </Tooltip>
           <div className="h-2 w-full max-w-xl overflow-hidden rounded-full bg-muted">
             <div
               className="h-full rounded-full bg-emerald-500 transition-all duration-500"
