@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 
 import { Abacus } from "@/components/abacus/abacus";
+import { AnimatedAbacus } from "@/components/abacus/animated-abacus";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -67,9 +68,19 @@ function BlockContent({
       );
     case "paragraph":
       return (
-        <p className="mx-auto max-w-xl text-center text-lg leading-relaxed text-foreground/85">
-          {block.text}
-        </p>
+        <div className="flex flex-col items-center gap-6">
+          <p className="mx-auto max-w-xl text-center text-lg leading-relaxed text-foreground/85">
+            {block.text}
+          </p>
+          {block.demo ? (
+            <AnimatedAbacus
+              frames={block.demo.frames}
+              captions={block.demo.captions}
+              label={block.demo.label ?? "Example"}
+              scale={0.8}
+            />
+          ) : null}
+        </div>
       );
     case "list":
       return (
@@ -181,6 +192,16 @@ function ExplanationDialog({
               readOnly
               scale={0.8}
               label="Explanation"
+            />
+          </div>
+        ) : visual?.kind === "abacus-anim" ? (
+          <div className="mt-6 flex justify-center">
+            <AnimatedAbacus
+              key={`abacus-anim-${current}`}
+              frames={visual.frames}
+              captions={visual.captions}
+              label={visual.label ?? "Example"}
+              scale={0.8}
             />
           </div>
         ) : visual?.kind === "image" ? (

@@ -33,9 +33,24 @@ export interface Course {
   sample?: number[];
 }
 
+/**
+ * An animated abacus demonstration: a sequence of abacus states (frames) that
+ * plays through to illustrate a move step by step. `frames[i]` holds the digits
+ * for state `i` (digits[0] is the units rod). All frames should use the same
+ * number of rods.
+ */
+export interface AbacusDemo {
+  frames: number[][];
+  /** Optional caption per frame, shown alongside the current step. */
+  captions?: string[];
+  /** Optional accessible label for the abacus. */
+  label?: string;
+}
+
 /** An optional visual shown inside an explanation dialog. */
 export type ExplanationVisual =
   | { kind: "abacus"; digits: number[] }
+  | ({ kind: "abacus-anim" } & AbacusDemo)
   | { kind: "image"; src: string; alt?: string };
 
 /** One animated step of an explanation walkthrough. */
@@ -55,7 +70,7 @@ export interface LessonExplanation {
 
 export type LessonBlock =
   | { type: "heading"; text: string }
-  | { type: "paragraph"; text: string }
+  | { type: "paragraph"; text: string; demo?: AbacusDemo }
   | { type: "list"; items: string[] }
   | { type: "explore"; label: string; rods: number; initial: number[] }
   | { type: "build"; prompt: string; target: number; rods?: number; explanation?: LessonExplanation }

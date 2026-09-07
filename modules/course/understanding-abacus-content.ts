@@ -42,10 +42,18 @@ export const understandingAbacusContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "Earth beads below the beam each count 1. Slide one up to the beam and the rod shows 1. Slide all four and it shows 4.",
+        demo: {
+          frames: [[0], [1], [2], [3], [4]],
+          captions: ["0", "1: one earth bead", "2: two earth beads", "3: three earth beads", "4: all four earth beads"],
+        },
       },
       {
         type: "paragraph",
         text: "The single heaven bead above the beam counts 5 all by itself. When it touches the beam, the rod is worth 5 — even though it's only one bead.",
+        demo: {
+          frames: [[0], [5]],
+          captions: ["0", "heaven bead down → 5"],
+        },
       },
       {
         type: "read",
@@ -161,6 +169,10 @@ export const understandingAbacusContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "Earth beads count 1, 2, 3, 4. Slide them up to the beam one at a time. Slide one bead and the rod shows 1; slide four and it shows 4.",
+        demo: {
+          frames: [[0], [1], [2], [3], [4]],
+          captions: ["0", "1", "2", "3", "4"],
+        },
       },
       {
         type: "build",
@@ -192,10 +204,18 @@ export const understandingAbacusContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "To show 5, don't try to invent a fifth earth bead — slide the heaven bead down to the beam instead. It is worth 5 on its own.",
+        demo: {
+          frames: [[0], [4], [5]],
+          captions: ["0", "4: all four earth beads", "5: slide the heaven bead down instead"],
+        },
       },
       {
         type: "paragraph",
         text: "Now combine the two kinds of beads. 6 is heaven plus one earth. 9 is heaven plus all four earth beads. The heaven bead's five friends are the earth beads below it.",
+        demo: {
+          frames: [[0], [5], [6], [9]],
+          captions: ["0", "5: heaven bead", "6: heaven + 1 earth", "9: heaven + all four earth"],
+        },
       },
       {
         type: "read",
@@ -387,6 +407,10 @@ export const understandingAbacusContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "To build a two-digit number, take the number apart by place value. For 47 you need 4 tens on the left rod and 7 ones on the right rod.",
+        demo: {
+          frames: [[0, 0], [0, 4], [7, 4]],
+          captions: ["0", "4 on the tens rod → 40", "7 on the ones rod → 47"],
+        },
       },
       {
         type: "build",
@@ -603,10 +627,26 @@ export const understandingAbacusContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "There are only four earth beads, so you can't add 4 by sliding four more beads when the rod is already busy. Instead, think in fives: to add 4, slide the heaven bead down (+5) and take one earth bead away (−1).",
+        demo: {
+          frames: [[3], [8], [7]],
+          captions: [
+            "Start: 3 — only one earth bead is free",
+            "+5: slide the heaven bead down → 8",
+            "−1: take one earth bead away → 7",
+          ],
+        },
       },
       {
         type: "paragraph",
         text: "The earth bead you remove is the addend's friend of five. The pairs are 1 ↔ 4 and 2 ↔ 3. So to add 4 you use +5 −1; to add 3 you use +5 −2.",
+        demo: {
+          frames: [[2], [7], [5]],
+          captions: [
+            "Start: 2",
+            "+5: slide the heaven bead down → 7",
+            "−2: take two earth beads away → 5",
+          ],
+        },
       },
       {
         type: "build",
@@ -616,7 +656,14 @@ export const understandingAbacusContent: CourseContentMap = {
         explanation: {
           steps: [
             { text: "2 + 4 = 6, so the rod must show 6." },
-            { text: "Show 6 as the heaven bead (5) plus one earth bead (1)." },
+            {
+              text: "Show 6 as the heaven bead (5) plus one earth bead (1).",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [5], [6]],
+                captions: ["0", "5: heaven bead", "+1 earth bead → 6"],
+              },
+            },
           ],
         },
       },
@@ -638,10 +685,21 @@ export const understandingAbacusContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "When a rod runs out of room, you carry — exactly like written arithmetic. To add 8 + 5 you can't fit 13 ones on one rod, so you record 3 on the ones rod and carry 1 to the tens rod: 13.",
+        demo: {
+          frames: [[8, 0], [3, 1]],
+          captions: [
+            "Start: 8 ones — no room for 5 more",
+            "Carry: record 3 ones, carry 1 ten → 13",
+          ],
+        },
       },
       {
         type: "paragraph",
         text: "Carrying is a sign that you've filled a rod to its limit: four earth beads plus a heaven bead is the most a rod can show, which is 9.",
+        demo: {
+          frames: [[0], [5], [9]],
+          captions: ["0", "5: heaven bead", "9: heaven + all four earth — the rod's limit"],
+        },
       },
       {
         type: "build",
@@ -652,7 +710,14 @@ export const understandingAbacusContent: CourseContentMap = {
           steps: [
             { text: "8 + 5 = 13, so show 1 ten and 3 ones." },
             { text: "The ones rod fills past 9, so you carry 1 to the tens rod." },
-            { text: "Set the carried 1 on the tens rod and 3 on the ones rod." },
+            {
+              text: "Set the carried 1 on the tens rod and 3 on the ones rod.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[8, 0], [3, 1]],
+                captions: ["8 ones — can't fit 5 more", "carry 1 ten → 13"],
+              },
+            },
           ],
         },
       },
@@ -789,6 +854,13 @@ export const understandingAbacusContent: CourseContentMap = {
       {
         type: "paragraph",
         text: "For 13 − 5 the ones can't lose 5, so you borrow: the tens rod loses one (13 → 3) and you add the friend of ten back. 13 − 5 = 8.",
+        demo: {
+          frames: [[3, 1], [8, 0]],
+          captions: [
+            "Start: 13 (1 ten + 3 ones)",
+            "Borrow 1 ten, then 13 − 5 = 8",
+          ],
+        },
       },
       {
         type: "build",

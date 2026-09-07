@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, Award, Check, Lock, Play, RotateCcw } from "lucide-react";
+import { ArrowRight, Award, Check, Play, RotateCcw } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -26,18 +26,16 @@ export default function CourseExplorer({ course }: { course: Course }) {
 
   const completedSet = useMemo(() => new Set(completed), [completed]);
 
-  const nodeState = nodes.map((node, index) => {
+  const nodeState = nodes.map((node) => {
     const key = nodeKey(node.level, node.lesson);
     const done = completedSet.has(key);
-    const unlocked =
-      done || index === 0 || nodes.slice(0, index).every((n) => completedSet.has(nodeKey(n.level, n.lesson)));
-    return { node, index, key, done, unlocked };
+    return { node, key, done };
   });
 
   const doneCount = nodeState.filter((s) => s.done).length;
   const percent = doneCount === 0 ? 0 : Math.round((doneCount / nodes.length) * 100);
   const complete = doneCount === nodes.length;
-  const current = nodeState.find((s) => !s.done && s.unlocked);
+  const current = nodeState.find((s) => !s.done);
 
   const startHref = current
     ? lessonUrl(course, current.node.level.slug, current.node.lesson.slug)
@@ -152,7 +150,6 @@ export default function CourseExplorer({ course }: { course: Course }) {
         {course.levels.map((level, levelIndex) => {
           const levelState = nodeState.filter((s) => s.node.level.slug === level.slug);
           const levelDone = levelState.every((s) => s.done);
-          const locked = !levelState[0]?.unlocked;
 
           return (
             <section
@@ -172,20 +169,14 @@ export default function CourseExplorer({ course }: { course: Course }) {
                     <Check className="size-3.5" />
                     Complete
                   </span>
-                ) : locked ? (
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-muted px-3 py-1 text-xs font-bold text-muted-foreground">
-                    <Lock className="size-3.5" />
-                    Locked
-                  </span>
                 ) : null}
               </div>
 
               <ul className="divide-y divide-border/70">
                 {levelState.map((state) => {
-                  const { node, unlocked, done } = state;
+                  const { node, done } = state;
                   return (
                     <li key={state.key}>
-                    {unlocked ? (
                       <Link
                         href={lessonUrl(course, node.level.slug, node.lesson.slug)}
                         className="group flex items-center gap-4 px-6 py-4 transition-colors hover:bg-muted/60 sm:px-8"
@@ -215,21 +206,7 @@ export default function CourseExplorer({ course }: { course: Course }) {
                           </span>
                         </span>
                       </Link>
-                    ) : (
-                      <div className="flex items-center gap-4 px-6 py-4 opacity-60 sm:px-8">
-                        <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">
-                          <Lock className="size-4" />
-                        </span>
-                        <span className="min-w-0 flex-1">
-                          <span className="font-semibold">{node.lesson.title}</span>
-                          <span className="block text-sm text-muted-foreground">{node.lesson.blurb}</span>
-                        </span>
-                        <span className="hidden shrink-0 text-sm font-medium text-muted-foreground sm:block">
-                          Finish previous lessons
-                        </span>
-                      </div>
-                    )}
-                  </li>
+                    </li>
                   );
                 })}
               </ul>
