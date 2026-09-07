@@ -314,7 +314,15 @@ export default function LessonPlayer({
         >
           <X className="size-5" />
         </button>
-        <div className="flex flex-1 justify-center">
+        <div className="flex flex-1 items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={startOver}
+            className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <RotateCcw className="size-4" />
+            Start over
+          </button>
           <div className="h-2 w-full max-w-xl overflow-hidden rounded-full bg-muted">
             <div
               className="h-full rounded-full bg-emerald-500 transition-all duration-500"
@@ -364,61 +372,38 @@ export default function LessonPlayer({
 
       {/* Bottom controls */}
       <footer className="px-4 pb-10">
-        <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-4">
-          <button
-            type="button"
-            onClick={startOver}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <RotateCcw className="size-4" />
-            Start over
-          </button>
-
-          <div className="flex w-full items-center justify-between gap-3">
-            <div className="flex min-w-24 shrink-0 items-center">
-              {isTask && attempted ? (
-                solved ? (
-                  <span className="font-semibold text-emerald-600">
-                    Correct
-                  </span>
-                ) : (
-                  <span className="font-semibold text-red-600">Incorrect</span>
-                )
-              ) : null}
-            </div>
-
-            <div className="flex items-center gap-3">
-              {isTask && attempted && taskBlock?.explanation ? (
-                <TaskExplainer
-                  task={taskBlock}
-                  onShow={() => setExplanation(taskBlock.explanation!)}
-                />
-              ) : null}
-              {isTask && attempted && !solved ? (
-                <Button
-                  variant="ghost"
-                  size="lg"
-                  onClick={retryTask}
-                  className="min-w-24 px-6 py-4 text-base"
-                >
-                  Try again
-                </Button>
-              ) : null}
+        <div className="mx-auto flex w-full max-w-2xl">
+          <div className="relative flex w-full items-center justify-center gap-3">
+            {isTask && attempted && taskBlock?.explanation ? (
+              <TaskExplainer
+                task={taskBlock}
+                onShow={() => setExplanation(taskBlock.explanation!)}
+              />
+            ) : null}
+            {isTask && attempted && !solved ? (
               <Button
+                variant="ghost"
                 size="lg"
-                disabled={isTask && !attempted && !hasSel}
-                onClick={handleButton}
-                className="min-w-64 px-12 py-4 text-base shadow-sm"
+                onClick={retryTask}
+                className="min-w-24 px-6 py-4 text-base"
               >
-                {isTask && !attempted
-                  ? "Check"
-                  : isLast && ready
-                    ? next
-                      ? "Next lesson"
-                      : "Finish course"
-                    : "Continue"}
+                Try again
               </Button>
-            </div>
+            ) : null}
+            <Button
+              size="lg"
+              disabled={isTask && !attempted && !hasSel}
+              onClick={handleButton}
+              className="min-w-64 px-12 py-4 text-base shadow-sm"
+            >
+              {isTask && !attempted
+                ? "Check"
+                : isLast && ready
+                  ? next
+                    ? "Next lesson"
+                    : "Finish course"
+                  : "Continue"}
+            </Button>
           </div>
         </div>
       </footer>
