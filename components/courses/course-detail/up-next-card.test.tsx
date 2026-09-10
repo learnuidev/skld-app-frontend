@@ -5,6 +5,7 @@ import {
   HIDE_AFTER_PX,
   SHOW_BEFORE_PX,
 } from "@/components/courses/course-detail/hide-on-scroll";
+import { LevelSection } from "@/components/courses/course-detail/level-section";
 import { UpNextCard } from "@/components/courses/course-detail/up-next-card";
 import { buildCoursePath, summarizeProgress } from "@/modules/course/path";
 import { nodeKey } from "@/modules/course/utils";
@@ -15,6 +16,12 @@ const reviewHref = "/courses/test-course/foundations/first-bead";
 
 /** Past the card's default show threshold, so it is hidden whichever way you scroll. */
 const PAST_SHOW = SHOW_BEFORE_PX + 100;
+
+/** Read the numeric z-index out of a Tailwind `z-*` class. */
+function zIndexOf(element: Element | null): number {
+  const match = typeof element?.className === "string" ? element.className.match(/\bz-(\d+)/) : null;
+  return match ? Number(match[1]) : 0;
+}
 
 /** Move the page and let the scroll listener react. */
 function scrollTo(y: number) {
@@ -158,5 +165,27 @@ describe("UpNextCard", () => {
     scrollTo(loose.showBeforePx);
 
     expect(container.firstElementChild).toHaveAttribute("aria-hidden", "true");
+  });
+
+  it("stacks above the sticky level headers", () => {
+    const levels = buildCoursePath(course, []);
+    const { container } = render(
+      <>
+        <LevelSection level={levels[0]} />
+        <UpNextCard
+          courseTitle={course.title}
+          lesson={levels[0].lessons[0]}
+          progress={summarizeProgress(levels)}
+          reviewHref={reviewHref}
+        />
+      </>,
+    );
+
+    const header = container.querySelector('section[aria-label^="Level"] div.sticky');
+    const card = container.querySelector("div.sticky.bottom-10");
+
+    // A level header scrolling past must tuck behind the card, never cover it.
+    expect(zIndexOf(header)).toBeGreaterThan(0);
+    expect(zIndexOf(card)).toBeGreaterThan(zIndexOf(header));
   });
 });
