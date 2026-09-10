@@ -141,9 +141,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 1,
         explanation: {
           steps: [
-            { text: "7 is a heaven bead (5) plus two earth beads (2)." },
-            { text: "Slide the heaven bead down to the beam for 5." },
-            { text: "Push up two earth beads to add the extra 2, showing 7." },
+            {
+              text: "7 is a heaven bead (5) plus two earth beads (2).",
+              visual: { kind: "abacus", digits: [7] },
+            },
+            {
+              text: "Slide the heaven bead down to the beam for 5.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [5]],
+                captions: ["Empty rod", "Heaven bead down → 5"],
+              },
+            },
+            {
+              text: "Push up two earth beads to add the extra 2, showing 7.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[5], [7]],
+                captions: ["5 on the rod", "Push up two earth beads → 7"],
+              },
+            },
           ],
         },
       },
@@ -154,9 +171,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 1,
         explanation: {
           steps: [
-            { text: "9 is a heaven bead (5) plus four earth beads (4)." },
-            { text: "Slide the heaven bead down to the beam for 5." },
-            { text: "Push all four earth beads up to add 4, showing 9." },
+            {
+              text: "9 is a heaven bead (5) plus four earth beads (4).",
+              visual: { kind: "abacus", digits: [9] },
+            },
+            {
+              text: "Slide the heaven bead down to the beam for 5.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [5]],
+                captions: ["Empty rod", "Heaven bead down → 5"],
+              },
+            },
+            {
+              text: "Push all four earth beads up to add 4, showing 9.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[5], [9]],
+                captions: ["5 on the rod", "Push up four earth beads → 9"],
+              },
+            },
           ],
         },
       },
@@ -181,8 +215,18 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 1,
         explanation: {
           steps: [
-            { text: "4 needs four earth beads, each worth 1." },
-            { text: "Push all four earth beads up to the beam to show 4." },
+            {
+              text: "4 needs four earth beads, each worth 1.",
+              visual: { kind: "abacus", digits: [4] },
+            },
+            {
+              text: "Push all four earth beads up to the beam to show 4.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [4]],
+                captions: ["Empty rod", "Four earth beads up → 4"],
+              },
+            },
           ],
         },
       },
@@ -298,25 +342,62 @@ export const understandingAbacusContent: CourseContentMap = {
       { type: "build", prompt: "Show 5 on the rod.", target: 5, rods: 1,
         explanation: {
           steps: [
-            { text: "5 needs only the heaven bead, worth 5 on its own." },
-            { text: "Slide it down to the beam and leave the earth beads down." },
+            {
+              text: "5 needs only the heaven bead, worth 5 on its own.",
+              visual: { kind: "abacus", digits: [5] },
+            },
+            {
+              text: "Slide it down to the beam and leave the earth beads down.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [5]],
+                captions: ["Empty rod", "Heaven bead down → 5"],
+              },
+            },
           ],
         },
       },
       { type: "build", prompt: "Show 8 on the rod.", target: 8, rods: 1,
         explanation: {
           steps: [
-            { text: "8 is 5 plus 3." },
-            { text: "Slide the heaven bead down for the 5." },
-            { text: "Push three earth beads up to add the 3." },
+            {
+              text: "8 is 5 plus 3.",
+              visual: { kind: "abacus", digits: [8] },
+            },
+            {
+              text: "Slide the heaven bead down for the 5.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [5]],
+                captions: ["Empty rod", "Heaven bead down → 5"],
+              },
+            },
+            {
+              text: "Push three earth beads up to add the 3.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[5], [8]],
+                captions: ["5 on the rod", "Push up three earth beads → 8"],
+              },
+            },
           ],
         },
       },
       { type: "build", prompt: "Show 6 on the rod.", target: 6, rods: 1,
         explanation: {
           steps: [
-            { text: "6 is the heaven bead (5) plus one earth bead (1)." },
-            { text: "Slide both to the beam to show 6." },
+            {
+              text: "6 is the heaven bead (5) plus one earth bead (1).",
+              visual: { kind: "abacus", digits: [6] },
+            },
+            {
+              text: "Slide both to the beam to show 6.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [6]],
+                captions: ["Empty rod", "Heaven (5) + one earth (1) → 6"],
+              },
+            },
           ],
         },
       },
@@ -344,8 +425,18 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 1,
         explanation: {
           steps: [
-            { text: "3 needs three earth beads, each worth 1." },
-            { text: "Push three beads up to the beam to show 3." },
+            {
+              text: "3 needs three earth beads, each worth 1.",
+              visual: { kind: "abacus", digits: [3] },
+            },
+            {
+              text: "Push three beads up to the beam to show 3.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [3]],
+                captions: ["Empty rod", "Three earth beads up → 3"],
+              },
+            },
           ],
         },
       },
@@ -356,9 +447,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 1,
         explanation: {
           steps: [
-            { text: "9 is 5 plus 4." },
-            { text: "Slide the heaven bead down for the 5." },
-            { text: "Push all four earth beads up to add the 4." },
+            {
+              text: "9 is 5 plus 4.",
+              visual: { kind: "abacus", digits: [9] },
+            },
+            {
+              text: "Slide the heaven bead down for the 5.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [5]],
+                captions: ["Empty rod", "Heaven bead down → 5"],
+              },
+            },
+            {
+              text: "Push all four earth beads up to add the 4.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[5], [9]],
+                captions: ["5 on the rod", "Push up four earth beads → 9"],
+              },
+            },
           ],
         },
       },
@@ -419,9 +527,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "23 is 2 tens and 3 ones." },
-            { text: "Put 2 on the tens rod." },
-            { text: "Put 3 on the ones rod, and the abacus shows 23." },
+            {
+              text: "23 is 2 tens and 3 ones.",
+              visual: { kind: "abacus", digits: [3, 2] },
+            },
+            {
+              text: "Put 2 on the tens rod.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0], [0, 2]],
+                captions: ["Empty abacus", "Two earth beads on the tens rod → 20"],
+              },
+            },
+            {
+              text: "Put 3 on the ones rod, and the abacus shows 23.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 2], [3, 2]],
+                captions: ["20 on the abacus", "Three earth beads on the ones rod → 23"],
+              },
+            },
           ],
         },
       },
@@ -432,9 +557,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "47 is 4 tens and 7 ones." },
-            { text: "Put 4 on the tens rod." },
-            { text: "Put 7 on the ones rod, and the abacus shows 47." },
+            {
+              text: "47 is 4 tens and 7 ones.",
+              visual: { kind: "abacus", digits: [7, 4] },
+            },
+            {
+              text: "Put 4 on the tens rod.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0], [0, 4]],
+                captions: ["Empty abacus", "Four earth beads on the tens rod → 40"],
+              },
+            },
+            {
+              text: "Put 7 on the ones rod, and the abacus shows 47.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 4], [7, 4]],
+                captions: ["40 on the abacus", "Heaven (5) + two earth (2) on the ones rod → 47"],
+              },
+            },
           ],
         },
       },
@@ -445,9 +587,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "52 is 5 tens and 2 ones." },
-            { text: "Show 5 on the tens rod using the heaven bead." },
-            { text: "Show 2 on the ones rod, and the abacus shows 52." },
+            {
+              text: "52 is 5 tens and 2 ones.",
+              visual: { kind: "abacus", digits: [2, 5] },
+            },
+            {
+              text: "Show 5 on the tens rod using the heaven bead.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0], [0, 5]],
+                captions: ["Empty abacus", "Heaven bead on the tens rod → 50"],
+              },
+            },
+            {
+              text: "Show 2 on the ones rod, and the abacus shows 52.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 5], [2, 5]],
+                captions: ["50 on the abacus", "Two earth beads on the ones rod → 52"],
+              },
+            },
           ],
         },
       },
@@ -489,8 +648,18 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "40 is 4 tens and 0 ones." },
-            { text: "Show 4 on the tens rod and leave the ones rod empty." },
+            {
+              text: "40 is 4 tens and 0 ones.",
+              visual: { kind: "abacus", digits: [0, 4] },
+            },
+            {
+              text: "Show 4 on the tens rod and leave the ones rod empty.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0], [0, 4]],
+                captions: ["Empty abacus", "Four earth beads on the tens rod → 40"],
+              },
+            },
           ],
         },
       },
@@ -533,9 +702,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 3,
         explanation: {
           steps: [
-            { text: "305 is 3 hundreds, 0 tens, and 5 ones." },
-            { text: "Show 3 on the hundreds rod and leave the tens rod empty." },
-            { text: "Show 5 on the ones rod to finish 305." },
+            {
+              text: "305 is 3 hundreds, 0 tens, and 5 ones.",
+              visual: { kind: "abacus", digits: [5, 0, 3] },
+            },
+            {
+              text: "Show 3 on the hundreds rod and leave the tens rod empty.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0, 0], [0, 0, 3]],
+                captions: ["Empty abacus", "Three earth beads on the hundreds rod → 300"],
+              },
+            },
+            {
+              text: "Show 5 on the ones rod to finish 305.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0, 3], [5, 0, 3]],
+                captions: ["300 on the abacus", "Heaven bead on the ones rod → 305"],
+              },
+            },
           ],
         },
       },
@@ -550,9 +736,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "57 is 5 tens and 7 ones." },
-            { text: "Show 5 on the tens rod using the heaven bead." },
-            { text: "Show 7 on the ones rod, and the abacus shows 57." },
+            {
+              text: "57 is 5 tens and 7 ones.",
+              visual: { kind: "abacus", digits: [7, 5] },
+            },
+            {
+              text: "Show 5 on the tens rod using the heaven bead.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0], [0, 5]],
+                captions: ["Empty abacus", "Heaven bead on the tens rod → 50"],
+              },
+            },
+            {
+              text: "Show 7 on the ones rod, and the abacus shows 57.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 5], [7, 5]],
+                captions: ["50 on the abacus", "Heaven (5) + two earth (2) on the ones rod → 57"],
+              },
+            },
           ],
         },
       },
@@ -575,9 +778,22 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 3,
         explanation: {
           steps: [
-            { text: "120 is 1 hundred, 2 tens, and 0 ones." },
-            { text: "Show 1 on the hundreds rod and 2 on the tens rod." },
-            { text: "Leave the ones rod empty to finish 120." },
+            {
+              text: "120 is 1 hundred, 2 tens, and 0 ones.",
+              visual: { kind: "abacus", digits: [0, 2, 1] },
+            },
+            {
+              text: "Show 1 on the hundreds rod and 2 on the tens rod.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0, 0], [0, 2, 1]],
+                captions: ["Empty abacus", "One earth on the hundreds, two on the tens → 120"],
+              },
+            },
+            {
+              text: "Leave the ones rod empty to finish 120.",
+              visual: { kind: "abacus", digits: [0, 2, 1] },
+            },
           ],
         },
       },
@@ -602,9 +818,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "12 + 13 = 25, so show 2 tens and 5 ones." },
-            { text: "Set 2 on the tens rod using two earth beads." },
-            { text: "Set 5 on the ones rod using the heaven bead." },
+            {
+              text: "12 + 13 = 25, so show 2 tens and 5 ones.",
+              visual: { kind: "abacus", digits: [5, 2] },
+            },
+            {
+              text: "Set 2 on the tens rod using two earth beads.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0], [0, 2]],
+                captions: ["Empty abacus", "Two earth beads on the tens rod → 20"],
+              },
+            },
+            {
+              text: "Set 5 on the ones rod using the heaven bead.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 2], [5, 2]],
+                captions: ["20 on the abacus", "Heaven bead on the ones rod → 25"],
+              },
+            },
           ],
         },
       },
@@ -615,9 +848,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "31 + 22 = 53, so show 5 tens and 3 ones." },
-            { text: "Set 5 on the tens rod using the heaven bead." },
-            { text: "Set 3 on the ones rod using three earth beads." },
+            {
+              text: "31 + 22 = 53, so show 5 tens and 3 ones.",
+              visual: { kind: "abacus", digits: [3, 5] },
+            },
+            {
+              text: "Set 5 on the tens rod using the heaven bead.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0], [0, 5]],
+                captions: ["Empty abacus", "Heaven bead on the tens rod → 50"],
+              },
+            },
+            {
+              text: "Set 3 on the ones rod using three earth beads.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 5], [3, 5]],
+                captions: ["50 on the abacus", "Three earth beads on the ones rod → 53"],
+              },
+            },
           ],
         },
       },
@@ -674,8 +924,18 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "4 + 4 + 4 = 12, so show 1 ten and 2 ones." },
-            { text: "Set 1 on the tens rod and 2 on the ones rod." },
+            {
+              text: "4 + 4 + 4 = 12, so show 1 ten and 2 ones.",
+              visual: { kind: "abacus", digits: [2, 1] },
+            },
+            {
+              text: "Set 1 on the tens rod and 2 on the ones rod.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0], [2, 1]],
+                captions: ["Empty abacus", "One ten and two ones → 12"],
+              },
+            },
           ],
         },
       },
@@ -728,9 +988,22 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "9 + 9 = 18, so show 1 ten and 8 ones." },
-            { text: "The ones rod is full, so the extra 10 carries over." },
-            { text: "Set the carried 1 on the tens rod and 8 on the ones rod." },
+            {
+              text: "9 + 9 = 18, so show 1 ten and 8 ones.",
+              visual: { kind: "abacus", digits: [8, 1] },
+            },
+            {
+              text: "The ones rod is full, so the extra 10 carries over.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[9, 0], [8, 1]],
+                captions: ["9 ones — the rod is full", "Carry one ten: 8 ones and 1 ten → 18"],
+              },
+            },
+            {
+              text: "Set the carried 1 on the tens rod and 8 on the ones rod.",
+              visual: { kind: "abacus", digits: [8, 1] },
+            },
           ],
         },
       },
@@ -748,9 +1021,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "27 + 15 = 42, so show 4 tens and 2 ones." },
-            { text: "The ones add up past 9, so carry 1 to the tens place." },
-            { text: "Set 4 on the tens rod and 2 on the ones rod." },
+            {
+              text: "27 + 15 = 42, so show 4 tens and 2 ones.",
+              visual: { kind: "abacus", digits: [2, 4] },
+            },
+            {
+              text: "The ones add up past 9, so carry 1 to the tens place.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[9, 2], [2, 3]],
+                captions: ["7 + 5 fills the ones rod: 9 ones, 3 left over", "Carry 1 ten: 2 ones and 3 tens → 32"],
+              },
+            },
+            {
+              text: "Set 4 on the tens rod and 2 on the ones rod.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[2, 3], [2, 4]],
+                captions: ["32 so far", "Add the last ten → 42"],
+              },
+            },
           ],
         },
       },
@@ -761,9 +1051,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "58 + 27 = 85, so show 8 tens and 5 ones." },
-            { text: "The ones add past 9, so carry 1 to the tens place." },
-            { text: "Set 8 on the tens rod and 5 on the ones rod." },
+            {
+              text: "58 + 27 = 85, so show 8 tens and 5 ones.",
+              visual: { kind: "abacus", digits: [5, 8] },
+            },
+            {
+              text: "The ones add past 9, so carry 1 to the tens place.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[9, 5], [5, 6]],
+                captions: ["8 + 7 fills the ones rod: 9 ones, 6 left over", "Carry 1 ten: 5 ones and 6 tens → 65"],
+              },
+            },
+            {
+              text: "Set 8 on the tens rod and 5 on the ones rod.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[5, 6], [5, 8]],
+                captions: ["65 so far", "Add the last two tens → 85"],
+              },
+            },
           ],
         },
       },
@@ -778,9 +1085,22 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "3 + 8 = 11, so show 1 ten and 1 one." },
-            { text: "The ones rod fills past 9, so the extra ten carries." },
-            { text: "Set the carried 1 on the tens rod and 1 on the ones rod." },
+            {
+              text: "3 + 8 = 11, so show 1 ten and 1 one.",
+              visual: { kind: "abacus", digits: [1, 1] },
+            },
+            {
+              text: "The ones rod fills past 9, so the extra ten carries.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[9, 0], [1, 1]],
+                captions: ["3 + 8 fills the ones rod: 9 ones, 2 left over", "Carry 1 ten: 1 one and 1 ten → 11"],
+              },
+            },
+            {
+              text: "Set the carried 1 on the tens rod and 1 on the ones rod.",
+              visual: { kind: "abacus", digits: [1, 1] },
+            },
           ],
         },
       },
@@ -791,8 +1111,18 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "4 + 5 + 6 = 15, so show 1 ten and 5 ones." },
-            { text: "Set 1 on the tens rod and 5 on the ones rod." },
+            {
+              text: "4 + 5 + 6 = 15, so show 1 ten and 5 ones.",
+              visual: { kind: "abacus", digits: [5, 1] },
+            },
+            {
+              text: "Set 1 on the tens rod and 5 on the ones rod.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0], [5, 1]],
+                captions: ["Empty abacus", "One ten and five ones → 15"],
+              },
+            },
           ],
         },
       },
@@ -803,9 +1133,22 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "18 + 8 = 26, so show 2 tens and 6 ones." },
-            { text: "The ones rod fills past 9, so the extra ten carries." },
-            { text: "Set 2 on the tens rod and 6 on the ones rod." },
+            {
+              text: "18 + 8 = 26, so show 2 tens and 6 ones.",
+              visual: { kind: "abacus", digits: [6, 2] },
+            },
+            {
+              text: "The ones rod fills past 9, so the extra ten carries.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[9, 1], [6, 2]],
+                captions: ["8 + 8 fills the ones rod: 9 ones, 7 left over", "Carry 1 ten: 6 ones and 2 tens → 26"],
+              },
+            },
+            {
+              text: "Set 2 on the tens rod and 6 on the ones rod.",
+              visual: { kind: "abacus", digits: [6, 2] },
+            },
           ],
         },
       },
@@ -826,9 +1169,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 1,
         explanation: {
           steps: [
-            { text: "9 take away 3 is 6." },
-            { text: "Slide three earth beads away from the beam to remove the 3." },
-            { text: "The heaven bead plus one remaining earth bead shows 6." },
+            {
+              text: "9 take away 3 is 6.",
+              visual: { kind: "abacus", digits: [6] },
+            },
+            {
+              text: "Slide three earth beads away from the beam to remove the 3.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[9], [6]],
+                captions: ["9 on the rod", "Slide three earth beads off the beam → 6"],
+              },
+            },
+            {
+              text: "The heaven bead plus one remaining earth bead shows 6.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[9], [6]],
+                captions: ["Heaven (5) + one earth (1)", "Six left on the rod"],
+              },
+            },
           ],
         },
       },
@@ -839,8 +1199,18 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 1,
         explanation: {
           steps: [
-            { text: "7 take away 2 is 5." },
-            { text: "Slide two earth beads away, leaving the heaven bead alone to show 5." },
+            {
+              text: "7 take away 2 is 5.",
+              visual: { kind: "abacus", digits: [5] },
+            },
+            {
+              text: "Slide two earth beads away, leaving the heaven bead alone to show 5.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[7], [5]],
+                captions: ["7 on the rod", "Slide two earth beads off the beam → 5"],
+              },
+            },
           ],
         },
       },
@@ -869,9 +1239,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "13 take away 5: the ones rod only has 3, not enough for 5." },
-            { text: "Borrow 1 ten from the tens rod, leaving the tens rod empty." },
-            { text: "Now the ones rod has 13, and 13 - 5 = 8." },
+            {
+              text: "13 take away 5: the ones rod only has 3, not enough for 5.",
+              visual: { kind: "abacus", digits: [3, 1] },
+            },
+            {
+              text: "Borrow 1 ten from the tens rod, leaving the tens rod empty.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[3, 1], [3, 0]],
+                captions: ["13 on the abacus: 1 ten + 3 ones", "Borrow the ten: 3 ones left → 3"],
+              },
+            },
+            {
+              text: "Now the ones rod has 13, and 13 - 5 = 8.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[3, 0], [8, 0]],
+                captions: ["Take 5 away from the 13 ones", "3 + 5 = 8, the abacus shows 8"],
+              },
+            },
           ],
         },
       },
@@ -882,9 +1269,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "12 take away 7: the ones rod only has 2, not enough for 7." },
-            { text: "Borrow 1 ten, so the ones rod has 12." },
-            { text: "12 - 7 = 5, so the abacus shows 5." },
+            {
+              text: "12 take away 7: the ones rod only has 2, not enough for 7.",
+              visual: { kind: "abacus", digits: [2, 1] },
+            },
+            {
+              text: "Borrow 1 ten, so the ones rod has 12.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[2, 1], [2, 0]],
+                captions: ["12 on the abacus: 1 ten + 2 ones", "Borrow the ten: 2 ones left → 2"],
+              },
+            },
+            {
+              text: "12 - 7 = 5, so the abacus shows 5.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[2, 0], [5, 0]],
+                captions: ["Take 7 away from the 12 ones", "2 + 3 = 5, the abacus shows 5"],
+              },
+            },
           ],
         },
       },
@@ -902,9 +1306,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "52 take away 28: the ones can't lose 8, so borrow from the tens rod." },
-            { text: "Borrow 1 ten, turning the ones into 12 and the tens into 4." },
-            { text: "12 - 8 = 4 ones and 4 - 2 = 2 tens, giving 24." },
+            {
+              text: "52 take away 28: the ones can't lose 8, so borrow from the tens rod.",
+              visual: { kind: "abacus", digits: [2, 5] },
+            },
+            {
+              text: "Borrow 1 ten, turning the ones into 12 and the tens into 4.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[2, 5], [2, 4]],
+                captions: ["52 on the abacus: 5 tens + 2 ones", "Borrow the ten: 4 tens and 12 ones to take from"],
+              },
+            },
+            {
+              text: "12 - 8 = 4 ones and 4 - 2 = 2 tens, giving 24.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[2, 4], [4, 2]],
+                captions: ["12 − 8 = 4 ones, 4 − 2 = 2 tens", "The abacus shows 24"],
+              },
+            },
           ],
         },
       },
@@ -915,9 +1336,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "81 take away 36: the ones can't lose 6, so borrow from the tens rod." },
-            { text: "Borrow 1 ten, turning the ones into 11 and the tens into 7." },
-            { text: "11 - 6 = 5 ones and 7 - 3 = 4 tens, giving 45." },
+            {
+              text: "81 take away 36: the ones can't lose 6, so borrow from the tens rod.",
+              visual: { kind: "abacus", digits: [1, 8] },
+            },
+            {
+              text: "Borrow 1 ten, turning the ones into 11 and the tens into 7.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[1, 8], [1, 7]],
+                captions: ["81 on the abacus: 8 tens + 1 one", "Borrow the ten: 7 tens and 11 ones to take from"],
+              },
+            },
+            {
+              text: "11 - 6 = 5 ones and 7 - 3 = 4 tens, giving 45.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[1, 7], [5, 4]],
+                captions: ["11 − 6 = 5 ones, 7 − 3 = 4 tens", "The abacus shows 45"],
+              },
+            },
           ],
         },
       },
@@ -932,9 +1370,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "34 take away 15: the ones can't lose 5, so borrow from the tens rod." },
-            { text: "Borrow 1 ten, turning the ones into 14 and the tens into 2." },
-            { text: "14 - 5 = 9 ones and 2 - 1 = 1 ten, giving 19." },
+            {
+              text: "34 take away 15: the ones can't lose 5, so borrow from the tens rod.",
+              visual: { kind: "abacus", digits: [4, 3] },
+            },
+            {
+              text: "Borrow 1 ten, turning the ones into 14 and the tens into 2.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[4, 3], [4, 2]],
+                captions: ["34 on the abacus: 3 tens + 4 ones", "Borrow the ten: 2 tens and 14 ones to take from"],
+              },
+            },
+            {
+              text: "14 - 5 = 9 ones and 2 - 1 = 1 ten, giving 19.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[4, 2], [9, 1]],
+                captions: ["14 − 5 = 9 ones, 2 − 1 = 1 ten", "The abacus shows 19"],
+              },
+            },
           ],
         },
       },
@@ -945,9 +1400,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "40 take away 6: the ones rod is empty, so borrow from the tens rod." },
-            { text: "Borrow 1 ten, turning the ones into 10 and the tens into 3." },
-            { text: "10 - 6 = 4 ones, and the 3 tens remain, giving 34." },
+            {
+              text: "40 take away 6: the ones rod is empty, so borrow from the tens rod.",
+              visual: { kind: "abacus", digits: [0, 4] },
+            },
+            {
+              text: "Borrow 1 ten, turning the ones into 10 and the tens into 3.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 4], [0, 3]],
+                captions: ["40 on the abacus: 4 tens, empty ones", "Borrow the ten: 3 tens and 10 ones to take from"],
+              },
+            },
+            {
+              text: "10 - 6 = 4 ones, and the 3 tens remain, giving 34.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 3], [4, 3]],
+                captions: ["10 − 6 = 4 ones, 3 tens remain", "The abacus shows 34"],
+              },
+            },
           ],
         },
       },
@@ -972,8 +1444,18 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "23 + 41 = 64, so show 6 tens and 4 ones." },
-            { text: "Set 6 on the tens rod and 4 on the ones rod." },
+            {
+              text: "23 + 41 = 64, so show 6 tens and 4 ones.",
+              visual: { kind: "abacus", digits: [4, 6] },
+            },
+            {
+              text: "Set 6 on the tens rod and 4 on the ones rod.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0], [4, 6]],
+                captions: ["Empty abacus", "Six tens and four ones → 64"],
+              },
+            },
           ],
         },
       },
@@ -1008,9 +1490,26 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 3,
         explanation: {
           steps: [
-            { text: "246 is 2 hundreds, 4 tens, and 6 ones." },
-            { text: "Show 2 on the hundreds rod and 4 on the tens rod." },
-            { text: "Show 6 on the ones rod to finish 246." },
+            {
+              text: "246 is 2 hundreds, 4 tens, and 6 ones.",
+              visual: { kind: "abacus", digits: [6, 4, 2] },
+            },
+            {
+              text: "Show 2 on the hundreds rod and 4 on the tens rod.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0, 0], [0, 4, 2]],
+                captions: ["Empty abacus", "Two hundreds and four tens → 240"],
+              },
+            },
+            {
+              text: "Show 6 on the ones rod to finish 246.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 4, 2], [6, 4, 2]],
+                captions: ["240 on the abacus", "Heaven (5) + one earth (1) on the ones rod → 246"],
+              },
+            },
           ],
         },
       },

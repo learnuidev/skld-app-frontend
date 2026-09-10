@@ -30,6 +30,32 @@ const blocks: LessonBlock[] = [
   { type: "paragraph", text: "Now read a rod on your own." },
 ];
 
+/** An explanation whose second step carries the board it is talking about. */
+const blocksWithBoard: LessonBlock[] = [
+  { type: "heading", text: "Reading a rod" },
+  {
+    type: "read",
+    prompt: "Which number is this abacus showing?",
+    digits: [1],
+    choices: [1, 2, 5, 10],
+    explanation: {
+      steps: [
+        { text: "One earth bead is touching the beam." },
+        {
+          text: "Show 6 as the heaven bead (5) plus one earth bead (1).",
+          visual: {
+            kind: "abacus-anim",
+            frames: [[0], [5], [6]],
+            captions: ["0", "5: heaven bead", "+1 earth bead → 6"],
+            label: "Six",
+          },
+        },
+      ],
+    },
+  },
+  { type: "paragraph", text: "Now read a rod on your own." },
+];
+
 function renderLesson(lessonBlocks: LessonBlock[] = blocks, lessonSlug = "first-bead") {
   return render(
     <LessonPlayer
@@ -152,6 +178,43 @@ describe("LessonPlayer", () => {
       first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING,
     ).toBeTruthy();
     expect(within(rail).getByText("Step 2 of 2")).toBeInTheDocument();
+  });
+
+  it("plays the step's animation on the card, where the question was", async () => {
+    const user = userEvent.setup();
+    renderLesson(blocksWithBoard);
+    await user.click(primaryButton());
+    await user.click(await screen.findByRole("button", { name: "1" }));
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    await user.click(screen.getByRole("button", { name: "Why?" }));
+
+    const rail = screen.getByRole("complementary", { name: "Why this is the answer" });
+
+    // The first instruction has no board of its own, so the question stays put.
+    expect(screen.getByRole("img", { name: "Read this abacus" })).toBeInTheDocument();
+    expect(screen.queryByRole("img", { name: "Six" })).not.toBeInTheDocument();
+
+    await user.click(within(rail).getByRole("button", { name: "Next step" }));
+
+    // The board takes the card — the question is out of the way, not just beside it.
+    expect(await within(card()).findByRole("img", { name: "Six" })).toBeInTheDocument();
+    expect(within(rail).queryByRole("img", { name: "Six" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("img", { name: "Read this abacus" })).not.toBeInTheDocument();
+
+    // Stepping back brings the question back with it.
+    await user.click(within(rail).getByRole("button", { name: "Previous step" }));
+    expect(await screen.findByRole("img", { name: "Read this abacus" })).toBeInTheDocument();
+    // The board fades out rather than vanishing, so wait it off the card.
+    await waitFor(() =>
+      expect(screen.queryByRole("img", { name: "Six" })).not.toBeInTheDocument(),
+    );
+
+    // Closing the walkthrough hands the card back to the lesson.
+    await user.click(within(rail).getByRole("button", { name: "Close explanation" }));
+    expect(screen.getByRole("img", { name: "Read this abacus" })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("complementary", { name: "Why this is the answer" }),
+    ).not.toBeInTheDocument();
   });
 
   it("carries the step count in the navbar", async () => {

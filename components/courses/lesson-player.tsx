@@ -15,6 +15,7 @@ import {
 import { DemoPanel } from "@/components/abacus/animated-abacus";
 import { LessonNavBar } from "@/components/courses/lesson/nav-bar";
 import { ExplanationRail } from "@/components/courses/lesson/explanation-rail";
+import { ExplanationStage, explanationSteps } from "@/components/courses/lesson/explanation-stage";
 import { PillButton } from "@/components/courses/lesson/pill-button";
 import { Button } from "@/components/ui/button";
 import {
@@ -196,11 +197,14 @@ export default function LessonPlayer({
   const [resetKey, setResetKey] = useState(0);
   const [showQuit, setShowQuit] = useState(false);
   const [showWhy, setShowWhy] = useState(false);
+  /** Which explanation step the "Why?" walkthrough is on — the card mirrors it. */
+  const [whyIndex, setWhyIndex] = useState(0);
   /** Wrong checks on this step: the second one turns the card yellow. */
   const [misses, setMisses] = useState(0);
   /** Steps answered correctly so far — the navbar's tally. */
   const [done, setDone] = useState<Set<number>>(new Set());
   const taskRef = useRef<TaskHandle | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
 
   const total = blocks.length;
   const block = blocks[current];
@@ -232,6 +236,7 @@ export default function LessonPlayer({
     setAttempted(false);
     setHasSel(false);
     setShowWhy(false);
+    setWhyIndex(0);
     setMisses(0);
     setCurrent(Math.max(0, step));
   }, []);
@@ -301,6 +306,13 @@ export default function LessonPlayer({
     return () => window.removeEventListener("keydown", onKey);
   }, [showQuit, current, total, goToStep, retryTask, startOver]);
 
+  // A board the walkthrough just put up starts at the top of the card, wherever
+  // the question had been scrolled to.
+  useEffect(() => {
+    if (!showWhy || !cardRef.current) return;
+    cardRef.current.scrollTop = 0;
+  }, [showWhy, whyIndex]);
+
   if (!block) {
     return null;
   }
@@ -308,6 +320,10 @@ export default function LessonPlayer({
   const taskBlock =
     block.type === "build" || block.type === "read" || block.type === "quiz" ? block : null;
   const canAskWhy = Boolean(taskBlock?.explanation);
+  const whySteps = taskBlock?.explanation ? explanationSteps(taskBlock.explanation) : [];
+  const whyStep = whySteps[Math.min(whyIndex, Math.max(0, whySteps.length - 1))];
+  /** The board the walkthrough is pointing at, shown where the question was. */
+  const whyVisual = showWhy ? whyStep?.visual : undefined;
   const primaryLabel = isTask && !attempted
     ? "Check"
     : isLast && ready
@@ -349,7 +365,9 @@ export default function LessonPlayer({
           >
             <ExplanationRail
               className={isDesktop ? "h-full w-[380px]" : "max-h-[45vh]"}
-              explanation={taskBlock.explanation}
+              steps={whySteps}
+              index={whyIndex}
+              onIndexChange={setWhyIndex}
               active={showWhy}
               onClose={() => setShowWhy(false)}
             />
@@ -362,8 +380,19 @@ export default function LessonPlayer({
             VERDICT_BORDER[verdict],
           )}
         >
-          <div className="min-h-0 flex-1 overflow-y-auto px-5 py-6 sm:px-8 sm:py-10">
-            <div className="flex min-h-full items-center justify-center">
+          <div
+            ref={cardRef}
+            className={cn(
+              "relative min-h-0 flex-1 px-5 py-6 sm:px-8 sm:py-10",
+              // A board in hand owns the card, so the question underneath holds still.
+              whyVisual ? "overflow-hidden" : "overflow-y-auto",
+            )}
+          >
+            <div
+              aria-hidden={whyVisual ? true : undefined}
+              inert={Boolean(whyVisual)}
+              className="flex min-h-full items-center justify-center"
+            >
               <AnimatePresence mode="wait">
                 <motion.div
                   key={`${current}-${resetKey}`}
@@ -383,6 +412,26 @@ export default function LessonPlayer({
                 </motion.div>
               </AnimatePresence>
             </div>
+
+            {/* The walkthrough's boards replace the question in place: each step
+                fades up over the card and the next one crossfades over it. */}
+            <AnimatePresence>
+              {whyVisual && whyStep ? (
+                <motion.div
+                  // Keyed by step so each instruction's animation plays afresh.
+                  key={`why-${whyIndex}`}
+                  initial={reduceMotion ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className="absolute inset-0 flex flex-col overflow-y-auto bg-card px-5 py-6 sm:px-8 sm:py-10"
+                >
+                  <div className="flex min-h-full items-center justify-center">
+                    <ExplanationStage step={whyStep} />
+                  </div>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
           </div>
 
           <div className="mx-auto flex w-full max-w-[367px] shrink-0 items-center justify-center gap-2 px-5 pt-4 pb-5">
@@ -393,7 +442,13 @@ export default function LessonPlayer({
             ) : null}
 
             {canAskWhy && attempted && !showWhy ? (
-              <PillButton variant="secondary" onClick={() => setShowWhy(true)}>
+              <PillButton
+                variant="secondary"
+                onClick={() => {
+                  setWhyIndex(0);
+                  setShowWhy(true);
+                }}
+              >
                 Why?
               </PillButton>
             ) : null}

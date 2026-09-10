@@ -178,7 +178,7 @@ export function DemoPanel({
               type="button"
               onClick={() => stepTo(-1)}
               disabled={current === 0}
-              aria-label="Previous step"
+              aria-label="Previous frame"
               className={CONTROL_BUTTON}
             >
               <SkipBack className="size-4" />
@@ -199,7 +199,7 @@ export function DemoPanel({
               type="button"
               onClick={() => stepTo(1)}
               disabled={current === total - 1}
-              aria-label="Next step"
+              aria-label="Next frame"
               className={CONTROL_BUTTON}
             >
               <SkipForward className="size-4" />
