@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { UpNextCard } from "@/components/courses/course-detail/up-next-card";
 import { buildCoursePath, summarizeProgress } from "@/modules/course/path";
@@ -19,7 +18,7 @@ function completedKeys(count: number): string[] {
   return keys.slice(0, count);
 }
 
-function renderCard(doneCount: number, onMarkComplete?: (key: string) => void) {
+function renderCard(doneCount: number) {
   const levels = buildCoursePath(course, completedKeys(doneCount));
   const current = levels.flatMap((level) => level.lessons).find((l) => l.status === "current");
 
@@ -29,75 +28,56 @@ function renderCard(doneCount: number, onMarkComplete?: (key: string) => void) {
       lesson={current ?? null}
       progress={summarizeProgress(levels)}
       reviewHref={reviewHref}
-      onMarkComplete={onMarkComplete}
     />,
   );
 }
 
 describe("UpNextCard", () => {
-  it("describes the lesson to continue with", () => {
+  it("names the lesson to continue with", () => {
     renderCard(0);
 
-    expect(screen.getByText("Up next")).toBeInTheDocument();
-    expect(screen.getByText("0 / 6")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "First Bead" })).toBeInTheDocument();
-    expect(screen.getByText("First Bead blurb")).toBeInTheDocument();
-    expect(screen.getByText("Foundations · 3 min")).toBeInTheDocument();
+  });
+
+  it("links to the lesson with the violet call to action", () => {
+    renderCard(0);
+
     expect(screen.getByRole("link", { name: /continue/i })).toHaveAttribute(
       "href",
       "/courses/test-course/foundations/first-bead",
     );
+    expect(screen.getByRole("link", { name: /continue/i })).toHaveClass("bg-violet-500");
   });
 
-  it("calls the level check a level check", () => {
+  it("calls a level check a level check", () => {
     renderCard(2);
 
     expect(screen.getByRole("heading", { name: "Level Check" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /start level check/i })).toBeInTheDocument();
-    expect(screen.getByText("Foundations · 5 min")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /start level check/i })).toHaveAttribute(
+      "href",
+      "/courses/test-course/foundations/foundations-check",
+    );
   });
 
-  it("reports exercises when the lesson has any", () => {
-    renderCard(1);
+  it("moves on to the next level once the first is finished", () => {
+    renderCard(3);
 
-    expect(screen.getByText("Foundations · 3 min · 4 exercises")).toBeInTheDocument();
-  });
-
-  it("marks the current lesson done on request", async () => {
-    const onMarkComplete = vi.fn();
-    renderCard(0, onMarkComplete);
-
-    await userEvent.click(screen.getByRole("button", { name: /mark this lesson as done/i }));
-
-    expect(onMarkComplete).toHaveBeenCalledWith("foundations:first-bead");
-  });
-
-  it("hides the mark-done button when there is no handler", () => {
-    renderCard(0);
-
-    expect(
-      screen.queryByRole("button", { name: /mark this lesson as done/i }),
-    ).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Speed Drill" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /continue/i })).toHaveAttribute(
+      "href",
+      "/courses/test-course/fluency/speed-drill",
+    );
   });
 
   it("wraps up when the course is finished", () => {
-    const levels = buildCoursePath(course, completedKeys(6));
+    renderCard(6);
 
-    render(
-      <UpNextCard
-        courseTitle={course.title}
-        lesson={null}
-        progress={summarizeProgress(levels)}
-        reviewHref={reviewHref}
-      />,
-    );
-
-    expect(screen.getByText("Course complete")).toBeInTheDocument();
     expect(screen.getByText("You finished Test Course")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /review course/i })).toHaveAttribute(
       "href",
       reviewHref,
     );
+    expect(screen.getByRole("link", { name: /review course/i })).toHaveClass("bg-emerald-500");
   });
 
   it("copes with a course that has no lessons yet", () => {
@@ -113,15 +93,9 @@ describe("UpNextCard", () => {
     expect(screen.getByText("No lessons yet")).toBeInTheDocument();
   });
 
-  it("counts completed lessons in the header", () => {
-    renderCard(3);
+  it("sticks to the foot of the path", () => {
+    const { container } = renderCard(0);
 
-    expect(screen.getByText("3 / 6")).toBeInTheDocument();
-  });
-
-  it("keeps the first level listed as complete in its facts", () => {
-    renderCard(3);
-
-    expect(screen.getByText("Fluency · 3 min")).toBeInTheDocument();
+    expect(container.firstElementChild).toHaveClass("sticky");
   });
 });

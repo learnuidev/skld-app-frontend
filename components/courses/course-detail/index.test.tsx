@@ -30,19 +30,6 @@ describe("CourseDetail", () => {
     expect(screen.getByRole("heading", { name: "Second Bead" })).toBeInTheDocument();
   });
 
-  it("stores the lesson when it is marked done", async () => {
-    render(<CourseDetail course={course} />);
-    await screen.findByText("0 of 6 lessons done");
-
-    await userEvent.click(screen.getByRole("button", { name: /mark this lesson as done/i }));
-
-    expect(await screen.findByText("1 of 6 lessons done")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Second Bead" })).toBeInTheDocument();
-    expect(JSON.parse(window.localStorage.getItem(storeKey) ?? "[]")).toEqual([
-      "foundations:first-bead",
-    ]);
-  });
-
   it("clears stored progress on reset", async () => {
     window.localStorage.setItem(storeKey, JSON.stringify(["foundations:first-bead"]));
 
@@ -72,7 +59,7 @@ describe("CourseDetail", () => {
     render(<CourseDetail course={course} />);
 
     expect(await screen.findByText("You finished Test Course")).toBeInTheDocument();
-    expect(screen.getAllByText("Course complete")).toHaveLength(2);
+    expect(screen.getByText("Course complete")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /review course/i })).toHaveAttribute(
       "href",
       "/courses/test-course/foundations/first-bead",

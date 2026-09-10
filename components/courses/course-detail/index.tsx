@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 
 import { CourseSummaryCard } from "@/components/courses/course-detail/course-summary-card";
 import { LessonPath } from "@/components/courses/course-detail/lesson-path";
 import { UpNextCard } from "@/components/courses/course-detail/up-next-card";
-import { clearProgress, readProgress, writeProgress } from "@/modules/course/progress";
-import { buildCoursePath, findCurrentLesson, summarizeProgress } from "@/modules/course/path";
+import { clearProgress, readProgress } from "@/modules/course/progress";
+import {
+  buildCoursePath,
+  findCurrentLesson,
+  summarizeProgress,
+} from "@/modules/course/path";
 import type { Course } from "@/modules/course/types";
 
 /**
@@ -27,16 +29,13 @@ export function CourseDetail({ course }: { course: Course }) {
     return () => window.clearTimeout(id);
   }, [course.slug]);
 
-  const levels = useMemo(() => buildCoursePath(course, completed), [course, completed]);
+  const levels = useMemo(
+    () => buildCoursePath(course, completed),
+    [course, completed],
+  );
   const progress = useMemo(() => summarizeProgress(levels), [levels]);
   const currentLesson = useMemo(() => findCurrentLesson(levels), [levels]);
   const reviewHref = levels[0]?.lessons[0]?.href ?? `/courses/${course.slug}`;
-
-  const markComplete = (key: string) => {
-    const next = completed.includes(key) ? completed : [...completed, key];
-    setCompleted(next);
-    writeProgress(course.slug, next);
-  };
 
   const reset = () => {
     clearProgress(course.slug);
@@ -45,14 +44,6 @@ export function CourseDetail({ course }: { course: Course }) {
 
   return (
     <div className="mx-auto w-full max-w-[1100px] px-4 pb-32 pt-8 sm:px-6 xl:px-8">
-      <Link
-        href="/courses"
-        className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition-colors hover:text-foreground"
-      >
-        <ArrowRight className="size-4 rotate-180" />
-        All courses
-      </Link>
-
       <div className="flex flex-col gap-10 xl:flex-row xl:items-start xl:justify-center xl:gap-8">
         <aside className="xl:sticky xl:top-[88px] xl:w-[487px] xl:shrink-0">
           <CourseSummaryCard
@@ -69,7 +60,6 @@ export function CourseDetail({ course }: { course: Course }) {
             lesson={currentLesson}
             progress={progress}
             reviewHref={reviewHref}
-            onMarkComplete={markComplete}
           />
         </LessonPath>
       </div>

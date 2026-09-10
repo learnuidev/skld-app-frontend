@@ -12,7 +12,7 @@ export interface LessonPathProps {
 /** The scrolling column of levels that the course card sits beside. */
 export function LessonPath({ levels, children }: LessonPathProps) {
   return (
-    <div className="min-w-0 flex-1 xl:max-w-[488px]">
+    <div className="min-w-0 flex-1 xl:max-w-md">
       {levels.map((level) => (
         <LevelSection key={level.slug} level={level} />
       ))}
