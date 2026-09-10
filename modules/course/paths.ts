@@ -1,5 +1,5 @@
 import { courseCatalog } from "./catalog";
-import type { CourseSummary } from "./types";
+import type { ArtName, CourseSummary } from "./types";
 
 /**
  * A group of courses that share a theme, rendered as one row on the courses
@@ -14,6 +14,11 @@ export interface LearningPath {
   description: string;
   /** Catalog slugs that appear as cards in this path, in display order. */
   courseSlugs: string[];
+  /**
+   * Artwork for the path's own icon. Without it the icon borrows the first
+   * course's art, so a path usually matches its lead course.
+   */
+  art?: ArtName;
 }
 
 /**
@@ -29,6 +34,8 @@ export interface PathCourse {
   sample: number[];
   accent: string;
   heroAccent: string;
+  /** Bespoke SVG artwork; falls back to the abacus preview when absent. */
+  art?: CourseSummary["art"];
   /** Total lessons, used with the locally stored completion count for progress. */
   lessonCount: number;
 }
@@ -58,28 +65,13 @@ export const primaryPaths: LearningPath[] = [
 /** Paths that are still being built; shown under "Other learning paths". */
 export const otherPaths: LearningPath[] = [
   {
-    slug: "middle-school-math",
+    slug: "math-fundamentals",
     badge: "Math",
-    title: "Middle School Math",
+    title: "Math Fundamentals",
     description:
-      "Fractions, ratios, and equations — number sense built the visual way, one small idea at a time.",
-    courseSlugs: ["math-fundamentals", "solving-equations"],
-  },
-  {
-    slug: "science-and-code",
-    badge: "Science · Coding",
-    title: "Science & Code",
-    description:
-      "Reason like a scientist, then think like a programmer. Two paths into the logic behind everything.",
-    courseSlugs: ["scientific-thinking", "think-like-a-programmer"],
-  },
-  {
-    slug: "everyday-practice",
-    badge: "Mixed",
-    title: "Everyday Practice",
-    description:
-      "Short daily reps that keep the bead moves and the number sense sharp, whatever you are studying.",
-    courseSlugs: ["abacus-addition", "daily-challenges"],
+      "Start with the parts of a whole, then build up to ratios and real number sense.",
+    courseSlugs: ["fractions"],
+    art: "operators",
   },
 ];
 
@@ -93,6 +85,7 @@ function toPathCourse(summary: CourseSummary): PathCourse {
     sample: summary.sample,
     accent: summary.accent,
     heroAccent: summary.heroAccent,
+    art: summary.art,
     lessonCount: summary.lessonCount,
   };
 }

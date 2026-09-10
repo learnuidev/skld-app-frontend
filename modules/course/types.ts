@@ -96,4 +96,12 @@ export interface CourseSummary {
   heroAccent: string;
   status: "available" | "coming-soon";
   sample: number[];
+  /**
+   * Bespoke SVG artwork for this course's cards and path icon. Courses without
+   * one fall back to the abacus preview built from `sample`.
+   */
+  art?: ArtName;
 }
+
+/** Named pieces of artwork, each with a component in `components/courses/illustrations`. */
+export type ArtName = "fractions" | "operators";

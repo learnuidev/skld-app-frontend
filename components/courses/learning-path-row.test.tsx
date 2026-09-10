@@ -93,6 +93,25 @@ describe("LearningPathRow", () => {
     expect(screen.getAllByText("14% complete").length).toBeGreaterThan(0);
   });
 
+  it("draws the path's own artwork for its icon", () => {
+    renderRow({ path: { ...path, art: "operators" } });
+
+    const icon = screen.getByRole("img", { name: "Abacus Mastery illustration" });
+
+    expect(icon.tagName.toLowerCase()).toBe("svg");
+    // Four operator tiles.
+    expect(icon.querySelectorAll("rect")).toHaveLength(4);
+  });
+
+  it("borrows the lead course's artwork when the path has none", () => {
+    renderRow({ courses: [{ ...courses[0], art: "fractions" }, courses[1]] });
+
+    const icon = screen.getByRole("img", { name: "Abacus Mastery illustration" });
+
+    // The fractions pie: four quarters.
+    expect(icon.querySelectorAll("path")).toHaveLength(4);
+  });
+
   it("toggles the star and reflects the current state", async () => {
     const onToggleStar = vi.fn();
     renderRow({ starred: false, onToggleStar });

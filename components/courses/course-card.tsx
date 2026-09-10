@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { Abacus } from "@/components/abacus/abacus";
+import { CourseArt } from "@/components/courses/course-art";
 import { cn } from "@/lib/utils";
 import type { PathCourse } from "@/modules/course/paths";
 
@@ -50,15 +50,9 @@ export function CourseCard({
         className={cn(
           "flex size-full items-center justify-center rounded-xl bg-gradient-to-br",
           course.accent,
-          available ? null : "opacity-70 saturate-50",
         )}
       >
-        <Abacus
-          digits={course.sample}
-          readOnly
-          scale={0.24}
-          label={`${course.title} preview`}
-        />
+        <CourseArt course={course} />
       </span>
 
       {available ? (

@@ -42,6 +42,18 @@ describe("learning paths", () => {
     );
   });
 
+  it("carries a course's bespoke artwork into the path data", () => {
+    const withArt = courseCatalog.filter((course) => course.art);
+    const resolved = [...primaryPaths, ...otherPaths].flatMap(
+      (path) => resolvePath(path).courses,
+    );
+
+    expect(withArt.length).toBeGreaterThan(0);
+    for (const summary of withArt) {
+      expect(resolved.find((course) => course.slug === summary.slug)?.art).toBe(summary.art);
+    }
+  });
+
   it("only ships the fields the page renders", () => {
     const [course] = resolvePath(primaryPaths[0]).courses;
 

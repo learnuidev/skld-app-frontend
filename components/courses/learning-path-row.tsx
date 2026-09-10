@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
 
-import { Abacus } from "@/components/abacus/abacus";
+import { CourseArt } from "@/components/courses/course-art";
 import { CourseCard } from "@/components/courses/course-card";
 import { cn } from "@/lib/utils";
 import type { LearningPath, PathCourse } from "@/modules/course/paths";
@@ -57,11 +57,11 @@ export function LearningPathRow({
               lead?.heroAccent ?? "from-orange-400 via-amber-300 to-yellow-200",
             )}
           >
-            <Abacus
-              digits={lead?.sample ?? [0, 0, 0, 0]}
-              readOnly
-              scale={0.13}
-              label={`${path.title} preview`}
+            <CourseArt
+              course={lead}
+              art={path.art}
+              size="icon"
+              label={`${path.title} illustration`}
             />
           </div>
 

@@ -155,6 +155,23 @@ export const courseCatalog: CourseSummary[] = [
     status: "coming-soon",
     sample: [3, 8, 0, 6],
   },
+  {
+    slug: "fractions",
+    title: "Fractions",
+    tagline: "Halves, thirds, and the spaces between.",
+    description:
+      "See why fractions behave the way they do — split, compare, and combine parts of a whole.",
+    subject: "Math",
+    levelCount: 4,
+    lessonCount: 22,
+    exerciseCount: 180,
+    lessonMinutes: 95,
+    accent: "bg-gradient-to-br from-sky-100 to-indigo-100",
+    heroAccent: "from-sky-400 via-blue-300 to-indigo-200",
+    status: "coming-soon",
+    sample: [6, 3, 5, 2],
+    art: "fractions",
+  },
 ];
 
 export function getCourseBySlug(slug: string): Course | undefined {
