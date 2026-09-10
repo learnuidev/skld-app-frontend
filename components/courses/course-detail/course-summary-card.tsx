@@ -42,10 +42,14 @@ export function CourseSummaryCard({
           <h1 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">
             {course.title}
           </h1>
-          <p className="mt-2 text-base font-medium text-muted-foreground">{course.tagline}</p>
+          <p className="mt-2 text-base font-medium text-muted-foreground">
+            {course.tagline}
+          </p>
         </div>
 
-        <p className="leading-relaxed text-muted-foreground">{course.introText}</p>
+        <p className="leading-relaxed text-muted-foreground line-clamp-2">
+          {course.introText}
+        </p>
 
         <CourseMetrics
           lessonCount={course.lessonCount}
