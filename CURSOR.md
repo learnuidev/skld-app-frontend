@@ -26,3 +26,5 @@ Import `PALETTE` from `components/courses/illustrations/palette.ts`. The neutral
 | `yellowDeep` | Deeper yellow: shading, and the Chinese board's beads |
 
 Never hard-code a hex value in an illustration — add it to the palette instead.
+
+**Illustrations sit on `fog`.** Both the course card artwork and the path icon are drawn on the same light grey plate, never on a per-course gradient — course colours belong to the course, not behind its artwork.
