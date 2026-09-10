@@ -4,7 +4,9 @@
  * strokes rather than text so the shapes never depend on a CJK font.
  */
 
-const INK = "#dc2626";
+import { PALETTE } from "./palette";
+
+const INK = PALETTE.purple;
 
 /** y, and the half-width, of each stroke from the top. */
 const STROKES = [

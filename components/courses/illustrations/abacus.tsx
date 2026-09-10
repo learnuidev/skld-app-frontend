@@ -1,23 +1,26 @@
+import { PALETTE } from "./palette";
+
 /**
- * Abacus artwork for the abacus courses. The palette mirrors the interactive
- * board used in lessons — dark frame, amber beam, red heaven bead, sky earth
- * beads — while each piece of art shows a different idea:
+ * Abacus artwork for the abacus courses, drawn from the shared palette so each
+ * piece is a different idea in the same colours:
  *
  *  - `abacus`  the whole soroban (the path icon)
  *  - `bead`    one rod up close, for learning what a single bead is worth
  *  - `mental`  the board as a dashed ghost, for mental arithmetic
  *  - `suanpan` the Chinese board, which carries two heaven beads and five earth
  *              beads per rod instead of one and four
+ *
+ * Across every board: purple frame, grey rods, a cream beam, gold heaven beads
+ * and rich earth beads — teal on the soroban, green on the Chinese one.
  */
-
-const FRAME = "#171717";
-const FRAME_JADE = "#115e59";
-const BEAM = "#fbbf24";
-const BEAM_JADE = "#5eead4";
-const HEAVEN = "#f87171";
-const EARTH = "#38bdf8";
-const JADE = "#67e8f9";
-const GHOST = "#7c3aed";
+const FRAME = PALETTE.purpleDeep;
+const BEAM = PALETTE.cream;
+const ROD = PALETTE.gray;
+const HEAVEN = PALETTE.gold;
+const EARTH = PALETTE.teal;
+const EARTH_CHINESE = PALETTE.green;
+const GHOST = PALETTE.purple;
+const SPARK = PALETTE.gold;
 
 const INNER_TOP = 18;
 const INNER_BOTTOM = 82;
@@ -105,8 +108,8 @@ function Board({ frame, beam, rods, heaven, earth }: BoardSpec) {
           y={INNER_TOP}
           width={1.8}
           height={INNER_BOTTOM - INNER_TOP}
-          fill="#ffffff"
-          opacity={0.12}
+          fill={ROD}
+          opacity={0.55}
         />
       ))}
 
@@ -187,14 +190,14 @@ export function BeadArt({
   return (
     <Art className={className} label={label}>
       <rect x={16} y={10} width={68} height={80} rx={14} fill={FRAME} />
-      <rect x={rodX - 1} y={16} width={2} height={68} fill="#ffffff" opacity={0.12} />
+      <rect x={rodX - 1} y={16} width={2} height={68} fill={ROD} opacity={0.55} />
       <rect x={22} y={42} width={56} height={4} rx={2} fill={BEAM} />
 
       {/* Heaven bead, pushed down to the beam: it is worth five. */}
       <rect x={rodX - 15} y={28} width={30} height={13} rx={6} fill={HEAVEN} />
 
       {/* The middle earth bead is lit up — the one being explained. */}
-      <circle cx={rodX} cy={65} r={22} fill="#ffffff" opacity={0.16} />
+      <circle cx={rodX} cy={65} r={22} fill={BEAM} opacity={0.18} />
       {[48, 60, 72].map((y) => (
         <rect key={y} x={rodX - 15} y={y} width={30} height={10.5} rx={5} fill={EARTH} />
       ))}
@@ -250,8 +253,8 @@ export function MentalArt({
       <g transform="translate(46 42) scale(1.7)">
         <path
           d="M13 2 4.1 12.6a1 1 0 0 0 .8 1.6h4.6l-1.7 7.2a1 1 0 0 0 1.7.9L18.4 11a1 1 0 0 0-.8-1.6h-4.4l1.6-6.6a1 1 0 0 0-1.8-.8Z"
-          fill={GHOST}
-          stroke="#ffffff"
+          fill={SPARK}
+          stroke={BEAM}
           strokeWidth={1.6}
           strokeLinejoin="round"
         />
@@ -271,11 +274,11 @@ export function SuanpanArt({
   return (
     <Art className={className} label={label}>
       <Board
-        frame={FRAME_JADE}
-        beam={BEAM_JADE}
+        frame={FRAME}
+        beam={BEAM}
         rods={RODS}
-        heaven={{ fill: JADE, count: 2 }}
-        earth={{ fill: JADE, count: 5 }}
+        heaven={{ fill: HEAVEN, count: 2 }}
+        earth={{ fill: EARTH_CHINESE, count: 5 }}
       />
     </Art>
   );

@@ -11,6 +11,7 @@ import {
 import { FractionsArt } from "@/components/courses/illustrations/fractions";
 import { NumeralsArt } from "@/components/courses/illustrations/numerals";
 import { OperatorsArt } from "@/components/courses/illustrations/operators";
+import { PALETTE } from "@/components/courses/illustrations/palette";
 import type { PathCourse } from "@/modules/course/paths";
 
 const base: PathCourse = {
@@ -128,10 +129,10 @@ describe("FractionsArt", () => {
     const { container } = render(<FractionsArt />);
     const colours = fills(container);
 
-    expect(colours.filter((fill) => fill === "#4f46e5")).toHaveLength(3);
-    expect(colours.filter((fill) => fill === "#c7d2fe")).toHaveLength(1);
+    expect(colours.filter((fill) => fill === PALETTE.purple)).toHaveLength(3);
+    expect(colours.filter((fill) => fill === PALETTE.cream)).toHaveLength(1);
     // The unshaded quarter is the last one drawn — the top-left slice.
-    expect(colours[3]).toBe("#c7d2fe");
+    expect(colours[3]).toBe(PALETTE.cream);
   });
 
   it("draws every quarter as an equal slice of the same circle", () => {
@@ -160,35 +161,31 @@ function painted(container: HTMLElement, fill: string) {
   );
 }
 
-const FRAME = "#171717";
-const HEAVEN = "#f87171";
-const EARTH = "#38bdf8";
-const JADE = "#67e8f9";
-
 describe("abacus artwork", () => {
   it("draws the soroban as one heaven bead and four earth beads per rod", () => {
     const { container } = render(<AbacusArt />);
 
-    expect(painted(container, FRAME)).toHaveLength(1);
-    expect(painted(container, HEAVEN)).toHaveLength(3);
-    expect(painted(container, EARTH)).toHaveLength(12);
+    expect(painted(container, PALETTE.purpleDeep)).toHaveLength(1);
+    expect(painted(container, PALETTE.gold)).toHaveLength(3);
+    expect(painted(container, PALETTE.teal)).toHaveLength(12);
   });
 
   it("draws the Chinese suanpan with its two and five beads", () => {
     const { container } = render(<SuanpanArt />);
 
-    expect(painted(container, "#115e59")).toHaveLength(1);
+    expect(painted(container, PALETTE.purpleDeep)).toHaveLength(1);
     // Two heaven and five earth beads, on each of three rods.
-    expect(painted(container, JADE)).toHaveLength(21);
+    expect(painted(container, PALETTE.gold)).toHaveLength(6);
+    expect(painted(container, PALETTE.green)).toHaveLength(15);
     // The suanpan is never mistaken for the soroban.
-    expect(painted(container, EARTH)).toHaveLength(0);
+    expect(painted(container, PALETTE.teal)).toHaveLength(0);
   });
 
   it("draws one rod up close for the bead lesson", () => {
     const { container } = render(<BeadArt />);
 
-    expect(painted(container, HEAVEN)).toHaveLength(1);
-    expect(painted(container, EARTH)).toHaveLength(3);
+    expect(painted(container, PALETTE.gold)).toHaveLength(1);
+    expect(painted(container, PALETTE.teal)).toHaveLength(3);
     // A halo picks out the bead being explained.
     expect(container.querySelectorAll("circle")).toHaveLength(1);
   });

@@ -4,13 +4,16 @@
  * the rest of the app's course art.
  */
 
+import { PALETTE } from "./palette";
+
 const CENTER = 50;
 const RADIUS = 42;
 /** Degrees of white space between neighbouring quarters. */
 const GAP = 2.6;
 
-const FILLED = "#4f46e5";
-const EMPTY = "#c7d2fe";
+/** The subject is purple; the quarter left empty is the cream neutral. */
+const FILLED = PALETTE.purple;
+const EMPTY = PALETTE.cream;
 
 /** A point on the circle, measured clockwise from the top. */
 function polar(angle: number, radius = RADIUS) {

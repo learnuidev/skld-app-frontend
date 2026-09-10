@@ -4,8 +4,11 @@
  * than text so they look the same everywhere and stay crisp at icon sizes.
  */
 
-const INK = "#4f46e5";
-const CHIP = "#ffffff";
+import { PALETTE } from "./palette";
+
+/** Symbols are the subject, so they carry the purple; the tiles are neutral. */
+const INK = PALETTE.purple;
+const CHIP = PALETTE.cream;
 const CHIP_SIZE = 40;
 const CHIP_RADIUS = 11;
 const STROKE = 6;
