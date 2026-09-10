@@ -1,6 +1,7 @@
 import { Abacus } from "@/components/abacus/abacus";
 import { CourseMetrics } from "@/components/courses/course-detail/course-metrics";
 import { CourseProgress } from "@/components/courses/course-detail/course-progress";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import type { Course } from "@/modules/course/types";
 import type { ProgressSummary } from "@/modules/course/path";
@@ -47,9 +48,17 @@ export function CourseSummaryCard({
           </p>
         </div>
 
-        <p className="leading-relaxed text-muted-foreground line-clamp-2">
-          {course.introText}
-        </p>
+        {/* Clamped to two lines; hovering reveals the whole introduction. */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <p className="cursor-help leading-relaxed text-muted-foreground line-clamp-2">
+              {course.introText}
+            </p>
+          </TooltipTrigger>
+          <TooltipContent className="max-w-sm text-sm leading-relaxed">
+            {course.introText}
+          </TooltipContent>
+        </Tooltip>
 
         <CourseMetrics
           lessonCount={course.lessonCount}
