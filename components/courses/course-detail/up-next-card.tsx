@@ -13,7 +13,9 @@ function Card({
   ...scroll
 }: { children: ReactNode } & ScrollHideOptions) {
   return (
-    <HideOnScroll className="sticky bottom-10 z-20" {...scroll}>
+    // z-40 keeps the floating card above the sticky level headers (z-30): as a
+    // level scrolls past, its header tucks behind the card instead of over it.
+    <HideOnScroll className="sticky bottom-10 z-40" {...scroll}>
       <div className="rounded-[44px] border-2 border-border bg-background/95 px-5 pb-5 pt-5 shadow-xl backdrop-blur">
         <div className="flex flex-col items-center gap-3 pt-4 text-center">
           {children}
