@@ -27,7 +27,7 @@ export default async function CoursePage(props: { params: Promise<{ slug: string
   }
 
   return (
-    <div className="min-h-screen bg-muted">
+    <div className="min-h-screen bg-background">
       <SiteNav className="lg:px-10" />
       <CourseExplorer course={course} />
     </div>
