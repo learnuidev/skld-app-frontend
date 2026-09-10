@@ -66,6 +66,7 @@ describe("learning paths", () => {
       sample: expect.any(Array),
       accent: expect.any(String),
       heroAccent: expect.any(String),
+      art: expect.any(String),
       lessonCount: expect.any(Number),
     });
     expect(courseCatalog.some((summary) => summary.slug === course.slug)).toBe(true);

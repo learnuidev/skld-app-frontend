@@ -104,4 +104,11 @@ export interface CourseSummary {
 }
 
 /** Named pieces of artwork, each with a component in `components/courses/illustrations`. */
-export type ArtName = "fractions" | "operators";
+export type ArtName =
+  | "fractions"
+  | "operators"
+  | "abacus"
+  | "bead"
+  | "mental"
+  | "suanpan"
+  | "numerals";

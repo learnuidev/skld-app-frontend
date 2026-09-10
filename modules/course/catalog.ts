@@ -19,6 +19,7 @@ export const courseCatalog: CourseSummary[] = [
     heroAccent: understandingAbacusCourse.heroAccent,
     status: "available",
     sample: [4, 3, 2, 1],
+    art: "bead",
   },
   {
     slug: anzanCourse.slug,
@@ -34,6 +35,7 @@ export const courseCatalog: CourseSummary[] = [
     heroAccent: anzanCourse.heroAccent,
     status: "available",
     sample: anzanCourse.sample ?? [0, 7, 5, 2],
+    art: "mental",
   },
   {
     slug: zhuxinsuanCourse.slug,
@@ -49,6 +51,7 @@ export const courseCatalog: CourseSummary[] = [
     heroAccent: zhuxinsuanCourse.heroAccent,
     status: "available",
     sample: zhuxinsuanCourse.sample ?? [6, 1, 4, 2],
+    art: "suanpan",
   },
   {
     slug: chineseNumbersCourse.slug,
@@ -64,6 +67,7 @@ export const courseCatalog: CourseSummary[] = [
     heroAccent: chineseNumbersCourse.heroAccent,
     status: "available",
     sample: chineseNumbersCourse.sample ?? [4, 3, 2, 1],
+    art: "numerals",
   },
   {
     slug: "math-fundamentals",

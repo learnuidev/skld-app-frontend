@@ -2,7 +2,14 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { CourseArt } from "@/components/courses/course-art";
+import {
+  AbacusArt,
+  BeadArt,
+  MentalArt,
+  SuanpanArt,
+} from "@/components/courses/illustrations/abacus";
 import { FractionsArt } from "@/components/courses/illustrations/fractions";
+import { NumeralsArt } from "@/components/courses/illustrations/numerals";
 import { OperatorsArt } from "@/components/courses/illustrations/operators";
 import type { PathCourse } from "@/modules/course/paths";
 
@@ -143,5 +150,91 @@ describe("FractionsArt", () => {
     render(<FractionsArt />);
 
     expect(screen.getByRole("img")).toHaveAccessibleName(/three of them filled/i);
+  });
+});
+
+/** Beads are the only shapes painted in these colours, so they count exactly. */
+function painted(container: HTMLElement, fill: string) {
+  return [...container.querySelectorAll("[fill]")].filter(
+    (shape) => shape.getAttribute("fill") === fill,
+  );
+}
+
+const FRAME = "#171717";
+const HEAVEN = "#f87171";
+const EARTH = "#38bdf8";
+const JADE = "#67e8f9";
+
+describe("abacus artwork", () => {
+  it("draws the soroban as one heaven bead and four earth beads per rod", () => {
+    const { container } = render(<AbacusArt />);
+
+    expect(painted(container, FRAME)).toHaveLength(1);
+    expect(painted(container, HEAVEN)).toHaveLength(3);
+    expect(painted(container, EARTH)).toHaveLength(12);
+  });
+
+  it("draws the Chinese suanpan with its two and five beads", () => {
+    const { container } = render(<SuanpanArt />);
+
+    expect(painted(container, "#115e59")).toHaveLength(1);
+    // Two heaven and five earth beads, on each of three rods.
+    expect(painted(container, JADE)).toHaveLength(21);
+    // The suanpan is never mistaken for the soroban.
+    expect(painted(container, EARTH)).toHaveLength(0);
+  });
+
+  it("draws one rod up close for the bead lesson", () => {
+    const { container } = render(<BeadArt />);
+
+    expect(painted(container, HEAVEN)).toHaveLength(1);
+    expect(painted(container, EARTH)).toHaveLength(3);
+    // A halo picks out the bead being explained.
+    expect(container.querySelectorAll("circle")).toHaveLength(1);
+  });
+
+  it("draws the mental board as a dashed ghost with a spark", () => {
+    const { container } = render(<MentalArt />);
+
+    const dashed = [...container.querySelectorAll("rect")].filter((rect) =>
+      rect.getAttribute("stroke-dasharray"),
+    );
+
+    expect(dashed).toHaveLength(1);
+    expect(container.querySelectorAll("path")).toHaveLength(1);
+    expect(container.querySelectorAll("rect")).toHaveLength(5);
+  });
+
+  it("gives every piece of abacus art its own look", () => {
+    const looks = [AbacusArt, BeadArt, MentalArt, SuanpanArt, NumeralsArt].map((Art) => {
+      const { container } = render(<Art />);
+      return container.querySelector("svg")?.innerHTML;
+    });
+
+    expect(new Set(looks).size).toBe(looks.length);
+  });
+});
+
+describe("NumeralsArt", () => {
+  it("draws one, two, three as strokes of increasing length", () => {
+    const { container } = render(<NumeralsArt />);
+    const lines = [...container.querySelectorAll("line")];
+
+    expect(lines).toHaveLength(3);
+
+    const widths = lines.map(
+      (line) => Number(line.getAttribute("x2")) - Number(line.getAttribute("x1")),
+    );
+    expect(widths[0]).toBeLessThan(widths[1]);
+    expect(widths[1]).toBeLessThan(widths[2]);
+    // Every stroke shares the centre line, like the characters do.
+    expect(new Set(lines.map((line) => Number(line.getAttribute("y1")))).size).toBe(3);
+  });
+
+  it("draws the numerals, never text", () => {
+    const { container } = render(<NumeralsArt />);
+
+    expect(container.querySelectorAll("text")).toHaveLength(0);
+    expect(screen.getByRole("img")).toHaveAccessibleName(/one, two and three/i);
   });
 });

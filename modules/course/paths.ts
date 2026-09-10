@@ -59,6 +59,7 @@ export const primaryPaths: LearningPath[] = [
       "zhuxinsuan",
       "chinese-numbers",
     ],
+    art: "abacus",
   },
 ];
 
