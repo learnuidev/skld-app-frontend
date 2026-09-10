@@ -65,7 +65,7 @@ export function CourseCard({
           className="absolute inset-x-[9.09%] bottom-[9.09%] block h-1.5 overflow-hidden rounded-full bg-border"
         >
           <span
-            className="block h-full rounded-full bg-emerald-500 transition-[width] duration-500"
+            className="block h-full rounded-full bg-foreground transition-[width] duration-500"
             style={{ width: hydrated ? `${percent}%` : "0%" }}
           />
         </span>

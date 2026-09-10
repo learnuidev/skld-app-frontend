@@ -33,6 +33,12 @@ describe("CourseProgress", () => {
     expect(container.querySelector('[role="progressbar"] > div')).toHaveStyle({ width: "0%" });
   });
 
+  it("fills the bar in ink rather than a status colour", () => {
+    const { container } = render(<CourseProgress {...base} />);
+
+    expect(container.querySelector('[role="progressbar"] > div')).toHaveClass("bg-foreground");
+  });
+
   it("offers a reset only when there is progress to clear", async () => {
     const onReset = vi.fn();
     const { rerender } = render(<CourseProgress {...base} done={0} percent={0} onReset={onReset} />);

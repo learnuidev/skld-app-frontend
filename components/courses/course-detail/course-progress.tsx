@@ -37,7 +37,7 @@ export function CourseProgress({
         className="mt-3 h-2.5 w-full overflow-hidden rounded-full bg-muted"
       >
         <div
-          className="h-full rounded-full bg-emerald-500 transition-all duration-500"
+          className="h-full rounded-full bg-foreground transition-all duration-500"
           style={{ width: hydrated ? `${percent}%` : "0%" }}
         />
       </div>

@@ -41,6 +41,8 @@ describe("CourseCard", () => {
       "25",
     );
     expect(container.querySelector('[role="progressbar"] > span')).toHaveStyle({ width: "25%" });
+    // Ink, not a status colour.
+    expect(container.querySelector('[role="progressbar"] > span')).toHaveClass("bg-foreground");
   });
 
   it("holds the bar at zero until progress has been read", () => {
