@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 import { CourseSummaryCard } from "@/components/courses/course-detail/course-summary-card";
@@ -14,6 +15,16 @@ describe("CourseSummaryCard", () => {
     expect(screen.getByRole("heading", { level: 1, name: "Test Course" })).toBeInTheDocument();
     expect(screen.getByText("A course for tests")).toBeInTheDocument();
     expect(screen.getByText(course.introText)).toBeInTheDocument();
+  });
+
+  it("reveals the whole introduction on hover, since it is clamped to two lines", async () => {
+    render(<CourseSummaryCard course={course} progress={progress} />);
+
+    expect(screen.queryByRole("tooltip")).not.toBeInTheDocument();
+
+    await userEvent.hover(screen.getByText(course.introText));
+
+    expect(await screen.findByRole("tooltip")).toHaveTextContent(course.introText);
   });
 
   it("draws the course preview with an accessible label", () => {
