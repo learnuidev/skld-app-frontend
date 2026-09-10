@@ -1,6 +1,10 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
+import {
+  HIDE_AFTER_PX,
+  SHOW_BEFORE_PX,
+} from "@/components/courses/course-detail/hide-on-scroll";
 import { UpNextCard } from "@/components/courses/course-detail/up-next-card";
 import { buildCoursePath, summarizeProgress } from "@/modules/course/path";
 import { nodeKey } from "@/modules/course/utils";
@@ -8,6 +12,17 @@ import { makeCourse } from "@/test/fixtures";
 
 const course = makeCourse();
 const reviewHref = "/courses/test-course/foundations/first-bead";
+
+/** Past the card's default show threshold, so it is hidden whichever way you scroll. */
+const PAST_SHOW = SHOW_BEFORE_PX + 100;
+
+/** Move the page and let the scroll listener react. */
+function scrollTo(y: number) {
+  Object.defineProperty(window, "scrollY", { value: y, configurable: true, writable: true });
+  act(() => {
+    window.dispatchEvent(new Event("scroll"));
+  });
+}
 
 /** Keys of the first `count` lessons in path order. */
 function completedKeys(count: number): string[] {
@@ -18,7 +33,7 @@ function completedKeys(count: number): string[] {
   return keys.slice(0, count);
 }
 
-function renderCard(doneCount: number) {
+function renderCard(doneCount: number, scroll?: { hideAfterPx?: number; showBeforePx?: number }) {
   const levels = buildCoursePath(course, completedKeys(doneCount));
   const current = levels.flatMap((level) => level.lessons).find((l) => l.status === "current");
 
@@ -28,6 +43,7 @@ function renderCard(doneCount: number) {
       lesson={current ?? null}
       progress={summarizeProgress(levels)}
       reviewHref={reviewHref}
+      {...scroll}
     />,
   );
 }
@@ -97,5 +113,50 @@ describe("UpNextCard", () => {
     const { container } = renderCard(0);
 
     expect(container.firstElementChild).toHaveClass("sticky");
+  });
+
+  it("hides itself once the page is scrolled past the default threshold", () => {
+    scrollTo(0);
+    const { container } = renderCard(0);
+
+    scrollTo(HIDE_AFTER_PX);
+    expect(container.firstElementChild).not.toHaveAttribute("aria-hidden");
+
+    scrollTo(PAST_SHOW);
+    expect(container.firstElementChild).toHaveAttribute("aria-hidden", "true");
+  });
+
+  it("takes the scroll thresholds it is given", () => {
+    const tight = { hideAfterPx: 100, showBeforePx: 200 };
+
+    scrollTo(0);
+    const { container } = renderCard(0, tight);
+
+    scrollTo((tight.hideAfterPx + tight.showBeforePx) / 2);
+
+    expect(container.firstElementChild).toHaveAttribute("aria-hidden", "true");
+  });
+
+  it("accepts thresholds looser than the defaults", () => {
+    const loose = { hideAfterPx: SHOW_BEFORE_PX, showBeforePx: SHOW_BEFORE_PX * 2 };
+
+    scrollTo(0);
+    const { container } = renderCard(0, loose);
+
+    // The default thresholds would already have hidden the card here.
+    scrollTo(loose.hideAfterPx);
+
+    expect(container.firstElementChild).not.toHaveAttribute("aria-hidden");
+  });
+
+  it("still hides within a looser range once you are deep enough", () => {
+    const loose = { hideAfterPx: SHOW_BEFORE_PX, showBeforePx: SHOW_BEFORE_PX * 2 };
+
+    scrollTo(0);
+    const { container } = renderCard(0, loose);
+
+    scrollTo(loose.showBeforePx);
+
+    expect(container.firstElementChild).toHaveAttribute("aria-hidden", "true");
   });
 });
