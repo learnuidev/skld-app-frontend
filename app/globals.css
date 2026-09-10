@@ -40,6 +40,22 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  /* Lesson player surface — mirrors the Brilliant-style lesson design. */
+  --color-lesson-line: var(--lesson-line);
+  --color-lesson-soft: var(--lesson-soft);
+  --color-lesson-correct: var(--lesson-correct);
+  --color-lesson-correct-deep: var(--lesson-correct-deep);
+  --color-lesson-correct-bg: var(--lesson-correct-bg);
+  --color-lesson-correct-fg: var(--lesson-correct-fg);
+  --color-lesson-warn: var(--lesson-warn);
+  --color-lesson-quip: var(--lesson-quip);
+  --color-lesson-quip-line: var(--lesson-quip-line);
+  --color-lesson-cta: var(--lesson-cta);
+  --color-lesson-cta-fg: var(--lesson-cta-fg);
+  --color-lesson-cta-shadow: var(--lesson-cta-shadow);
+  --color-lesson-dot: var(--lesson-dot);
+  --color-lesson-dot-done: var(--lesson-dot-done);
+  --color-lesson-dot-todo: var(--lesson-dot-todo);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -82,6 +98,22 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  /* Lesson player palette. Light values come straight from the lesson design. */
+  --lesson-line: oklch(0 0 0 / 10%);
+  --lesson-soft: oklch(0 0 0 / 5%);
+  --lesson-correct: #29cc57;
+  --lesson-correct-deep: #15b441;
+  --lesson-correct-bg: #eafaee;
+  --lesson-correct-fg: #009b2b;
+  --lesson-warn: #f7c325;
+  --lesson-quip: rgb(240 248 250 / 88%);
+  --lesson-quip-line: #aacfd7;
+  --lesson-cta: #383838;
+  --lesson-cta-fg: #ffffff;
+  --lesson-cta-shadow: #000000;
+  --lesson-dot: #666666;
+  --lesson-dot-done: oklch(0 0 0 / 20%);
+  --lesson-dot-todo: oklch(0 0 0 / 5%);
 }
 
 .dark {
@@ -116,6 +148,22 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  /* Lesson player palette, dark: the same shapes on ink, greens lifted to read. */
+  --lesson-line: oklch(1 0 0 / 16%);
+  --lesson-soft: oklch(1 0 0 / 7%);
+  --lesson-correct: #35d16a;
+  --lesson-correct-deep: #15803d;
+  --lesson-correct-bg: oklch(0.72 0.19 148 / 16%);
+  --lesson-correct-fg: #86efac;
+  --lesson-warn: #f9d25c;
+  --lesson-quip: oklch(0.72 0.05 210 / 16%);
+  --lesson-quip-line: oklch(0.72 0.05 210 / 40%);
+  --lesson-cta: #f4f4f5;
+  --lesson-cta-fg: #18181b;
+  --lesson-cta-shadow: #52525b;
+  --lesson-dot: oklch(1 0 0 / 70%);
+  --lesson-dot-done: oklch(1 0 0 / 25%);
+  --lesson-dot-todo: oklch(1 0 0 / 8%);
 }
 
 @layer base {
@@ -127,5 +175,16 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* A correct answer blooms out of the lesson card's green border. */
+@keyframes lesson-border-glow {
+  0% {
+    box-shadow: 0 0 0 0
+      color-mix(in oklab, var(--lesson-correct) 55%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 12px transparent;
   }
 }

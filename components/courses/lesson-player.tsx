@@ -3,22 +3,19 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { useRouter } from "next/navigation";
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Monitor,
-  Moon,
-  RefreshCw,
-  RotateCcw,
-  Sun,
-  X,
-} from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
-import { Abacus } from "@/components/abacus/abacus";
+import {
+  AbacusExplorer,
+  BuildTask,
+  QuizTask,
+  ReadTask,
+  type TaskHandle,
+} from "@/components/abacus/practice";
 import { DemoPanel } from "@/components/abacus/animated-abacus";
-import { useTheme } from "@/components/theme-provider";
-import { cn } from "@/lib/utils";
+import { LessonNavBar } from "@/components/courses/lesson/nav-bar";
+import { ExplanationRail } from "@/components/courses/lesson/explanation-rail";
+import { PillButton } from "@/components/courses/lesson/pill-button";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -27,26 +24,41 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import {
-  AbacusExplorer,
-  BuildTask,
-  QuizTask,
-  ReadTask,
-  type TaskHandle,
-} from "@/components/abacus/practice";
+import { cn } from "@/lib/utils";
 import { flattenCourse, lessonUrl, nodeKey } from "@/modules/course/utils";
 import { readProgress, writeProgress } from "@/modules/course/progress";
-import type {
-  Course,
-  LessonBlock,
-  LessonExplanation,
-} from "@/modules/course/types";
+import type { Course, LessonBlock } from "@/modules/course/types";
 
+/** How the card's border answers the student. */
+type Verdict = "pending" | "correct" | "incorrect" | "retry";
+
+const VERDICT_BORDER: Record<Verdict, string> = {
+  pending: "border-lesson-line",
+  correct: "border-lesson-correct animate-[lesson-border-glow_1s_ease-out]",
+  incorrect: "border-lesson-line",
+  retry: "border-lesson-warn",
+};
+
+/** The explanation rail's width from `lg` up, where it sits beside the card. */
+const RAIL_WIDTH = 380;
+const RAIL_EASE: [number, number, number, number] = [0.4, 0, 0.2, 1];
+
+/** `lg` and up: the rail shares the row with the card instead of stacking. */
+function useIsDesktop() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 1024px)");
+    const sync = () => setIsDesktop(query.matches);
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
+  }, []);
+
+  return isDesktop;
+}
+
+/** The step's question, as the tutor would repeat it back. */
 function BlockContent({
   block,
   solved,
@@ -65,7 +77,7 @@ function BlockContent({
   switch (block.type) {
     case "heading":
       return (
-        <h2 className="text-center text-3xl font-bold tracking-tight sm:text-4xl">
+        <h2 className="text-center text-2xl font-bold tracking-tight sm:text-[1.75rem] sm:leading-tight">
           {block.text}
         </h2>
       );
@@ -74,7 +86,7 @@ function BlockContent({
       if (block.demo) {
         return (
           <div className="grid gap-6 sm:grid-cols-2 sm:items-center sm:gap-8 lg:gap-16">
-            <p className="mx-auto max-w-4xl text-center text-lg leading-relaxed text-foreground/85 sm:mx-0 sm:max-w-none sm:text-left">
+            <p className="mx-auto max-w-4xl text-center text-base leading-6 text-foreground/85 sm:mx-0 sm:max-w-none sm:text-left sm:text-lg sm:leading-7">
               {block.text}
             </p>
             <DemoPanel
@@ -87,7 +99,7 @@ function BlockContent({
         );
       }
       return (
-        <p className="mx-auto max-w-xl text-center text-lg leading-relaxed text-foreground/85">
+        <p className="mx-auto max-w-xl text-center text-base leading-6 text-foreground/85 sm:text-lg sm:leading-7">
           {block.text}
         </p>
       );
@@ -95,11 +107,8 @@ function BlockContent({
       return (
         <ul className="mx-auto max-w-xl space-y-4">
           {block.items.map((item) => (
-            <li
-              key={item}
-              className="flex items-start gap-3 text-lg leading-relaxed"
-            >
-              <span className="mt-2.5 size-2 shrink-0 rounded-full bg-amber-500" />
+            <li key={item} className="flex items-start gap-3 text-base leading-6 sm:text-lg">
+              <span className="mt-2.5 size-2 shrink-0 rounded-full bg-lesson-correct" />
               <span className="text-foreground/85">{item}</span>
             </li>
           ))}
@@ -108,7 +117,7 @@ function BlockContent({
     case "explore":
       return (
         <div className="flex flex-col items-center gap-5">
-          <p className="text-center text-lg font-semibold">{block.label}</p>
+          <p className="text-center text-[1.15625rem] leading-[1.5] font-bold">{block.label}</p>
           <AbacusExplorer rods={block.rods} initial={block.initial} />
         </div>
       );
@@ -153,206 +162,6 @@ function BlockContent({
   }
 }
 
-function ExplanationDialog({
-  explanation,
-  onClose,
-}: {
-  explanation: LessonExplanation;
-  onClose: () => void;
-}) {
-  const steps = useMemo(
-    () =>
-      explanation.steps && explanation.steps.length > 0
-        ? explanation.steps
-        : [{ text: explanation.text ?? "", visual: explanation.visual }],
-    [explanation],
-  );
-  const total = steps.length;
-  const [idx, setIdx] = useState(0);
-  const current = Math.min(idx, total - 1);
-  const step = steps[current];
-  const visual = step?.visual;
-
-  const goPrev = () => setIdx((i) => Math.max(0, i - 1));
-  const goNext = () => setIdx((i) => Math.min(total - 1, i + 1));
-
-  return (
-    <Dialog open onOpenChange={(open) => !open && onClose()}>
-      <DialogContent
-        showCloseButton={false}
-        className="max-w-md rounded-3xl bg-card p-6 gap-0 sm:p-7"
-      >
-        <div className="flex items-start justify-between gap-4">
-          <DialogTitle className="text-xl font-bold">Explanation</DialogTitle>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close explanation"
-            className="-mr-1 -mt-1 flex size-8 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          >
-            <X className="size-5" />
-          </button>
-        </div>
-
-        {visual?.kind === "abacus" ? (
-          <div className="mt-6 flex justify-center">
-            <Abacus
-              digits={visual.digits}
-              readOnly
-              scale={0.8}
-              label="Explanation"
-            />
-          </div>
-        ) : visual?.kind === "abacus-anim" ? (
-          <div className="mt-6 flex justify-center">
-            <DemoPanel
-              key={`abacus-anim-${current}`}
-              frames={visual.frames}
-              captions={visual.captions}
-              label={visual.label ?? "Example"}
-              scale={0.75}
-              controls={true}
-              showCaption={false}
-            />
-          </div>
-        ) : visual?.kind === "image" ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={visual.src}
-            alt={visual.alt ?? "Explanation"}
-            className="mx-auto mt-6 max-h-64 rounded-2xl"
-          />
-        ) : null}
-
-        <div className="relative mt-6 min-h-20">
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={current}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
-              className="text-base leading-relaxed text-foreground/85"
-            >
-              {step?.text}
-            </motion.p>
-          </AnimatePresence>
-        </div>
-
-        {total > 1 ? (
-          <div className="mt-6 flex items-center justify-between gap-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={goPrev}
-              disabled={current === 0}
-            >
-              Back
-            </Button>
-            <div className="flex items-center gap-1.5">
-              {steps.map((_, i) => (
-                <span
-                  key={i}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === current
-                      ? "w-5 bg-foreground"
-                      : "w-1.5 bg-muted-foreground/30"
-                  }`}
-                />
-              ))}
-            </div>
-            {current < total - 1 ? (
-              <Button variant="outline" size="sm" onClick={goNext}>
-                Next
-              </Button>
-            ) : (
-              <Button size="sm" onClick={onClose}>
-                Done
-              </Button>
-            )}
-          </div>
-        ) : null}
-      </DialogContent>
-    </Dialog>
-  );
-}
-
-function TaskExplainer({
-  task,
-  onShow,
-}: {
-  task: LessonBlock & {
-    type: "build" | "read" | "quiz";
-    explanation?: LessonExplanation;
-  };
-  onShow: () => void;
-}) {
-  if (!task.explanation) return null;
-  return (
-    <Button
-      variant="outline"
-      size="lg"
-      onClick={onShow}
-      className="min-w-24 px-8 py-4 text-base h-12"
-    >
-      Why?
-    </Button>
-  );
-}
-
-function ThemeSelector() {
-  const { theme, setTheme } = useTheme();
-  const [open, setOpen] = useState(false);
-  const mode = theme === "dark" ? "Dark" : theme === "light" ? "Light" : "Auto";
-  const Icon = theme === "dark" ? Moon : theme === "light" ? Sun : Monitor;
-  const options = ["Auto", "Light", "Dark"] as const;
-
-  const choose = (option: (typeof options)[number]) => {
-    setTheme(
-      option === "Dark" ? "dark" : option === "Light" ? "light" : "system",
-    );
-    setOpen(false);
-  };
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        aria-label="Theme"
-        className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-      >
-        <Icon className="size-5" />
-      </button>
-
-      {open ? (
-        <>
-          <div className="fixed inset-0 z-30" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 z-40 mt-2 w-36 rounded-2xl border border-border bg-card p-1.5 shadow-xl">
-            {options.map((option) => (
-              <button
-                key={option}
-                type="button"
-                onClick={() => choose(option)}
-                className={cn(
-                  "flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-semibold transition-colors",
-                  mode === option
-                    ? "bg-muted text-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
-                )}
-              >
-                {option}
-              </button>
-            ))}
-          </div>
-        </>
-      ) : null}
-    </div>
-  );
-}
-
 export default function LessonPlayer({
   course,
   levelSlug,
@@ -365,14 +174,17 @@ export default function LessonPlayer({
   blocks: LessonBlock[];
 }) {
   const router = useRouter();
+  const isDesktop = useIsDesktop();
+  const reduceMotion = useReducedMotion();
+  const railTransition = reduceMotion
+    ? { duration: 0 }
+    : { duration: 0.32, ease: RAIL_EASE };
   const nodes = useMemo(() => flattenCourse(course), [course]);
   const currentGlobal = nodes.findIndex(
     (n) => n.level.slug === levelSlug && n.lesson.slug === lessonSlug,
   );
   const next =
-    currentGlobal >= 0 && currentGlobal < nodes.length - 1
-      ? nodes[currentGlobal + 1]
-      : null;
+    currentGlobal >= 0 && currentGlobal < nodes.length - 1 ? nodes[currentGlobal + 1] : null;
   const progressKey = nodes[currentGlobal]
     ? nodeKey(nodes[currentGlobal].level, nodes[currentGlobal].lesson)
     : `${levelSlug}:${lessonSlug}`;
@@ -383,19 +195,26 @@ export default function LessonPlayer({
   const [hasSel, setHasSel] = useState(false);
   const [resetKey, setResetKey] = useState(0);
   const [showQuit, setShowQuit] = useState(false);
-  const [explanation, setExplanation] = useState<LessonExplanation | null>(
-    null,
-  );
+  const [showWhy, setShowWhy] = useState(false);
+  /** Wrong checks on this step: the second one turns the card yellow. */
+  const [misses, setMisses] = useState(0);
+  /** Steps answered correctly so far — the navbar's tally. */
+  const [done, setDone] = useState<Set<number>>(new Set());
   const taskRef = useRef<TaskHandle | null>(null);
 
   const total = blocks.length;
   const block = blocks[current];
   const isLast = current === total - 1;
-  const isTask =
-    block?.type === "build" || block?.type === "read" || block?.type === "quiz";
+  const isTask = block?.type === "build" || block?.type === "read" || block?.type === "quiz";
   const answered = isTask ? attempted : true;
   const ready = answered;
-  const progress = total === 0 ? 0 : Math.round(((current + 1) / total) * 100);
+  const verdict: Verdict = solved
+    ? "correct"
+    : attempted && isTask
+      ? misses >= 2
+        ? "retry"
+        : "incorrect"
+      : "pending";
 
   const coursePath = `/courses/${course.slug}`;
 
@@ -408,13 +227,19 @@ export default function LessonPlayer({
     router.push(path);
   };
 
+  const goToStep = useCallback((step: number) => {
+    setSolved(false);
+    setAttempted(false);
+    setHasSel(false);
+    setShowWhy(false);
+    setMisses(0);
+    setCurrent(Math.max(0, step));
+  }, []);
+
   const advance = () => {
     if (!ready) return;
     if (current < total - 1) {
-      setSolved(false);
-      setAttempted(false);
-      setHasSel(false);
-      setCurrent((c) => c + 1);
+      goToStep(current + 1);
     } else if (next) {
       completeAndGo(lessonUrl(course, next.level.slug, next.lesson.slug));
     } else {
@@ -425,35 +250,22 @@ export default function LessonPlayer({
   const handleButton = () => {
     if (isTask && !attempted) {
       setAttempted(true);
-      if (taskRef.current?.check()) setSolved(true);
+      if (taskRef.current?.check()) {
+        setSolved(true);
+        setDone((prev) => new Set(prev).add(current));
+      } else {
+        setMisses((m) => m + 1);
+      }
       return;
     }
     advance();
   };
 
   const startOver = useCallback(() => {
-    setCurrent(0);
-    setSolved(false);
-    setAttempted(false);
-    setHasSel(false);
+    setDone(new Set());
+    goToStep(0);
     setResetKey((k) => k + 1);
-  }, []);
-
-  const goPrevStep = useCallback(() => {
-    if (current <= 0) return;
-    setSolved(false);
-    setAttempted(false);
-    setHasSel(false);
-    setCurrent((c) => c - 1);
-  }, [current]);
-
-  const goNextStep = useCallback(() => {
-    if (current >= total - 1) return;
-    setSolved(false);
-    setAttempted(false);
-    setHasSel(false);
-    setCurrent((c) => c + 1);
-  }, [current, total]);
+  }, [goToStep]);
 
   const retryTask = useCallback(() => {
     setSolved(false);
@@ -465,23 +277,18 @@ export default function LessonPlayer({
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey || e.altKey) return;
-      if (showQuit || explanation) return;
+      if (showQuit) return;
       const el = e.target as HTMLElement | null;
-      if (
-        el &&
-        (el.tagName === "INPUT" ||
-          el.tagName === "TEXTAREA" ||
-          el.isContentEditable)
-      ) {
+      if (el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable)) {
         return;
       }
       const key = e.key.toLowerCase();
       if (key === "p") {
         e.preventDefault();
-        goPrevStep();
+        if (current > 0) goToStep(current - 1);
       } else if (key === "n") {
         e.preventDefault();
-        goNextStep();
+        if (current < total - 1) goToStep(current + 1);
       } else if (key === "r") {
         e.preventDefault();
         retryTask();
@@ -492,203 +299,135 @@ export default function LessonPlayer({
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [
-    showQuit,
-    explanation,
-    current,
-    total,
-    goPrevStep,
-    goNextStep,
-    retryTask,
-    startOver,
-  ]);
+  }, [showQuit, current, total, goToStep, retryTask, startOver]);
 
   if (!block) {
     return null;
   }
 
   const taskBlock =
-    isTask &&
-    (block.type === "build" || block.type === "read" || block.type === "quiz")
-      ? block
-      : null;
+    block.type === "build" || block.type === "read" || block.type === "quiz" ? block : null;
+  const canAskWhy = Boolean(taskBlock?.explanation);
+  const primaryLabel = isTask && !attempted
+    ? "Check"
+    : isLast && ready
+      ? next
+        ? "Next lesson"
+        : "Finish course"
+      : "Continue";
 
   return (
-    <div className="flex min-h-screen flex-col bg-card">
-      {/* Top bar */}
-      <header className="group flex items-center gap-3 px-4 py-4 sm:px-8">
-        <button
-          type="button"
-          onClick={() => setShowQuit(true)}
-          aria-label="Exit lesson"
-          className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-        >
-          <X className="size-5" />
-        </button>
-        <div className="flex flex-1 items-center justify-center gap-3">
-          {/* <div className="flex items-center gap-1 opacity-0 pointer-events-none transition-opacity duration-200 group-hover:opacity-100 group-hover:pointer-events-auto">
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  onClick={goPrevStep}
-                  disabled={current === 0}
-                  aria-label="Previous step"
-                  className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  <ChevronLeft className="size-4" />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>Previous step</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  onClick={startOver}
-                  aria-label="Start over"
-                  className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                >
-                  <RotateCcw className="size-4" />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>Start over</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  onClick={retryTask}
-                  aria-label="Restart step"
-                  className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                >
-                  <RefreshCw className="size-4" />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>Restart step</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <button
-                  type="button"
-                  onClick={goNextStep}
-                  disabled={current === total - 1}
-                  aria-label="Next step"
-                  className="flex size-9 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
-                >
-                  <ChevronRight className="size-4" />
-                </button>
-              </TooltipTrigger>
-              <TooltipContent>Next step</TooltipContent>
-            </Tooltip>
-          </div> */}
-          <div className="h-2 w-full max-w-xl overflow-hidden rounded-full bg-muted">
-            <div
-              className="h-full rounded-full bg-black dark:bg-white transition-all duration-500"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
-        <div className="flex shrink-0 items-center">
-          <ThemeSelector />
-        </div>
-      </header>
+    <div className="flex h-dvh flex-col bg-background">
+      <LessonNavBar
+        current={current}
+        total={total}
+        done={done.size}
+        onExit={() => setShowQuit(true)}
+      />
 
-      {/* Content */}
-      <main className="flex flex-1 items-center justify-center px-4 pb-8">
-        <AnimatePresence mode="wait">
+      <div className="flex min-h-0 flex-1 flex-col-reverse gap-3 px-3 pb-3 sm:gap-4 sm:px-8 sm:pb-8 lg:flex-row">
+        {taskBlock?.explanation ? (
           <motion.div
-            key={`${current}-${resetKey}`}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
-            className="w-full max-w-3xl"
+            key={current}
+            initial={false}
+            // Beside the card on wide screens, below it on narrow ones — so the
+            // panel claims width there and height here. Either way the card
+            // takes up the slack in step, and the whole row glides.
+            animate={
+              showWhy
+                ? isDesktop
+                  ? { width: RAIL_WIDTH, opacity: 1 }
+                  : { height: "auto", opacity: 1 }
+                : isDesktop
+                  ? { width: 0, opacity: 0 }
+                  : { height: 0, opacity: 0 }
+            }
+            transition={railTransition}
+            aria-hidden={!showWhy}
+            inert={!showWhy}
+            className="shrink-0 overflow-hidden"
           >
-            <BlockContent
-              block={block}
-              solved={solved}
-              attempted={attempted}
-              taskRef={taskRef}
-              onHasSelection={setHasSel}
+            <ExplanationRail
+              className={isDesktop ? "h-full w-[380px]" : "max-h-[45vh]"}
+              explanation={taskBlock.explanation}
+              active={showWhy}
+              onClose={() => setShowWhy(false)}
             />
           </motion.div>
-        </AnimatePresence>
-      </main>
+        ) : null}
 
-      {/* Bottom controls */}
-      <footer className="px-4 pb-10">
-        <div className="mx-auto flex w-full max-w-2xl">
-          <div className="relative flex w-full items-center justify-center gap-3">
+        <main
+          className={cn(
+            "flex min-h-0 flex-1 flex-col rounded-2xl border-2 bg-card transition-colors duration-300 sm:rounded-3xl",
+            VERDICT_BORDER[verdict],
+          )}
+        >
+          <div className="min-h-0 flex-1 overflow-y-auto px-5 py-6 sm:px-8 sm:py-10">
+            <div className="flex min-h-full items-center justify-center">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={`${current}-${resetKey}`}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  className="w-full max-w-3xl"
+                >
+                  <BlockContent
+                    block={block}
+                    solved={solved}
+                    attempted={attempted}
+                    taskRef={taskRef}
+                    onHasSelection={setHasSel}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+
+          <div className="mx-auto flex w-full max-w-[367px] shrink-0 items-center justify-center gap-2 px-5 pt-4 pb-5">
             {isTask && attempted && !solved ? (
-              <Button
-                variant="ghost"
-                size="lg"
-                onClick={retryTask}
-                className="min-w-24 px-6 py-4 text-base h-12"
-              >
+              <PillButton variant="secondary" onClick={retryTask}>
                 Try again
-              </Button>
+              </PillButton>
             ) : null}
-            <Button
-              size="lg"
+
+            {canAskWhy && attempted && !showWhy ? (
+              <PillButton variant="secondary" onClick={() => setShowWhy(true)}>
+                Why?
+              </PillButton>
+            ) : null}
+
+            <PillButton
+              variant={solved ? "success" : "primary"}
+              className="flex-1"
               disabled={isTask && !attempted && !hasSel}
               onClick={handleButton}
-              className="min-w-64 px-12 py-4 text-base shadow-sm h-12"
             >
-              {isTask && !attempted
-                ? "Check"
-                : isLast && ready
-                  ? next
-                    ? "Next lesson"
-                    : "Finish course"
-                  : "Continue"}
-            </Button>
-
-            {isTask && attempted && taskBlock?.explanation ? (
-              <TaskExplainer
-                task={taskBlock}
-                onShow={() => setExplanation(taskBlock.explanation!)}
-              />
-            ) : null}
+              {primaryLabel}
+            </PillButton>
           </div>
-        </div>
-      </footer>
-
-      {/* Explanation dialog */}
-      {explanation ? (
-        <ExplanationDialog
-          explanation={explanation}
-          onClose={() => setExplanation(null)}
-        />
-      ) : null}
+        </main>
+      </div>
 
       {/* Quit confirmation */}
       <Dialog open={showQuit} onOpenChange={setShowQuit}>
-        <DialogContent
-          showCloseButton={false}
-          className="max-w-sm rounded-3xl p-0 text-center"
-        >
+        <DialogContent showCloseButton={false} className="max-w-sm rounded-3xl p-0 text-center">
           <DialogHeader className="gap-2 p-6 pb-0">
-            <DialogTitle className="text-center text-xl font-bold">
-              Are you sure?
-            </DialogTitle>
+            <DialogTitle className="text-center text-xl font-bold">Are you sure?</DialogTitle>
             <DialogDescription className="text-center">
               If you quit, you will lose your progress and XP.
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-3 p-6">
-            <Button
-              className="w-full py-4 h-12"
-              onClick={() => setShowQuit(false)}
-            >
+            <Button className="h-12 w-full py-4" onClick={() => setShowQuit(false)}>
               Keep learning
             </Button>
             <Button
-              variant={"outline"}
+              variant="outline"
               type="button"
               onClick={() => router.push(coursePath)}
-              className="w-full py-4 h-12 text-destructive"
+              className="h-12 w-full py-4 text-destructive"
             >
               Quit
             </Button>

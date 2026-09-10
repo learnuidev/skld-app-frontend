@@ -1,6 +1,7 @@
 "use client";
 
 import { forwardRef, useImperativeHandle, useState } from "react";
+import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Abacus, digitsToValue, valueToDigits } from "./abacus";
@@ -10,12 +11,98 @@ export interface TaskHandle {
   check(): boolean;
 }
 
+/** The lesson design's prompt line: bold, centred, a touch larger than body text. */
+const PROMPT = "text-center text-[1.15625rem] leading-[1.5] font-bold";
+
 function clearDigits(rods: number) {
   return valueToDigits(0, rods);
 }
 
 function placeLabel(value: number) {
   return value.toLocaleString("en-US");
+}
+
+/**
+ * One answer card. The design keeps them quiet until they matter: a hairline
+ * border while you choose, a green fill and a corner tick once the answer is in.
+ */
+function ChoiceButton({
+  label,
+  state,
+  disabled,
+  onClick,
+}: {
+  label: string;
+  state: "idle" | "picked" | "wrong" | "correct";
+  disabled?: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      disabled={disabled}
+      aria-pressed={state === "picked" || state === "correct"}
+      onClick={onClick}
+      className={cn(
+        "relative flex h-14 items-center justify-center rounded-2xl border bg-card px-5 text-lg font-medium transition-colors",
+        state === "correct"
+          ? "border-2 border-lesson-correct bg-lesson-correct-bg text-lesson-correct-fg"
+          : state === "wrong"
+            ? "border-lesson-line text-muted-foreground line-through"
+            : state === "picked"
+              ? "border-2 border-foreground text-foreground"
+              : "border-lesson-line text-foreground/70 hover:border-foreground/30 hover:text-foreground",
+      )}
+    >
+      {label}
+      {state === "correct" ? (
+        <span className="absolute -top-2 -right-2 flex size-6 items-center justify-center rounded-lg bg-lesson-correct text-white">
+          <Check className="size-4" aria-hidden />
+        </span>
+      ) : null}
+    </button>
+  );
+}
+
+/** The 2×2 (or stacked) answer grid shared by the reading and quiz tasks. */
+function ChoiceGrid({
+  options,
+  picked,
+  wrong,
+  solved,
+  answer,
+  locked,
+  onPick,
+}: {
+  options: number[];
+  picked: number | null;
+  wrong: Set<number>;
+  solved: boolean;
+  answer: number;
+  locked: boolean;
+  onPick: (option: number) => void;
+}) {
+  return (
+    <div className="grid w-full max-w-lg gap-4 sm:grid-cols-2">
+      {options.map((option) => (
+        <ChoiceButton
+          key={option}
+          label={placeLabel(option)}
+          disabled={locked || wrong.has(option)}
+          state={
+            solved && option === answer
+              ? "correct"
+              : wrong.has(option)
+                ? "wrong"
+                : picked === option
+                  ? "picked"
+                  : "idle"
+          }
+          onClick={() => onPick(option)}
+        />
+      ))}
+    </div>
+  );
 }
 
 /** Free-play board with a live value readout. */
@@ -103,15 +190,15 @@ export const BuildTask = forwardRef<
 
   return (
     <div className="flex flex-col items-center gap-6">
-      <p className="text-center text-lg font-semibold">{prompt}</p>
+      <p className={PROMPT}>{prompt}</p>
       <Abacus digits={digits} onChange={change} readOnly={solved || locked} label="Your abacus" />
       <div className="flex h-10 items-center">
         {wrong ? (
-          <p className="rounded-2xl bg-orange-50 px-4 py-3 text-sm font-medium text-orange-700">
+          <p className="rounded-2xl bg-lesson-soft px-4 py-3 text-sm font-medium text-foreground/70">
             That board shows {placeLabel(shown)}. Remember: heaven = 5, earth beads = 1.
           </p>
         ) : solved ? (
-          <p className="text-sm font-medium text-emerald-700">That&apos;s {placeLabel(target)}!</p>
+          <p className="text-sm font-medium text-lesson-correct-fg">That&apos;s {placeLabel(target)}!</p>
         ) : null}
       </div>
     </div>
@@ -148,39 +235,24 @@ export const ReadTask = forwardRef<
 
   return (
     <div className="flex flex-col items-center gap-6">
-      <p className="text-center text-lg font-semibold">{prompt}</p>
-      <Abacus digits={digits} readOnly scale={1} label="Read this abacus" />
-      <div className="grid w-full max-w-md gap-2 sm:grid-cols-2">
-        {choices.map((option) => {
-          const isWrong = wrong.has(option);
-          const isRight = solved && option === answer;
-          return (
-            <button
-              key={option}
-              type="button"
-              disabled={locked || isWrong}
-              onClick={() => {
-                setPicked(option);
-                onHasSelection(true);
-              }}
-              className={cn(
-                "rounded-2xl border px-5 py-3 text-left text-lg font-semibold transition-colors",
-                isRight
-                  ? "border-emerald-300 bg-emerald-100 text-emerald-800"
-                  : isWrong
-                    ? "border-red-200 bg-red-50 text-red-400 line-through"
-                    : picked === option
-                      ? "border-foreground bg-card"
-                      : "border-border bg-card hover:bg-muted",
-              )}
-            >
-              {placeLabel(option)}
-            </button>
-          );
-        })}
-      </div>
+      <p className={PROMPT}>{prompt}</p>
+      <Abacus digits={digits} readOnly scale={0.85} label="Read this abacus" />
+      <ChoiceGrid
+        options={choices}
+        picked={picked}
+        wrong={wrong}
+        solved={solved}
+        answer={answer}
+        locked={locked}
+        onPick={(option) => {
+          setPicked(option);
+          onHasSelection(true);
+        }}
+      />
       {solved ? (
-        <p className="text-sm font-medium text-emerald-700">That&apos;s {placeLabel(answer)}!</p>
+        <p className="text-sm font-medium text-lesson-correct-fg">
+          That&apos;s {placeLabel(answer)}!
+        </p>
       ) : null}
     </div>
   );
@@ -215,38 +287,23 @@ export const QuizTask = forwardRef<
 
   return (
     <div className="flex flex-col items-center gap-6">
-      <p className="text-center text-lg font-semibold">{prompt}</p>
-      <div className="grid w-full max-w-md gap-2 sm:grid-cols-2">
-        {choices.map((option) => {
-          const isWrong = wrong.has(option);
-          const isRight = solved && option === answer;
-          return (
-            <button
-              key={option}
-              type="button"
-              disabled={locked || isWrong}
-              onClick={() => {
-                setPicked(option);
-                onHasSelection(true);
-              }}
-              className={cn(
-                "rounded-2xl border px-5 py-3 text-left text-lg font-semibold transition-colors",
-                isRight
-                  ? "border-emerald-300 bg-emerald-100 text-emerald-800"
-                  : isWrong
-                    ? "border-red-200 bg-red-50 text-red-400 line-through"
-                    : picked === option
-                      ? "border-foreground bg-card"
-                      : "border-border bg-card hover:bg-muted",
-              )}
-            >
-              {placeLabel(option)}
-            </button>
-          );
-        })}
-      </div>
+      <p className={PROMPT}>{prompt}</p>
+      <ChoiceGrid
+        options={choices}
+        picked={picked}
+        wrong={wrong}
+        solved={solved}
+        answer={answer}
+        locked={locked}
+        onPick={(option) => {
+          setPicked(option);
+          onHasSelection(true);
+        }}
+      />
       {solved ? (
-        <p className="text-sm font-medium text-emerald-700">That&apos;s {placeLabel(answer)}!</p>
+        <p className="text-sm font-medium text-lesson-correct-fg">
+          That&apos;s {placeLabel(answer)}!
+        </p>
       ) : null}
     </div>
   );
