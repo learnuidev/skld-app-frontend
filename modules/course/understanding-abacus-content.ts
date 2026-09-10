@@ -62,8 +62,18 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [1, 2, 5, 10],
         explanation: {
           steps: [
-            { text: "One earth bead is touching the beam." },
-            { text: "Each earth bead counts as 1, so the rod shows 1." },
+            {
+              text: "One earth bead is touching the beam.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [1]],
+                captions: ["Empty rod", "One earth bead up → 1"],
+              },
+            },
+            {
+              text: "Each earth bead counts as 1, so the rod shows 1.",
+              visual: { kind: "abacus", digits: [1] },
+            },
           ],
         },
       },
@@ -74,8 +84,18 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [5, 1, 4, 10],
         explanation: {
           steps: [
-            { text: "Only the heaven bead is touching the beam." },
-            { text: "A single heaven bead is worth 5, so the rod shows 5." },
+            {
+              text: "Only the heaven bead is touching the beam.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [5]],
+                captions: ["Empty rod", "Heaven bead down → 5"],
+              },
+            },
+            {
+              text: "A single heaven bead is worth 5, so the rod shows 5.",
+              visual: { kind: "abacus", digits: [5] },
+            },
           ],
         },
       },
@@ -86,9 +106,22 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [6, 5, 4, 7],
         explanation: {
           steps: [
-            { text: "The heaven bead touching the beam is worth 5." },
-            { text: "The one earth bead touching the beam is worth 1." },
-            { text: "5 + 1 = 6, so the rod shows 6." },
+            {
+              text: "The heaven bead touching the beam is worth 5.",
+              visual: { kind: "abacus", digits: [5] },
+            },
+            {
+              text: "The one earth bead touching the beam is worth 1.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[5], [6]],
+                captions: ["Heaven bead: 5", "One earth bead joins → 6"],
+              },
+            },
+            {
+              text: "5 + 1 = 6, so the rod shows 6.",
+              visual: { kind: "abacus", digits: [6] },
+            },
           ],
         },
       },
@@ -110,8 +143,14 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [0, 11, 1, 5],
         explanation: {
           steps: [
-            { text: "No bead is touching the beam on either rod." },
-            { text: "So the tens rod shows 0 and the ones rod shows 0, making 0." },
+            {
+              text: "No bead is touching the beam on either rod.",
+              visual: { kind: "abacus", digits: [0, 0] },
+            },
+            {
+              text: "So the tens rod shows 0 and the ones rod shows 0, making 0.",
+              visual: { kind: "abacus", digits: [0, 0] },
+            },
           ],
         },
       },
@@ -129,8 +168,18 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [3, 5, 2, 4],
         explanation: {
           steps: [
-            { text: "Three earth beads are touching the beam." },
-            { text: "Each counts as 1, so the rod shows 3." },
+            {
+              text: "Three earth beads are touching the beam.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [3]],
+                captions: ["Empty rod", "Three earth beads up → 3"],
+              },
+            },
+            {
+              text: "Each counts as 1, so the rod shows 3.",
+              visual: { kind: "abacus", digits: [3] },
+            },
           ],
         },
       },
@@ -237,8 +286,18 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [2, 4, 1, 6],
         explanation: {
           steps: [
-            { text: "Two earth beads are touching the beam." },
-            { text: "Each counts as 1, so the rod shows 2." },
+            {
+              text: "Two earth beads are touching the beam.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [2]],
+                captions: ["Empty rod", "Two earth beads up → 2"],
+              },
+            },
+            {
+              text: "Each counts as 1, so the rod shows 2.",
+              visual: { kind: "abacus", digits: [2] },
+            },
           ],
         },
       },
@@ -268,9 +327,22 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [6, 5, 1, 9],
         explanation: {
           steps: [
-            { text: "The heaven bead is worth 5." },
-            { text: "The one earth bead is worth 1." },
-            { text: "5 + 1 = 6, so the rod shows 6." },
+            {
+              text: "The heaven bead is worth 5.",
+              visual: { kind: "abacus", digits: [5] },
+            },
+            {
+              text: "The one earth bead is worth 1.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[5], [6]],
+                captions: ["Heaven bead: 5", "One earth bead joins → 6"],
+              },
+            },
+            {
+              text: "5 + 1 = 6, so the rod shows 6.",
+              visual: { kind: "abacus", digits: [6] },
+            },
           ],
         },
       },
@@ -281,9 +353,22 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [9, 4, 6, 8],
         explanation: {
           steps: [
-            { text: "The heaven bead is worth 5." },
-            { text: "The four earth beads are worth 4 in total." },
-            { text: "5 + 4 = 9, so the rod shows 9." },
+            {
+              text: "The heaven bead is worth 5.",
+              visual: { kind: "abacus", digits: [5] },
+            },
+            {
+              text: "The four earth beads are worth 4 in total.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[5], [9]],
+                captions: ["Heaven bead: 5", "All four earth beads up → 9"],
+              },
+            },
+            {
+              text: "5 + 4 = 9, so the rod shows 9.",
+              visual: { kind: "abacus", digits: [9] },
+            },
           ],
         },
       },
@@ -301,9 +386,22 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [8, 3, 5, 4],
         explanation: {
           steps: [
-            { text: "The heaven bead is worth 5." },
-            { text: "The three earth beads are worth 3." },
-            { text: "5 + 3 = 8, so the rod shows 8." },
+            {
+              text: "The heaven bead is worth 5.",
+              visual: { kind: "abacus", digits: [5] },
+            },
+            {
+              text: "The three earth beads are worth 3.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[5], [8]],
+                captions: ["Heaven bead: 5", "Three earth beads up → 8"],
+              },
+            },
+            {
+              text: "5 + 3 = 8, so the rod shows 8.",
+              visual: { kind: "abacus", digits: [8] },
+            },
           ],
         },
       },
@@ -314,8 +412,18 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [4, 5, 9, 1],
         explanation: {
           steps: [
-            { text: "There is no heaven bead, so the rod has no 5." },
-            { text: "Four earth beads, each worth 1, show 4." },
+            {
+              text: "There is no heaven bead, so the rod has no 5.",
+              visual: { kind: "abacus", digits: [0] },
+            },
+            {
+              text: "Four earth beads, each worth 1, show 4.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0], [4]],
+                captions: ["No heaven bead on the rod", "Four earth beads up → 4"],
+              },
+            },
           ],
         },
       },
@@ -326,9 +434,22 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [7, 2, 5, 9],
         explanation: {
           steps: [
-            { text: "The heaven bead is worth 5." },
-            { text: "The two earth beads are worth 2." },
-            { text: "5 + 2 = 7, so the rod shows 7." },
+            {
+              text: "The heaven bead is worth 5.",
+              visual: { kind: "abacus", digits: [5] },
+            },
+            {
+              text: "The two earth beads are worth 2.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[5], [7]],
+                captions: ["Heaven bead: 5", "Two earth beads up → 7"],
+              },
+            },
+            {
+              text: "5 + 2 = 7, so the rod shows 7.",
+              visual: { kind: "abacus", digits: [7] },
+            },
           ],
         },
       },
@@ -412,9 +533,22 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [7, 2, 6, 5],
         explanation: {
           steps: [
-            { text: "The heaven bead is worth 5." },
-            { text: "The two earth beads are worth 2." },
-            { text: "5 + 2 = 7, so the rod shows 7." },
+            {
+              text: "The heaven bead is worth 5.",
+              visual: { kind: "abacus", digits: [5] },
+            },
+            {
+              text: "The two earth beads are worth 2.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[5], [7]],
+                captions: ["Heaven bead: 5", "Two earth beads up → 7"],
+              },
+            },
+            {
+              text: "5 + 2 = 7, so the rod shows 7.",
+              visual: { kind: "abacus", digits: [7] },
+            },
           ],
         },
       },
@@ -491,9 +625,22 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [24, 42, 6, 204],
         explanation: {
           steps: [
-            { text: "The tens rod shows 2, which is worth 20." },
-            { text: "The ones rod shows 4." },
-            { text: "20 + 4 = 24, so the abacus shows 24." },
+            {
+              text: "The tens rod shows 2, which is worth 20.",
+              visual: { kind: "abacus", digits: [0, 2] },
+            },
+            {
+              text: "The ones rod shows 4.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 2], [4, 2]],
+                captions: ["The tens rod: 20", "The ones rod adds 4 → 24"],
+              },
+            },
+            {
+              text: "20 + 4 = 24, so the abacus shows 24.",
+              visual: { kind: "abacus", digits: [4, 2] },
+            },
           ],
         },
       },
@@ -504,8 +651,18 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [30, 3, 33, 300],
         explanation: {
           steps: [
-            { text: "Three tens are worth 30." },
-            { text: "There are no ones, so the number is 30." },
+            {
+              text: "Three tens are worth 30.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0], [0, 3]],
+                captions: ["Empty abacus", "Three earth beads on the tens rod → 30"],
+              },
+            },
+            {
+              text: "There are no ones, so the number is 30.",
+              visual: { kind: "abacus", digits: [0, 3] },
+            },
           ],
         },
       },
@@ -624,8 +781,18 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [10, 1, 11, 100],
         explanation: {
           steps: [
-            { text: "One ten is worth 10." },
-            { text: "Zero ones add nothing, so the abacus shows 10." },
+            {
+              text: "One ten is worth 10.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0], [0, 1]],
+                captions: ["Empty abacus", "One earth bead on the tens rod → 10"],
+              },
+            },
+            {
+              text: "Zero ones add nothing, so the abacus shows 10.",
+              visual: { kind: "abacus", digits: [0, 1] },
+            },
           ],
         },
       },
@@ -636,8 +803,18 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [70, 7, 77, 700],
         explanation: {
           steps: [
-            { text: "Seven tens are worth 70." },
-            { text: "Zero ones add nothing, so the abacus shows 70." },
+            {
+              text: "Seven tens are worth 70.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0], [0, 7]],
+                captions: ["Empty abacus", "Heaven (5) + two earth (2) on the tens rod → 70"],
+              },
+            },
+            {
+              text: "Zero ones add nothing, so the abacus shows 70.",
+              visual: { kind: "abacus", digits: [0, 7] },
+            },
           ],
         },
       },
@@ -677,9 +854,22 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [234, 432, 204, 2340],
         explanation: {
           steps: [
-            { text: "The hundreds rod shows 2, worth 200." },
-            { text: "The tens rod shows 3 (30) and the ones rod shows 4." },
-            { text: "200 + 30 + 4 = 234." },
+            {
+              text: "The hundreds rod shows 2, worth 200.",
+              visual: { kind: "abacus", digits: [0, 0, 2] },
+            },
+            {
+              text: "The tens rod shows 3 (30) and the ones rod shows 4.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0, 2], [4, 3, 2]],
+                captions: ["200 on the hundreds rod", "+3 tens and 4 ones → 234"],
+              },
+            },
+            {
+              text: "200 + 30 + 4 = 234.",
+              visual: { kind: "abacus", digits: [4, 3, 2] },
+            },
           ],
         },
       },
@@ -690,8 +880,18 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [400, 4, 44, 444],
         explanation: {
           steps: [
-            { text: "The hundreds rod shows 4, worth 400." },
-            { text: "The tens and ones rods are empty, so the number is 400." },
+            {
+              text: "The hundreds rod shows 4, worth 400.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0, 0], [0, 0, 4]],
+                captions: ["Empty abacus", "Four earth beads on the hundreds rod → 400"],
+              },
+            },
+            {
+              text: "The tens and ones rods are empty, so the number is 400.",
+              visual: { kind: "abacus", digits: [0, 0, 4] },
+            },
           ],
         },
       },
@@ -766,8 +966,22 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [405, 54, 450, 45],
         explanation: {
           steps: [
-            { text: "The hundreds rod shows 4, worth 400." },
-            { text: "The tens rod is empty and the ones rod shows 5, so the number is 405." },
+            {
+              text: "The hundreds rod shows 4, worth 400.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0, 0], [0, 0, 4]],
+                captions: ["Empty abacus", "Four earth beads on the hundreds rod → 400"],
+              },
+            },
+            {
+              text: "The tens rod is empty and the ones rod shows 5, so the number is 405.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0, 4], [5, 0, 4]],
+                captions: ["400 with an empty tens rod", "Heaven bead on the ones rod → 405"],
+              },
+            },
           ],
         },
       },
@@ -905,7 +1119,10 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 1,
         explanation: {
           steps: [
-            { text: "2 + 4 = 6, so the rod must show 6." },
+            {
+              text: "2 + 4 = 6, so the rod must show 6.",
+              visual: { kind: "abacus", digits: [6] },
+            },
             {
               text: "Show 6 as the heaven bead (5) plus one earth bead (1).",
               visual: {
@@ -968,8 +1185,18 @@ export const understandingAbacusContent: CourseContentMap = {
         rods: 2,
         explanation: {
           steps: [
-            { text: "8 + 5 = 13, so show 1 ten and 3 ones." },
-            { text: "The ones rod fills past 9, so you carry 1 to the tens rod." },
+            {
+              text: "8 + 5 = 13, so show 1 ten and 3 ones.",
+              visual: { kind: "abacus", digits: [3, 1] },
+            },
+            {
+              text: "The ones rod fills past 9, so you carry 1 to the tens rod.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[8, 0], [9, 0]],
+                captions: ["8 + 5 overflows the ones rod", "9 ones — 4 still to add"],
+              },
+            },
             {
               text: "Set the carried 1 on the tens rod and 3 on the ones rod.",
               visual: {
@@ -1477,9 +1704,26 @@ export const understandingAbacusContent: CourseContentMap = {
         choices: [375, 573, 357, 735],
         explanation: {
           steps: [
-            { text: "The hundreds rod has 3 beads up, worth 300." },
-            { text: "The tens rod has 7 beads up, worth 70." },
-            { text: "The ones rod has 5 beads up, so 300 + 70 + 5 = 375." },
+            {
+              text: "The hundreds rod has 3 beads up, worth 300.",
+              visual: { kind: "abacus", digits: [0, 0, 3] },
+            },
+            {
+              text: "The tens rod has 7 beads up, worth 70.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 0, 3], [0, 7, 3]],
+                captions: ["300 on the hundreds rod", "+7 tens → 370"],
+              },
+            },
+            {
+              text: "The ones rod has 5 beads up, so 300 + 70 + 5 = 375.",
+              visual: {
+                kind: "abacus-anim",
+                frames: [[0, 7, 3], [5, 7, 3]],
+                captions: ["370 so far", "Heaven bead on the ones rod → 375"],
+              },
+            },
           ],
         },
       },
