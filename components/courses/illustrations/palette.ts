@@ -1,28 +1,30 @@
 /**
- * The palette every course illustration draws from. Purple leads, and each
- * colour keeps the same job everywhere so the artwork reads as one set:
+ * The palette every course illustration draws from: black in shades, with
+ * yellow as the one bright note. Each token keeps the same job everywhere, so
+ * the artwork reads as a single set.
  *
- *  - purple / purpleDeep  the subject itself, and the darks beneath it
- *  - cream / gray         neutrals: surfaces, quiet details, empty space
- *  - gold                 the one bright contrast in a picture
- *  - teal / green         rich supporting tones
+ * The neutral scale runs from black up to paper —
  *
- * Cream and gold are warm neighbours of purple; teal and green sit opposite it
- * on the wheel, which is what makes them read as accents rather than noise.
+ *   ink  →  charcoal  →  gray  →  paper
+ *
+ * — and yellow sits on top of it in three strengths: `butter` for quiet
+ * washes, `yellow` for the bright note, `yellowDeep` for shading.
  */
 export const PALETTE = {
-  /** Filled slices, symbols, numerals, the ghost outline. */
-  purple: "#7c3aed",
-  /** The dark behind the subject — abacus frames and boards. */
-  purpleDeep: "#4c1d95",
-  /** Neutral surfaces: chips, beams, empty slices, highlights. */
-  cream: "#fffbeb",
-  /** Neutral detail: rods and other quiet structure. */
-  gray: "#a8a29e",
-  /** The single bright contrast: heaven beads and the spark. */
-  gold: "#f59e0b",
-  /** Rich tone: the soroban's earth beads. */
-  teal: "#0d9488",
-  /** Rich tone: the Chinese board's beads. */
-  green: "#10b981",
+  /** The subject: boards and frames, symbols, numerals, filled slices. */
+  ink: "#171717",
+  /** The lighter black: tiles and structure that sit beside the subject. */
+  charcoal: "#404040",
+  /** Quiet neutral detail: rods and ghost lines. */
+  gray: "#a3a3a3",
+  /** Light grey: the plate every illustration sits on. */
+  fog: "#ededed",
+  /** The light neutral: beads, chips, highlights that must read on ink. */
+  paper: "#fafafa",
+  /** Pale yellow: beams and quiet washes. */
+  butter: "#fef08a",
+  /** The bright note: heaven beads, symbols, the spark. */
+  yellow: "#facc15",
+  /** Deeper yellow: shading, and the Chinese board's beads. */
+  yellowDeep: "#eab308",
 } as const;

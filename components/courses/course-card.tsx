@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { CourseArt } from "@/components/courses/course-art";
+import { PALETTE } from "@/components/courses/illustrations/palette";
 import { cn } from "@/lib/utils";
 import type { PathCourse } from "@/modules/course/paths";
 
@@ -46,11 +47,10 @@ export function CourseCard({
         </span>
       )}
 
+      {/* Every illustration sits on the same light grey plate. */}
       <span
-        className={cn(
-          "flex size-full items-center justify-center rounded-xl bg-gradient-to-br",
-          course.accent,
-        )}
+        className="flex size-full items-center justify-center rounded-xl"
+        style={{ backgroundColor: PALETTE.fog }}
       >
         <CourseArt course={course} />
       </span>

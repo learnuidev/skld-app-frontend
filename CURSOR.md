@@ -10,17 +10,19 @@ To add a heading style on a non-landing page, use sans font classes only (e.g. `
 
 ## Colour
 
-**Every course illustration uses one purple-led palette.** Purple is the lead colour, and the colours that go with it are the neutrals (cream, gray), the bright contrasts (yellow, gold) and the rich tones (teal, green). No illustration may pick its own colours.
+**Every course illustration uses one palette: black in shades, with yellow as the bright note.** No illustration may pick its own colours.
 
-Import `PALETTE` from `components/courses/illustrations/palette.ts` and give each colour its fixed job:
+Import `PALETTE` from `components/courses/illustrations/palette.ts`. The neutral scale runs from black up to paper — `ink` → `charcoal` → `gray` → `paper` — and yellow sits on top of it in three strengths. Give each token its fixed job:
 
 | Token | Job |
 | --- | --- |
-| `purple` | The subject: filled slices, symbols, numerals, the ghost outline |
-| `purpleDeep` | The dark behind the subject — abacus frames and boards |
-| `cream` | Neutral surfaces: chips, beams, empty slices, highlights |
-| `gray` | Neutral detail: rods and other quiet structure |
-| `gold` | The one bright contrast in a picture: heaven beads, the spark |
-| `teal` / `green` | Rich supporting tones: earth beads |
+| `ink` | The subject: boards and frames, symbols, numerals, filled slices |
+| `charcoal` | The lighter black: tiles and structure beside the subject |
+| `gray` | Quiet neutral detail: rods and ghost lines |
+| `fog` | Light grey: the plate every illustration sits on |
+| `paper` | The light neutral: beads, chips, highlights that must read on ink |
+| `butter` | Pale yellow: beams and quiet washes |
+| `yellow` | The bright note: heaven beads, symbols, the spark |
+| `yellowDeep` | Deeper yellow: shading, and the Chinese board's beads |
 
 Never hard-code a hex value in an illustration — add it to the palette instead.

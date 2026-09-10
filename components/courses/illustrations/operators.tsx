@@ -6,9 +6,9 @@
 
 import { PALETTE } from "./palette";
 
-/** Symbols are the subject, so they carry the purple; the tiles are neutral. */
-const INK = PALETTE.purple;
-const CHIP = PALETTE.cream;
+/** Black tiles with the symbols in the bright note — the set's loudest piece. */
+const INK = PALETTE.yellow;
+const CHIP = PALETTE.charcoal;
 const CHIP_SIZE = 40;
 const CHIP_RADIUS = 11;
 const STROKE = 6;

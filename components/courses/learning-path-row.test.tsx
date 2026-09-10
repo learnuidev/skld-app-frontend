@@ -21,8 +21,6 @@ const courses: PathCourse[] = [
     subject: "Abacus",
     status: "available",
     sample: [4, 3, 2, 1],
-    accent: "bg-gradient-to-br from-orange-100 to-amber-100",
-    heroAccent: "from-orange-400 via-amber-300 to-yellow-200",
     lessonCount: 12,
   },
   {
@@ -32,8 +30,6 @@ const courses: PathCourse[] = [
     subject: "Abacus",
     status: "coming-soon",
     sample: [0, 7, 5, 2],
-    accent: "bg-gradient-to-br from-violet-100 to-purple-100",
-    heroAccent: "from-violet-400 via-purple-300 to-fuchsia-200",
     lessonCount: 8,
   },
 ];

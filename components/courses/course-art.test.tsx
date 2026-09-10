@@ -21,8 +21,6 @@ const base: PathCourse = {
   subject: "Abacus",
   status: "available",
   sample: [4, 3, 2, 1],
-  accent: "bg-gradient-to-br from-orange-100 to-amber-100",
-  heroAccent: "from-orange-400 via-amber-300 to-yellow-200",
   lessonCount: 12,
 };
 
@@ -129,10 +127,10 @@ describe("FractionsArt", () => {
     const { container } = render(<FractionsArt />);
     const colours = fills(container);
 
-    expect(colours.filter((fill) => fill === PALETTE.purple)).toHaveLength(3);
-    expect(colours.filter((fill) => fill === PALETTE.cream)).toHaveLength(1);
+    expect(colours.filter((fill) => fill === PALETTE.ink)).toHaveLength(3);
+    expect(colours.filter((fill) => fill === PALETTE.butter)).toHaveLength(1);
     // The unshaded quarter is the last one drawn — the top-left slice.
-    expect(colours[3]).toBe(PALETTE.cream);
+    expect(colours[3]).toBe(PALETTE.butter);
   });
 
   it("draws every quarter as an equal slice of the same circle", () => {
@@ -165,27 +163,27 @@ describe("abacus artwork", () => {
   it("draws the soroban as one heaven bead and four earth beads per rod", () => {
     const { container } = render(<AbacusArt />);
 
-    expect(painted(container, PALETTE.purpleDeep)).toHaveLength(1);
-    expect(painted(container, PALETTE.gold)).toHaveLength(3);
-    expect(painted(container, PALETTE.teal)).toHaveLength(12);
+    expect(painted(container, PALETTE.ink)).toHaveLength(1);
+    expect(painted(container, PALETTE.yellow)).toHaveLength(3);
+    expect(painted(container, PALETTE.paper)).toHaveLength(12);
   });
 
   it("draws the Chinese suanpan with its two and five beads", () => {
     const { container } = render(<SuanpanArt />);
 
-    expect(painted(container, PALETTE.purpleDeep)).toHaveLength(1);
+    expect(painted(container, PALETTE.ink)).toHaveLength(1);
     // Two heaven and five earth beads, on each of three rods.
-    expect(painted(container, PALETTE.gold)).toHaveLength(6);
-    expect(painted(container, PALETTE.green)).toHaveLength(15);
+    expect(painted(container, PALETTE.yellow)).toHaveLength(6);
+    expect(painted(container, PALETTE.yellowDeep)).toHaveLength(15);
     // The suanpan is never mistaken for the soroban.
-    expect(painted(container, PALETTE.teal)).toHaveLength(0);
+    expect(painted(container, PALETTE.paper)).toHaveLength(0);
   });
 
   it("draws one rod up close for the bead lesson", () => {
     const { container } = render(<BeadArt />);
 
-    expect(painted(container, PALETTE.gold)).toHaveLength(1);
-    expect(painted(container, PALETTE.teal)).toHaveLength(3);
+    expect(painted(container, PALETTE.yellow)).toHaveLength(1);
+    expect(painted(container, PALETTE.paper)).toHaveLength(3);
     // A halo picks out the bead being explained.
     expect(container.querySelectorAll("circle")).toHaveLength(1);
   });

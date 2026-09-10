@@ -11,8 +11,6 @@ const base: PathCourse = {
   subject: "Abacus",
   status: "available",
   sample: [4, 3, 2, 1],
-  accent: "bg-gradient-to-br from-orange-100 to-amber-100",
-  heroAccent: "from-orange-400 via-amber-300 to-yellow-200",
   lessonCount: 12,
 };
 

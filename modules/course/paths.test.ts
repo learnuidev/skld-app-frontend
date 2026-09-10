@@ -64,8 +64,6 @@ describe("learning paths", () => {
       subject: expect.any(String),
       status: expect.stringMatching(/^(available|coming-soon)$/),
       sample: expect.any(Array),
-      accent: expect.any(String),
-      heroAccent: expect.any(String),
       art: expect.any(String),
       lessonCount: expect.any(Number),
     });

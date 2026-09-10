@@ -6,7 +6,7 @@
 
 import { PALETTE } from "./palette";
 
-const INK = PALETTE.purple;
+const INK = PALETTE.ink;
 
 /** y, and the half-width, of each stroke from the top. */
 const STROKES = [

@@ -2,6 +2,7 @@ import { Star } from "lucide-react";
 
 import { CourseArt } from "@/components/courses/course-art";
 import { CourseCard } from "@/components/courses/course-card";
+import { PALETTE } from "@/components/courses/illustrations/palette";
 import { cn } from "@/lib/utils";
 import type { LearningPath, PathCourse } from "@/modules/course/paths";
 
@@ -51,11 +52,10 @@ export function LearningPathRow({
     <li>
       <div className="pb-0 pt-6 lg:pb-6 lg:pl-6">
         <div className="flex items-center gap-4 lg:gap-10">
+          {/* The path icon sits on the same light grey plate as the cards. */}
           <div
-            className={cn(
-              "flex size-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br lg:size-20",
-              lead?.heroAccent ?? "from-orange-400 via-amber-300 to-yellow-200",
-            )}
+            className="flex size-14 shrink-0 items-center justify-center rounded-2xl lg:size-20"
+            style={{ backgroundColor: PALETTE.fog }}
           >
             <CourseArt
               course={lead}

@@ -10,17 +10,19 @@ import { PALETTE } from "./palette";
  *  - `suanpan` the Chinese board, which carries two heaven beads and five earth
  *              beads per rod instead of one and four
  *
- * Across every board: purple frame, grey rods, a cream beam, gold heaven beads
- * and rich earth beads — teal on the soroban, green on the Chinese one.
+ * Across every board: black frame, grey rods, a pale yellow beam, bright
+ * yellow heaven beads and light earth beads — paper on the soroban, a deeper
+ * yellow on the Chinese one.
  */
-const FRAME = PALETTE.purpleDeep;
-const BEAM = PALETTE.cream;
+const FRAME = PALETTE.ink;
+const BEAM = PALETTE.butter;
 const ROD = PALETTE.gray;
-const HEAVEN = PALETTE.gold;
-const EARTH = PALETTE.teal;
-const EARTH_CHINESE = PALETTE.green;
-const GHOST = PALETTE.purple;
-const SPARK = PALETTE.gold;
+const HEAVEN = PALETTE.yellow;
+const EARTH = PALETTE.paper;
+const EARTH_CHINESE = PALETTE.yellowDeep;
+const GHOST = PALETTE.ink;
+const DETAIL = PALETTE.gray;
+const SPARK = PALETTE.yellow;
 
 const INNER_TOP = 18;
 const INNER_BOTTOM = 82;
@@ -235,8 +237,8 @@ export function MentalArt({
           y={22}
           width={2}
           height={56}
-          fill={GHOST}
-          opacity={0.3}
+          fill={DETAIL}
+          opacity={0.45}
         />
       ))}
 
@@ -246,8 +248,8 @@ export function MentalArt({
         width={70}
         height={3}
         rx={1.5}
-        fill={GHOST}
-        opacity={0.55}
+        fill={DETAIL}
+        opacity={0.7}
       />
 
       <g transform="translate(46 42) scale(1.7)">

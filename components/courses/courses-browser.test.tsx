@@ -13,8 +13,6 @@ function makeCourse(slug: string, title: string, lessonCount = 10) {
     subject: "Abacus",
     status: "available" as const,
     sample: [1, 2, 3, 4],
-    accent: "bg-gradient-to-br from-orange-100 to-amber-100",
-    heroAccent: "from-orange-400 via-amber-300 to-yellow-200",
     lessonCount,
   };
 }

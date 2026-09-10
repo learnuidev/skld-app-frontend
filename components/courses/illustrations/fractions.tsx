@@ -11,9 +11,9 @@ const RADIUS = 42;
 /** Degrees of white space between neighbouring quarters. */
 const GAP = 2.6;
 
-/** The subject is purple; the quarter left empty is the cream neutral. */
-const FILLED = PALETTE.purple;
-const EMPTY = PALETTE.cream;
+/** The shaded quarters are black; the one left empty is a pale yellow wash. */
+const FILLED = PALETTE.ink;
+const EMPTY = PALETTE.butter;
 
 /** A point on the circle, measured clockwise from the top. */
 function polar(angle: number, radius = RADIUS) {

@@ -32,8 +32,6 @@ export interface PathCourse {
   subject: string;
   status: CourseSummary["status"];
   sample: number[];
-  accent: string;
-  heroAccent: string;
   /** Bespoke SVG artwork; falls back to the abacus preview when absent. */
   art?: CourseSummary["art"];
   /** Total lessons, used with the locally stored completion count for progress. */
@@ -84,8 +82,6 @@ function toPathCourse(summary: CourseSummary): PathCourse {
     subject: summary.subject,
     status: summary.status,
     sample: summary.sample,
-    accent: summary.accent,
-    heroAccent: summary.heroAccent,
     art: summary.art,
     lessonCount: summary.lessonCount,
   };
