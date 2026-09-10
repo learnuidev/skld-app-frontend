@@ -67,6 +67,22 @@ describe("CourseCard", () => {
     expect(screen.queryByRole("progressbar")).not.toBeInTheDocument();
   });
 
+  it("makes the whole card a link target, not just the label", () => {
+    render(
+      <ul>
+        <CourseCard course={base} />
+      </ul>,
+    );
+
+    const link = screen.getByRole("link", { name: "Understanding Abacus" });
+
+    // The label's overlay is anchored to the wrapper that holds the card, so
+    // clicking the artwork opens the course too.
+    expect(link.parentElement?.querySelector('[role="progressbar"]')).toBeInTheDocument();
+    expect(link.className).toContain("after:absolute");
+    expect(link.className).toContain("after:inset-0");
+  });
+
   it("links cards with the connector rule between them", () => {
     const { container } = render(
       <ul>

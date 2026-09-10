@@ -75,31 +75,36 @@ export function CourseCard({
 
   return (
     <li className="group relative flex shrink-0 flex-col items-center">
-      <div className="relative">
-        {card}
-        {showConnector ? (
-          <span
-            aria-hidden
-            className="absolute left-full top-1/2 h-0.5 w-4 -translate-y-1/2 bg-border"
-          />
-        ) : null}
-      </div>
+      <div className="relative flex flex-col items-center">
+        <div className="relative">
+          {card}
+          {showConnector ? (
+            <span
+              aria-hidden
+              className="absolute left-full top-1/2 h-0.5 w-4 -translate-y-1/2 bg-border"
+            />
+          ) : null}
+        </div>
 
-      {available ? (
-        <Link
-          href={`/courses/${course.slug}`}
-          className={cn(
-            "mt-6 rounded-sm px-1 text-center text-base text-foreground underline-offset-4 hover:underline",
-            width,
-          )}
-        >
-          {course.title}
-        </Link>
-      ) : (
-        <span className={cn("mt-6 px-1 text-center text-base text-muted-foreground", width)}>
-          {course.title}
-        </span>
-      )}
+        {available ? (
+          // The anchor's ::after stretches back over the card, so clicking the
+          // artwork opens the course too — the pattern Brilliant's cards use.
+          <Link
+            href={`/courses/${course.slug}`}
+            className={cn(
+              "mt-6 rounded-sm px-1 text-center text-base text-foreground underline-offset-4",
+              "after:absolute after:inset-0 after:content-[''] hover:underline",
+              width,
+            )}
+          >
+            {course.title}
+          </Link>
+        ) : (
+          <span className={cn("mt-6 px-1 text-center text-base text-muted-foreground", width)}>
+            {course.title}
+          </span>
+        )}
+      </div>
     </li>
   );
 }
