@@ -152,6 +152,64 @@ describe("bridge scenes", () => {
     expect(plain.container.querySelectorAll("text")).toHaveLength(0);
     expect(annotated.container.querySelectorAll("text").length).toBeGreaterThan(0);
   });
+
+  it("names every part of a scene once the names are on", () => {
+    const problems: string[] = [];
+
+    for (const name of NAMES) {
+      const { container, unmount } = draw(name, { labels: true });
+      const written = [...container.querySelectorAll("text")].map((text) =>
+        (text.textContent ?? "").trim().toLowerCase(),
+      );
+
+      for (const part of SCENE_PARTS[name]) {
+        // The part's own name, or the shorter one its drawing has room for.
+        const wanted = (part.tag ?? part.label).toLowerCase();
+        if (!written.includes(wanted)) {
+          problems.push(`${name}: "${wanted}" is never written on the drawing`);
+        }
+      }
+
+      unmount();
+    }
+
+    expect(problems).toEqual([]);
+  });
+
+  it("keeps every name written on the drawing inside the frame", () => {
+    // jsdom measures no text, so a name is judged by an estimate of its width:
+    // 7px bold runs a little under 4.2px a character, which is enough to catch
+    // a name that runs off the edge of the drawing.
+    const PER_CHARACTER = 4.2;
+    const slack = 2;
+    const problems: string[] = [];
+
+    for (const name of NAMES) {
+      const { container, unmount } = draw(name, { labels: true });
+
+      for (const text of container.querySelectorAll("text")) {
+        const written = text.textContent ?? "";
+        const x = Number(text.getAttribute("x") ?? 0);
+        const y = Number(text.getAttribute("y") ?? 0);
+        const width = written.length * PER_CHARACTER;
+        const anchor = text.getAttribute("text-anchor") ?? "middle";
+        const left = anchor === "start" ? x : anchor === "end" ? x - width : x - width / 2;
+
+        if (left < -slack || left + width > SCENE_WIDTH + slack) {
+          problems.push(
+            `${name}: "${written}" runs from ${left.toFixed(1)} to ${(left + width).toFixed(1)}`,
+          );
+        }
+        if (y - 6 < -slack || y + 6 > SCENE_HEIGHT + slack) {
+          problems.push(`${name}: "${written}" sits at y=${y}`);
+        }
+      }
+
+      unmount();
+    }
+
+    expect(problems).toEqual([]);
+  });
 });
 
 describe("scene parts", () => {

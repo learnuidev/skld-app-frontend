@@ -35,6 +35,13 @@ export const SCENE_HEIGHT = 180;
 export interface ScenePart {
   id: string;
   label: string;
+  /**
+   * The name the drawing writes for this part, when the full label will not
+   * fit there — "High water level" is drawn as "high water". Defaults to
+   * `label`. Every part is named on its drawing when the names are on, and
+   * this is the name it is written under.
+   */
+  tag?: string;
   /** What the part does, in one sentence — shown when the learner finds it. */
   note: string;
   /** Where its pin sits, in scene coordinates. */
@@ -822,6 +829,21 @@ function Overview({ highlight, labels }: SceneShapes) {
           <Tag x={202} y={82}>
             pier
           </Tag>
+          {/* The deck names itself on its own length. */}
+          <Tag x={160} y={95} colour={PALETTE.paper}>
+            superstructure
+          </Tag>
+          {/* The bearing is a small block between deck and pier, so it is named
+              beside the deck and joined to it by a short line. */}
+          <Tag x={100} y={108} anchor="end">
+            bearing
+          </Tag>
+          <Tie x1={103} y1={106} x2={112} y2={101} opacity={0.9} />
+          {/* The buried work, named in the bank the abutment stands on. */}
+          <Tag x={40} y={156}>
+            foundation
+          </Tag>
+          <Tie x1={40} y1={151} x2={40} y2={145} opacity={0.9} />
         </>
       ) : null}
     </>
@@ -885,6 +907,11 @@ function Superstructure({ highlight, labels }: SceneShapes) {
       <Wash y={107} height={7} opacity={0.05} />
       {labels ? (
         <>
+          {/* The railing stands on its own above the deck, so it is named above
+              it, inside the frame. */}
+          <Tag x={64} y={46}>
+            railing
+          </Tag>
           <Tag x={40} y={140}>
             wearing surface
           </Tag>
@@ -929,9 +956,27 @@ function Bearings({ highlight, labels }: SceneShapes) {
       </g>
       {labels ? (
         <>
+          {/* The girder names itself along its own length, the way the deck is
+              named in the other sections. */}
+          <Tag x={250} y={89} colour={PALETTE.paper}>
+            main girder
+          </Tag>
           <Arrow x1={156} y1={70} x2={156} y2={30} colour={PALETTE.gray} dashed />
           <Tag x={156} y={24} colour={PALETTE.gray}>
             traffic load
+          </Tag>
+          {/* The bearing is small and the pier cap is wide, so each name sits
+              beside its own part with a short line to it. */}
+          <Tag x={112} y={108} anchor="end">
+            bearing
+          </Tag>
+          <Tie x1={115} y1={108} x2={122} y2={108} opacity={0.9} />
+          <Tag x={250} y={124} anchor="start">
+            pier cap
+          </Tag>
+          <Tie x1={247} y1={124} x2={238} y2={124} opacity={0.9} />
+          <Tag x={212} y={152} anchor="start">
+            pier
           </Tag>
           <Arrow x1={226} y1={108} x2={252} y2={108} />
           <Arrow x1={252} y1={116} x2={226} y2={116} />
@@ -989,7 +1034,8 @@ function Supports({ highlight, labels }: SceneShapes) {
       </g>
       {labels ? (
         <>
-          <Tag x={18} y={100}>
+          {/* Written left to right along the bank, starting inside the frame. */}
+          <Tag x={2} y={100} anchor="start">
             embankment
           </Tag>
           <Tag x={60} y={130} colour={PALETTE.paper}>
@@ -1039,6 +1085,10 @@ function Foundations({ highlight, labels }: SceneShapes) {
       </g>
       {labels ? (
         <>
+          {/* The pier rises out of the ground, so its name sits beside it. */}
+          <Tag x={182} y={40} anchor="start">
+            pier
+          </Tag>
           <Tag x={232} y={73} anchor="start">
             pile cap
           </Tag>
@@ -1305,7 +1355,8 @@ function Dimensions({ highlight, labels }: SceneShapes) {
         <DimensionLine x1={30} y={80} x2={290} label="L" />
       </g>
       <g opacity={fade("construction-height")}>
-        <DimensionLine x1={36} y={101} x2={36} label="h" />
+        {/* Left of the deck's own end: written on the deck, "h" was ink on ink. */}
+        <DimensionLine x1={22} y={101} x2={22} label="h" />
       </g>
       <g opacity={fade("net-span")}>
         <Leader x={146.5} y1={140} y2={120} />
@@ -1374,13 +1425,15 @@ function DeckPosition({ highlight, labels }: SceneShapes) {
       </g>
       {labels ? (
         <>
-          <Tag x={160} y={a + 34}>
+          {/* Each name is written on the deck of its own drawing, which is
+              the whole point of the three panels: where the deck sits. */}
+          <Tag x={160} y={a + 6} colour={PALETTE.paper}>
             deck
           </Tag>
-          <Tag x={160} y={b + 22}>
+          <Tag x={160} y={b + 38} colour={PALETTE.paper}>
             through
           </Tag>
-          <Tag x={160} y={c + 18}>
+          <Tag x={160} y={c + 26} colour={PALETTE.paper}>
             half-through
           </Tag>
         </>
@@ -1434,13 +1487,14 @@ function Beam({ highlight, labels }: SceneShapes) {
       </g>
       {labels ? (
         <>
-          <Tag x={160} y={a + 32}>
+          <Tag x={160} y={a + 30}>
             simply supported
           </Tag>
-          <Tag x={160} y={b + 32}>
+          {/* Stepped left of the middle support, which its own name sat on. */}
+          <Tag x={100} y={b + 30}>
             continuous
           </Tag>
-          <Tag x={160} y={c + 36}>
+          <Tag x={160} y={c + 30}>
             cantilever
           </Tag>
         </>
@@ -1491,13 +1545,23 @@ function ArchScene({ highlight, labels }: SceneShapes) {
       </g>
       {labels ? (
         <>
-          <Tag x={160} y={44} colour={PALETTE.paper}>
+          {/* The deck names itself on its own length; it used to be written in
+              the opening below, where white on light paper could not be read. */}
+          <Tag x={160} y={24} colour={PALETTE.paper}>
             deck
           </Tag>
           <Tag x={12} y={68} anchor="start" colour={PALETTE.yellowDeep}>
             thrust
           </Tag>
-          <Tag x={160} y={140}>
+          {/* The ring is named in the opening beside it, clear of the ties. */}
+          <Tag x={258} y={50}>
+            arch ring
+          </Tag>
+          {/* And the tie is named at its own end, above the tie itself. */}
+          <Tag x={54} y={147} anchor="end">
+            tie
+          </Tag>
+          <Tag x={160} y={174}>
             tied arch — the tie pulls the feet together
           </Tag>
         </>
@@ -1616,7 +1680,20 @@ function CableStayed({ highlight, labels }: SceneShapes) {
           <Tag x={64} y={deckY - 8}>
             main girder
           </Tag>
-          <Tag x={104} y={164} colour={PALETTE.yellowDeep}>
+          {/* The back stays are tied down into these blocks, so each is named
+              just above the block it names. */}
+          <Tag x={15} y={132}>
+            anchor
+          </Tag>
+          <Tag x={305} y={132}>
+            anchor
+          </Tag>
+          {/* What the fan of stays adds up to: named under the drawing, with
+              the lesson's own words for it beneath, in the bright note. */}
+          <Tag x={160} y={158}>
+            multi-point support
+          </Tag>
+          <Tag x={160} y={170} colour={PALETTE.yellowDeep}>
             each stay lifts like an invisible pier
           </Tag>
         </>
@@ -1684,18 +1761,27 @@ function Suspension({ highlight, labels }: SceneShapes) {
       </g>
       {labels ? (
         <>
-          <Arrow x1={14} y1={14} x2={70} y2={14} colour={PALETTE.yellow} head={5} />
-          <Tag x={76} y={14} anchor="start" colour={PALETTE.yellowDeep}>
+          <Arrow x1={14} y1={14} x2={62} y2={14} colour={PALETTE.yellow} head={5} />
+          <Tag x={68} y={14} anchor="start" colour={PALETTE.yellowDeep}>
             wind
           </Tag>
-          <Tag x={160} y={74} colour={PALETTE.paper}>
+          <Tag x={236} y={14}>
+            tower
+          </Tag>
+          {/* Down the middle of the span in the order the load travels: the
+              cable, the hangers that drop from it, the girder they lift. */}
+          <Tag x={160} y={62}>
             main cable
           </Tag>
-          <Tag x={150} y={150}>
+          <Tag x={160} y={94}>
+            hanger
+          </Tag>
+          <Tag x={160} y={124} colour={PALETTE.paper}>
             stiffening girder
           </Tag>
-          <Tag x={160} y={166} colour={PALETTE.gray}>
-            hangers · towers · anchorages
+          {/* The block the cable is tied into, named beside it under the deck. */}
+          <Tag x={34} y={141} anchor="start">
+            anchorage
           </Tag>
         </>
       ) : null}
@@ -1741,13 +1827,16 @@ function Composite({ highlight, labels }: SceneShapes) {
       </g>
       {labels ? (
         <>
-          <Tag x={160} y={a + 34}>
+          {/* Each system is named on the deck of its own drawing: the three
+              panels are small, and a name written across the tower or the
+              stays of one drawing could not be read. */}
+          <Tag x={160} y={a + 12} colour={PALETTE.paper}>
             beam + arch
           </Tag>
-          <Tag x={160} y={b + 22}>
+          <Tag x={160} y={b + 37} colour={PALETTE.paper}>
             partial cable-stayed
           </Tag>
-          <Tag x={160} y={c + 26}>
+          <Tag x={160} y={c + 39} colour={PALETTE.paper}>
             cable-stayed + suspension
           </Tag>
         </>
@@ -1902,6 +1991,7 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
     {
       id: "transition-slab",
       label: "Transition slab",
+      tag: "slab",
       note: "A slab between the abutment and the fill. It tilts as the fill settles, so the road stays smooth.",
       at: [22, 88],
     },
@@ -1966,6 +2056,7 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
     {
       id: "paving",
       label: "Deck paving",
+      tag: "paving",
       note: "The running surface, laid over the waterproofing.",
       at: [80, 92],
     },
@@ -1978,6 +2069,7 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
     {
       id: "drain",
       label: "Drainage",
+      tag: "drain",
       note: "Pipes and waterproofing that take rain off the deck before it soaks into the structure.",
       at: [128, 128],
     },
@@ -1992,24 +2084,28 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
     {
       id: "high-water-level",
       label: "High water level",
+      tag: "high water",
       note: "The highest level the river has been seen to reach in flood.",
       at: [70, 78],
     },
     {
       id: "design-flood-level",
       label: "Design flood level",
+      tag: "design flood",
       note: "The level the designer calculates the bridge must cope with. Spans are measured at this level.",
       at: [250, 96],
     },
     {
       id: "navigable-level",
       label: "Navigable water level",
+      tag: "navigable",
       note: "The level at which boats can still pass under the bridge normally.",
       at: [130, 114],
     },
     {
       id: "low-water-level",
       label: "Low water level",
+      tag: "low water",
       note: "The lowest level in the dry season.",
       at: [200, 132],
     },
@@ -2024,24 +2120,28 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
     {
       id: "bridge-length",
       label: "Bridge length L",
+      tag: "L",
       note: "The whole bridge, end to end — between the tail ends of the abutment wing walls.",
       at: [160, 80],
     },
     {
       id: "construction-height",
       label: "Construction height h",
+      tag: "h",
       note: "From the bottom of the superstructure to the top of the deck. It must never exceed the height the route allows.",
       at: [40, 101],
     },
     {
       id: "net-span",
       label: "Net span l₀",
+      tag: "l₀",
       note: "The clear waterway between two piers at the design flood level.",
       at: [155, 118],
     },
     {
       id: "computed-span",
       label: "Computed span l",
+      tag: "l",
       note: "Centre to centre of the supports — the span the calculations use.",
       at: [185, 134],
     },
@@ -2068,6 +2168,7 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
     {
       id: "pipe-duct",
       label: "Pipe duct",
+      tag: "pipes",
       note: "Space left under the deck so pipes and cables can cross with the bridge.",
       at: [84, 126],
     },
@@ -2082,18 +2183,21 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
     {
       id: "deck-bridge",
       label: "Deck bridge",
+      tag: "deck",
       note: "The traffic runs on top of the load-bearing structure.",
       at: [160, 12],
     },
     {
       id: "through-bridge",
       label: "Through bridge",
+      tag: "through",
       note: "The traffic runs inside the structure, on its lower chord.",
       at: [160, 103],
     },
     {
       id: "half-through-bridge",
       label: "Half-through bridge",
+      tag: "half-through",
       note: "The deck cuts across the middle: part of the structure stands above the traffic.",
       at: [160, 149],
     },
@@ -2122,18 +2226,21 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
     {
       id: "arch-ring",
       label: "Main arch ring",
+      tag: "arch ring",
       note: "The curved member that carries the load in compression.",
       at: [110, 40],
     },
     {
       id: "thrust",
       label: "Horizontal thrust",
+      tag: "thrust",
       note: "The push that an arch gives its foundations. Meeting it is what an arch bridge needs from the ground.",
       at: [10, 82],
     },
     {
       id: "tie-rod",
       label: "Tie",
+      tag: "tie",
       note: "A tie between the arch feet pulls them together, so the ground no longer has to resist the thrust.",
       at: [160, 157],
     },
@@ -2148,6 +2255,7 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
     {
       id: "portal-frame",
       label: "Portal frame",
+      tag: "portal",
       note: "Two legs and a beam cast as one piece. The piers help the beam bend, so it can be shallower.",
       at: [160, a18()],
     },
@@ -2160,12 +2268,14 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
     {
       id: "inclined-leg",
       label: "Inclined leg frame",
+      tag: "inclined legs",
       note: "Slanted legs open up more room underneath and give the bridge a lighter look.",
       at: [160, 72],
     },
     {
       id: "continuous-frame",
       label: "Continuous frame",
+      tag: "continuous",
       note: "A long frame over several flexible piers — the usual choice for mountain valleys.",
       at: [160, 133],
     },
@@ -2238,6 +2348,7 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
     {
       id: "beam-arch",
       label: "Beam and arch",
+      tag: "beam + arch",
       note: "The arch and the beam carry the load together, each doing what it is best at.",
       at: [160, 18],
     },
