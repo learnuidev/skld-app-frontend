@@ -1,0 +1,834 @@
+[
+  {
+    "start": "00:17",
+    "input": "Hello students"
+  },
+  {
+    "start": "00:19",
+    "input": "Welcome to the Bridge Engineering class at Kunming University of Science and Technology."
+  },
+  {
+    "start": "00:23",
+    "input": "This is the first lesson in \"Bridge Engineering\"."
+  },
+  {
+    "start": "00:27",
+    "input": "We will learn the definition of a bridge together."
+  },
+  {
+    "start": "00:31",
+    "input": "Domestic construction achievements"
+  },
+  {
+    "start": "00:33",
+    "input": "Components of a bridge"
+  },
+  {
+    "start": "00:35",
+    "input": "Bridge layout and calculation related terms"
+  },
+  {
+    "start": "00:39",
+    "input": "Let's first look at what exactly a bridge is."
+  },
+  {
+    "start": "00:42",
+    "input": "For bridges"
+  },
+  {
+    "start": "00:43",
+    "input": "Students should be very familiar with"
+  },
+  {
+    "start": "00:45",
+    "input": "Bridges are essential components of human life and production."
+  },
+  {
+    "start": "00:49",
+    "input": "Buildings constructed to overcome natural obstacles"
+  },
+  {
+    "start": "00:53",
+    "input": "Also the oldest human"
+  },
+  {
+    "start": "00:55",
+    "input": "Most spectacular"
+  },
+  {
+    "start": "00:56",
+    "input": "The most beautiful architectural project"
+  },
+  {
+    "start": "00:59",
+    "input": "It embodies the civilization and progress of an era."
+  },
+  {
+    "start": "01:03",
+    "input": "In modern society"
+  },
+  {
+    "start": "01:05",
+    "input": "Bridges are for cars"
+  },
+  {
+    "start": "01:08",
+    "input": "train"
+  },
+  {
+    "start": "01:09",
+    "input": "Pedestrian and other traffic flows cross the river"
+  },
+  {
+    "start": "01:13",
+    "input": "Valleys or other line obstacles"
+  },
+  {
+    "start": "01:16",
+    "input": "Structures with load-bearing capacity"
+  },
+  {
+    "start": "01:19",
+    "input": "Combining the functions of the bridge"
+  },
+  {
+    "start": "01:21",
+    "input": "Bridges that people usually see include: highway bridges"
+  },
+  {
+    "start": "01:26",
+    "input": "railway bridges"
+  },
+  {
+    "start": "01:27",
+    "input": "urban bridges"
+  },
+  {
+    "start": "01:28",
+    "input": "Water crossing bridge"
+  },
+  {
+    "start": "01:30",
+    "input": "Bridges crossing water include both aqueducts and inverted siphon bridges."
+  },
+  {
+    "start": "01:34",
+    "input": "There are also transport bridges within the factory (site)."
+  },
+  {
+    "start": "01:37",
+    "input": "Pipelines, bridges, etc."
+  },
+  {
+    "start": "01:39",
+    "input": "With the advancement of science and technology"
+  },
+  {
+    "start": "01:41",
+    "input": "In addition to its primary function of transportation, bridges"
+  },
+  {
+    "start": "01:44",
+    "input": "It has gradually become a series of three-dimensional art projects."
+  },
+  {
+    "start": "01:49",
+    "input": "So what achievements has my country made in bridge construction?"
+  },
+  {
+    "start": "01:55",
+    "input": "Chinese history"
+  },
+  {
+    "start": "01:56",
+    "input": "Long-standing culture"
+  },
+  {
+    "start": "01:57",
+    "input": "It is one of the world's ancient civilizations"
+  },
+  {
+    "start": "02:00",
+    "input": "Our ancestors also wrote a glorious chapter in the history of world bridge construction."
+  },
+  {
+    "start": "02:07",
+    "input": "The Zhaozhou Bridge in Hebei Province is a representative example of a stone arch bridge."
+  },
+  {
+    "start": "02:13",
+    "input": "And the world's longest stone beam bridge, Anping Bridge in Quanzhou, Fujian."
+  },
+  {
+    "start": "02:19",
+    "input": "They are all masterpieces of ancient bridge architecture."
+  },
+  {
+    "start": "02:23",
+    "input": "In modern bridges"
+  },
+  {
+    "start": "02:25",
+    "input": "Concrete beam bridges are widely used in bridges with small to medium spans."
+  },
+  {
+    "start": "02:30",
+    "input": "Standard spans are mostly used for spans under 30m."
+  },
+  {
+    "start": "02:34",
+    "input": "As the span increases"
+  },
+  {
+    "start": "02:36",
+    "input": "Prestressed concrete continuous beam bridges or prestressed concrete continuous rigid frame bridges are often used."
+  },
+  {
+    "start": "02:43",
+    "input": "In recent years"
+  },
+  {
+    "start": "02:45",
+    "input": "my country has built many long-span concrete beam bridges or continuous rigid frame bridges."
+  },
+  {
+    "start": "02:50",
+    "input": "Chongqing Shibanpo Yangtze River Bridge (Second Line)"
+  },
+  {
+    "start": "02:54",
+    "input": "It is currently the largest span prestressed concrete continuous rigid frame bridge in my country."
+  },
+  {
+    "start": "02:58",
+    "input": "The main span reaches 330m"
+  },
+  {
+    "start": "03:02",
+    "input": "Arch bridges are one type of long-span bridges."
+  },
+  {
+    "start": "03:06",
+    "input": "With a beautiful shape"
+  },
+  {
+    "start": "03:08",
+    "input": "Advantages of strong cross-border capabilities and mature technology"
+  },
+  {
+    "start": "03:12",
+    "input": "Some of the more famous ones include: Pingnan Third Bridge in Guangxi."
+  },
+  {
+    "start": "03:16",
+    "input": "Chongqing Chaotianmen Yangtze River Bridge, etc."
+  },
+  {
+    "start": "03:18",
+    "input": "Six of the world's ten largest arch bridges are located in China."
+  },
+  {
+    "start": "03:24",
+    "input": "The spans are all over 440m"
+  },
+  {
+    "start": "03:27",
+    "input": "The largest was completed in 2020."
+  },
+  {
+    "start": "03:30",
+    "input": "Pingnan Third Bridge, Pingnan County, Guigang City, Guangxi"
+  },
+  {
+    "start": "03:32",
+    "input": "Main span 575m"
+  },
+  {
+    "start": "03:34",
+    "input": "It is currently the world's largest span steel-concrete composite arch bridge."
+  },
+  {
+    "start": "03:39",
+    "input": "Biliang Bridge"
+  },
+  {
+    "start": "03:40",
+    "input": "Arch bridges have a greater spanning capacity than cable-stayed bridges."
+  },
+  {
+    "start": "03:44",
+    "input": "This type of bridge has a beautiful shape."
+  },
+  {
+    "start": "03:47",
+    "input": "Good mechanical properties and economic indicators"
+  },
+  {
+    "start": "03:50",
+    "input": "It is also one of the most important bridge types for long-span bridges."
+  },
+  {
+    "start": "03:55",
+    "input": "Since the 1990s"
+  },
+  {
+    "start": "03:57",
+    "input": "my country's cable-stayed bridge construction has developed rapidly."
+  },
+  {
+    "start": "04:02",
+    "input": "It has now become the country with the most cable-stayed bridges in the world."
+  },
+  {
+    "start": "04:06",
+    "input": "When the bridge span exceeds 1000m"
+  },
+  {
+    "start": "04:09",
+    "input": "Suspension bridges are generally considered the most economical type of bridge."
+  },
+  {
+    "start": "04:13",
+    "input": "my country started building modern long-span suspension bridges relatively late."
+  },
+  {
+    "start": "04:18",
+    "input": "However, significant construction achievements were made in the 1990s."
+  },
+  {
+    "start": "04:24",
+    "input": "Several suspension bridges were built in succession."
+  },
+  {
+    "start": "04:27",
+    "input": "Top 10 longest suspension bridges in the world"
+  },
+  {
+    "start": "04:29",
+    "input": "There are 6 in my country"
+  },
+  {
+    "start": "04:32",
+    "input": "The bridge with the longest span is currently the Yangsigang Yangtze River Bridge."
+  },
+  {
+    "start": "04:36",
+    "input": "Main span 1700m"
+  },
+  {
+    "start": "04:38",
+    "input": "The main span of the Zhanggao River Crossing Bridge in Jiangsu Province, currently under construction, is 2300 meters."
+  },
+  {
+    "start": "04:45",
+    "input": "Once completed, it will be the world's longest-span bridge."
+  },
+  {
+    "start": "04:49",
+    "input": "To learn more about the characteristics of various types of bridges"
+  },
+  {
+    "start": "04:53",
+    "input": "We need to first understand the components of a bridge."
+  },
+  {
+    "start": "04:57",
+    "input": "This is also the focus of our first lesson."
+  },
+  {
+    "start": "05:01",
+    "input": "What you see now is the outline of a highway bridge."
+  },
+  {
+    "start": "05:08",
+    "input": "Bridges mainly consist of bridge span structures."
+  },
+  {
+    "start": "05:11",
+    "input": "support"
+  },
+  {
+    "start": "05:12",
+    "input": "Bridge piers"
+  },
+  {
+    "start": "05:13",
+    "input": "Bridge abutments and foundations, etc."
+  },
+  {
+    "start": "05:16",
+    "input": "Next, we'll disassemble it in detail."
+  },
+  {
+    "start": "05:19",
+    "input": "Bridge span structure (English: superstructure) is also called superstructure"
+  },
+  {
+    "start": "05:26",
+    "input": "It is the main load-bearing structure that crosses obstacles when the line is interrupted."
+  },
+  {
+    "start": "05:31",
+    "input": "It includes the bridge deck."
+  },
+  {
+    "start": "05:34",
+    "input": "Bridge deck beams and the structural components that support them"
+  },
+  {
+    "start": "05:37",
+    "input": "Such as main beams (slabs)"
+  },
+  {
+    "start": "05:39",
+    "input": "arch"
+  },
+  {
+    "start": "05:40",
+    "input": "Suspension cables, etc."
+  },
+  {
+    "start": "05:42",
+    "input": "Its function is to bear the load generated by pedestrians and vehicles on the bridge."
+  },
+  {
+    "start": "05:48",
+    "input": "The span is relatively large"
+  },
+  {
+    "start": "05:50",
+    "input": "In addition to the requirement of safely withstanding large vehicle loads, the load must also be constant."
+  },
+  {
+    "start": "05:57",
+    "input": "The construction of bridge span structures is therefore relatively complex."
+  },
+  {
+    "start": "06:00",
+    "input": "Construction is also quite difficult."
+  },
+  {
+    "start": "06:02",
+    "input": "Bearings are important structural components that connect the superstructure and substructure of a bridge."
+  },
+  {
+    "start": "06:07",
+    "input": "It can reliably transfer the reaction force of the bridge superstructure to the bridge substructure."
+  },
+  {
+    "start": "06:13",
+    "input": "And ensure that the bridge span structure can generate sufficient deformation (including displacement and rotation)."
+  },
+  {
+    "start": "06:21",
+    "input": "This ensures that the actual stress condition of the structure matches the calculated theoretical diagram."
+  },
+  {
+    "start": "06:28",
+    "input": "Piers and abutments (also known as substructure)"
+  },
+  {
+    "start": "06:32",
+    "input": "It is the supporting structure of the bridge span and the load-bearing capacity of dead and live loads."
+  },
+  {
+    "start": "06:37",
+    "input": "This live load includes loads such as vehicles and pedestrians."
+  },
+  {
+    "start": "06:41",
+    "input": "Buildings transferred to the foundation"
+  },
+  {
+    "start": "06:44",
+    "input": "The structures typically located at both ends of a bridge are called abutments."
+  },
+  {
+    "start": "06:50",
+    "input": "Bridge abutments connect with road embankments"
+  },
+  {
+    "start": "06:52",
+    "input": "To resist the horizontal earth pressure of the embankment"
+  },
+  {
+    "start": "06:55",
+    "input": "Preventing landslides and collapses of embankment fill"
+  },
+  {
+    "start": "07:00",
+    "input": "The one placed in the middle of the span is called a bridge pier."
+  },
+  {
+    "start": "07:03",
+    "input": "Single-span bridges do not have intermediate piers."
+  },
+  {
+    "start": "07:05",
+    "input": "The bottom structural part of the bridge piers and abutments that transfers all loads to the foundation."
+  },
+  {
+    "start": "07:11",
+    "input": "It is usually referred to as the foundation."
+  },
+  {
+    "start": "07:14",
+    "input": "It is key to ensuring the safe use of bridges."
+  },
+  {
+    "start": "07:18",
+    "input": "Because foundations are often buried deep in the soil."
+  },
+  {
+    "start": "07:22",
+    "input": "And sometimes underwater construction is required."
+  },
+  {
+    "start": "07:26",
+    "input": "Therefore, it is also one of the more difficult parts of bridge construction."
+  },
+  {
+    "start": "07:32",
+    "input": "At the junction of the embankment and the bridge abutment"
+  },
+  {
+    "start": "07:36",
+    "input": "Conical slope protection made of stone is typically installed on both sides of the bridge abutment."
+  },
+  {
+    "start": "07:40",
+    "input": "To ensure the stability of the embankment slope"
+  },
+  {
+    "start": "07:45",
+    "input": "To prevent settlement of the bridge end connection section"
+  },
+  {
+    "start": "07:49",
+    "input": "Bridgeend transition slabs must be installed."
+  },
+  {
+    "start": "07:51",
+    "input": "It rests between the bridge abutment or the end of the cantilever beam and the backfill."
+  },
+  {
+    "start": "07:57",
+    "input": "Rotates as the fill settles."
+  },
+  {
+    "start": "08:00",
+    "input": "It can act as a buffer when the vehicle is in motion."
+  },
+  {
+    "start": "08:05",
+    "input": "Even if the backfill soil settles, it shouldn't cause unevenness."
+  },
+  {
+    "start": "08:10",
+    "input": "also"
+  },
+  {
+    "start": "08:11",
+    "input": "Bridges also have some accessories."
+  },
+  {
+    "start": "08:14",
+    "input": "Including bridge deck paving"
+  },
+  {
+    "start": "08:17",
+    "input": "Drainage and waterproofing system"
+  },
+  {
+    "start": "08:18",
+    "input": "Railings (or crash barriers)"
+  },
+  {
+    "start": "08:21",
+    "input": "Expansion joints and lighting, etc."
+  },
+  {
+    "start": "08:24",
+    "input": "For urban bridges"
+  },
+  {
+    "start": "08:26",
+    "input": "If there are pipelines crossing the bridge"
+  },
+  {
+    "start": "08:28",
+    "input": "The construction of the bridge pipeline also needs to be reserved."
+  },
+  {
+    "start": "08:32",
+    "input": "Sometimes, revetments are also built as needed."
+  },
+  {
+    "start": "08:36",
+    "input": "diversion structures and other ancillary facilities"
+  },
+  {
+    "start": "08:39",
+    "input": "The main function of ancillary facilities is to enhance the service function of bridges."
+  },
+  {
+    "start": "08:45",
+    "input": "At the end of this lesson"
+  },
+  {
+    "start": "08:46",
+    "input": "Let's learn some terminology related to bridge layout and calculation together."
+  },
+  {
+    "start": "08:54",
+    "input": "The water level in a river varies at different times."
+  },
+  {
+    "start": "08:58",
+    "input": "The lowest water level during the dry season is called the low water level."
+  },
+  {
+    "start": "09:03",
+    "input": "The highest water level in a river during the flood peak season is called the high water level."
+  },
+  {
+    "start": "09:09",
+    "input": "The high water level calculated according to the specified design flood frequency in bridge design"
+  },
+  {
+    "start": "09:16",
+    "input": "This is called the design flood level (English: designed water level); (see PPT) in waterways of all levels."
+  },
+  {
+    "start": "09:19",
+    "input": "Able to maintain the water level during normal navigation of ships"
+  },
+  {
+    "start": "09:24",
+    "input": "This is called the navigable water level."
+  },
+  {
+    "start": "09:27",
+    "input": "For bridges with supports"
+  },
+  {
+    "start": "09:30",
+    "input": "Adjacent piers at the design flood level"
+  },
+  {
+    "start": "09:33",
+    "input": "The horizontal clearance between the inner edges of the top of the platform is called the clear span."
+  },
+  {
+    "start": "09:37",
+    "input": "Bridges without supports are"
+  },
+  {
+    "start": "09:40",
+    "input": "Horizontal clearance between the inner edges of the intersection of the upper and lower structures"
+  },
+  {
+    "start": "09:45",
+    "input": "The net span is represented by lowercase l0."
+  },
+  {
+    "start": "09:48",
+    "input": "The sum of the net spans of all spans in a multi-span bridge (∑l0) is called the total span."
+  },
+  {
+    "start": "09:54",
+    "input": "It reflects the ability of the area under the bridge to discharge floodwaters."
+  },
+  {
+    "start": "09:59",
+    "input": "For bridges with supports"
+  },
+  {
+    "start": "10:01",
+    "input": "The horizontal distance between the centers of two adjacent supports is called the computed span."
+  },
+  {
+    "start": "10:07",
+    "input": "For bridges without supports (such as arch bridges)"
+  },
+  {
+    "start": "10:10",
+    "input": "(e.g., rigid frame bridges)"
+  },
+  {
+    "start": "10:12",
+    "input": "For the best"
+  },
+  {
+    "start": "10:13",
+    "input": "Horizontal distance between the centers of the intersecting surfaces of the substructure"
+  },
+  {
+    "start": "10:16",
+    "input": "Represented by lowercase 1"
+  },
+  {
+    "start": "10:19",
+    "input": "The mechanical calculations of bridge structures are based on l."
+  },
+  {
+    "start": "10:24",
+    "input": "The standard span is expressed in lb."
+  },
+  {
+    "start": "10:28",
+    "input": "(Raises hand) Regarding beam bridges"
+  },
+  {
+    "start": "10:29",
+    "input": "Slab bridge"
+  },
+  {
+    "start": "10:30",
+    "input": "The distance between the centerlines of the two bridge piers or the centerline of the bridge piers"
+  },
+  {
+    "start": "10:34",
+    "input": "The distance between the center of the expansion joint at the front edge of the bridge abutment back wall and the bridge abutment back wall shall be used as the reference."
+  },
+  {
+    "start": "10:41",
+    "input": "For arch bridges and culverts"
+  },
+  {
+    "start": "10:44",
+    "input": "Based on the net span"
+  },
+  {
+    "start": "10:46",
+    "input": "Total length of the bridge."
+  },
+  {
+    "start": "10:47",
+    "input": "Abbreviated as bridge length"
+  },
+  {
+    "start": "10:49",
+    "input": "For bridges with abutments, the distance is the distance between the tail ends of the wing walls of the abutments on both banks."
+  },
+  {
+    "start": "10:57",
+    "input": "For bridges without abutments, the length of the bridge deck is the driving lane."
+  },
+  {
+    "start": "11:01",
+    "input": "Represented by uppercase L"
+  },
+  {
+    "start": "11:04",
+    "input": "The clearance of a bridge refers to the space required to allow for navigation."
+  },
+  {
+    "start": "11:08",
+    "input": "(Or the needs of vehicles and pedestrians) and ensuring bridge safety"
+  },
+  {
+    "start": "11:13",
+    "input": "The spatial boundaries defined below the bottom edge of the superstructure."
+  },
+  {
+    "start": "11:19",
+    "input": "The clearance above the bridge floor is the distance between the bridge's roadway and the roadway."
+  },
+  {
+    "start": "11:24",
+    "input": "The space boundaries to be maintained above the sidewalk"
+  },
+  {
+    "start": "11:28",
+    "input": "highway"
+  },
+  {
+    "start": "11:29",
+    "input": "There are corresponding regulations for the clearance of railway and urban bridge decks."
+  },
+  {
+    "start": "11:37",
+    "input": "Bridge construction height"
+  },
+  {
+    "start": "11:38",
+    "input": "It is the vertical distance from the bottom edge of the superstructure to the top surface of the bridge deck."
+  },
+  {
+    "start": "11:43",
+    "input": "That is, h in the diagram"
+  },
+  {
+    "start": "11:46",
+    "input": "Bridge deck elevation determined during route alignment"
+  },
+  {
+    "start": "11:50",
+    "input": "With navigation (or vehicle and pedestrian access under the bridge)."
+  },
+  {
+    "start": "11:55",
+    "input": "Difference in elevation of the top of the clearance boundary"
+  },
+  {
+    "start": "11:58",
+    "input": "This is called the allowable construction height."
+  },
+  {
+    "start": "12:01",
+    "input": "Obviously"
+  },
+  {
+    "start": "12:02",
+    "input": "The height of a bridge structure shall not exceed the allowable height."
+  },
+  {
+    "start": "12:07",
+    "input": "To control the height of bridge construction"
+  },
+  {
+    "start": "12:10",
+    "input": "Structures can be arranged above the bridge deck."
+  },
+  {
+    "start": "12:14",
+    "input": "Such as cable-stayed bridges"
+  },
+  {
+    "start": "12:15",
+    "input": "Suspension bridge"
+  },
+  {
+    "start": "12:17",
+    "input": "Through arch bridges, etc."
+  },
+  {
+    "start": "12:19",
+    "input": "This method solves"
+  },
+  {
+    "start": "12:22",
+    "input": "Through today's learning"
+  },
+  {
+    "start": "12:24",
+    "input": "Hopefully, everyone now has a better understanding of some of the basic components and terminology of bridges."
+  },
+  {
+    "start": "12:29",
+    "input": "The basic knowledge from today will be frequently used in future lessons."
+  },
+  {
+    "start": "12:35",
+    "input": "Please review what you have learned today carefully."
+  },
+  {
+    "start": "12:38",
+    "input": "Students"
+  },
+  {
+    "start": "12:39",
+    "input": "See you next class!"
+  }
+]

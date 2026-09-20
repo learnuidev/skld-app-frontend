@@ -1,0 +1,22 @@
+[
+  {
+    "time": "00:17",
+    "title": "Introduction to Bridge Engineering: Historical Achievements and Modern Functions",
+    "description": "The course introduces the definition, components, layout, and calculation terminology of bridges. It emphasizes their importance as load-bearing structures that cross obstacles and reviews China's historical achievements in bridge construction, including the Zhaozhou Bridge and Anping Bridge. These examples show how bridges serve transportation needs while also developing into works of art that reflect the civilization and progress of their time."
+  },
+  {
+    "time": "02:23",
+    "title": "Achievements in Chinese Bridge Construction: Innovation and Breakthroughs in Long-Span Bridges",
+    "description": "China has achieved significant advances in long-span bridge construction, including continuous steel-concrete bridges, arch bridges, cable-stayed bridges, and suspension bridges. Projects such as the Chongqing Shibanpo Yangtze River Bridge, Guangxi Pingnan Third Bridge, and Yangsigang Yangtze River Bridge demonstrate China's advanced bridge design and construction capabilities. China is also pursuing record-breaking projects, including the Zhanggao Yangtze River Crossing Bridge in Jiangsu Province, which is planned to have a 2,300-meter main span."
+  },
+  {
+    "time": "04:49",
+    "title": "Detailed Explanation of Bridge Structural Components and Functions",
+    "description": "The course explains the main components of a bridge, including the superstructure, bearings, piers, abutments, and foundations, along with their functions. It emphasizes the importance of bearings, piers, and abutments in supporting loads and maintaining structural stability. The course also introduces bridge ancillary facilities and explains how they improve the bridge's service functions. It concludes with a brief overview of bridge layout and structural calculation terminology."
+  },
+  {
+    "time": "08:54",
+    "title": "Detailed Explanation of Bridge Design Terminology and Basic Concepts: From Water Level to Structure Height",
+    "description": "The course discusses key bridge design terms, including low water level, peak flood level, design flood level, navigable water level, cross-border, total cross-border, calculated cross-border, bridge length, under-bridge clearance, bridge deck clearance, bridge structural height, and allowable structural height. It explains the definitions and applications of these terms in bridge design. A key principle is that the bridge structural height must be less than or equal to the allowable structural height, with the overall bridge height controlled through structural layout."
+  }
+]
