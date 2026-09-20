@@ -10,6 +10,7 @@ import {
   HotspotTask,
   OrderTask,
   PartsExplore,
+  reorder,
   SceneFigure,
   SortTask,
 } from "@/components/bridge/practice";
@@ -206,18 +207,64 @@ describe("OrderTask", () => {
     onHasSelection: vi.fn(),
   };
 
+  /** The cards, top to bottom, as the learner reads them. */
+  function rows() {
+    return screen.getAllByRole("listitem");
+  }
+
+  function labels() {
+    return rows().map((row) => row.textContent?.replace(/^\d+/, "").trim());
+  }
+
   it("starts scrambled, and only accepts the authored order", async () => {
     const user = userEvent.setup();
     const ref = createRef<TaskHandle>();
     render(<OrderTask {...props} ref={ref} />);
 
+    expect(labels()).toEqual(["Ground", "Traffic", "Deck"]);
     expect(ref.current?.check()).toBe(false);
 
-    // The cards start mid-list first: Ground, Traffic, Deck.
+    // The arrows are the keyboard-and-tap route through the same reorder.
     await user.click(screen.getByRole("button", { name: "Move Traffic up" }));
+    expect(labels()).toEqual(["Traffic", "Ground", "Deck"]);
+
+    await user.click(screen.getByRole("button", { name: "Move Deck up" }));
+    expect(labels()).toEqual(["Traffic", "Deck", "Ground"]);
+    expect(checked(ref)).toBe(true);
+  });
+
+  it("offers every card as a drag handle", () => {
+    render(<OrderTask {...props} ref={createRef<TaskHandle>()} />);
+
+    // The drag itself is a pointer gesture, which jsdom cannot run; what the
+    // card must carry is the grab cursor and the grip that says "drag me".
+    for (const row of rows()) {
+      expect(row).toHaveClass("cursor-grab");
+      expect(row.querySelector("svg")).toBeInTheDocument();
+    }
+  });
+
+  it("keeps the arrows usable while the cards are draggable", async () => {
+    const user = userEvent.setup();
+    render(<OrderTask {...props} ref={createRef<TaskHandle>()} />);
+
+    // A drag handle must never swallow the buttons inside the card.
     await user.click(screen.getByRole("button", { name: "Move Deck up" }));
 
-    expect(checked(ref)).toBe(true);
+    expect(labels()).toEqual(["Ground", "Deck", "Traffic"]);
+  });
+
+  it("stops the cards moving once the answer is in", async () => {
+    const user = userEvent.setup();
+    render(<OrderTask {...props} solved locked ref={createRef<TaskHandle>()} />);
+
+    for (const row of rows()) {
+      expect(row).not.toHaveClass("cursor-grab");
+    }
+
+    await user.click(screen.getByRole("button", { name: "Move Deck up" }));
+
+    expect(labels()).toEqual(["Ground", "Traffic", "Deck"]);
   });
 
   it("will not move the first card up or the last one down", () => {
@@ -228,6 +275,30 @@ describe("OrderTask", () => {
 
     expect(up[0]).toBeDisabled();
     expect(down[down.length - 1]).toBeDisabled();
+  });
+});
+
+describe("reorder", () => {
+  const items = ["a", "b", "c", "d"];
+
+  it("moves a card to the front, the back, or the middle", () => {
+    expect(reorder(items, 2, 0)).toEqual(["c", "a", "b", "d"]);
+    expect(reorder(items, 0, 3)).toEqual(["b", "c", "d", "a"]);
+    expect(reorder(items, 1, 2)).toEqual(["a", "c", "b", "d"]);
+  });
+
+  it("leaves the list alone for a drop that changes nothing", () => {
+    expect(reorder(items, 1, 1)).toBe(items);
+    expect(reorder(items, -1, 2)).toBe(items);
+    expect(reorder(items, 0, 9)).toBe(items);
+  });
+
+  it("keeps every card, whatever the move", () => {
+    for (let from = 0; from < items.length; from += 1) {
+      for (let to = 0; to < items.length; to += 1) {
+        expect([...reorder(items, from, to)].sort()).toEqual([...items].sort());
+      }
+    }
   });
 });
 

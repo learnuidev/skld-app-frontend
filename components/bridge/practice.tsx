@@ -1,8 +1,8 @@
 "use client";
 
 import { forwardRef, useImperativeHandle, useState } from "react";
-import { motion } from "framer-motion";
-import { ArrowDown, ArrowUp, Check } from "lucide-react";
+import { Reorder } from "framer-motion";
+import { ArrowDown, ArrowUp, Check, GripVertical } from "lucide-react";
 
 import type { TaskHandle } from "@/components/abacus/practice";
 import { PALETTE } from "@/components/courses/illustrations/palette";
@@ -441,7 +441,24 @@ function scramble<T>(items: T[]): T[] {
   return [...items.slice(mid), ...items.slice(0, mid)];
 }
 
-/** Put the steps in order: the river's levels, or the path a load takes. */
+/** Move one card to a new position, leaving the order of the rest alone. */
+export function reorder<T>(items: T[], from: number, to: number): T[] {
+  if (from === to) return items;
+  if (from < 0 || to < 0 || from >= items.length || to >= items.length) return items;
+  const next = [...items];
+  const [moved] = next.splice(from, 1);
+  next.splice(to, 0, moved);
+  return next;
+}
+
+/**
+ * Put the steps in order: the river's levels, or the path a load takes.
+ *
+ * The cards are dragged into place — with a mouse or a finger, since the drag
+ * is a pointer gesture rather than the browser's mouse-only drag-and-drop. Each
+ * card also carries a pair of arrow buttons, which is how a keyboard, or anyone
+ * who would rather tap, gets the same job done.
+ */
 export const OrderTask = forwardRef<
   TaskHandle,
   {
@@ -464,58 +481,79 @@ export const OrderTask = forwardRef<
     [order, items],
   );
 
-  const move = (index: number, by: number) => {
-    const next = [...order];
-    const target = index + by;
-    if (target < 0 || target >= next.length) return;
-    [next[index], next[target]] = [next[target], next[index]];
-    setOrder(next);
+  const moveTo = (from: number, to: number) => {
+    setOrder((current) => reorder(current, from, to));
     onHasSelection(true);
   };
+
+  /** Dragging is a pointer gesture; the arrows stay for everything else. */
+  const arrowsEnabled = !locked && order.length > 1;
 
   return (
     <div className="flex w-full flex-col items-center gap-6">
       <p className={PROMPT}>{prompt}</p>
-      <ul className="flex w-full max-w-lg flex-col gap-2">
+
+      <Reorder.Group
+        axis="y"
+        values={order}
+        onReorder={(next) => {
+          setOrder(next);
+          onHasSelection(true);
+        }}
+        className="flex w-full max-w-lg list-none flex-col gap-2"
+      >
         {order.map((item, index) => {
           const right = solved && items[index]?.id === item.id;
           return (
-            <motion.li key={item.id} layout transition={{ duration: 0.2 }}>
-              <div
-                className={cn(
-                  "flex items-center gap-2 rounded-2xl border bg-card px-3 py-2",
-                  right ? "border-2 border-lesson-correct" : "border-lesson-line",
-                )}
-              >
-                <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-lesson-soft text-sm font-bold tabular-nums">
-                  {index + 1}
-                </span>
-                <span className="min-w-0 flex-1 text-sm font-medium sm:text-base">{item.label}</span>
-                <span className="flex shrink-0 flex-col">
-                  <button
-                    type="button"
-                    aria-label={`Move ${item.label} up`}
-                    disabled={locked || index === 0}
-                    onClick={() => move(index, -1)}
-                    className="flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-lesson-soft hover:text-foreground disabled:opacity-30"
-                  >
-                    <ArrowUp className="size-4" />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label={`Move ${item.label} down`}
-                    disabled={locked || index === order.length - 1}
-                    onClick={() => move(index, 1)}
-                    className="flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-lesson-soft hover:text-foreground disabled:opacity-30"
-                  >
-                    <ArrowDown className="size-4" />
-                  </button>
-                </span>
-              </div>
-            </motion.li>
+            <Reorder.Item
+              key={item.id}
+              value={item}
+              drag={locked ? false : "y"}
+              whileDrag={locked ? undefined : { scale: 1.02, zIndex: 2 }}
+              className={cn(
+                "flex items-center gap-2 rounded-2xl border bg-card px-3 py-2",
+                !locked && "cursor-grab active:cursor-grabbing",
+                right ? "border-2 border-lesson-correct" : "border-lesson-line",
+              )}
+            >
+              <GripVertical
+                aria-hidden
+                className={cn("size-4 shrink-0 text-muted-foreground", locked && "opacity-30")}
+              />
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-lesson-soft text-sm font-bold tabular-nums">
+                {index + 1}
+              </span>
+              <span className="min-w-0 flex-1 text-sm font-medium sm:text-base">{item.label}</span>
+              <span className="flex shrink-0 flex-col">
+                <button
+                  type="button"
+                  aria-label={`Move ${item.label} up`}
+                  disabled={!arrowsEnabled || index === 0}
+                  onClick={() => moveTo(index, index - 1)}
+                  className="flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-lesson-soft hover:text-foreground disabled:opacity-30"
+                >
+                  <ArrowUp className="size-4" />
+                </button>
+                <button
+                  type="button"
+                  aria-label={`Move ${item.label} down`}
+                  disabled={!arrowsEnabled || index === order.length - 1}
+                  onClick={() => moveTo(index, index + 1)}
+                  className="flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-lesson-soft hover:text-foreground disabled:opacity-30"
+                >
+                  <ArrowDown className="size-4" />
+                </button>
+              </span>
+            </Reorder.Item>
           );
         })}
-      </ul>
+      </Reorder.Group>
+
+      {!solved ? (
+        <p className="text-xs text-muted-foreground">
+          Drag a card where it belongs, or use the arrows.
+        </p>
+      ) : null}
     </div>
   );
 });
