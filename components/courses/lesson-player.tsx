@@ -37,7 +37,15 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { flattenCourse, isTaskBlock, lessonUrl, nodeKey } from "@/modules/course/utils";
+import {
+  flattenCourse,
+  isTaskBlock,
+  lessonStepUrl,
+  lessonUrl,
+  nodeKey,
+  stepIdFromLessonPath,
+  stepIndex,
+} from "@/modules/course/utils";
 import { readProgress, writeProgress } from "@/modules/course/progress";
 import type { Course, LessonBlock } from "@/modules/course/types";
 
@@ -273,11 +281,14 @@ export default function LessonPlayer({
   course,
   levelSlug,
   lessonSlug,
+  step,
   blocks,
 }: {
   course: Course;
   levelSlug: string;
   lessonSlug: string;
+  /** Zero-based step the URL asks for — the page opens wherever the link points. */
+  step: number;
   blocks: LessonBlock[];
 }) {
   const router = useRouter();
@@ -296,7 +307,7 @@ export default function LessonPlayer({
     ? nodeKey(nodes[currentGlobal].level, nodes[currentGlobal].lesson)
     : `${levelSlug}:${lessonSlug}`;
 
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(step);
   const [solved, setSolved] = useState(false);
   const [attempted, setAttempted] = useState(false);
   const [hasSel, setHasSel] = useState(false);
@@ -315,6 +326,8 @@ export default function LessonPlayer({
   const [failed, setFailed] = useState<Set<number>>(new Set());
   const taskRef = useRef<TaskHandle | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
+  /** The step the card is on — what the URL has to agree with. */
+  const shown = useRef(current);
 
   const total = blocks.length;
   const block = blocks[current];
@@ -335,6 +348,23 @@ export default function LessonPlayer({
   const canGiveUp = isTask && attempted && !solved && !revealed && misses >= GIVE_UP_AFTER;
 
   const coursePath = `/courses/${course.slug}`;
+  const lessonPath = lessonUrl(course, levelSlug, lessonSlug);
+
+  /** Keep a step index inside the lesson: a button at either end asks for a
+   * step that does not exist, and landing on nothing would blank the card. */
+  const clampStep = useCallback(
+    (index: number) => Math.min(Math.max(0, index), total - 1),
+    [total],
+  );
+
+  /** The link of one step — every step in a lesson has one of its own. */
+  const stepUrl = useCallback(
+    (index: number) => {
+      const block = blocks[clampStep(index)];
+      return block ? lessonStepUrl(course, levelSlug, lessonSlug, block.id) : lessonPath;
+    },
+    [blocks, clampStep, course, levelSlug, lessonPath, lessonSlug],
+  );
 
   const completeAndGo = (path: string) => {
     const existing = readProgress(course.slug);
@@ -345,8 +375,11 @@ export default function LessonPlayer({
     router.push(path);
   };
 
-  const goToStep = useCallback(
-    (step: number) => {
+  /** Put a step on the card, started clean. The address bar is left alone. */
+  const showStep = useCallback(
+    (index: number) => {
+      const landed = clampStep(index);
+      shown.current = landed;
       setSolved(false);
       setAttempted(false);
       setHasSel(false);
@@ -354,18 +387,53 @@ export default function LessonPlayer({
       setWhyIndex(0);
       setMisses(0);
       setRevealed(false);
-      // Clamped both ways: a step button at either end asks for a step that
-      // does not exist, and landing on nothing would blank the card.
-      setCurrent(Math.min(Math.max(0, step), total - 1));
+      setCurrent(landed);
     },
-    [total],
+    [clampStep],
   );
+
+  /**
+   * Step the lesson on, link and all: the address bar follows the card, so the
+   * learner can copy, bookmark or share the step they are looking at.
+   */
+  const goToStep = useCallback(
+    (index: number) => {
+      showStep(index);
+      const url = stepUrl(index);
+      if (window.location.pathname !== url) {
+        window.history.pushState(null, "", url);
+      }
+    },
+    [showStep, stepUrl],
+  );
+
+  // Back and forward walk the lesson's steps rather than leaving it: whatever
+  // link the browser lands on, the card follows it.
+  useEffect(() => {
+    const onPop = () => {
+      const id = stepIdFromLessonPath(lessonPath, window.location.pathname);
+      const landed = id === null ? -1 : stepIndex(blocks, id);
+      if (landed >= 0) showStep(landed);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [blocks, lessonPath, showStep]);
+
+  // A step the URL reached any other way than stepping — a link into the lesson
+  // while it is already open, say. The URL is the one that knows. A URL that
+  // agrees with the card has nothing to say, so an answer in hand is never
+  // wiped by a re-render.
+  useEffect(() => {
+    if (shown.current !== step) showStep(step);
+  }, [step, showStep]);
 
   const advance = () => {
     if (!ready) return;
     if (current < total - 1) {
       goToStep(current + 1);
     } else if (next) {
+      // The next lesson's own URL opens its first step, so there is no step to
+      // name here — and no reason for this lesson to know its content.
       completeAndGo(lessonUrl(course, next.level.slug, next.lesson.slug));
     } else {
       completeAndGo(coursePath);

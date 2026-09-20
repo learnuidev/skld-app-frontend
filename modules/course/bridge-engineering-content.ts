@@ -14,24 +14,28 @@ export const bridgeEngineeringContent: CourseContentMap = {
   // ── Module 1 · Components of a Bridge ────────────────────────────────────
   "components-of-a-bridge": {
     "what-is-a-bridge": [
-      { type: "heading", text: "What Is a Bridge?" },
+      { id: "what-is-a-bridge", type: "heading", text: "What Is a Bridge?" },
       {
+        id: "bridge-load-bearing",
         type: "paragraph",
         text: "A bridge is a structure with load-bearing capacity, built so that traffic — cars, trains, people, water, pipes — can cross an obstacle: a river, a valley, or another road. It has to carry that traffic safely, and it has been doing so for longer than almost any other kind of engineering.",
       },
       {
+        id: "every-bridge-same-drawing",
         type: "figure",
         scene: "overview",
         caption:
           "Every bridge, however long, is this same drawing: something that spans the gap, something that holds it up, and something that carries the load into the ground.",
       },
       {
+        id: "take-the-tour",
         type: "parts",
         prompt: "Take the tour: tap each pin.",
         scene: "overview",
         hint: "Six pins, six parts. Tap one to find out what it does.",
       },
       {
+        id: "not-what-a-bridge-does",
         type: "choose",
         prompt: "A bridge carries traffic over an obstacle. Which of these is NOT what a bridge does?",
         choices: [
@@ -63,6 +67,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "carries-traffic-across-gap",
         type: "hotspot",
         prompt: "Tap the part that carries the traffic across the gap.",
         scene: "overview",
@@ -85,6 +90,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "famous-chinese-bridges",
         type: "list",
         items: [
           "Zhaozhou Bridge in Hebei — a stone arch bridge, and a masterpiece of ancient bridge building.",
@@ -95,29 +101,34 @@ export const bridgeEngineeringContent: CourseContentMap = {
         ],
       },
       {
+        id: "bridge-as-art",
         type: "paragraph",
         text: "Beyond its transport job, a bridge has become a piece of three-dimensional art — and a record of what its age could build.",
       },
     ],
 
     superstructure: [
-      { type: "heading", text: "The Superstructure" },
+      { id: "the-superstructure", type: "heading", text: "The Superstructure" },
       {
+        id: "superstructure-span-structure",
         type: "paragraph",
         text: "The superstructure — also called the bridge span structure — is the part that crosses the obstacle when the road is interrupted. It includes the bridge deck, the deck beams, and the main members that support them: main beams or slabs, arches, suspension cables.",
       },
       {
+        id: "deck-in-section",
         type: "figure",
         scene: "superstructure",
         caption:
           "A deck in section. Traffic runs on the wearing surface; the slab spreads the wheel loads; the girder spans between supports and bends.",
       },
       {
+        id: "name-each-deck-layer",
         type: "parts",
         prompt: "Tap each pin to name a layer of the deck.",
         scene: "superstructure",
       },
       {
+        id: "deep-beam-between-supports",
         type: "hotspot",
         prompt: "Which part is the deep beam that spans between the supports?",
         scene: "superstructure",
@@ -143,6 +154,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "harder-than-a-floor",
         type: "choose",
         prompt: "Why is building a superstructure harder than building an ordinary building's floor?",
         choices: [
@@ -173,6 +185,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "deck-layers-in-order",
         type: "order",
         prompt: "Put the layers of the deck in order, from the traffic down to the spanning member.",
         items: [
@@ -198,18 +211,21 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     bearings: [
-      { type: "heading", text: "Bearings" },
+      { id: "what-a-bearing-does", type: "heading", text: "Bearings" },
       {
+        id: "bearing-connects-deck-to-pier",
         type: "paragraph",
         text: "A bearing is the small structural component that connects the superstructure to the substructure. It reliably transfers the reaction from the deck down to the pier — and just as importantly, it lets the deck move.",
       },
       {
+        id: "bearings-on-a-pier-cap",
         type: "figure",
         scene: "bearings",
         caption:
           "Two bearings on a pier cap. Everything the deck carries passes through them, and they let the deck slide and rotate as it stretches in the heat.",
       },
       {
+        id: "what-bearing-lets-deck-do",
         type: "choose",
         prompt: "Apart from passing the load down, what must a bearing allow the deck to do?",
         choices: [
@@ -241,6 +257,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "lets-deck-move",
         type: "hotspot",
         prompt: "Tap the part that lets the deck move while it carries the load.",
         scene: "bearings",
@@ -262,6 +279,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "match-calculated-diagram",
         type: "choose",
         prompt: "A bridge designer says 'the real structure must match the calculated diagram'. What does the bearing have to do with that?",
         choices: [
@@ -285,21 +303,25 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     "piers-and-abutments": [
-      { type: "heading", text: "Piers & Abutments" },
+      { id: "piers-and-abutments", type: "heading", text: "Piers & Abutments" },
       {
+        id: "piers-and-abutments-substructure",
         type: "paragraph",
         text: "Piers and abutments together are the substructure: the supporting structure that receives the deck's dead load and the live load of vehicles and people, and passes it to the foundation.",
       },
       {
+        id: "abutment-at-each-end",
         type: "paragraph",
         text: "The support at each end of the bridge is an abutment. It connects to the road embankment and resists the horizontal earth pressure of the fill, so the bank cannot slide or collapse. A support in the middle of the span is a pier — and a single-span bridge has no pier at all.",
       },
       {
+        id: "end-of-bridge-pins",
         type: "parts",
         prompt: "Tap the pins to see how the end of a bridge is finished.",
         scene: "supports",
       },
       {
+        id: "two-kinds-of-support",
         type: "sort",
         prompt: "Sort these into the two kinds of support.",
         buckets: [
@@ -329,6 +351,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "resists-earth-pressure",
         type: "hotspot",
         prompt: "Tap the support that resists the earth pressure of the embankment.",
         scene: "supports",
@@ -350,6 +373,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "cone-slope-transition-slab",
         type: "choose",
         prompt: "What are the two extra pieces at the end of a bridge for?",
         choices: [
@@ -382,23 +406,27 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     foundations: [
-      { type: "heading", text: "Foundations" },
+      { id: "bridge-foundations", type: "heading", text: "Foundations" },
       {
+        id: "what-a-foundation-does",
         type: "paragraph",
         text: "The foundation is the bottom part of the piers and abutments that transfers all their loads into the ground. It is the key to a bridge being safe to use — and because it is often buried deep in soil, and sometimes built underwater, it is one of the most difficult parts of the whole job.",
       },
       {
+        id: "pier-on-a-pile-cap",
         type: "figure",
         scene: "foundations",
         caption:
           "A pier on a pile cap, with piles driven down to the bearing stratum. Everything above the ground is only as good as what is under it.",
       },
       {
+        id: "buried-parts-of-bridge",
         type: "parts",
         prompt: "Tap the buried parts of the bridge.",
         scene: "foundations",
       },
       {
+        id: "load-path-to-the-ground",
         type: "order",
         prompt: "Put the load path in order — from the traffic to the ground.",
         items: [
@@ -427,6 +455,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "spreads-pier-load",
         type: "hotspot",
         prompt: "Tap the buried part that spreads the pier's load into the ground.",
         scene: "foundations",
@@ -448,6 +477,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "hardest-part-to-build",
         type: "choose",
         prompt: "Why are foundations usually the hardest part of building a bridge?",
         choices: [
@@ -478,17 +508,20 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     fittings: [
-      { type: "heading", text: "Fittings & Facilities" },
+      { id: "fittings-and-facilities", type: "heading", text: "Fittings & Facilities" },
       {
+        id: "structure-is-only-half",
         type: "paragraph",
         text: "The structure is only half of a bridge. The rest is what makes it usable: deck paving, drainage and waterproofing, railings or crash barriers, expansion joints, and lighting. Urban bridges also reserve ducts for pipelines crossing the bridge, and sometimes build revetments and diversion works as needed.",
       },
       {
+        id: "find-each-fitting",
         type: "parts",
         prompt: "Find each fitting on the deck.",
         scene: "fittings",
       },
       {
+        id: "three-jobs-fittings-do",
         type: "concepts",
         prompt: "Three jobs the fittings do.",
         concepts: [
@@ -518,6 +551,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         ],
       },
       {
+        id: "deck-grow-and-shrink",
         type: "hotspot",
         prompt: "Tap the fitting that lets the deck grow and shrink without cracking.",
         scene: "fittings",
@@ -542,6 +576,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "sort-fittings-by-job",
         type: "sort",
         prompt: "Sort each fitting by the job it does.",
         buckets: [
@@ -572,6 +607,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "water-quiet-enemy",
         type: "choose",
         prompt: "Water is a bridge's quiet enemy. Which fitting handles it?",
         choices: [
@@ -604,17 +640,20 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     "reading-the-drawing": [
-      { type: "heading", text: "Reading the Drawing" },
+      { id: "reading-the-drawing", type: "heading", text: "Reading the Drawing" },
       {
+        id: "water-levels-explained",
         type: "paragraph",
         text: "The water level in a river changes constantly. The lowest level in the dry season is the low water level. The highest seen in flood season is the high water level. The level calculated for the flood the bridge is designed to pass is the design flood level. The level at which boats can still navigate normally is the navigable water level.",
       },
       {
+        id: "name-each-level-line",
         type: "parts",
         prompt: "Tap each level line to name it.",
         scene: "levels",
       },
       {
+        id: "water-levels-in-order",
         type: "order",
         prompt: "Put the water levels in order, lowest first.",
         items: [
@@ -642,6 +681,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "space-a-boat-needs",
         type: "hotspot",
         prompt: "Tap the space a boat needs to pass under the deck.",
         scene: "levels",
@@ -666,12 +706,14 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "four-letters-dimensions",
         type: "figure",
         scene: "dimensions",
         caption:
           "Four letters do most of the work on a bridge drawing: l₀ the net span, l the computed span, L the total bridge length, h the construction height.",
       },
       {
+        id: "measurement-engineers-calculate",
         type: "hotspot",
         prompt: "Tap the measurement engineers actually calculate with.",
         scene: "dimensions",
@@ -696,6 +738,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "allowable-construction-height",
         type: "choose",
         prompt: "The construction height h must never be greater than the allowable construction height. What is the allowable height?",
         choices: [
@@ -728,12 +771,14 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     "components-check": [
-      { type: "heading", text: "Level Check: Name That Part" },
+      { id: "level-check-name-that-part", type: "heading", text: "Level Check: Name That Part" },
       {
+        id: "module-one-in-one-drawing",
         type: "paragraph",
         text: "Module 1 in one drawing. Everything you have learned is on this bridge — find it, name it, and read the numbers off it.",
       },
       {
+        id: "build-the-bridge",
         type: "assemble",
         prompt: "Build the bridge: put every part where it belongs.",
         scene: "overview",
@@ -759,6 +804,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "deck-load-to-pier",
         type: "hotspot",
         prompt: "Tap the part that transfers the load from the deck to the pier.",
         scene: "overview",
@@ -780,6 +826,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "file-each-part",
         type: "sort",
         prompt: "File each part under what it is.",
         buckets: [
@@ -812,6 +859,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "flood-water-gets-through",
         type: "choose",
         prompt: "A multi-span bridge crosses a river. Flood water has to get through. Which measurement tells you how much room the river has?",
         choices: [
@@ -845,12 +893,14 @@ export const bridgeEngineeringContent: CourseContentMap = {
   // ── Module 2 · Bridge Classification ─────────────────────────────────────
   "bridge-classification": {
     "six-ways": [
-      { type: "heading", text: "Six Ways to Sort" },
+      { id: "six-ways-to-sort", type: "heading", text: "Six Ways to Sort" },
       {
+        id: "why-engineers-sort-bridges",
         type: "paragraph",
         text: "We meet bridges every day: a small footbridge on the way to work, or a bridge that turns a journey into a view. To study them systematically, engineers sort them — and there is more than one way to sort the same bridge.",
       },
       {
+        id: "six-ways-classification",
         type: "concepts",
         prompt: "Six ways to sort the bridge.",
         concepts: [
@@ -901,6 +951,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         ],
       },
       {
+        id: "sort-questions-into-ways",
         type: "sort",
         prompt: "Now sort these questions into the six ways bridges are classified.",
         buckets: [
@@ -935,6 +986,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "nature-of-crossing",
         type: "choose",
         prompt: "Which of these is a classification by the nature of the crossing?",
         choices: [
@@ -956,18 +1008,21 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     "by-material": [
-      { type: "heading", text: "By Material" },
+      { id: "by-material", type: "heading", text: "By Material" },
       {
+        id: "most-widely-used-material",
         type: "paragraph",
         text: "The most widely used bridge material is reinforced concrete. Steel is used where light weight matters most. Beyond those come the high-performance materials: ultra-high performance concrete (UHPC) for the ribs of box arches, and carbon-fibre reinforced polymer (CFRP) cables in cable-stayed bridges.",
       },
       {
+        id: "material-choice-made-visible",
         type: "figure",
         scene: "cable-stayed",
         caption:
           "Material choice made visible: the girder, the tower and the stays of this one bridge are each made of the material that suits the force in them — and the stays are where the newest materials are being tried.",
       },
       {
+        id: "material-belongs-to-job",
         type: "sort",
         prompt: "Which material belongs to which job?",
         buckets: [
@@ -1001,6 +1056,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "steel-for-long-spans",
         type: "choose",
         prompt: "Why do long-span bridges often use steel for the main girder?",
         choices: [
@@ -1024,16 +1080,19 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     "by-purpose": [
-      { type: "heading", text: "By Purpose" },
+      { id: "by-purpose", type: "heading", text: "By Purpose" },
       {
+        id: "groups-bridges-serve",
         type: "paragraph",
         text: "Bridges serve different groups of people: railway bridges, highway bridges, pedestrian bridges, road-rail bridges, and waterway bridges. Water crossing structures include aqueducts and inverted siphon bridges, and inside factories there are transport bridges and pipeline bridges.",
       },
       {
+        id: "crab-bridge-australia",
         type: "paragraph",
         text: "Not every bridge is for people. In Australia a bridge was built for wildlife: crabs making their yearly migration across a road. The principle behind it matters in bridge engineering — pay attention to environmental protection and ecological sustainability.",
       },
       {
+        id: "who-the-bridge-serves",
         type: "concepts",
         prompt: "Bridges by purpose.",
         concepts: [
@@ -1071,6 +1130,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         ],
       },
       {
+        id: "sort-bridges-by-group",
         type: "sort",
         prompt: "Now sort these bridges by the group each one serves.",
         buckets: [
@@ -1106,6 +1166,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "what-crab-bridge-shows",
         type: "choose",
         prompt: "What does the crab bridge in Australia show about bridge engineering?",
         choices: [
@@ -1127,16 +1188,19 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     "by-span": [
-      { type: "heading", text: "By Span" },
+      { id: "by-span", type: "heading", text: "By Span" },
       {
+        id: "small-medium-large-spans",
         type: "paragraph",
         text: "Design specifications classify bridges by total length and by single span: small, medium, large and extra-large. Span is also the number that decides which structural system makes sense — beam, arch, cable-stayed or suspension.",
       },
       {
+        id: "drag-the-span",
         type: "span",
         prompt: "Drag the span and watch the bridge change system.",
       },
       {
+        id: "suspension-most-economical",
         type: "choose",
         prompt: "Beyond roughly 1000 m, which type is generally considered the most economical?",
         choices: ["Beam", "Arch", "Cable-stayed", "Suspension"],
@@ -1160,6 +1224,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "standard-span-under-30m",
         type: "choose",
         prompt: "Concrete beam bridges are widely used for small to medium spans. What is the usual standard span for them?",
         choices: ["Under 30 m", "30 to 100 m", "100 to 300 m", "Over 300 m"],
@@ -1184,18 +1249,21 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     "deck-position": [
-      { type: "heading", text: "Where the Deck Sits" },
+      { id: "where-the-deck-sits", type: "heading", text: "Where the Deck Sits" },
       {
+        id: "three-deck-positions",
         type: "paragraph",
         text: "Classified by the relative position of the bridge deck and the main load-bearing structure, bridges come in three kinds: the deck (or upper-support) bridge, where traffic runs on top; the through (or bottom-support) bridge, where traffic runs inside the structure; and the half-through (or middle-support) bridge, where the deck cuts across the middle.",
       },
       {
+        id: "arch-bridges-side-view",
         type: "figure",
         scene: "deck-position",
         caption:
           "Three arch bridges seen from the side: the deck on top, the deck at the bottom chord, and the deck through the middle of the arch.",
       },
       {
+        id: "structure-above-traffic",
         type: "hotspot",
         prompt: "Tap the bridge where part of the structure stands above the traffic.",
         scene: "deck-position",
@@ -1218,6 +1286,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "why-a-through-bridge",
         type: "choose",
         prompt: "Why would an engineer choose a through bridge instead of a deck bridge?",
         choices: [
@@ -1241,12 +1310,14 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     "beam-bridges": [
-      { type: "heading", text: "Beam Bridges" },
+      { id: "beam-bridges", type: "heading", text: "Beam Bridges" },
       {
+        id: "simplest-bridge-of-all",
         type: "paragraph",
         text: "A beam laid on a pier gives the simplest bridge of all: the simply supported beam bridge. Under a vertical load, a beam's supports produce only vertical reactions — no horizontal force — and the main beam is primarily in bending. That is why beam bridges are built from materials that resist bending well, such as steel and reinforced concrete.",
       },
       {
+        id: "three-beam-bridges",
         type: "concepts",
         prompt: "The three beam bridges.",
         concepts: [
@@ -1277,6 +1348,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         ],
       },
       {
+        id: "sort-beam-bridges",
         type: "sort",
         prompt: "Sort these beam bridges by how they behave.",
         buckets: [
@@ -1310,6 +1382,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "weak-point-at-the-ends",
         type: "hotspot",
         prompt: "Tap the beam bridge whose ends are the weak point of the structure.",
         scene: "beam",
@@ -1334,6 +1407,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "only-vertical-reactions",
         type: "choose",
         prompt: "A beam bridge's supports produce only vertical reactions. What does that tell you about the main beam?",
         choices: [
@@ -1355,18 +1429,21 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     "arch-bridges": [
-      { type: "heading", text: "Arch Bridges" },
+      { id: "arch-bridges", type: "heading", text: "Arch Bridges" },
       {
+        id: "main-arch-ring",
         type: "paragraph",
         text: "The main load-bearing member of an arch bridge is the main arch ring. Under a vertical load there is a horizontal thrust at the arch foot — and the bending moment that thrust creates has the opposite sign to the one the vertical load creates. The two cancel out, so the arch ring has small bending moments and shear, and is mainly in compression.",
       },
       {
+        id: "arch-in-compression",
         type: "figure",
         scene: "arch",
         caption:
           "Above: an arch in compression, pushing outwards at its feet. Below: a tied arch, where a tie between the feet balances that thrust.",
       },
       {
+        id: "pushes-into-the-ground",
         type: "hotspot",
         prompt: "Tap the force an arch bridge pushes into the ground.",
         scene: "arch",
@@ -1391,6 +1468,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "tie-between-arch-feet",
         type: "choose",
         prompt: "What does a tie between the arch feet do?",
         choices: [
@@ -1419,6 +1497,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "why-arch-spans-further",
         type: "choose",
         prompt: "Compared with a beam bridge of the same span, why does an arch bridge span so much further?",
         choices: [
@@ -1443,18 +1522,21 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     "rigid-frames": [
-      { type: "heading", text: "Rigid Frames" },
+      { id: "rigid-frames", type: "heading", text: "Rigid Frames" },
       {
+        id: "beam-and-piers-combined",
         type: "paragraph",
         text: "A rigid frame bridge is one where the beam and the piers are integrally combined. The piers are fixed to the beam, so they take part in the beam's bending — which improves the bridge's resistance to bending, and lets the structure be shallower.",
       },
       {
+        id: "three-frame-types",
         type: "figure",
         scene: "frame",
         caption:
           "Portal frame, inclined-leg frame, and continuous frame. The yellow squares are the rigid joints, where pier and beam are cast as one.",
       },
       {
+        id: "different-from-beam-bridge",
         type: "hotspot",
         prompt: "Tap the joint that makes a rigid frame different from a beam bridge.",
         scene: "frame",
@@ -1479,6 +1561,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "trade-off-at-rigid-joint",
         type: "choose",
         prompt: "What is the trade-off at the rigid joint?",
         choices: [
@@ -1505,6 +1588,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "flexible-piers-yunnan",
         type: "choose",
         prompt: "Continuous rigid frame bridges are common in the mountains of Yunnan. Why are their piers usually made more flexible?",
         choices: [
@@ -1526,18 +1610,21 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     "cable-stayed": [
-      { type: "heading", text: "Cable-Stayed Bridges" },
+      { id: "cable-stayed-bridges", type: "heading", text: "Cable-Stayed Bridges" },
       {
+        id: "three-main-parts",
         type: "paragraph",
         text: "A cable-stayed bridge has three main parts: the stay cables, the main girder, and the tower. Without the stays, the girder would behave like a three-span continuous beam under the traffic load. Add the towers and cables, and everything changes.",
       },
       {
+        id: "row-of-invisible-piers",
         type: "figure",
         scene: "cable-stayed",
         caption:
           "The stays pull the girder upwards at many points, like a row of invisible piers. That is why a cable-stayed girder can be lighter and span further than a beam.",
       },
       {
+        id: "lifts-the-girder",
         type: "hotspot",
         prompt: "Tap the member that lifts the girder at many points.",
         scene: "cable-stayed",
@@ -1562,6 +1649,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "what-limits-the-span",
         type: "choose",
         prompt: "What limits how far a cable-stayed bridge can span?",
         choices: [
@@ -1587,6 +1675,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "sort-parts-by-force",
         type: "sort",
         prompt: "What does each part of a cable-stayed bridge have to do?",
         buckets: [
@@ -1618,6 +1707,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "two-cable-problems",
         type: "choose",
         prompt: "Two problems with high-strength wire stay cables have to be taken seriously. Which pair?",
         choices: [
@@ -1639,18 +1729,21 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     "suspension-and-composite": [
-      { type: "heading", text: "Suspension & Combined Systems" },
+      { id: "suspension-and-combined-systems", type: "heading", text: "Suspension & Combined Systems" },
       {
+        id: "hangs-the-whole-span",
         type: "paragraph",
         text: "A suspension bridge hangs the whole span from a strong cable carried over the towers. The cable is the main load-bearing member. Hangers drop from it to lift the deck structure — in a suspension bridge the deck is called the stiffening girder — and the ends of the cable are anchored in massive blocks called anchorages.",
       },
       {
+        id: "the-force-path",
         type: "figure",
         scene: "suspension",
         caption:
           "The force path is clear: deck → hangers → main cable → towers → foundations, with the anchorages holding the cable's pull at each end.",
       },
       {
+        id: "stops-cable-pulling-towers",
         type: "hotspot",
         prompt: "Tap the part that stops the main cable pulling the towers over.",
         scene: "suspension",
@@ -1673,6 +1766,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "wind-stability-matters",
         type: "choose",
         prompt: "A suspension bridge spans further than anything else. What must always be watched carefully?",
         choices: [
@@ -1699,6 +1793,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "two-cable-systems",
         type: "sort",
         prompt: "Sort the two cable systems by what is true of each.",
         buckets: [
@@ -1730,11 +1825,13 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "find-each-combined-bridge",
         type: "parts",
         prompt: "When systems are combined, new bridges appear. Find each one.",
         scene: "composite",
       },
       {
+        id: "why-combine-systems",
         type: "choose",
         prompt: "Why combine two structural systems in one bridge?",
         choices: [
@@ -1765,12 +1862,14 @@ export const bridgeEngineeringContent: CourseContentMap = {
     ],
 
     "classification-check": [
-      { type: "heading", text: "Level Check: Match the System" },
+      { id: "level-check-match-system", type: "heading", text: "Level Check: Match the System" },
       {
+        id: "five-structural-systems",
         type: "paragraph",
         text: "Every bridge in this module is one of five structural systems, plus the composites that mix them. Here is the whole module in one set of questions.",
       },
       {
+        id: "compression-in-curved-ring",
         type: "hotspot",
         prompt: "Tap the system that carries its load by compression in a curved ring.",
         scene: "composite",
@@ -1795,6 +1894,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "match-bridge-to-system",
         type: "sort",
         prompt: "Match each bridge to the system that carries it.",
         buckets: [
@@ -1830,6 +1930,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "systems-by-span-reach",
         type: "order",
         prompt: "Order these systems by how far they reach — shortest span first.",
         items: [
@@ -1857,6 +1958,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         },
       },
       {
+        id: "pedestrian-bridge-over-stream",
         type: "choose",
         prompt: "One last one. A pedestrian bridge over a small stream, 20 m wide, in a park. Which system is the sensible choice?",
         choices: [

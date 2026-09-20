@@ -94,19 +94,26 @@ export interface LessonExplanation {
   visual?: ExplanationVisual;
 }
 
+/**
+ * One step of a lesson — the smallest part a learner can be sent to. Every block
+ * is authored with an `id` of its own, unique within its lesson, and that id is
+ * the last segment of the step's URL:
+ * `/courses/<course>/<level>/<lesson>/<id>`.
+ */
 export type LessonBlock =
-  | { type: "heading"; text: string }
-  | { type: "paragraph"; text: string; demo?: AbacusDemo }
-  | { type: "list"; items: string[] }
-  | { type: "explore"; label: string; rods: number; initial: number[] }
-  | { type: "build"; prompt: string; target: number; rods?: number; explanation?: LessonExplanation }
-  | { type: "read"; prompt: string; digits: number[]; choices: number[]; explanation?: LessonExplanation }
-  | { type: "quiz"; prompt: string; choices: number[]; answer: number; explanation?: LessonExplanation }
+  | { id: string; type: "heading"; text: string }
+  | { id: string; type: "paragraph"; text: string; demo?: AbacusDemo }
+  | { id: string; type: "list"; items: string[] }
+  | { id: string; type: "explore"; label: string; rods: number; initial: number[] }
+  | { id: string; type: "build"; prompt: string; target: number; rods?: number; explanation?: LessonExplanation }
+  | { id: string; type: "read"; prompt: string; digits: number[]; choices: number[]; explanation?: LessonExplanation }
+  | { id: string; type: "quiz"; prompt: string; choices: number[]; answer: number; explanation?: LessonExplanation }
   // ── Bridge engineering ──────────────────────────────────────────────────
   // A labelled drawing, a clickable drawing, and four ways to be asked about
   // one. `scene` names the geometry; part ids come from that scene's registry.
-  | { type: "figure"; scene: BridgeScene; caption?: string; highlight?: string[]; labels?: boolean }
+  | { id: string; type: "figure"; scene: BridgeScene; caption?: string; highlight?: string[]; labels?: boolean }
   | {
+      id: string;
       type: "parts";
       prompt: string;
       scene: BridgeScene;
@@ -114,8 +121,9 @@ export type LessonBlock =
       parts?: string[];
       hint?: string;
     }
-  | { type: "span"; prompt: string }
+  | { id: string; type: "span"; prompt: string }
   | {
+      id: string;
       type: "concepts";
       prompt: string;
       /** Shown one at a time, each with its own drawing. */
@@ -131,6 +139,7 @@ export type LessonBlock =
       }[];
     }
   | {
+      id: string;
       type: "hotspot";
       prompt: string;
       scene: BridgeScene;
@@ -141,6 +150,7 @@ export type LessonBlock =
       explanation?: LessonExplanation;
     }
   | {
+      id: string;
       type: "choose";
       prompt: string;
       choices: string[];
@@ -148,6 +158,7 @@ export type LessonBlock =
       explanation?: LessonExplanation;
     }
   | {
+      id: string;
       type: "sort";
       prompt: string;
       buckets: { id: string; label: string }[];
@@ -155,6 +166,7 @@ export type LessonBlock =
       explanation?: LessonExplanation;
     }
   | {
+      id: string;
       type: "order";
       prompt: string;
       /** Authored in the correct order; the card shuffles them for the learner. */
@@ -162,6 +174,7 @@ export type LessonBlock =
       explanation?: LessonExplanation;
     }
   | {
+      id: string;
       type: "assemble";
       prompt: string;
       scene: BridgeScene;

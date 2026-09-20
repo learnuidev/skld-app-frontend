@@ -1,53 +1,33 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
-import LessonPlayer from "@/components/courses/lesson-player";
-import { getCourseBySlug } from "@/modules/course/catalog";
-import { getLessonContent } from "@/modules/course/content";
-import type { CourseLesson, LessonBlock } from "@/modules/course/types";
+import { getLessonView } from "@/modules/course/lesson-view";
+import { lessonStepUrl } from "@/modules/course/utils";
 
-function fallbackContent(lesson: CourseLesson): LessonBlock[] {
-  return [
-    { type: "paragraph", text: `${lesson.blurb} Take a look below, then try it yourself on the beads.` },
-    {
-      type: "explore",
-      label: "Practice here: click the beads to build numbers.",
-      rods: 3,
-      initial: [0, 0, 0],
-    },
-  ];
-}
+type LessonParams = { slug: string; level: string; lesson: string };
 
-export async function generateMetadata(props: {
-  params: Promise<{ slug: string; level: string; lesson: string }>;
-}): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<LessonParams> }): Promise<Metadata> {
   const { slug, level: levelSlug, lesson: lessonSlug } = await props.params;
-  const course = getCourseBySlug(slug);
-  const level = course?.levels.find((l) => l.slug === levelSlug);
-  const lesson = level?.lessons.find((l) => l.slug === lessonSlug);
-  if (!course || !level || !lesson) {
+  const view = getLessonView(slug, levelSlug, lessonSlug);
+  if (!view) {
     return { title: "Lesson not found · peony" };
   }
   return {
-    title: `${lesson.title} · ${course.title} · peony`,
-    description: lesson.blurb,
+    title: `${view.lesson.title} · ${view.course.title} · peony`,
+    description: view.lesson.blurb,
   };
 }
 
-export default async function LessonPage(props: {
-  params: Promise<{ slug: string; level: string; lesson: string }>;
-}) {
+/**
+ * A lesson opens on its first step, so this URL has nothing of its own to show:
+ * it hands over to the first step's own link, and every step has one from there.
+ */
+export default async function LessonPage(props: { params: Promise<LessonParams> }) {
   const { slug, level: levelSlug, lesson: lessonSlug } = await props.params;
-  const course = getCourseBySlug(slug);
-  if (!course) notFound();
-  const level = course.levels.find((l) => l.slug === levelSlug);
-  if (!level) notFound();
-  const lesson = level.lessons.find((l) => l.slug === lessonSlug);
-  if (!lesson) notFound();
+  const view = getLessonView(slug, levelSlug, lessonSlug);
+  if (!view) notFound();
 
-  const blocks = getLessonContent(course.slug, level.slug, lesson.slug) ?? fallbackContent(lesson);
-
-  return (
-    <LessonPlayer course={course} levelSlug={level.slug} lessonSlug={lesson.slug} blocks={blocks} />
+  redirect(
+    lessonStepUrl(view.course, view.level.slug, view.lesson.slug, view.blocks[0].id),
   );
 }

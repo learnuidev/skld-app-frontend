@@ -5,23 +5,27 @@ export type { LessonBlock };
 export const understandingAbacusContent: CourseContentMap = {
   "meet-the-soroban": {
     "what-is-an-abacus": [
-      { type: "heading", text: "What is an abacus?" },
+      { id: "what-is-an-abacus", type: "heading", text: "What is an abacus?" },
       {
+        id: "frame-of-sliding-beads",
         type: "paragraph",
         text: "An abacus is a frame of sliding beads used to do arithmetic by hand. For thousands of years — before paper, before calculators — people around the world counted on beads strung on rods.",
       },
       {
+        id: "learn-the-soroban",
         type: "paragraph",
         text: "In this course you'll learn the soroban, the Japanese abacus. It's beautifully simple: every bead has a value, and every rod holds one digit. Learn to read the beads and you can add, subtract, and multiply at astonishing speed.",
       },
     ],
     anatomy: [
-      { type: "heading", text: "Meet the parts" },
+      { id: "meet-the-parts", type: "heading", text: "Meet the parts" },
       {
+        id: "frame-rods-and-beam",
         type: "paragraph",
         text: "A soroban has a wooden frame, vertical rods, and a horizontal bar across the middle called the beam. Beads that touch the beam are the ones that count.",
       },
       {
+        id: "beam-rods-heaven-earth",
         type: "list",
         items: [
           "Beam — the bar across the middle. Beads touching the beam are counted.",
@@ -31,6 +35,7 @@ export const understandingAbacusContent: CourseContentMap = {
         ],
       },
       {
+        id: "try-clicking-the-beads",
         type: "explore",
         label: "Try it: click the beads and watch them move toward the beam.",
         rods: 3,
@@ -38,8 +43,9 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "beads-worth": [
-      { type: "heading", text: "What each bead is worth" },
+      { id: "what-each-bead-is-worth", type: "heading", text: "What each bead is worth" },
       {
+        id: "earth-beads-count-one",
         type: "paragraph",
         text: "Earth beads below the beam each count 1. Slide one up to the beam and the rod shows 1. Slide all four and it shows 4.",
         demo: {
@@ -48,6 +54,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "heaven-bead-counts-five",
         type: "paragraph",
         text: "The single heaven bead above the beam counts 5 all by itself. When it touches the beam, the rod is worth 5 — even though it's only one bead.",
         demo: {
@@ -56,6 +63,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "read-the-rod-one",
         type: "read",
         prompt: "Which number is this abacus showing?",
         digits: [1],
@@ -78,6 +86,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "read-the-rod-five",
         type: "read",
         prompt: "What about this one?",
         digits: [5],
@@ -100,6 +109,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "read-the-rod-six",
         type: "read",
         prompt: "This rod uses both kinds of beads. What number is it?",
         digits: [6],
@@ -127,16 +137,19 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "reset-and-clean": [
-      { type: "heading", text: "Zero: clearing the board" },
+      { id: "zero-clearing-the-board", type: "heading", text: "Zero: clearing the board" },
       {
+        id: "before-a-calculation",
         type: "paragraph",
         text: "Before a calculation you clear the abacus: every heaven bead pushed up, every earth bead pushed down. With no bead touching the beam, every rod shows 0.",
       },
       {
+        id: "make-clearing-automatic",
         type: "paragraph",
         text: "Make clearing automatic — always push beads away from the beam, using your thumb for earth beads and your index finger for the heaven bead. Muscle memory pays off later.",
       },
       {
+        id: "both-rods-are-cleared",
         type: "read",
         prompt: "Both rods are cleared. Which number does this abacus show?",
         digits: [0, 0],
@@ -156,12 +169,14 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "meet-the-soroban-check": [
-      { type: "heading", text: "Level check" },
+      { id: "level-check", type: "heading", text: "Level check" },
       {
+        id: "show-what-you-know",
         type: "paragraph",
         text: "Show what you know. Solve each question to finish the level.",
       },
       {
+        id: "read-the-rod-three",
         type: "read",
         prompt: "Which number is shown?",
         digits: [3],
@@ -184,6 +199,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "build-seven",
         type: "build",
         prompt: "Slide the beads to show 7.",
         target: 7,
@@ -214,6 +230,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "build-nine",
         type: "build",
         prompt: "Now show 9 on the rod.",
         target: 9,
@@ -248,8 +265,9 @@ export const understandingAbacusContent: CourseContentMap = {
 
   "counting-with-beads": {
     "one-to-four": [
-      { type: "heading", text: "One to four" },
+      { id: "one-to-four", type: "heading", text: "One to four" },
       {
+        id: "earth-beads-count",
         type: "paragraph",
         text: "Earth beads count 1, 2, 3, 4. Slide them up to the beam one at a time. Slide one bead and the rod shows 1; slide four and it shows 4.",
         demo: {
@@ -258,6 +276,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "build-four",
         type: "build",
         prompt: "Slide the beads to show 4.",
         target: 4,
@@ -280,6 +299,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "read-two",
         type: "read",
         prompt: "Which number is this rod showing?",
         digits: [2],
@@ -303,8 +323,9 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "five-and-friends": [
-      { type: "heading", text: "Five and its friends" },
+      { id: "five-and-its-friends", type: "heading", text: "Five and its friends" },
       {
+        id: "show-five-with-heaven",
         type: "paragraph",
         text: "To show 5, don't try to invent a fifth earth bead — slide the heaven bead down to the beam instead. It is worth 5 on its own.",
         demo: {
@@ -313,6 +334,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "combine-the-two-kinds",
         type: "paragraph",
         text: "Now combine the two kinds of beads. 6 is heaven plus one earth. 9 is heaven plus all four earth beads. The heaven bead's five friends are the earth beads below it.",
         demo: {
@@ -321,6 +343,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "heaven-plus-one-earth",
         type: "read",
         prompt: "Heaven plus one earth. What number is this?",
         digits: [6],
@@ -347,6 +370,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "heaven-plus-four-earth",
         type: "read",
         prompt: "Heaven plus all four earth beads. What number is this?",
         digits: [9],
@@ -374,12 +398,14 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "read-any-number": [
-      { type: "heading", text: "Read any number from 1 to 9" },
+      { id: "read-any-number", type: "heading", text: "Read any number from 1 to 9" },
       {
+        id: "read-a-rod",
         type: "paragraph",
         text: "Read a rod the way you'd read a number: check the heaven bead first (that's 5), then add the earth beads touching the beam.",
       },
       {
+        id: "heaven-and-three-earth",
         type: "read",
         prompt: "Heaven bead down, three earth beads up. What number?",
         digits: [8],
@@ -406,6 +432,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "four-earth-beads-only",
         type: "read",
         prompt: "No heaven bead, four earth beads up. What number?",
         digits: [4],
@@ -428,6 +455,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "heaven-and-two-earth",
         type: "read",
         prompt: "Heaven bead down, two earth beads up. What number?",
         digits: [7],
@@ -455,12 +483,13 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "build-a-number": [
-      { type: "heading", text: "Build a number" },
+      { id: "build-a-number", type: "heading", text: "Build a number" },
       {
+        id: "building-is-reading-in-reverse",
         type: "paragraph",
         text: "Building is reading in reverse: figure out how many earth beads and whether you need the heaven bead, then slide them to the beam.",
       },
-      { type: "build", prompt: "Show 5 on the rod.", target: 5, rods: 1,
+      { id: "build-five", type: "build", prompt: "Show 5 on the rod.", target: 5, rods: 1,
         explanation: {
           steps: [
             {
@@ -478,7 +507,7 @@ export const understandingAbacusContent: CourseContentMap = {
           ],
         },
       },
-      { type: "build", prompt: "Show 8 on the rod.", target: 8, rods: 1,
+      { id: "build-eight", type: "build", prompt: "Show 8 on the rod.", target: 8, rods: 1,
         explanation: {
           steps: [
             {
@@ -504,7 +533,7 @@ export const understandingAbacusContent: CourseContentMap = {
           ],
         },
       },
-      { type: "build", prompt: "Show 6 on the rod.", target: 6, rods: 1,
+      { id: "build-six", type: "build", prompt: "Show 6 on the rod.", target: 6, rods: 1,
         explanation: {
           steps: [
             {
@@ -524,9 +553,10 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "counting-with-beads-check": [
-      { type: "heading", text: "Level check" },
-      { type: "paragraph", text: "Read it, then build it. Solve every question to finish." },
+      { id: "level-check", type: "heading", text: "Level check" },
+      { id: "read-it-then-build-it", type: "paragraph", text: "Read it, then build it. Solve every question to finish." },
       {
+        id: "read-the-rod-seven",
         type: "read",
         prompt: "What number is this rod showing?",
         digits: [7],
@@ -553,6 +583,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "build-three",
         type: "build",
         prompt: "Show 3 on the rod.",
         target: 3,
@@ -575,6 +606,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "build-nine",
         type: "build",
         prompt: "Show 9 on the rod.",
         target: 9,
@@ -609,16 +641,19 @@ export const understandingAbacusContent: CourseContentMap = {
 
   "tens-and-beyond": {
     "rods-are-places": [
-      { type: "heading", text: "Rods are places" },
+      { id: "rods-are-places", type: "heading", text: "Rods are places" },
       {
+        id: "one-rod-one-digit",
         type: "paragraph",
         text: "One rod can only hold a single digit, so bigger numbers use more rods. The rightmost rod is the ones place, the next rod to the left is the tens place, and the one after that is the hundreds place.",
       },
       {
+        id: "place-value-in-your-hands",
         type: "paragraph",
         text: "Two beads on the tens rod and three beads on the ones rod mean 20 + 3 = 23. The abacus is place value you can hold in your hands.",
       },
       {
+        id: "four-ones-two-tens",
         type: "read",
         prompt: "4 ones and 2 tens. What number is this abacus showing?",
         digits: [4, 2],
@@ -645,6 +680,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "no-ones-three-tens",
         type: "read",
         prompt: "No ones and 3 tens. What number is this?",
         digits: [0, 3],
@@ -668,8 +704,9 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "building-two-digit": [
-      { type: "heading", text: "Building two-digit numbers" },
+      { id: "building-two-digit-numbers", type: "heading", text: "Building two-digit numbers" },
       {
+        id: "take-apart-by-place-value",
         type: "paragraph",
         text: "To build a two-digit number, take the number apart by place value. For 47 you need 4 tens on the left rod and 7 ones on the right rod.",
         demo: {
@@ -678,6 +715,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "build-twenty-three",
         type: "build",
         prompt: "Build 23 on the abacus.",
         target: 23,
@@ -708,6 +746,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "build-forty-seven",
         type: "build",
         prompt: "Build 47 on the abacus.",
         target: 47,
@@ -738,6 +777,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "build-fifty-two",
         type: "build",
         prompt: "Build 52 on the abacus.",
         target: 52,
@@ -769,12 +809,14 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "zeros-matter": [
-      { type: "heading", text: "Hold the zeros" },
+      { id: "hold-the-zeros", type: "heading", text: "Hold the zeros" },
       {
+        id: "a-resting-rod-means-zero",
         type: "paragraph",
         text: "A resting rod still takes up a place — it just means zero. 3 tens and 0 ones is 30, not 3. If you skip the tens rod's place, the number quietly shrinks by ten times.",
       },
       {
+        id: "one-ten-zero-ones",
         type: "read",
         prompt: "1 ten and 0 ones. What number is this?",
         digits: [0, 1],
@@ -797,6 +839,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "seven-tens-zero-ones",
         type: "read",
         prompt: "7 tens and 0 ones. What number is this?",
         digits: [0, 7],
@@ -819,6 +862,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "build-forty",
         type: "build",
         prompt: "Build 40 on the abacus.",
         target: 40,
@@ -842,12 +886,14 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "reading-big-numbers": [
-      { type: "heading", text: "Reading big numbers" },
+      { id: "reading-big-numbers", type: "heading", text: "Reading big numbers" },
       {
+        id: "add-a-third-rod",
         type: "paragraph",
         text: "Add a third rod and you're reading hundreds. Read each rod from left to right — hundreds, tens, ones — and say the number in the usual way.",
       },
       {
+        id: "two-hundreds-three-tens",
         type: "read",
         prompt: "2 hundreds, 3 tens, 4 ones. What number is this?",
         digits: [4, 3, 2],
@@ -874,6 +920,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "four-hundreds",
         type: "read",
         prompt: "0 ones, 0 tens, 4 hundreds. What number is this?",
         digits: [0, 0, 4],
@@ -896,6 +943,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "build-three-oh-five",
         type: "build",
         prompt: "Build 305 on the abacus.",
         target: 305,
@@ -927,9 +975,10 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "tens-and-beyond-check": [
-      { type: "heading", text: "Level check" },
-      { type: "paragraph", text: "Build and read your way through the level." },
+      { id: "level-check", type: "heading", text: "Level check" },
+      { id: "build-and-read-your-way", type: "paragraph", text: "Build and read your way through the level." },
       {
+        id: "build-fifty-seven",
         type: "build",
         prompt: "Build 57 on the abacus.",
         target: 57,
@@ -960,6 +1009,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "four-hundreds-five-ones",
         type: "read",
         prompt: "4 hundreds, 0 tens, 5 ones. What number is this?",
         digits: [5, 0, 4],
@@ -986,6 +1036,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "build-one-twenty",
         type: "build",
         prompt: "Build 120 on the abacus.",
         target: 120,
@@ -1016,16 +1067,19 @@ export const understandingAbacusContent: CourseContentMap = {
 
   "adding-on-the-beads": {
     "add-without-trading": [
-      { type: "heading", text: "Add without trading" },
+      { id: "add-without-trading", type: "heading", text: "Add without trading" },
       {
+        id: "adding-is-sliding-beads",
         type: "paragraph",
         text: "Adding on an abacus is just sliding beads. To add a small number, slide that many earth beads toward the beam — as long as the rod has room.",
       },
       {
+        id: "add-place-by-place",
         type: "paragraph",
         text: "Add place by place: ones to ones, tens to tens. When no rod ever fills past nine, there's nothing to carry — the beads do the arithmetic for you.",
       },
       {
+        id: "twelve-plus-thirteen",
         type: "build",
         prompt: "12 + 13. Slide the beads to show the sum.",
         target: 25,
@@ -1056,6 +1110,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "thirty-one-plus-twenty-two",
         type: "build",
         prompt: "31 + 22. Show the sum on the abacus.",
         target: 53,
@@ -1087,8 +1142,9 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "friends-of-five": [
-      { type: "heading", text: "Friends of five" },
+      { id: "friends-of-five", type: "heading", text: "Friends of five" },
       {
+        id: "only-four-earth-beads",
         type: "paragraph",
         text: "There are only four earth beads, so you can't add 4 by sliding four more beads when the rod is already busy. Instead, think in fives: to add 4, slide the heaven bead down (+5) and take one earth bead away (−1).",
         demo: {
@@ -1101,6 +1157,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "pairs-of-one-and-four",
         type: "paragraph",
         text: "The earth bead you remove is the addend's friend of five. The pairs are 1 ↔ 4 and 2 ↔ 3. So to add 4 you use +5 −1; to add 3 you use +5 −2.",
         demo: {
@@ -1113,6 +1170,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "two-plus-four",
         type: "build",
         prompt: "2 + 4 = 6. Slide the beads to show the sum.",
         target: 6,
@@ -1135,6 +1193,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "four-plus-four-plus-four",
         type: "build",
         prompt: "4 + 4 + 4 = 12. Show the total on the abacus.",
         target: 12,
@@ -1158,8 +1217,9 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     carrying: [
-      { type: "heading", text: "Carrying over" },
+      { id: "carrying-over", type: "heading", text: "Carrying over" },
       {
+        id: "when-a-rod-runs-out",
         type: "paragraph",
         text: "When a rod runs out of room, you carry — exactly like written arithmetic. To add 8 + 5 you can't fit 13 ones on one rod, so you record 3 on the ones rod and carry 1 to the tens rod: 13.",
         demo: {
@@ -1171,6 +1231,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "filled-to-the-limit",
         type: "paragraph",
         text: "Carrying is a sign that you've filled a rod to its limit: four earth beads plus a heaven bead is the most a rod can show, which is 9.",
         demo: {
@@ -1179,6 +1240,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "eight-plus-five",
         type: "build",
         prompt: "8 + 5. Show the sum on the abacus.",
         target: 13,
@@ -1209,6 +1271,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "nine-plus-nine",
         type: "build",
         prompt: "9 + 9 = 18. Show the sum on the abacus.",
         target: 18,
@@ -1236,12 +1299,14 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "add-two-digit": [
-      { type: "heading", text: "Adding two-digit numbers" },
+      { id: "adding-two-digit-numbers", type: "heading", text: "Adding two-digit numbers" },
       {
+        id: "line-up-the-rods",
         type: "paragraph",
         text: "Line up the rods by place value and add from the right, carrying whenever a rod overflows. Keep your eyes on the beam — with practice your fingers learn the moves before you think about them.",
       },
       {
+        id: "twenty-seven-plus-fifteen",
         type: "build",
         prompt: "27 + 15 = 42. Show the sum on the abacus.",
         target: 42,
@@ -1272,6 +1337,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "fifty-eight-plus-twenty-seven",
         type: "build",
         prompt: "58 + 27. Show the sum on the abacus.",
         target: 85,
@@ -1303,9 +1369,10 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "adding-on-the-beads-check": [
-      { type: "heading", text: "Level check" },
-      { type: "paragraph", text: "Add, carry, and show each sum to finish the level." },
+      { id: "level-check", type: "heading", text: "Level check" },
+      { id: "add-carry-and-show", type: "paragraph", text: "Add, carry, and show each sum to finish the level." },
       {
+        id: "three-plus-eight",
         type: "build",
         prompt: "3 + 8. Show the sum on the abacus.",
         target: 11,
@@ -1332,6 +1399,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "four-plus-five-plus-six",
         type: "build",
         prompt: "4 + 5 + 6. Show the total on the abacus.",
         target: 15,
@@ -1354,6 +1422,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "eighteen-plus-eight",
         type: "build",
         prompt: "18 + 8. Show the sum on the abacus.",
         target: 26,
@@ -1384,12 +1453,14 @@ export const understandingAbacusContent: CourseContentMap = {
 
   "subtracting-on-the-beads": {
     "take-away-ones": [
-      { type: "heading", text: "Take away ones" },
+      { id: "take-away-ones", type: "heading", text: "Take away ones" },
       {
+        id: "subtraction-in-reverse",
         type: "paragraph",
         text: "Subtraction is addition in reverse: instead of sliding beads up to the beam, slide them away. To subtract a small number, remove that many earth beads from the beam.",
       },
       {
+        id: "nine-minus-three",
         type: "build",
         prompt: "9 − 3. Slide the beads to show the difference.",
         target: 6,
@@ -1420,6 +1491,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "seven-minus-two",
         type: "build",
         prompt: "7 − 2. Show the difference on the rod.",
         target: 5,
@@ -1443,12 +1515,14 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     borrowing: [
-      { type: "heading", text: "Borrowing" },
+      { id: "how-borrowing-works", type: "heading", text: "Borrowing" },
       {
+        id: "borrow-from-the-tens",
         type: "paragraph",
         text: "What if the ones rod doesn't have enough beads? Borrow from the tens rod: take 1 ten away, which adds 10 ones' worth to the rod on its right.",
       },
       {
+        id: "thirteen-minus-five",
         type: "paragraph",
         text: "For 13 − 5 the ones can't lose 5, so you borrow: the tens rod loses one (13 → 3) and you add the friend of ten back. 13 − 5 = 8.",
         demo: {
@@ -1460,6 +1534,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "show-thirteen-minus-five",
         type: "build",
         prompt: "13 − 5. Show the difference on the abacus.",
         target: 8,
@@ -1490,6 +1565,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "twelve-minus-seven",
         type: "build",
         prompt: "12 − 7. Show the difference on the abacus.",
         target: 5,
@@ -1521,12 +1597,14 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "subtract-two-digit": [
-      { type: "heading", text: "Subtracting two-digit numbers" },
+      { id: "subtracting-two-digit-numbers", type: "heading", text: "Subtracting two-digit numbers" },
       {
+        id: "subtract-place-by-place",
         type: "paragraph",
         text: "Subtract place by place from right to left, borrowing from the next rod whenever a place comes up short. Do it on the beads a few times and the pattern sticks forever.",
       },
       {
+        id: "fifty-two-minus-twenty-eight",
         type: "build",
         prompt: "52 − 28. Show the difference on the abacus.",
         target: 24,
@@ -1557,6 +1635,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "eighty-one-minus-thirty-six",
         type: "build",
         prompt: "81 − 36. Show the difference on the abacus.",
         target: 45,
@@ -1588,9 +1667,10 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "subtracting-on-the-beads-check": [
-      { type: "heading", text: "Level check" },
-      { type: "paragraph", text: "Subtract and borrow your way to the finish." },
+      { id: "level-check", type: "heading", text: "Level check" },
+      { id: "subtract-and-borrow", type: "paragraph", text: "Subtract and borrow your way to the finish." },
       {
+        id: "thirty-four-minus-fifteen",
         type: "build",
         prompt: "34 − 15. Show the difference on the abacus.",
         target: 19,
@@ -1621,6 +1701,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "forty-minus-six",
         type: "build",
         prompt: "40 − 6. Show the difference on the abacus.",
         target: 34,
@@ -1655,16 +1736,19 @@ export const understandingAbacusContent: CourseContentMap = {
 
   "beyond-the-beads": {
     "imagine-the-beads": [
-      { type: "heading", text: "Imagine the beads" },
+      { id: "imagine-the-beads", type: "heading", text: "Imagine the beads" },
       {
+        id: "abacus-training-becomes-superpower",
         type: "paragraph",
         text: "This is where abacus training becomes superpower: anzan, or mental abacus. With enough practice, your brain keeps a picture of the beads, and you can run calculations on that mental abacus — no frame required.",
       },
       {
+        id: "start-small-with-anzan",
         type: "paragraph",
         text: "Start small. Build a number on the real abacus, close your eyes, and try to see it. Then do an addition on the beads once, clear it, and repeat the same moves in your head.",
       },
       {
+        id: "twenty-three-plus-forty-one",
         type: "build",
         prompt: "Add 23 + 41 in your mind, then show your answer on the abacus.",
         target: 64,
@@ -1688,16 +1772,19 @@ export const understandingAbacusContent: CourseContentMap = {
       },
     ],
     "speed-and-focus": [
-      { type: "heading", text: "Train for speed" },
+      { id: "train-for-speed", type: "heading", text: "Train for speed" },
       {
+        id: "race-against-the-clock",
         type: "paragraph",
         text: "Competitive abacus students race against the clock. Start with this drill: build a number, clear the board, and build it again until you can do it in under five seconds.",
       },
       {
+        id: "a-few-focused-minutes",
         type: "paragraph",
         text: "Aim for a few focused minutes every day rather than one long weekly session. Speed comes from clean finger habits and instant bead-reading — exactly what this course has been training.",
       },
       {
+        id: "warm-up-what-number",
         type: "read",
         prompt: "Warm up: what number is on the board?",
         digits: [5, 7, 3],
@@ -1728,6 +1815,7 @@ export const understandingAbacusContent: CourseContentMap = {
         },
       },
       {
+        id: "final-drill-build-246",
         type: "build",
         prompt: "Final drill: build 246 on the abacus.",
         target: 246,

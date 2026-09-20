@@ -25,6 +25,41 @@ export function lessonUrl(course: Course, levelSlug: string, lessonSlug: string)
   return `/courses/${course.slug}/${levelSlug}/${lessonSlug}`;
 }
 
+/**
+ * URL of one step of a lesson — the block's own id, hung off the lesson's URL.
+ * Ids are authored, so a link keeps pointing at the step it was copied from
+ * however the lesson is edited around it, and a reader can see where it goes.
+ * The lesson's own URL is not a step: it redirects to this, the first one.
+ */
+export function lessonStepUrl(
+  course: Course,
+  levelSlug: string,
+  lessonSlug: string,
+  stepId: string,
+) {
+  return `${lessonUrl(course, levelSlug, lessonSlug)}/${stepId}`;
+}
+
+/** Where a step id sits in a lesson, or -1 when the lesson has no such step. */
+export function stepIndex(blocks: LessonBlock[], stepId: string): number {
+  return blocks.findIndex((block) => block.id === stepId);
+}
+
+/** An id as a URL writes it: one kebab-case segment, nothing else. */
+const STEP_ID = /^[a-z0-9][a-z0-9-]*$/;
+
+/**
+ * The step a path names below a lesson, or null when the path is not one — a
+ * different lesson, the lesson itself, or something that is not an id at all.
+ * Used to follow the address bar back and forth.
+ */
+export function stepIdFromLessonPath(basePath: string, pathname: string): string | null {
+  const prefix = `${basePath}/`;
+  if (!pathname.startsWith(prefix)) return null;
+  const id = pathname.slice(prefix.length).replace(/\/+$/, "");
+  return STEP_ID.test(id) ? id : null;
+}
+
 /** The first lesson that is not yet complete and is unlocked, or null when the course is finished. */
 export function getContinueTarget(course: Course, completed: string[]): CourseNode | null {
   const nodes = flattenCourse(course);

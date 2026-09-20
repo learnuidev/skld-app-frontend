@@ -1,6 +1,6 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import LessonPlayer from "@/components/courses/lesson-player";
 import type { LessonBlock } from "@/modules/course/types";
@@ -13,9 +13,14 @@ vi.mock("next/navigation", () => ({
 
 const course = makeCourse();
 
+/** Where the lesson's steps live: a lesson at its own URL, a step at its id. */
+const LESSON_PATH = "/courses/test-course/foundations/first-bead";
+const stepPath = (id: string) => `${LESSON_PATH}/${id}`;
+
 const blocks: LessonBlock[] = [
-  { type: "heading", text: "Reading a rod" },
+  { id: "reading-a-rod", type: "heading", text: "Reading a rod" },
   {
+    id: "read-the-rod",
     type: "read",
     prompt: "Which number is this abacus showing?",
     digits: [1],
@@ -27,13 +32,14 @@ const blocks: LessonBlock[] = [
       ],
     },
   },
-  { type: "paragraph", text: "Now read a rod on your own." },
+  { id: "read-on-your-own", type: "paragraph", text: "Now read a rod on your own." },
 ];
 
 /** An explanation whose second step carries the board it is talking about. */
 const blocksWithBoard: LessonBlock[] = [
-  { type: "heading", text: "Reading a rod" },
+  { id: "reading-a-rod", type: "heading", text: "Reading a rod" },
   {
+    id: "read-the-rod",
     type: "read",
     prompt: "Which number is this abacus showing?",
     digits: [1],
@@ -53,26 +59,46 @@ const blocksWithBoard: LessonBlock[] = [
       ],
     },
   },
-  { type: "paragraph", text: "Now read a rod on your own." },
+  { id: "read-on-your-own", type: "paragraph", text: "Now read a rod on your own." },
 ];
 
 /** A lesson whose two questions are both reads, so a wrong answer is easy to make. */
 const twoQuestions: LessonBlock[] = [
-  { type: "heading", text: "Two questions" },
-  { type: "read", prompt: "Which number is this abacus showing?", digits: [1], choices: [1, 2, 5, 10] },
-  { type: "read", prompt: "And this one?", digits: [2], choices: [1, 2, 5, 10] },
+  { id: "two-questions", type: "heading", text: "Two questions" },
+  {
+    id: "read-the-first-rod",
+    type: "read",
+    prompt: "Which number is this abacus showing?",
+    digits: [1],
+    choices: [1, 2, 5, 10],
+  },
+  {
+    id: "read-the-second-rod",
+    type: "read",
+    prompt: "And this one?",
+    digits: [2],
+    choices: [1, 2, 5, 10],
+  },
 ];
 
-function renderLesson(lessonBlocks: LessonBlock[] = blocks, lessonSlug = "first-bead") {
+function renderLesson(lessonBlocks: LessonBlock[] = blocks, lessonSlug = "first-bead", step = 0) {
   return render(
     <LessonPlayer
       course={course}
       levelSlug="foundations"
       lessonSlug={lessonSlug}
+      step={step}
       blocks={lessonBlocks}
     />,
   );
 }
+
+// jsdom keeps one history for the whole file, and the player reads the address
+// bar as it steps. Every test starts from a URL of its own.
+beforeEach(() => {
+  push.mockClear();
+  window.history.replaceState(null, "", "/");
+});
 
 /** The card that holds the step — the thing whose border answers back. */
 function card() {
@@ -401,17 +427,81 @@ describe("LessonPlayer", () => {
 
   it("offers the next step when the lesson ends", async () => {
     const user = userEvent.setup();
-    renderLesson([{ type: "heading", text: "One step" }]);
+    renderLesson([{ id: "one-step", type: "heading", text: "One step" }]);
 
     expect(screen.getByRole("button", { name: "Next lesson" })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Next lesson" }));
 
+    // The next lesson's URL opens its first step, whoever authored it.
     expect(push).toHaveBeenCalledWith("/courses/test-course/foundations/second-bead");
+  });
+
+  it("opens on the step the link names", () => {
+    renderLesson(blocks, "first-bead", 2);
+
+    expect(screen.getByText("Now read a rod on your own.")).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Reading a rod" })).not.toBeInTheDocument();
+
+    // The two steps behind the learner are the ones the link says are behind.
+    const bar = screen.getByRole("progressbar", { name: "Lesson progress" });
+    expect(bar).toHaveAttribute("aria-valuenow", "2");
+  });
+
+  it("gives every step a link of its own, named by its id", async () => {
+    const user = userEvent.setup();
+    renderLesson();
+
+    expect(window.location.pathname).toBe("/");
+
+    await user.click(screen.getByRole("button", { name: "Next step" }));
+    expect(window.location.pathname).toBe(stepPath("read-the-rod"));
+
+    await user.click(screen.getByRole("button", { name: "Previous step" }));
+    expect(window.location.pathname).toBe(stepPath("reading-a-rod"));
+  });
+
+  it("moves the address bar on with the Continue button", async () => {
+    const user = userEvent.setup();
+    renderLesson();
+
+    // The heading is the first of three steps; continuing names the next one.
+    await user.click(primaryButton());
+    expect(window.location.pathname).toBe(stepPath("read-the-rod"));
+  });
+
+  it("follows the address bar back to an earlier step", async () => {
+    const user = userEvent.setup();
+    renderLesson();
+
+    await user.click(screen.getByRole("button", { name: "Next step" }));
+    await user.click(screen.getByRole("button", { name: "Next step" }));
+    expect(window.location.pathname).toBe(stepPath("read-on-your-own"));
+
+    // Going back is the browser's business, not the player's: it moves the URL
+    // and the card has to catch up with whatever link it lands on.
+    window.history.replaceState(null, "", stepPath("reading-a-rod"));
+    window.dispatchEvent(new PopStateEvent("popstate"));
+
+    expect(await screen.findByRole("heading", { name: "Reading a rod" })).toBeInTheDocument();
+    const bar = screen.getByRole("progressbar", { name: "Lesson progress" });
+    expect(bar).toHaveAttribute("aria-valuenow", "0");
+  });
+
+  it("stays out of the address bar until the learner steps", async () => {
+    const user = userEvent.setup();
+    renderLesson(blocks, "first-bead", 1);
+
+    // Answering a question is not stepping anywhere: the link stays put.
+    await user.click(await screen.findByRole("button", { name: "1" }));
+    await user.click(screen.getByRole("button", { name: "Check" }));
+
+    expect(window.location.pathname).toBe("/");
+    expect(screen.getByRole("button", { name: "Continue" })).toBeInTheDocument();
   });
 
   it("finishes the course from the last step", async () => {
     const user = userEvent.setup();
-    renderLesson([{ type: "heading", text: "One step" }], "fluency-check");
+    renderLesson([{ id: "one-step", type: "heading", text: "One step" }], "fluency-check");
 
     expect(screen.getByRole("button", { name: "Finish course" })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Finish course" }));

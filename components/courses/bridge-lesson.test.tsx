@@ -20,6 +20,7 @@ function renderLesson(levelSlug: string, lessonSlug: string) {
       course={bridgeEngineeringCourse}
       levelSlug={levelSlug}
       lessonSlug={lessonSlug}
+      step={0}
       blocks={blocks}
     />,
   );

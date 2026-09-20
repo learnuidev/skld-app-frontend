@@ -5,8 +5,9 @@ export type { LessonBlock };
 export const chineseNumbersContent: CourseContentMap = {
   "number-words": {
     "one-to-ten": [
-      { type: "heading", text: "一 to 十 · One to Ten" },
+      { id: "one-to-ten", type: "heading", text: "一 to 十 · One to Ten" },
       {
+        id: "every-digit-chinese-character",
         type: "paragraph",
         text: "Every digit has its own Chinese character: 一 (1), 二 (2), 三 (3), 四 (4), 五 (5), 六 (6), 七 (7), 八 (8), 九 (9) — and 十 (10) starts the big units. On the abacus each rod holds exactly one digit, so small numbers are just beads on a single rod.",
         demo: {
@@ -15,6 +16,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-a-single-rod",
         type: "paragraph",
         text: "To read a single rod, check the heaven bead first. It is worth 五 (5); each earth bead below is worth 一 (1). So the rod shows the heaven bead plus the earth beads touching the beam.",
         demo: {
@@ -23,12 +25,14 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "click-the-beads",
         type: "explore",
         label: "Play: click the beads and watch each number's Chinese name appear.",
         rods: 2,
         initial: [0, 0],
       },
       {
+        id: "read-the-rod-seven",
         type: "read",
         prompt: "Read the rod.",
         digits: [7],
@@ -42,6 +46,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-eight-on-the-rod",
         type: "build",
         prompt: "Show 八 (8) on the rod.",
         target: 8,
@@ -55,8 +60,9 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     "read-the-rods": [
-      { type: "heading", text: "Read the Rods" },
+      { id: "read-the-rods", type: "heading", text: "Read the Rods" },
       {
+        id: "reading-a-rod-two-questions",
         type: "paragraph",
         text: "Reading a rod is two quick questions: is the heaven bead on the beam (that's 5)? And how many earth beads are touching it? Add the two to get your digit.",
         demo: {
@@ -65,6 +71,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-the-rod-three",
         type: "read",
         prompt: "Read the rod.",
         digits: [3],
@@ -77,6 +84,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-the-rod-five",
         type: "read",
         prompt: "Read the rod.",
         digits: [5],
@@ -89,6 +97,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-the-rod-seven",
         type: "read",
         prompt: "Read the rod.",
         digits: [7],
@@ -102,6 +111,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-two-rods-ten",
         type: "read",
         prompt: "This one uses two rods. Read it.",
         digits: [0, 1],
@@ -116,8 +126,9 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     "build-the-rods": [
-      { type: "heading", text: "Build the Rods" },
+      { id: "build-the-rods", type: "heading", text: "Build the Rods" },
       {
+        id: "to-build-a-number",
         type: "paragraph",
         text: "To build a number, split it into a heaven bead (5) and a handful of earth beads (1). Slide the heaven bead down for the 5, then push up the earth beads you need.",
         demo: {
@@ -126,6 +137,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-two-on-the-rod",
         type: "build",
         prompt: "Show 二 (2) on the rod.",
         target: 2,
@@ -138,6 +150,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-five-on-the-rod",
         type: "build",
         prompt: "Show 五 (5) on the rod.",
         target: 5,
@@ -150,6 +163,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-six-on-the-rod",
         type: "build",
         prompt: "Show 六 (6) on the rod.",
         target: 6,
@@ -162,6 +176,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-nine-on-the-rod",
         type: "build",
         prompt: "Show 九 (9) on the rod.",
         target: 9,
@@ -175,9 +190,10 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     "number-words-check": [
-      { type: "heading", text: "Level check" },
-      { type: "paragraph", text: "Read it, then build it. Solve every question to finish." },
+      { id: "level-check", type: "heading", text: "Level check" },
+      { id: "read-then-build-it", type: "paragraph", text: "Read it, then build it. Solve every question to finish." },
       {
+        id: "check-read-the-rod-four",
         type: "read",
         prompt: "What number is this rod?",
         digits: [4],
@@ -190,6 +206,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "check-build-eight",
         type: "build",
         prompt: "Show 八 (8) on the rod.",
         target: 8,
@@ -202,6 +219,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "check-read-two-rods-ten",
         type: "read",
         prompt: "Two rods — what number is this?",
         digits: [0, 1],
@@ -215,6 +233,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "check-build-three",
         type: "build",
         prompt: "Show 三 (3) on the rod.",
         target: 3,
@@ -231,12 +250,14 @@ export const chineseNumbersContent: CourseContentMap = {
 
   "tens-hundreds-thousands": {
     tens: [
-      { type: "heading", text: "十 · Tens" },
+      { id: "tens-overview", type: "heading", text: "十 · Tens" },
       {
+        id: "shi-means-ten",
         type: "paragraph",
         text: "十 (shí) means ten, and it is one of the two big-unit characters. To write a two-digit number you put a digit, then 十, then the ones digit: 21 = 二十一 (èr shí yī). The pattern is [digit]十[digit].",
       },
       {
+        id: "ten-to-nineteen",
         type: "paragraph",
         text: "For ten to nineteen, drop the little 一 at the front. 11 = 十一 (shí yī) — literally \"ten one\". And 10 is simply 十, never 一十.",
         demo: {
@@ -245,6 +266,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-twenty-three",
         type: "build",
         prompt: "Build 二十三 (23).",
         target: 23,
@@ -258,6 +280,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-twenty-five",
         type: "read",
         prompt: "Read this two-rod number.",
         digits: [5, 2],
@@ -271,6 +294,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-forty-seven",
         type: "build",
         prompt: "Build 四十七 (47).",
         target: 47,
@@ -285,8 +309,9 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     hundreds: [
-      { type: "heading", text: "百 · Hundreds" },
+      { id: "hundreds-overview", type: "heading", text: "百 · Hundreds" },
       {
+        id: "bai-means-hundred",
         type: "paragraph",
         text: "百 (bǎi) means a hundred. 100 = 一百 (yī bǎi). Read a three-digit number by splitting it into hundreds, tens and ones: 321 = 三百二十一 (sān bǎi èr shí yī).",
         demo: {
@@ -295,6 +320,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-two-hundred-forty-six",
         type: "build",
         prompt: "Build 二百四十六 (246).",
         target: 246,
@@ -307,6 +333,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-three-hundred-forty-six",
         type: "read",
         prompt: "Read this three-rod number.",
         digits: [6, 4, 3],
@@ -320,6 +347,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-five-hundred-empty-rods",
         type: "read",
         prompt: "This one has empty rods. Read it.",
         digits: [0, 0, 5],
@@ -334,8 +362,9 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     thousands: [
-      { type: "heading", text: "千 · Thousands" },
+      { id: "thousands-overview", type: "heading", text: "千 · Thousands" },
       {
+        id: "qian-means-thousand",
         type: "paragraph",
         text: "千 (qiān) means a thousand. 1000 = 一千 (yī qiān). For four-digit numbers, read thousands first, then hundreds, tens and ones: 5678 = 五千六百七十八 (wǔ qiān liù bǎi qī shí bā).",
         demo: {
@@ -344,6 +373,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-five-six-seven-eight",
         type: "build",
         prompt: "Build 五千六百七十八 (5678).",
         target: 5678,
@@ -356,6 +386,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-six-five-four-three",
         type: "read",
         prompt: "Read this four-rod number.",
         digits: [3, 4, 5, 6],
@@ -369,6 +400,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-two-thousand",
         type: "read",
         prompt: "Read this four-rod number.",
         digits: [0, 0, 0, 2],
@@ -383,8 +415,9 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     zero: [
-      { type: "heading", text: "零 · The Zero" },
+      { id: "zero-overview", type: "heading", text: "零 · The Zero" },
       {
+        id: "when-a-place-is-empty",
         type: "paragraph",
         text: "When a place has nothing in it, keep its spot and write 零 (líng) once for the whole empty stretch. 105 is 一百零五 (yī bǎi líng wǔ), never 一百五. The empty rod on the abacus is exactly that zero.",
         demo: {
@@ -393,6 +426,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "one-zero-covers-empty-places",
         type: "paragraph",
         text: "One 零 covers the whole run of empty places, however long. 1001 = 一千零一 (yī qiān líng yī): the empty hundreds and tens rods together are just one 零.",
         demo: {
@@ -401,6 +435,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-hundred-zero-five",
         type: "read",
         prompt: "Read this number.",
         digits: [5, 0, 1],
@@ -414,6 +449,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-thousand-zero-two",
         type: "read",
         prompt: "Read this number.",
         digits: [2, 0, 0, 1],
@@ -427,6 +463,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-thousand-zero-one",
         type: "build",
         prompt: "Build 一千零一 (1001).",
         target: 1001,
@@ -441,9 +478,10 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     "tens-hundreds-thousands-check": [
-      { type: "heading", text: "Level check" },
-      { type: "paragraph", text: "Build and read your way through ten, hundred and thousand." },
+      { id: "level-check", type: "heading", text: "Level check" },
+      { id: "build-and-read-units", type: "paragraph", text: "Build and read your way through ten, hundred and thousand." },
       {
+        id: "check-build-twenty-eight",
         type: "build",
         prompt: "Build 二十八 (28).",
         target: 28,
@@ -456,6 +494,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "check-read-hundred-twenty",
         type: "read",
         prompt: "Read this three-rod number.",
         digits: [0, 2, 1],
@@ -469,6 +508,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "check-build-three-zero-six",
         type: "build",
         prompt: "Build 三百零六 (306).",
         target: 306,
@@ -482,6 +522,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "check-read-thousand-four",
         type: "read",
         prompt: "Read this four-rod number.",
         digits: [4, 0, 0, 1],
@@ -499,12 +540,14 @@ export const chineseNumbersContent: CourseContentMap = {
 
   "the-myriad": {
     "why-wan": [
-      { type: "heading", text: "Why 万?" },
+      { id: "why-wan", type: "heading", text: "Why 万?" },
       {
+        id: "west-groups-by-thousands",
         type: "paragraph",
         text: "In the West, numbers are grouped by thousands: 10,000 is \"ten thousand\". Chinese groups by ten-thousands instead. The unit is 万 (wàn), and it is the pivot of the whole system: after 千 (thousand) the next big unit is not a phrase but its own character, 万.",
       },
       {
+        id: "wan-on-the-fifth-rod",
         type: "paragraph",
         text: "So 10,000 = 一万 (yī wàn), 100,000 = 十万 (shí wàn), 1,000,000 = 一百万 (yī bǎi wàn). On the abacus, 万 arrives on the fifth rod: 个, 十, 百, 千, 万.",
         demo: {
@@ -513,6 +556,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "quiz-wan-value",
         type: "quiz",
         prompt: "万 (wàn) is worth which number?",
         choices: [1000, 10000, 100000, 100],
@@ -525,6 +569,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-wan-rod-ten-thousand",
         type: "read",
         prompt: "The fifth rod is 万. What number is shown?",
         digits: [0, 0, 0, 0, 1],
@@ -538,8 +583,9 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     "wan-family": [
-      { type: "heading", text: "The 万 Family" },
+      { id: "the-wan-family", type: "heading", text: "The 万 Family" },
       {
+        id: "once-wan-is-your-unit",
         type: "paragraph",
         text: "Once 万 is your unit, the family is easy: 一万 (10,000), 十万 (100,000), 一百万 (1,000,000), 一千万 (10,000,000). The same digits 一, 十, 百, 千 come first, and 万 comes last as the unit.",
         demo: {
@@ -548,6 +594,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "powers-of-wan-list",
         type: "list",
         items: [
           "一万 (yī wàn) = 10,000",
@@ -557,6 +604,7 @@ export const chineseNumbersContent: CourseContentMap = {
         ],
       },
       {
+        id: "read-four-wan",
         type: "read",
         prompt: "Read the 万 rod.",
         digits: [0, 0, 0, 0, 4],
@@ -569,6 +617,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-five-wan",
         type: "build",
         prompt: "Build 五万 (50,000).",
         target: 50000,
@@ -582,6 +631,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "quiz-ten-wan",
         type: "quiz",
         prompt: "十万 (shí wàn) is which number?",
         choices: [10000, 100000, 1000000, 10],
@@ -594,6 +644,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "quiz-thousand-wan",
         type: "quiz",
         prompt: "一千万 (yī qiān wàn) is which number?",
         choices: [1000000, 10000000, 100000000, 100000],
@@ -607,8 +658,9 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     "compose-wan": [
-      { type: "heading", text: "Compose a Myriad Number" },
+      { id: "compose-a-myriad-number", type: "heading", text: "Compose a Myriad Number" },
       {
+        id: "wan-part-then-the-rest",
         type: "paragraph",
         text: "Any number under 100 million is two pieces: the 万 part, then the rest. Read the 万 part as its own number and tag 万 on the end, then read whatever is left under 10,000. 12,345 = 一万 + 2345 = 一万二千三百四十五 (yī wàn èr qiān sān bǎi sì shí wǔ).",
         demo: {
@@ -617,6 +669,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-twelve-thousand",
         type: "read",
         prompt: "Read this five-rod number.",
         digits: [5, 4, 3, 2, 1],
@@ -630,6 +683,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-twenty-three-thousand",
         type: "build",
         prompt: "Build 二万三千四百五十六 (23,456).",
         target: 23456,
@@ -642,6 +696,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-thirty-four-thousand",
         type: "read",
         prompt: "Read this five-rod number.",
         digits: [0, 6, 5, 4, 3],
@@ -655,6 +710,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-forty-five-thousand",
         type: "build",
         prompt: "Build 四万五千 (45,000).",
         target: 45000,
@@ -668,9 +724,10 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     "the-myriad-check": [
-      { type: "heading", text: "Level check" },
-      { type: "paragraph", text: "Read and build numbers built on 万." },
+      { id: "level-check", type: "heading", text: "Level check" },
+      { id: "read-and-build-wan-numbers", type: "paragraph", text: "Read and build numbers built on 万." },
       {
+        id: "check-build-twelve-thousand",
         type: "build",
         prompt: "Build 一万二千三百 (12,300).",
         target: 12300,
@@ -683,6 +740,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "check-read-wan-zero-five",
         type: "read",
         prompt: "Read this five-rod number.",
         digits: [5, 0, 0, 0, 2],
@@ -696,6 +754,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "check-build-ninety-nine-thousand",
         type: "build",
         prompt: "Build 九万九千九百九十九 (99,999).",
         target: 99999,
@@ -712,8 +771,9 @@ export const chineseNumbersContent: CourseContentMap = {
 
   "yi-and-zhao": {
     yi: [
-      { type: "heading", text: "亿 · One Hundred Million" },
+      { id: "yi-overview", type: "heading", text: "亿 · One Hundred Million" },
       {
+        id: "yi-on-the-ninth-rod",
         type: "paragraph",
         text: "亿 (yì) is 100,000,000 — a group of ten thousand 万. It arrives on the ninth rod: 个, 十, 百, 千, 万, 十万, 百万, 千万, 亿.",
         demo: {
@@ -722,10 +782,12 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "past-hundred-million-chunks",
         type: "paragraph",
         text: "100,000,000 = 一亿 (yī yì). Past a hundred million, a number reads in chunks: the 亿 part first, then the 万 part, then the rest. 1,2345,6789 = 一亿 二千三百四十五万 六千七百八十九.",
       },
       {
+        id: "quiz-yi-value",
         type: "quiz",
         prompt: "亿 (yì) is worth which number?",
         choices: [10000, 100000000, 10000000, 1000000000],
@@ -738,6 +800,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "quiz-wan-per-yi",
         type: "quiz",
         prompt: "How many 万 make one 亿?",
         choices: [10, 100, 1000, 10000],
@@ -751,6 +814,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "quiz-five-yi",
         type: "quiz",
         prompt: "Which number is 五亿 (wǔ yì)?",
         choices: [500000000, 5000000, 500000, 50000000],
@@ -763,6 +827,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-all-nines",
         type: "read",
         prompt: "Read the number on these five rods.",
         digits: [9, 9, 9, 9, 9],
@@ -775,6 +840,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-five-wan",
         type: "build",
         prompt: "Build 五万 (50,000).",
         target: 50000,
@@ -788,12 +854,14 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     zhao: [
-      { type: "heading", text: "兆 · One Trillion" },
+      { id: "zhao-overview", type: "heading", text: "兆 · One Trillion" },
       {
+        id: "zhao-one-trillion",
         type: "paragraph",
         text: "兆 (zhào) is 1,000,000,000,000 — one trillion, the top of this course. It is a group of ten thousand 亿, and the old saying puts it plainly: 万亿为兆, \"ten-thousand 亿 make a 兆\".",
       },
       {
+        id: "zhao-four-places-left",
         type: "paragraph",
         text: "On the number line, 亿 is at 10⁸ and 兆 is at 10¹² — exactly four more places, the next group of four. Read from the biggest unit down: 兆, then 亿, then 万, then the rest.",
         demo: {
@@ -802,6 +870,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "quiz-zhao-value",
         type: "quiz",
         prompt: "兆 (zhào) is worth which number?",
         choices: [100000000000, 1000000000, 1000000000000, 1000000],
@@ -814,6 +883,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "quiz-yi-per-zhao",
         type: "quiz",
         prompt: "How many 亿 make one 兆?",
         choices: [10, 100, 1000, 10000],
@@ -826,6 +896,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "quiz-thousand-yi",
         type: "quiz",
         prompt: "Which number is 一千亿 (yī qiān yì)?",
         choices: [100000000000, 10000000000, 1000000000, 1000000000000],
@@ -838,6 +909,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-forty-five-thousand",
         type: "read",
         prompt: "Read the number on these five rods.",
         digits: [8, 7, 6, 5, 4],
@@ -851,6 +923,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-ninety-eight-thousand",
         type: "build",
         prompt: "Build 九万八千七百六十五 (98,765).",
         target: 98765,
@@ -865,8 +938,9 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     ladder: [
-      { type: "heading", text: "The 万进 Ladder" },
+      { id: "wan-jin-ladder", type: "heading", text: "The 万进 Ladder" },
       {
+        id: "the-wan-jin-rule",
         type: "paragraph",
         text: "Here is the rule that builds the whole ladder: after 千, every next big unit is ten thousand times the one before it. This is called 万进 (wàn jìn) — \"myriad progression\".",
         demo: {
@@ -875,6 +949,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "big-unit-values-list",
         type: "list",
         items: [
           "万 (wàn) = 10⁴ = 10,000",
@@ -883,10 +958,12 @@ export const chineseNumbersContent: CourseContentMap = {
         ],
       },
       {
+        id: "four-places-between-units",
         type: "paragraph",
         text: "Between 万 and 亿 sit four places (万, 十万, 百万, 千万); between 亿 and 兆 sit four more (亿, 十亿, 百亿, 千亿). One 兆 = 一万 亿 = 10,000 × 10⁸ = 10¹².",
       },
       {
+        id: "quiz-unit-multiplier",
         type: "quiz",
         prompt: "Each big unit is how many times the one before it?",
         choices: [10, 100, 1000, 10000],
@@ -899,6 +976,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "quiz-zhao-times-unit",
         type: "quiz",
         prompt: "兆 is 10,000 × what unit?",
         choices: [10000, 100000, 1000000, 100000000],
@@ -911,6 +989,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-one-thousand",
         type: "read",
         prompt: "Read the number on these five rods.",
         digits: [0, 0, 0, 1, 0],
@@ -923,6 +1002,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-ten-thousand-leap",
         type: "build",
         prompt: "Build 一万 (10,000) — the 万进 leap.",
         target: 10000,
@@ -936,9 +1016,10 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     "yi-and-zhao-check": [
-      { type: "heading", text: "Level check" },
-      { type: "paragraph", text: "Match the units, then read and build the smaller pieces." },
+      { id: "level-check", type: "heading", text: "Level check" },
+      { id: "match-units-then-build", type: "paragraph", text: "Match the units, then read and build the smaller pieces." },
       {
+        id: "check-quiz-one-yi",
         type: "quiz",
         prompt: "Which is 一亿 (yī yì)?",
         choices: [100000000, 10000000, 1000000000, 1000],
@@ -950,6 +1031,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "check-quiz-ten-yi",
         type: "quiz",
         prompt: "Which number is 十亿 (shí yì)?",
         choices: [1000000000, 100000000, 10000000000, 100000],
@@ -962,6 +1044,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "check-read-thirty-four-thousand",
         type: "read",
         prompt: "Read this five-rod number.",
         digits: [0, 6, 5, 4, 3],
@@ -975,6 +1058,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "check-build-ninety-eight-thousand",
         type: "build",
         prompt: "Build 九万八千 (98,000).",
         target: 98000,
@@ -991,8 +1075,9 @@ export const chineseNumbersContent: CourseContentMap = {
 
   "read-everything": {
     "group-of-four": [
-      { type: "heading", text: "Split into Groups of Four" },
+      { id: "split-into-groups-of-four", type: "heading", text: "Split into Groups of Four" },
       {
+        id: "mark-off-four-digits",
         type: "paragraph",
         text: "Because Chinese leaps by 万 (10⁴), you read a big number by marking off every four digits from the right. The first four are plain (个 十 百 千); the next group gets 万; then 亿; then 兆.",
         demo: {
@@ -1001,6 +1086,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "group-names-list",
         type: "list",
         items: [
           "Group 0 (rightmost 4 digits) — plain 个 十 百 千",
@@ -1010,10 +1096,12 @@ export const chineseNumbersContent: CourseContentMap = {
         ],
       },
       {
+        id: "example-split-groups",
         type: "paragraph",
         text: "Example: 567,890,123,456 splits into 5678 | 9012 | 3456. Mark every four digits back from the ones and the groups are 5678 亿, 9012 万 and 3456. One group further left, 1,000,000,000,000 is just 1 兆 — the top of this course.",
       },
       {
+        id: "quiz-group-boundary",
         type: "quiz",
         prompt: "From the right, every fourth digit starts a new group named by what?",
         choices: [100, 1000, 10000, 10],
@@ -1026,6 +1114,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "quiz-digits-per-group",
         type: "quiz",
         prompt: "How many digits make one full group?",
         choices: [2, 3, 4, 5],
@@ -1038,6 +1127,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-and-spot-split",
         type: "read",
         prompt: "Read this five-rod number and spot the group split.",
         digits: [5, 4, 3, 2, 1],
@@ -1051,6 +1141,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-and-mark-split",
         type: "build",
         prompt: "Build 二万三千四百五十六 (23,456) and mark the group split.",
         target: 23456,
@@ -1064,8 +1155,9 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     "read-big": [
-      { type: "heading", text: "Read a Big Number" },
+      { id: "read-a-big-number", type: "heading", text: "Read a Big Number" },
       {
+        id: "read-in-layers",
         type: "paragraph",
         text: "Read a big number in layers, biggest unit first: say the 兆 group (tag 兆), then the 亿 group (tag 亿), then the 万 group (tag 万), then whatever is left. Each group is read like a normal four-digit number, with its unit tagged on.",
         demo: {
@@ -1074,10 +1166,12 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "whole-ladder-at-once",
         type: "paragraph",
         text: "Here is the whole ladder at once: 1,000,000,000,000 = 一兆, one trillion — the top of this course. And 567,890,123,456 = 五千六百七十八亿 九千零一十二万 三千四百五十六, one step below the trillion mark.",
       },
       {
+        id: "quiz-one-zhao",
         type: "quiz",
         prompt: "Which number is 一兆 (one trillion)?",
         choices: [1000000000000, 1000000000, 100000000000, 10000000000],
@@ -1089,6 +1183,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "quiz-group-2345-yi",
         type: "quiz",
         prompt: "The 亿 group reads 2345亿. What number is that?",
         choices: [234500000000, 2345000000, 23450000, 2345000],
@@ -1101,6 +1196,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-thirty-four-thousand",
         type: "read",
         prompt: "Read this five-rod number.",
         digits: [0, 6, 5, 4, 3],
@@ -1115,8 +1211,9 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     "zero-group": [
-      { type: "heading", text: "Zero Inside a Group" },
+      { id: "zero-inside-a-group", type: "heading", text: "Zero Inside a Group" },
       {
+        id: "zero-rule-per-group",
         type: "paragraph",
         text: "Each group is read like its own four-digit number, so the 零 rule works the same way inside a group. If a group's middle is empty, write 零. If a whole group is empty, skip it entirely.",
         demo: {
@@ -1125,10 +1222,12 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "skip-empty-wan-group",
         type: "paragraph",
         text: "100,000,001 = 1,0000,0001. The 亿 group is 1, the 万 group is empty, and the ones are 0001. The empty 万 group is skipped, and one 零 bridges the gap: 一亿零一.",
       },
       {
+        id: "quiz-hundred-million-one",
         type: "quiz",
         prompt: "100,000,001 in Chinese reads...",
         choices: [100000001, 101, 1000001, 100001],
@@ -1142,6 +1241,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "read-ten-thousand-one",
         type: "read",
         prompt: "Read this five-rod number.",
         digits: [1, 0, 0, 0, 1],
@@ -1155,6 +1255,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "build-ten-thousand-one",
         type: "build",
         prompt: "Build 一万零一 (10,001).",
         target: 10001,
@@ -1169,8 +1270,9 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     "abacus-connection": [
-      { type: "heading", text: "The Abacus Connection" },
+      { id: "the-abacus-connection", type: "heading", text: "The Abacus Connection" },
       {
+        id: "every-rod-is-a-place",
         type: "paragraph",
         text: "Every rod on the abacus is one place: 个 十 百 千 万 十万 百万 千万 亿 十亿 百亿 千亿 兆. The abacus is purely positional — the beads have no idea which unit they are, you read them by their rod.",
         demo: {
@@ -1179,16 +1281,19 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "words-agree-with-abacus",
         type: "paragraph",
         text: "Chinese number words do the same job, but they draw a line every four rods and name those lines 万, 亿, 兆. So the abacus and the words always agree: one rod is one place, and every fourth rod names a whole group.",
       },
       {
+        id: "click-the-fifth-wan-rod",
         type: "explore",
         label: "Explore: click the fifth (万) rod and watch the abacus value leap by ten thousand.",
         rods: 5,
         initial: [0, 0, 0, 0, 1],
       },
       {
+        id: "read-wan-rod-two-beads",
         type: "read",
         prompt: "The fifth rod is 万. Read this number.",
         digits: [0, 0, 0, 0, 2],
@@ -1202,9 +1307,10 @@ export const chineseNumbersContent: CourseContentMap = {
       },
     ],
     "read-everything-check": [
-      { type: "heading", text: "The Finale" },
-      { type: "paragraph", text: "Read, build and decode your way all the way to 兆." },
+      { id: "the-finale", type: "heading", text: "The Finale" },
+      { id: "read-build-decode-to-zhao", type: "paragraph", text: "Read, build and decode your way all the way to 兆." },
       {
+        id: "finale-quiz-zhao-worth",
         type: "quiz",
         prompt: "What is 兆 (zhào) worth?",
         choices: [1000000000000, 100000000, 100000, 10000000000],
@@ -1216,6 +1322,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "finale-quiz-yi-value",
         type: "quiz",
         prompt: "Which unit is worth 100,000,000?",
         choices: [100000000, 10000, 100000, 1000000000],
@@ -1227,6 +1334,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "finale-read-fifty-six-thousand",
         type: "read",
         prompt: "Read this five-rod number.",
         digits: [0, 8, 7, 6, 5],
@@ -1240,6 +1348,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "finale-build-forty-five-thousand",
         type: "build",
         prompt: "Build 四万五千六百七十八 (45,678).",
         target: 45678,
@@ -1252,6 +1361,7 @@ export const chineseNumbersContent: CourseContentMap = {
         },
       },
       {
+        id: "finale-quiz-wan-yi",
         type: "quiz",
         prompt: "Which number is 一万亿 (wàn yì)?",
         choices: [1000000000000, 100000000, 100000000000, 10000000000],

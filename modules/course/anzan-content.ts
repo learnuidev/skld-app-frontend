@@ -3,37 +3,44 @@ import type { CourseContentMap } from "./types";
 export const anzanContent: CourseContentMap = {
   "picture-the-soroban": {
     "what-is-anzan": [
-      { type: "heading", text: "Anzan means mental calculation" },
+      { id: "anzan-means-mental-calculation", type: "heading", text: "Anzan means mental calculation" },
       {
+        id: "anzan-is-mental-arithmetic",
         type: "paragraph",
         text: "Anzan (暗算) is the Japanese word for mental arithmetic. In abacus training it means something more specific: you keep a vivid picture of the soroban in your mind and slide its beads to compute — even when no real abacus is nearby.",
       },
       {
+        id: "masters-move-beads-fast",
         type: "paragraph",
         text: "Masters move beads so fast on their mental board that they can add a column of fifteen numbers in seconds. That speed is not a gift — it is a trained mental image. This course trains yours, step by step.",
       },
       {
+        id: "look-closely-at-the-board",
         type: "explore",
         label: "Spend a moment with a real board. This is the exact picture you're about to learn to hold in your head.",
         rods: 4,
         initial: [2, 5, 7, 0],
       },
       {
+        id: "notice-the-rods-and-beads",
         type: "paragraph",
         text: "Notice the rods, the amber beam, the red heaven bead and the sky-blue earth beads. Every anzan exercise in this course starts from this picture.",
       },
     ],
     "mental-board": [
-      { type: "heading", text: "Build your mental board" },
+      { id: "build-your-mental-board", type: "heading", text: "Build your mental board" },
       {
+        id: "mental-soroban-three-parts",
         type: "paragraph",
         text: "A mental soroban is just three things you can picture: vertical rods (one per digit), an amber beam across the middle, and beads that count only when they touch it.",
       },
       {
+        id: "same-rules-as-real-beads",
         type: "paragraph",
         text: "The rules are exactly the rules of real beads: a heaven bead touching the beam is 5, and each earth bead touching it is 1. Because your mental board follows the same rules, every bead trick you already know transfers straight across.",
       },
       {
+        id: "anchor-the-units-rod",
         type: "list",
         items: [
           "The units rod is always on the right — anchor it first.",
@@ -42,6 +49,7 @@ export const anzanContent: CourseContentMap = {
         ],
       },
       {
+        id: "build-35-from-memory",
         type: "explore",
         label: "Build 35, study it for a few seconds, then hit Clear and rebuild it from memory.",
         rods: 2,
@@ -49,16 +57,19 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "snap-a-photo": [
-      { type: "heading", text: "Photograph the beads" },
+      { id: "photograph-the-beads", type: "heading", text: "Photograph the beads" },
       {
+        id: "anzan-starts-with-seeing",
         type: "paragraph",
         text: "Anzan starts with seeing: glance at a number on a real board, look away, and describe the beads that were touching the beam. This photo is the raw material your mental board is made from.",
       },
       {
+        id: "start-with-one-rod",
         type: "paragraph",
         text: "Start with one rod, then two. Don't count the beads — read the number the way you read a word.",
       },
       {
+        id: "photo-of-this-rod",
         type: "read",
         prompt: "Snap a photo of this rod. What number is it?",
         digits: [8],
@@ -71,6 +82,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "one-more-photo",
         type: "read",
         prompt: "One more photo. What number does this board show?",
         digits: [6, 2],
@@ -83,6 +95,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "rebuild-26-from-memory",
         type: "build",
         prompt: "Now close your eyes, picture that board, and rebuild 26 from memory.",
         target: 26,
@@ -96,6 +109,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "photograph-a-rod-showing-9",
         type: "quiz",
         prompt: "You photograph a rod showing 9, then clear the board. What number are you holding in your mind?",
         choices: [9, 5, 0, 4],
@@ -110,12 +124,14 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "image-to-number": [
-      { type: "heading", text: "Read your own mind" },
+      { id: "read-your-own-mind", type: "heading", text: "Read your own mind" },
       {
+        id: "read-the-photo-back",
         type: "paragraph",
         text: "The point of the mental photo is to read it back. When you picture a board, name the number from left to right: read the heaven bead of each rod first, then the earth beads beneath it.",
       },
       {
+        id: "read-51-on-the-board",
         type: "read",
         prompt: "Read the number your mental board is showing.",
         digits: [5, 1],
@@ -128,6 +144,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "read-3-on-the-board",
         type: "read",
         prompt: "What about this one?",
         digits: [0, 3],
@@ -140,6 +157,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "read-247-on-the-board",
         type: "read",
         prompt: "Now read a three-rod board.",
         digits: [2, 4, 7],
@@ -153,6 +171,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "heaven-bead-on-tens-rod",
         type: "quiz",
         prompt: "Your mental board shows only a heaven bead on the tens rod. What number is that?",
         choices: [50, 5, 10, 15],
@@ -166,12 +185,14 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "picture-the-soroban-check": [
-      { type: "heading", text: "Level check — picture the soroban" },
+      { id: "level-check-picture-the-soroban", type: "heading", text: "Level check — picture the soroban" },
       {
+        id: "hold-the-number-in-mind",
         type: "paragraph",
         text: "Hold a number in your mind, read it, and build it. Solve every question to finish the level.",
       },
       {
+        id: "read-6-on-the-board",
         type: "read",
         prompt: "What number is your mental board showing?",
         digits: [6],
@@ -184,6 +205,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "read-4-on-the-board",
         type: "read",
         prompt: "And this one?",
         digits: [0, 4],
@@ -196,6 +218,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "picture-and-build-71",
         type: "build",
         prompt: "Picture 71, then show it on your abacus.",
         target: 71,
@@ -209,6 +232,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "tens-rod-of-84",
         type: "quiz",
         prompt: "You hold 84 in mind. What does the tens rod of your picture show?",
         choices: [8, 4, 80, 84],
@@ -225,16 +249,19 @@ export const anzanContent: CourseContentMap = {
 
   "mental-addition": {
     "add-without-trading": [
-      { type: "heading", text: "Add simple sums in your head" },
+      { id: "add-simple-sums-mentally", type: "heading", text: "Add simple sums in your head" },
       {
+        id: "addition-feels-like-real-beads",
         type: "paragraph",
         text: "On a mental board, addition feels exactly like the real thing: slide earth beads toward the beam. Picture 2, slide one more bead up, and you see 3.",
       },
       {
+        id: "sums-that-never-carry",
         type: "paragraph",
         text: "These sums never fill a rod past nine, so nothing carries — just keep the running picture simple.",
       },
       {
+        id: "2-plus-1",
         type: "quiz",
         prompt: "2 + 1 = ?",
         choices: [3, 2, 4, 5],
@@ -248,6 +275,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "12-plus-31",
         type: "quiz",
         prompt: "12 + 31 = ?",
         choices: [43, 34, 42, 53],
@@ -260,6 +288,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "build-12-plus-31",
         type: "build",
         prompt: "Check your mental picture: show 12 + 31 = 43 on the abacus.",
         target: 43,
@@ -273,16 +302,19 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "five-friends": [
-      { type: "heading", text: "Friends of five" },
+      { id: "friends-of-five", type: "heading", text: "Friends of five" },
       {
+        id: "when-earth-beads-run-short",
         type: "paragraph",
         text: "When you need more earth beads than are free, use the friends-of-five trick: add 5 by dropping the heaven bead, then take away the addend's friend of five. Four's friend is one; three's friend is two.",
       },
       {
+        id: "drop-the-five-remove-one",
         type: "paragraph",
         text: "So 3 + 4 becomes: drop the five, remove one. Watch your mental board settle on 7.",
       },
       {
+        id: "3-plus-4",
         type: "quiz",
         prompt: "3 + 4 = ?",
         choices: [7, 6, 5, 9],
@@ -296,6 +328,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "4-plus-4-plus-4",
         type: "quiz",
         prompt: "4 + 4 + 4 = ?",
         choices: [12, 10, 14, 11],
@@ -308,6 +341,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "2-plus-3-plus-4",
         type: "quiz",
         prompt: "2 + 3 + 4 = ?",
         choices: [9, 8, 10, 7],
@@ -321,16 +355,19 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "carry-in-your-head": [
-      { type: "heading", text: "Carry in your head" },
+      { id: "carry-in-your-head", type: "heading", text: "Carry in your head" },
       {
+        id: "eight-plus-five-overflows",
         type: "paragraph",
         text: "Eight plus five cannot fit on one rod — even in your imagination. Picture the ones rod overflowing, then carry: clear the rod down and add one bead to the tens rod. The board shows 13.",
       },
       {
+        id: "ten-ones-for-one-ten",
         type: "paragraph",
         text: "Think of it as trading ten ones for one ten, exactly as you would on a real soroban.",
       },
       {
+        id: "8-plus-5",
         type: "quiz",
         prompt: "8 + 5 = ?",
         choices: [13, 12, 15, 11],
@@ -344,6 +381,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "9-plus-9",
         type: "quiz",
         prompt: "9 + 9 = ?",
         choices: [18, 17, 19, 16],
@@ -357,6 +395,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "7-plus-8",
         type: "quiz",
         prompt: "7 + 8 = ?",
         choices: [15, 14, 16, 13],
@@ -370,6 +409,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "confirm-the-mental-carry",
         type: "build",
         prompt: "Show 8 + 5 = 13 on the abacus to confirm your mental carry.",
         target: 13,
@@ -383,12 +423,14 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "two-digit-mental-add": [
-      { type: "heading", text: "Two-digit addition in your head" },
+      { id: "two-digit-mental-addition", type: "heading", text: "Two-digit addition in your head" },
       {
+        id: "add-rod-by-rod",
         type: "paragraph",
         text: "Add two-digit numbers rod by rod, exactly like written arithmetic — but the beads do the place-keeping. Picture 27: two earth beads on the tens rod, heaven plus two earths on the ones rod. Now add 15: one more ten, then five ones that carry the board to 42.",
       },
       {
+        id: "27-plus-15",
         type: "quiz",
         prompt: "27 + 15 = ?",
         choices: [42, 32, 52, 43],
@@ -402,6 +444,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "34-plus-26",
         type: "quiz",
         prompt: "34 + 26 = ?",
         choices: [60, 50, 70, 56],
@@ -415,6 +458,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "58-plus-27",
         type: "quiz",
         prompt: "58 + 27 = ?",
         choices: [85, 75, 95, 84],
@@ -428,6 +472,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "build-58-plus-27",
         type: "build",
         prompt: "Show 58 + 27 = 85 to verify your mental carries.",
         target: 85,
@@ -441,12 +486,14 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "mental-add-string": [
-      { type: "heading", text: "Add a few in a row" },
+      { id: "a-few-in-a-row", type: "heading", text: "Add a few in a row" },
       {
+        id: "anzan-is-built-on-strings",
         type: "paragraph",
         text: "Anzan is built on strings: a series of numbers added one after another to a running total. Start with three small numbers, keep the running total on your mental board, and never go back to restart.",
       },
       {
+        id: "3-plus-6-plus-4",
         type: "quiz",
         prompt: "3 + 6 + 4 = ?",
         choices: [13, 12, 14, 11],
@@ -459,6 +506,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "8-plus-5-plus-7",
         type: "quiz",
         prompt: "8 + 5 + 7 = ?",
         choices: [20, 19, 21, 18],
@@ -471,6 +519,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "12-plus-9-plus-14",
         type: "quiz",
         prompt: "12 + 9 + 14 = ?",
         choices: [35, 33, 36, 34],
@@ -484,9 +533,10 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "mental-addition-check": [
-      { type: "heading", text: "Level check — mental addition" },
-      { type: "paragraph", text: "Keep the running total on your mental board. Solve every question to finish." },
+      { id: "level-check-mental-addition", type: "heading", text: "Level check — mental addition" },
+      { id: "keep-the-running-total", type: "paragraph", text: "Keep the running total on your mental board. Solve every question to finish." },
       {
+        id: "5-plus-6",
         type: "quiz",
         prompt: "5 + 6 = ?",
         choices: [11, 10, 12, 13],
@@ -500,6 +550,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "27-plus-19",
         type: "quiz",
         prompt: "27 + 19 = ?",
         choices: [46, 44, 45, 47],
@@ -513,6 +564,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "sum-4-7-8-6",
         type: "quiz",
         prompt: "4 + 7 + 8 + 6 = ?",
         choices: [25, 24, 26, 23],
@@ -525,6 +577,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "show-8-plus-9",
         type: "build",
         prompt: "Show the answer to 8 + 9 = 17 on the beads.",
         target: 17,
@@ -541,12 +594,14 @@ export const anzanContent: CourseContentMap = {
 
   "mental-subtraction": {
     "subtract-without-trading": [
-      { type: "heading", text: "Subtract without trading" },
+      { id: "subtract-without-trading", type: "heading", text: "Subtract without trading" },
       {
+        id: "subtraction-is-addition-in-reverse",
         type: "paragraph",
         text: "Subtraction on your mental board is addition in reverse: slide earth beads away from the beam. Picture 9, remove 3, and the rod shows 6.",
       },
       {
+        id: "9-minus-3",
         type: "quiz",
         prompt: "9 − 3 = ?",
         choices: [6, 5, 7, 8],
@@ -560,6 +615,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "7-minus-2",
         type: "quiz",
         prompt: "7 − 2 = ?",
         choices: [5, 4, 6, 3],
@@ -573,6 +629,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "build-9-minus-3",
         type: "build",
         prompt: "Show 9 − 3 = 6 on the rod.",
         target: 6,
@@ -586,16 +643,19 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "break-five": [
-      { type: "heading", text: "Break five mentally" },
+      { id: "break-five-mentally", type: "heading", text: "Break five mentally" },
       {
+        id: "when-the-bead-is-missing",
         type: "paragraph",
         text: "What if the bead you must remove isn't there? To take 3 away from 6, you cannot remove three earth beads — only one is up. So you break the five: take the heaven bead off (−5) and add back three's friend of five (+2). Six loses five and gains two: 3.",
       },
       {
+        id: "heaven-bead-off-two-up",
         type: "paragraph",
         text: "Read it as beads: heaven bead off, two earth beads up. The board shows 3.",
       },
       {
+        id: "6-minus-3",
         type: "quiz",
         prompt: "6 − 3 = ?",
         choices: [3, 2, 4, 5],
@@ -609,6 +669,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "8-minus-4",
         type: "quiz",
         prompt: "8 − 4 = ?",
         choices: [4, 3, 5, 6],
@@ -622,6 +683,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "which-bead-do-you-break",
         type: "build",
         prompt: "Show 7 − 2 = 5. Which bead do you break?",
         target: 5,
@@ -636,16 +698,19 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "borrow-in-your-head": [
-      { type: "heading", text: "Borrow in your head" },
+      { id: "borrow-in-your-head", type: "heading", text: "Borrow in your head" },
       {
+        id: "borrowing-from-the-left-rod",
         type: "paragraph",
         text: "When a rod cannot lose enough ones, borrow one ten from the rod to its left and add back the difference on the short rod. For 13 − 5: the tens rod loses one, and the ones rod gains 10 − 5 = 5 on top of its 3 → 8.",
       },
       {
+        id: "borrowing-mirrors-carrying",
         type: "paragraph",
         text: "Borrowing is the mirror of carrying — the same trade, in reverse.",
       },
       {
+        id: "13-minus-5",
         type: "quiz",
         prompt: "13 − 5 = ?",
         choices: [8, 7, 9, 6],
@@ -659,6 +724,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "12-minus-7",
         type: "quiz",
         prompt: "12 − 7 = ?",
         choices: [5, 6, 4, 7],
@@ -672,6 +738,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "20-minus-6",
         type: "quiz",
         prompt: "20 − 6 = ?",
         choices: [14, 13, 15, 12],
@@ -685,6 +752,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "build-13-minus-5",
         type: "build",
         prompt: "Show 13 − 5 = 8 on the abacus.",
         target: 8,
@@ -698,12 +766,14 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "two-digit-mental-sub": [
-      { type: "heading", text: "Two-digit subtraction in your head" },
+      { id: "two-digit-mental-subtraction", type: "heading", text: "Two-digit subtraction in your head" },
       {
+        id: "subtract-place-by-place",
         type: "paragraph",
         text: "Line up the rods and subtract place by place, borrowing whenever a rod comes up short. Picture 52 and subtract 28: the ones cannot lose eight, so you borrow, and the tens rod drops by one as the ones rod gains two.",
       },
       {
+        id: "52-minus-28",
         type: "quiz",
         prompt: "52 − 28 = ?",
         choices: [24, 34, 26, 14],
@@ -717,6 +787,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "81-minus-36",
         type: "quiz",
         prompt: "81 − 36 = ?",
         choices: [45, 55, 35, 46],
@@ -730,6 +801,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "64-minus-27",
         type: "quiz",
         prompt: "64 − 27 = ?",
         choices: [37, 47, 36, 27],
@@ -743,6 +815,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "build-81-minus-36",
         type: "build",
         prompt: "Show 81 − 36 = 45 on the abacus.",
         target: 45,
@@ -756,9 +829,10 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "mental-subtraction-check": [
-      { type: "heading", text: "Level check — mental subtraction" },
-      { type: "paragraph", text: "Break, borrow, and subtract your way to the finish." },
+      { id: "level-check-mental-subtraction", type: "heading", text: "Level check — mental subtraction" },
+      { id: "break-borrow-and-subtract", type: "paragraph", text: "Break, borrow, and subtract your way to the finish." },
       {
+        id: "15-minus-8",
         type: "quiz",
         prompt: "15 − 8 = ?",
         choices: [7, 6, 8, 9],
@@ -772,6 +846,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "70-minus-25",
         type: "quiz",
         prompt: "70 − 25 = ?",
         choices: [45, 55, 35, 44],
@@ -785,6 +860,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "11-minus-4-minus-3",
         type: "quiz",
         prompt: "11 − 4 − 3 = ?",
         choices: [4, 5, 6, 3],
@@ -797,6 +873,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "build-62-minus-27",
         type: "build",
         prompt: "Show 62 − 27 = 35 on the abacus.",
         target: 35,
@@ -813,12 +890,14 @@ export const anzanContent: CourseContentMap = {
 
   "strings-and-speed": {
     "running-totals": [
-      { type: "heading", text: "Keep a running total" },
+      { id: "keep-a-running-total", type: "heading", text: "Keep a running total" },
       {
+        id: "the-heart-of-flash-anzan",
         type: "paragraph",
         text: "The heart of flash anzan is adding a long list to one running total. Start with three or four two-digit numbers. After each number you update the total on your mental board; you never start over.",
       },
       {
+        id: "start-at-0-add-15",
         type: "quiz",
         prompt: "Start at 0. Add 15, then 20, then 5. What is the total?",
         choices: [40, 35, 45, 30],
@@ -831,6 +910,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "sum-25-30-12-8",
         type: "quiz",
         prompt: "25 + 30 + 12 + 8 = ?",
         choices: [75, 65, 85, 74],
@@ -843,6 +923,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "start-at-40-add-16",
         type: "quiz",
         prompt: "Start at 40, add 16, then 24. Total?",
         choices: [80, 70, 90, 76],
@@ -856,16 +937,19 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "spot-the-carry": [
-      { type: "heading", text: "See a carry before it happens" },
+      { id: "see-a-carry-coming", type: "heading", text: "See a carry before it happens" },
       {
+        id: "fast-students-see-it-coming",
         type: "paragraph",
         text: "The fastest students don't wait for a rod to overflow — they see it coming. When your ones rod shows 7, it needs 3 more to fill, so adding 5 or more will always carry.",
       },
       {
+        id: "predict-before-you-slide",
         type: "paragraph",
         text: "Predict before you slide: '27's ones rod needs 3 to fill; adding 6 carries one to the tens.' Then run it — the board settles on 33.",
       },
       {
+        id: "38-plus-7",
         type: "quiz",
         prompt: "38 + 7 = ?",
         choices: [45, 44, 46, 43],
@@ -879,6 +963,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "46-plus-8",
         type: "quiz",
         prompt: "46 + 8 = ?",
         choices: [54, 53, 55, 52],
@@ -892,6 +977,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "75-plus-9",
         type: "quiz",
         prompt: "75 + 9 = ?",
         choices: [84, 83, 85, 82],
@@ -906,12 +992,14 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "two-rods-at-once": [
-      { type: "heading", text: "Two rods at once" },
+      { id: "two-rods-at-once", type: "heading", text: "Two rods at once" },
       {
+        id: "see-tens-and-ones-together",
         type: "paragraph",
         text: "Longer numbers are easier when you see tens and ones together. For 34 + 21, picture 3 tens with 4 ones meeting 2 tens with 1 one, merging into 5 tens and 5 ones — 55.",
       },
       {
+        id: "34-plus-21",
         type: "quiz",
         prompt: "34 + 21 = ?",
         choices: [55, 65, 54, 45],
@@ -924,6 +1012,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "26-plus-43",
         type: "quiz",
         prompt: "26 + 43 = ?",
         choices: [69, 79, 68, 59],
@@ -936,6 +1025,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "51-plus-38",
         type: "quiz",
         prompt: "51 + 38 = ?",
         choices: [89, 99, 88, 79],
@@ -948,6 +1038,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "build-51-plus-38",
         type: "build",
         prompt: "Show 51 + 38 = 89 on the abacus.",
         target: 89,
@@ -961,16 +1052,19 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "flash-anzan": [
-      { type: "heading", text: "Flash anzan" },
+      { id: "flash-anzan", type: "heading", text: "Flash anzan" },
       {
+        id: "flash-anzan-is-the-showpiece",
         type: "paragraph",
         text: "Flash anzan is the showpiece: numbers appear one after another, and you add each one to your mental board before the next flashes. Champions add ten or more numbers shown for under a second each.",
       },
       {
+        id: "build-the-skill-with-flashcards",
         type: "paragraph",
         text: "This app can't flash numbers at you yet, so build the skill with a friend or flashcards: have someone read a list aloud at a steady beat while you keep the total on your mental board.",
       },
       {
+        id: "start-with-three-numbers",
         type: "list",
         items: [
           "Start with three numbers, each held for a full second.",
@@ -979,6 +1073,7 @@ export const anzanContent: CourseContentMap = {
         ],
       },
       {
+        id: "quick-warm-up-string",
         type: "quiz",
         prompt: "A quick warm-up string: 14, then 23, then 12. Total?",
         choices: [49, 48, 50, 47],
@@ -991,6 +1086,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "longer-string-31-25-44",
         type: "quiz",
         prompt: "Now a longer string: 31, 25, 44. Total?",
         choices: [100, 99, 101, 110],
@@ -1004,9 +1100,10 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "strings-speed-check": [
-      { type: "heading", text: "Level check — strings and speed" },
-      { type: "paragraph", text: "Keep one running total for each string and finish the level." },
+      { id: "level-check-strings-and-speed", type: "heading", text: "Level check — strings and speed" },
+      { id: "keep-one-running-total", type: "paragraph", text: "Keep one running total for each string and finish the level." },
       {
+        id: "12-plus-15-plus-8",
         type: "quiz",
         prompt: "12 + 15 + 8 = ?",
         choices: [35, 33, 36, 34],
@@ -1019,6 +1116,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "30-plus-22-plus-18",
         type: "quiz",
         prompt: "30 + 22 + 18 = ?",
         choices: [70, 60, 72, 68],
@@ -1031,6 +1129,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "46-plus-17-plus-9",
         type: "quiz",
         prompt: "46 + 17 + 9 = ?",
         choices: [72, 71, 73, 62],
@@ -1043,6 +1142,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "build-the-100-string",
         type: "build",
         prompt: "Show the string 31 + 25 + 44 = 100 on the abacus.",
         target: 100,
@@ -1059,12 +1159,14 @@ export const anzanContent: CourseContentMap = {
 
   "big-numbers": {
     "three-digit-add": [
-      { type: "heading", text: "Three-digit mental addition" },
+      { id: "three-digit-mental-addition", type: "heading", text: "Three-digit mental addition" },
       {
+        id: "anchor-hundreds-on-the-left",
         type: "paragraph",
         text: "Your mental board grows a third rod. Anchor hundreds on the left, tens in the middle, ones on the right, and add place by place from the right, carrying leftward whenever a rod overflows.",
       },
       {
+        id: "123-plus-456",
         type: "quiz",
         prompt: "123 + 456 = ?",
         choices: [579, 569, 589, 578],
@@ -1078,6 +1180,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "456-plus-789",
         type: "quiz",
         prompt: "456 + 789 = ?",
         choices: [1245, 1244, 1135, 1255],
@@ -1091,6 +1194,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "345-plus-278",
         type: "quiz",
         prompt: "345 + 278 = ?",
         choices: [623, 613, 633, 622],
@@ -1104,6 +1208,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "build-345-plus-278",
         type: "build",
         prompt: "Show 345 + 278 = 623 on the abacus.",
         target: 623,
@@ -1117,12 +1222,14 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "three-digit-sub": [
-      { type: "heading", text: "Three-digit mental subtraction" },
+      { id: "three-digit-mental-subtraction", type: "heading", text: "Three-digit mental subtraction" },
       {
+        id: "subtraction-across-hundreds",
         type: "paragraph",
         text: "Subtraction across hundreds is the same routine one rod higher: take away place by place and borrow from the next rod when a place comes up short.",
       },
       {
+        id: "652-minus-231",
         type: "quiz",
         prompt: "652 − 231 = ?",
         choices: [421, 431, 411, 321],
@@ -1136,6 +1243,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "800-minus-356",
         type: "quiz",
         prompt: "800 − 356 = ?",
         choices: [444, 454, 434, 544],
@@ -1149,6 +1257,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "923-minus-468",
         type: "quiz",
         prompt: "923 − 468 = ?",
         choices: [455, 465, 445, 555],
@@ -1162,6 +1271,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "build-800-minus-356",
         type: "build",
         prompt: "Show 800 − 356 = 444 on the abacus.",
         target: 444,
@@ -1175,16 +1285,19 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "decimals-money": [
-      { type: "heading", text: "Decimals and money" },
+      { id: "decimals-and-money", type: "heading", text: "Decimals and money" },
       {
+        id: "money-is-where-anzan-shines",
         type: "paragraph",
         text: "Money is where mental abacus shines in daily life. Fix an imaginary decimal point as a place on your board and treat cents as ones: $4.50 + $2.25 becomes 450 + 225 = 675, which you read back as $6.75.",
       },
       {
+        id: "the-decimal-point-is-imaginary",
         type: "paragraph",
         text: "The decimal point is imaginary — like the board itself. Just remember which rod is your ones rod.",
       },
       {
+        id: "4-50-plus-2-25",
         type: "quiz",
         prompt: "$4.50 + $2.25 = ?",
         choices: [6.75, 6.25, 7.75, 5.75],
@@ -1198,6 +1311,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "1-99-plus-2-01",
         type: "quiz",
         prompt: "$1.99 + $2.01 = ?",
         choices: [4, 4.5, 3.99, 3.9],
@@ -1210,6 +1324,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "0-70-plus-0-80",
         type: "quiz",
         prompt: "0.70 + 0.80 = ?",
         choices: [1.5, 1.4, 0.15, 1.05],
@@ -1223,12 +1338,14 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "mixed-operations": [
-      { type: "heading", text: "Mixed-up math" },
+      { id: "mixed-up-math", type: "heading", text: "Mixed-up math" },
       {
+        id: "strings-of-mixed-operations",
         type: "paragraph",
         text: "Strings don't have to be all addition. The rule is the same: one running total, updated with each next term. Start at zero and perform each step on the beads.",
       },
       {
+        id: "20-plus-15-minus-8",
         type: "quiz",
         prompt: "20 + 15 − 8 = ?",
         choices: [27, 25, 28, 26],
@@ -1241,6 +1358,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "50-minus-12-plus-7",
         type: "quiz",
         prompt: "50 − 12 + 7 = ?",
         choices: [45, 44, 46, 55],
@@ -1253,6 +1371,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "100-minus-35-minus-18",
         type: "quiz",
         prompt: "100 − 35 − 18 = ?",
         choices: [47, 48, 46, 57],
@@ -1265,6 +1384,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "build-the-mixed-answer",
         type: "build",
         prompt: "Show 50 − 12 + 7 = 45 on the abacus.",
         target: 45,
@@ -1278,9 +1398,10 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "big-numbers-check": [
-      { type: "heading", text: "Level check — big boards and mixed numbers" },
-      { type: "paragraph", text: "Add, subtract, and keep your place — even with a decimal point." },
+      { id: "level-check-big-numbers", type: "heading", text: "Level check — big boards and mixed numbers" },
+      { id: "keep-your-place-with-decimals", type: "paragraph", text: "Add, subtract, and keep your place — even with a decimal point." },
       {
+        id: "268-plus-174",
         type: "quiz",
         prompt: "268 + 174 = ?",
         choices: [442, 432, 452, 342],
@@ -1294,6 +1415,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "900-minus-268",
         type: "quiz",
         prompt: "900 − 268 = ?",
         choices: [632, 642, 622, 732],
@@ -1307,6 +1429,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "3-50-plus-2-75",
         type: "quiz",
         prompt: "$3.50 + $2.75 = ?",
         choices: [6.25, 6.75, 6.5, 5.75],
@@ -1320,6 +1443,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "build-268-plus-174",
         type: "build",
         prompt: "Show 268 + 174 = 442 on the abacus.",
         target: 442,
@@ -1336,12 +1460,14 @@ export const anzanContent: CourseContentMap = {
 
   "anzan-mastery": {
     "speed-habits": [
-      { type: "heading", text: "Speed-training habits" },
+      { id: "speed-training-habits", type: "heading", text: "Speed-training habits" },
       {
+        id: "speed-needs-short-sessions",
         type: "paragraph",
         text: "Speed is built in short, focused sessions. Five minutes daily beats an hour on Sunday. Start every session by clearing your mental board and doing one slow, clean run — then time the next.",
       },
       {
+        id: "warm-up-slowly",
         type: "list",
         items: [
           "Warm up by reading and building numbers slowly.",
@@ -1350,6 +1476,7 @@ export const anzanContent: CourseContentMap = {
         ],
       },
       {
+        id: "warm-up-18-plus-25",
         type: "quiz",
         prompt: "Warm-up check: 18 + 25 = ?",
         choices: [43, 42, 44, 53],
@@ -1363,16 +1490,19 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "stronger-images": [
-      { type: "heading", text: "Make your mental image vivid" },
+      { id: "make-your-mental-image-vivid", type: "heading", text: "Make your mental image vivid" },
       {
+        id: "vividness-is-trainable",
         type: "paragraph",
         text: "Vividness is trainable. Always picture the same board: dark frame, amber beam, red heaven bead, blue earth beads. When your image fades, go back to the real board for a minute and re-fire the photograph.",
       },
       {
+        id: "draw-the-board-eyes-closed",
         type: "paragraph",
         text: "Practise 'drawing' the board with your eyes closed after you clear it — from 0 beads up to a full board and back down.",
       },
       {
+        id: "refresh-drill-4-plus-9",
         type: "quiz",
         prompt: "Refresh drill: 4 + 9 = ?",
         choices: [13, 12, 14, 15],
@@ -1386,6 +1516,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "56-minus-19",
         type: "quiz",
         prompt: "Hold 56 in mind, then subtract 19. What do you see?",
         choices: [37, 36, 38, 47],
@@ -1400,16 +1531,19 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "ten-number-sprint": [
-      { type: "heading", text: "The ten-number sprint" },
+      { id: "the-ten-number-sprint", type: "heading", text: "The ten-number sprint" },
       {
+        id: "the-classic-anzan-drill",
         type: "paragraph",
         text: "The classic anzan drill: add ten numbers to one running total. Have someone read a list aloud while you keep the total on your mental board — then say the final number out loud.",
       },
       {
+        id: "try-the-ten-number-list",
         type: "paragraph",
         text: "Try this list now, adding each number to your mental board as you go: 6, 14, 9, 21, 7, 13, 18, 5, 22, 10.",
       },
       {
+        id: "the-sprint-running-total",
         type: "quiz",
         prompt: "What is the running total after that whole sprint list?",
         choices: [125, 120, 118, 132],
@@ -1422,6 +1556,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "shorter-sprint-12-plus-8",
         type: "quiz",
         prompt: "Shorter sprint: 12 + 8 + 15 + 5 + 20 = ?",
         choices: [60, 55, 62, 58],
@@ -1436,9 +1571,10 @@ export const anzanContent: CourseContentMap = {
       },
     ],
     "anzan-mastery-check": [
-      { type: "heading", text: "Final challenge" },
-      { type: "paragraph", text: "A mini championship set. Keep your mental board steady and solve every question." },
+      { id: "final-challenge", type: "heading", text: "Final challenge" },
+      { id: "a-mini-championship-set", type: "paragraph", text: "A mini championship set. Keep your mental board steady and solve every question." },
       {
+        id: "34-plus-27",
         type: "quiz",
         prompt: "34 + 27 = ?",
         choices: [61, 60, 62, 51],
@@ -1451,6 +1587,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "100-minus-47-plus-12",
         type: "quiz",
         prompt: "100 − 47 + 12 = ?",
         choices: [65, 64, 66, 55],
@@ -1463,6 +1600,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "string-5-plus-18",
         type: "quiz",
         prompt: "A string: 5 + 18 + 24 + 6 = ?",
         choices: [53, 52, 54, 43],
@@ -1475,6 +1613,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "12-40-plus-8-60",
         type: "quiz",
         prompt: "$12.40 + $8.60 = ?",
         choices: [21, 20.4, 21.4, 20],
@@ -1488,6 +1627,7 @@ export const anzanContent: CourseContentMap = {
         },
       },
       {
+        id: "build-the-final-sprint",
         type: "build",
         prompt: "Show the final sprint result: 6 + 14 + 9 + 21 + 7 + 13 + 18 + 5 + 22 + 10 = 125.",
         target: 125,
