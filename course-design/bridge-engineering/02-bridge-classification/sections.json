@@ -1,0 +1,17 @@
+[
+  {
+    "time": "00:17",
+    "title": "Bridge Classification and Structural Systems",
+    "description": "Bridges can be classified according to the materials used in their load-bearing structures, including reinforced concrete, high-performance concrete, and carbon-fiber-reinforced polymer (CFRP) bridges. They can also be classified by purpose, such as railway bridges, highway bridges, and pedestrian bridges, as well as by length, span, location of the load-bearing structure, and the nature of the crossing. The course emphasizes environmental protection and ecological sustainability as important design principles. It also explains how bridge structural systems are classified according to their stress conditions and highlights the diverse requirements involved in bridge design and construction."
+  },
+  {
+    "time": "03:19",
+    "title": "Bridge Structural Systems and Their Characteristics",
+    "description": "The main structural systems of bridges include beam bridges, arch bridges, rigid-frame bridges, cable-stayed bridges, and suspension bridges. Beam bridges primarily resist bending and are suitable for materials with high bending strength. Arch bridges primarily resist compression and can be used for small, medium, and large spans. Rigid-frame bridges integrate the piers with the main beam to improve bending resistance. Cable-stayed bridges distribute loads through stay cables, while suspension bridges use a main cable suspended above the bridge deck and are particularly suitable for long spans. Differences in stress behavior, material selection, and applicable span lengths demonstrate the diversity of bridge design and technological development."
+  },
+  {
+    "time": "09:09",
+    "title": "Bridge Structures and Types: From Cable-Stayed Bridges to Composite Systems",
+    "description": "Cable-stayed bridges use stay cables to increase the load-bearing capacity of the main girder and extend the possible span length, although they may have greater weight and reduced stiffness. Suspension bridges use high-strength cables to suspend the bridge deck, giving them exceptional spanning capability, but their wind-resistance and stability must be carefully considered. Composite bridge systems combine different structural forms to optimize overall performance and improve the efficiency of bridge design and construction."
+  }
+]

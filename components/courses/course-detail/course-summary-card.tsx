@@ -1,4 +1,6 @@
 import { Abacus } from "@/components/abacus/abacus";
+import { CourseArt } from "@/components/courses/course-art";
+import { PALETTE } from "@/components/courses/illustrations/palette";
 import { CourseMetrics } from "@/components/courses/course-detail/course-metrics";
 import { CourseProgress } from "@/components/courses/course-detail/course-progress";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -23,21 +25,32 @@ export function CourseSummaryCard({
   return (
     <div className="rounded-[22px] border-2 border-border bg-background px-6 pb-6 pt-8 xl:px-8 xl:pb-8">
       <div className="flex flex-col items-start gap-6">
-        <div
-          className={cn(
-            "flex size-[100px] shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br",
-            course.heroAccent,
-          )}
-        >
-          <span className="flex items-center justify-center rounded-xl bg-white/75 p-1.5">
-            <Abacus
-              digits={course.sample ?? [4, 3, 2, 1]}
-              readOnly
-              scale={0.24}
-              label={`${course.title} course preview`}
-            />
-          </span>
-        </div>
+        {course.art ? (
+          // A course with its own artwork sits on the shared light plate, the
+          // same as its card on the courses page.
+          <div
+            className="flex size-[100px] shrink-0 items-center justify-center overflow-hidden rounded-2xl"
+            style={{ backgroundColor: PALETTE.fog }}
+          >
+            <CourseArt course={course} label={`${course.title} course preview`} />
+          </div>
+        ) : (
+          <div
+            className={cn(
+              "flex size-[100px] shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br",
+              course.heroAccent,
+            )}
+          >
+            <span className="flex items-center justify-center rounded-xl bg-white/75 p-1.5">
+              <Abacus
+                digits={course.sample ?? [4, 3, 2, 1]}
+                readOnly
+                scale={0.24}
+                label={`${course.title} course preview`}
+              />
+            </span>
+          </div>
+        )}
 
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-balance sm:text-4xl">

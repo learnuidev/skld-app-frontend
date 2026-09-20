@@ -1,4 +1,4 @@
-import type { Course, CourseContentMap, CourseLesson, CourseLevel } from "./types";
+import type { Course, CourseContentMap, CourseLesson, CourseLevel, LessonBlock } from "./types";
 
 export interface CourseNode {
   level: CourseLevel;
@@ -47,14 +47,33 @@ export function continueHref(course: Course, completed: string[]): string {
   return target ? lessonUrl(course, target.level.slug, target.lesson.slug) : `/courses/${course.slug}`;
 }
 
-/** Number of interactive tasks (build/read/quiz) authored across a course's content. */
+/** Every block the learner has to answer, across both course families. */
+export const TASK_BLOCK_TYPES = [
+  "build",
+  "read",
+  "quiz",
+  "hotspot",
+  "choose",
+  "sort",
+  "order",
+  "assemble",
+] as const;
+
+export type TaskBlock = Extract<LessonBlock, { type: (typeof TASK_BLOCK_TYPES)[number] }>;
+
+/** Whether a block asks a question — the ones that gate the Check button. */
+export function isTaskBlock(block: LessonBlock): block is TaskBlock {
+  return (TASK_BLOCK_TYPES as readonly string[]).includes(block.type);
+}
+
+/** Number of interactive tasks authored across a course's content. */
 export function countLevelExercises(levels: CourseLevel[], content: CourseContentMap): number {
   return levels.reduce((total, level) => {
     return (
       total +
       level.lessons.reduce((sum, lesson) => {
         const blocks = content[level.slug]?.[lesson.slug] ?? [];
-        return sum + blocks.filter((b) => b.type === "build" || b.type === "read" || b.type === "quiz").length;
+        return sum + blocks.filter(isTaskBlock).length;
       }, 0)
     );
   }, 0);

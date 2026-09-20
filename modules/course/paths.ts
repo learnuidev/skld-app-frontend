@@ -59,6 +59,15 @@ export const primaryPaths: LearningPath[] = [
     ],
     art: "abacus",
   },
+  {
+    slug: "civil-engineering",
+    badge: "Engineering · 1 course",
+    title: "Civil Engineering",
+    description:
+      "How structures carry load, starting with the one you can see all of: a bridge. Label its parts, read its drawing, and sort every kind of bridge by how it works.",
+    courseSlugs: ["bridge-engineering"],
+    art: "bridge",
+  },
 ];
 
 /** Paths that are still being built; shown under "Other learning paths". */

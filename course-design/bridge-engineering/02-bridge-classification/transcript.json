@@ -1,0 +1,962 @@
+[
+  {
+    "start": "00:17",
+    "input": "Hello students"
+  },
+  {
+    "start": "00:18",
+    "input": "We encounter many bridges in our daily lives."
+  },
+  {
+    "start": "00:21",
+    "input": "Perhaps it is such an ordinary-looking building"
+  },
+  {
+    "start": "00:23",
+    "input": "The small bridge, however, bears witness to the passing and experiences of many pedestrians."
+  },
+  {
+    "start": "00:27",
+    "input": "Perhaps it is a bridge that not only connects you to your destination"
+  },
+  {
+    "start": "00:32",
+    "input": "The bridge also adds to the beautiful scenery of your journey."
+  },
+  {
+    "start": "00:35",
+    "input": "Therefore, in order to facilitate our systematic and in-depth study of bridge structure-related knowledge..."
+  },
+  {
+    "start": "00:40",
+    "input": "It is necessary to classify and categorize these various types of bridges."
+  },
+  {
+    "start": "00:46",
+    "input": "This is the topic of our lesson today—the classification of bridges."
+  },
+  {
+    "start": "00:51",
+    "input": "We can classify bridges from different perspectives."
+  },
+  {
+    "start": "00:54",
+    "input": "For example, these bridges"
+  },
+  {
+    "start": "00:56",
+    "input": "By comparison, it is easy to see that they are built using different materials."
+  },
+  {
+    "start": "01:03",
+    "input": "Therefore, we can determine the main load-bearing structure of the bridge."
+  },
+  {
+    "start": "01:07",
+    "input": "Classify bridges by the materials used in their construction."
+  },
+  {
+    "start": "01:11",
+    "input": "In our country"
+  },
+  {
+    "start": "01:13",
+    "input": "The most widely used bridge construction material at present is reinforced concrete."
+  },
+  {
+    "start": "01:19",
+    "input": "It is worth noting"
+  },
+  {
+    "start": "01:20",
+    "input": "Currently, some materials with superior performance are already being used in bridge construction."
+  },
+  {
+    "start": "01:27",
+    "input": "For example, ultra-high performance concrete is used for the ribs of box arches."
+  },
+  {
+    "start": "01:31",
+    "input": "For example, CFRP (carbon fiber reinforced polymer) is used in cable-stayed bridges."
+  },
+  {
+    "start": "01:37",
+    "input": "The application of these high-performance materials will further revolutionize bridge engineering."
+  },
+  {
+    "start": "01:42",
+    "input": "Let's take a look at these bridges again."
+  },
+  {
+    "start": "01:45",
+    "input": "Clearly, they serve different groups of people."
+  },
+  {
+    "start": "01:48",
+    "input": "We can classify bridges according to their purpose as railway bridges."
+  },
+  {
+    "start": "01:54",
+    "input": "Highway bridge"
+  },
+  {
+    "start": "01:55",
+    "input": "pedestrian bridge"
+  },
+  {
+    "start": "01:56",
+    "input": "and road-rail bridges"
+  },
+  {
+    "start": "01:58",
+    "input": "Waterway Bridge"
+  },
+  {
+    "start": "02:00",
+    "input": "also"
+  },
+  {
+    "start": "02:01",
+    "input": "Humans build bridges not only to meet the needs of human activities."
+  },
+  {
+    "start": "02:06",
+    "input": "For example, this bridge in Australia"
+  },
+  {
+    "start": "02:08",
+    "input": "It was built to meet the migration needs of crabs."
+  },
+  {
+    "start": "02:12",
+    "input": "This also reflects an important principle in bridge engineering design and construction."
+  },
+  {
+    "start": "02:16",
+    "input": "Focus on environmental protection"
+  },
+  {
+    "start": "02:17",
+    "input": "Focus on ecological sustainability"
+  },
+  {
+    "start": "02:20",
+    "input": "In the \"General Design Specifications for Highway Bridges and Culverts\""
+  },
+  {
+    "start": "02:23",
+    "input": "We can determine the total length of the bridge"
+  },
+  {
+    "start": "02:26",
+    "input": "There are also single-span diameters"
+  },
+  {
+    "start": "02:27",
+    "input": "Classify bridges into mega-bridges"
+  },
+  {
+    "start": "02:30",
+    "input": "bridge"
+  },
+  {
+    "start": "02:31",
+    "input": "Zhongqiao"
+  },
+  {
+    "start": "02:32",
+    "input": "small bridge"
+  },
+  {
+    "start": "02:34",
+    "input": "This is a classification of bridges based on the length of their spans."
+  },
+  {
+    "start": "02:39",
+    "input": "If classified according to the relative position of the bridge deck and the main load-bearing structure"
+  },
+  {
+    "start": "02:43",
+    "input": "It can be divided into upper support type"
+  },
+  {
+    "start": "02:45",
+    "input": "Three types: middle support and bottom support"
+  },
+  {
+    "start": "02:49",
+    "input": "Classified by the nature of crossing"
+  },
+  {
+    "start": "02:50",
+    "input": "Bridges can also be divided into river-crossing bridges."
+  },
+  {
+    "start": "02:53",
+    "input": "Cross-sea bridge"
+  },
+  {
+    "start": "02:55",
+    "input": "overpass"
+  },
+  {
+    "start": "02:56",
+    "input": "overpass"
+  },
+  {
+    "start": "02:58",
+    "input": "Sometimes, in order to meet the navigation needs under the bridge"
+  },
+  {
+    "start": "03:01",
+    "input": "The bridge can also be built as a movable bridge."
+  },
+  {
+    "start": "03:05",
+    "input": "Previously, we learned about bridge classification based on their intuitive external features."
+  },
+  {
+    "start": "03:11",
+    "input": "Next, we will focus on the system classification of bridge structures."
+  },
+  {
+    "start": "03:15",
+    "input": "Based on the stress conditions of the bridge's load-bearing structural components"
+  },
+  {
+    "start": "03:19",
+    "input": "Bridge structural systems can generally be divided into beam bridges."
+  },
+  {
+    "start": "03:23",
+    "input": "arch bridge"
+  },
+  {
+    "start": "03:24",
+    "input": "rigid frame bridge"
+  },
+  {
+    "start": "03:25",
+    "input": "cable-stayed bridge"
+  },
+  {
+    "start": "03:26",
+    "input": "Types of suspension bridges"
+  },
+  {
+    "start": "03:28",
+    "input": "Different bridge structural systems have different stress characteristics."
+  },
+  {
+    "start": "03:32",
+    "input": "This further determines the selection of bridge construction materials and the applicable range of bridge spans."
+  },
+  {
+    "start": "03:38",
+    "input": "Below, we will briefly introduce the main characteristics of different bridge structural systems."
+  },
+  {
+    "start": "03:43",
+    "input": "First, we will study beam bridges."
+  },
+  {
+    "start": "03:46",
+    "input": "A beam is erected on the pier."
+  },
+  {
+    "start": "03:48",
+    "input": "This results in the simplest bridge type – the simply supported beam bridge."
+  },
+  {
+    "start": "03:53",
+    "input": "Beam bridge under vertical load"
+  },
+  {
+    "start": "03:55",
+    "input": "The support only generates vertical reaction force."
+  },
+  {
+    "start": "03:58",
+    "input": "No horizontal reaction force will be generated"
+  },
+  {
+    "start": "04:00",
+    "input": "The main beam is primarily subjected to bending."
+  },
+  {
+    "start": "04:02",
+    "input": "Therefore, we should choose materials with strong bending resistance to construct the main beam."
+  },
+  {
+    "start": "04:07",
+    "input": "For example, steel"
+  },
+  {
+    "start": "04:09",
+    "input": "reinforced concrete, etc."
+  },
+  {
+    "start": "04:12",
+    "input": "The structural system of beam bridges can be further subdivided into simply supported beam bridges."
+  },
+  {
+    "start": "04:16",
+    "input": "Continuous beam bridge"
+  },
+  {
+    "start": "04:17",
+    "input": "cantilever bridge"
+  },
+  {
+    "start": "04:19",
+    "input": "Simply supported beam bridges have simple stress distribution"
+  },
+  {
+    "start": "04:21",
+    "input": "Construction"
+  },
+  {
+    "start": "04:23",
+    "input": "Widely used in short-span bridges"
+  },
+  {
+    "start": "04:26",
+    "input": "Compared to simply supported beams, continuous beams"
+  },
+  {
+    "start": "04:29",
+    "input": "The main girder of the bridge span forms a continuous structure at the pier top."
+  },
+  {
+    "start": "04:34",
+    "input": "Therefore, vehicles pass through more smoothly."
+  },
+  {
+    "start": "04:37",
+    "input": "Meanwhile, the main beam at the pier top continuously reinforces the coordinated stress distribution between the adjacent bridge spans."
+  },
+  {
+    "start": "04:44",
+    "input": "Currently, it is the most commonly used type of beam bridge in highways and urban roads."
+  },
+  {
+    "start": "04:53",
+    "input": "Cantilever bridges have hanging holes between the two cantilever ends."
+  },
+  {
+    "start": "04:58",
+    "input": "A relatively complex connection structure needs to be installed at the cantilever end."
+  },
+  {
+    "start": "05:02",
+    "input": "This location often becomes a weak point in the bridge structure."
+  },
+  {
+    "start": "05:06",
+    "input": "Diseases are very likely to occur."
+  },
+  {
+    "start": "05:08",
+    "input": "Affecting bridge performance"
+  },
+  {
+    "start": "05:10",
+    "input": "Therefore, cantilever bridges are now rarely used."
+  },
+  {
+    "start": "05:15",
+    "input": "The main load-bearing structure of an arch bridge is the main arch ring."
+  },
+  {
+    "start": "05:19",
+    "input": "Under vertical load"
+  },
+  {
+    "start": "05:21",
+    "input": "There is horizontal thrust at the arch foot."
+  },
+  {
+    "start": "05:23",
+    "input": "The bending moment generated by this thrust on the main arch ring has the opposite sign to the bending moment generated by the vertical load."
+  },
+  {
+    "start": "05:30",
+    "input": "Able to cancel each other out"
+  },
+  {
+    "start": "05:32",
+    "input": "Therefore, the bending moment of the main arch ring"
+  },
+  {
+    "start": "05:34",
+    "input": "The shear forces are relatively small."
+  },
+  {
+    "start": "05:36",
+    "input": "The main arch ring is primarily under compression."
+  },
+  {
+    "start": "05:39",
+    "input": "Therefore, for small and medium span arch bridges"
+  },
+  {
+    "start": "05:42",
+    "input": "It is generally constructed using masonry materials with high compressive strength and reinforced concrete."
+  },
+  {
+    "start": "05:49",
+    "input": "For long-span arch bridges"
+  },
+  {
+    "start": "05:51",
+    "input": "From the perspective of construction stability"
+  },
+  {
+    "start": "05:53",
+    "input": "From a convenience perspective"
+  },
+  {
+    "start": "05:54",
+    "input": "It can be constructed using reinforced concrete and steel structures."
+  },
+  {
+    "start": "06:00",
+    "input": "Compared with beam bridges of the same span"
+  },
+  {
+    "start": "06:02",
+    "input": "Due to the bending moment of the main arch ring"
+  },
+  {
+    "start": "06:04",
+    "input": "Both shear force and deformation are very small."
+  },
+  {
+    "start": "06:07",
+    "input": "Therefore, arch bridges have a great spanning capacity."
+  },
+  {
+    "start": "06:10",
+    "input": "The arch bridge currently under construction has a span exceeding 600 meters."
+  },
+  {
+    "start": "06:15",
+    "input": "Where conditions permit"
+  },
+  {
+    "start": "06:17",
+    "input": "Building arch bridges is often an economically reasonable choice."
+  },
+  {
+    "start": "06:21",
+    "input": "At the same time, the arched bridge has a more aesthetically pleasing curved shape."
+  },
+  {
+    "start": "06:25",
+    "input": "certainly"
+  },
+  {
+    "start": "06:26",
+    "input": "The curved shape of the arch bridge also makes its construction more difficult than that of the beam bridge."
+  },
+  {
+    "start": "06:33",
+    "input": "in addition"
+  },
+  {
+    "start": "06:34",
+    "input": "The horizontal thrust at the arch foot of a through-arch bridge places high demands on the bearing capacity of the foundation."
+  },
+  {
+    "start": "06:40",
+    "input": "As for the under-arch bridge"
+  },
+  {
+    "start": "06:42",
+    "input": "Tie rods can be installed at the arch foot."
+  },
+  {
+    "start": "06:45",
+    "input": "To balance the thrust of the arch feet"
+  },
+  {
+    "start": "06:48",
+    "input": "This reduces the requirements for the bearing capacity of the foundation."
+  },
+  {
+    "start": "06:51",
+    "input": "This type of arch bridge is also known as a \"tied arch bridge\"."
+  },
+  {
+    "start": "06:56",
+    "input": "The main load-bearing structure of a rigid frame bridge is a rigid frame structure in which beams and piers are integrally combined."
+  },
+  {
+    "start": "07:03",
+    "input": "The biggest difference between it and a beam bridge lies in the structural treatment of the pier-beam connection."
+  },
+  {
+    "start": "07:08",
+    "input": "After the piers and beams are fixed together"
+  },
+  {
+    "start": "07:11",
+    "input": "The piers of the rigid frame bridge will also participate in the bending of the main beam."
+  },
+  {
+    "start": "07:14",
+    "input": "This has a certain effect on improving the bending resistance of the bridge span."
+  },
+  {
+    "start": "07:17",
+    "input": "Commonly used rigid frame bridge types include portal rigid frame bridges."
+  },
+  {
+    "start": "07:21",
+    "input": "Inclined-leg rigid frame bridges and continuous rigid frame bridges"
+  },
+  {
+    "start": "07:24",
+    "input": "Portal rigid frame bridge under vertical load"
+  },
+  {
+    "start": "07:28",
+    "input": "The bridge span structure, like a beam bridge, is subjected to bending moment."
+  },
+  {
+    "start": "07:32",
+    "input": "However, because the bridge piers impose rotational constraints on the main beam..."
+  },
+  {
+    "start": "07:35",
+    "input": "The mid-span bending moment is smaller than that of a simply supported beam with the same span."
+  },
+  {
+    "start": "07:39",
+    "input": "Therefore, the height of the bridge structure can be made smaller (3)"
+  },
+  {
+    "start": "07:44",
+    "input": "The horizontal constraint of the foundation on the pier foot will generate thrust."
+  },
+  {
+    "start": "07:48",
+    "input": "This horizontal thrust can generate axial pressure on the main beam."
+  },
+  {
+    "start": "07:53",
+    "input": "Therefore, the stress state of its portal rigid frame bridge is between that of a beam bridge and an arch bridge."
+  },
+  {
+    "start": "08:01",
+    "input": "The bridge piers bear both vertical pressure and bending moment."
+  },
+  {
+    "start": "08:05",
+    "input": "At the pier-beam fixed position"
+  },
+  {
+    "start": "08:08",
+    "input": "Due to the high structural stiffness"
+  },
+  {
+    "start": "08:09",
+    "input": "Therefore, the negative bending moment is also relatively large if ordinary reinforced concrete is used for construction."
+  },
+  {
+    "start": "08:16",
+    "input": "This area is prone to cracking."
+  },
+  {
+    "start": "08:19",
+    "input": "Portal rigid frame bridges in temperature"
+  },
+  {
+    "start": "08:22",
+    "input": "Under non-uniform foundation settlement"
+  },
+  {
+    "start": "08:24",
+    "input": "It will generate relatively large additional secondary internal forces in the structure."
+  },
+  {
+    "start": "08:29",
+    "input": "inclined leg rigid frame bridge"
+  },
+  {
+    "start": "08:31",
+    "input": "As the name suggests"
+  },
+  {
+    "start": "08:32",
+    "input": "It means making the bridge piers at an angle."
+  },
+  {
+    "start": "08:35",
+    "input": "This structural feature can increase the spanning space under the bridge."
+  },
+  {
+    "start": "08:39",
+    "input": "Make the bridge design light and beautiful"
+  },
+  {
+    "start": "08:42",
+    "input": "However, the construction of the slanted legs will be more difficult."
+  },
+  {
+    "start": "08:46",
+    "input": "Continuous rigid frame bridges are a type of long-span bridge commonly used in mountainous terrain in Yunnan Province."
+  },
+  {
+    "start": "08:52",
+    "input": "It belongs to a multi-statically indeterminate structure."
+  },
+  {
+    "start": "08:54",
+    "input": "Therefore, the secondary internal force effect will be more severe."
+  },
+  {
+    "start": "08:58",
+    "input": "In order to mitigate the adverse effects of secondary internal force"
+  },
+  {
+    "start": "09:01",
+    "input": "The piers of continuous rigid frame bridges are generally made to be more flexible."
+  },
+  {
+    "start": "09:05",
+    "input": "Forming a high-pier, long-span continuous rigid frame bridge"
+  },
+  {
+    "start": "09:09",
+    "input": "Next, we will learn about cable-stayed bridges."
+  },
+  {
+    "start": "09:12",
+    "input": "A cable-stayed bridge includes cable stays."
+  },
+  {
+    "start": "09:14",
+    "input": "Main beam"
+  },
+  {
+    "start": "09:15",
+    "input": "The three main components of the tower column"
+  },
+  {
+    "start": "09:18",
+    "input": "Due to the presence of the stay cables"
+  },
+  {
+    "start": "09:21",
+    "input": "Significant changes in the stress on the bridge structure"
+  },
+  {
+    "start": "09:24",
+    "input": "Without the effect of the stay cables"
+  },
+  {
+    "start": "09:27",
+    "input": "So the main beam is in Heng"
+  },
+  {
+    "start": "09:29",
+    "input": "Under live vertical load"
+  },
+  {
+    "start": "09:31",
+    "input": "The bridge structure is designed as a three-span continuous beam."
+  },
+  {
+    "start": "09:35",
+    "input": "Let's add the bridge towers and cables to examine the stress changes in the structure."
+  },
+  {
+    "start": "09:42",
+    "input": "At this point, the cable is pulled upwards."
+  },
+  {
+    "start": "09:46",
+    "input": "Lift the main beam at multiple points"
+  },
+  {
+    "start": "09:49",
+    "input": "It's like having a series of \"invisible bridge piers\"."
+  },
+  {
+    "start": "09:52",
+    "input": "The vertical components of the stay cables provide multi-point vertical elastic support for the main beam."
+  },
+  {
+    "start": "09:58",
+    "input": "This significantly improves the bending moment of the main beam."
+  },
+  {
+    "start": "10:01",
+    "input": "Reduce the self-weight of the main beam"
+  },
+  {
+    "start": "10:04",
+    "input": "This would significantly increase the bridge's spanning capacity."
+  },
+  {
+    "start": "10:08",
+    "input": "The main span of the world's largest cable-stayed bridge currently exceeds 1100m."
+  },
+  {
+    "start": "10:14",
+    "input": "One thing to note"
+  },
+  {
+    "start": "10:16",
+    "input": "With the increase in bridge span"
+  },
+  {
+    "start": "10:18",
+    "input": "The weight of the stay cables will produce a sag effect."
+  },
+  {
+    "start": "10:21",
+    "input": "This leads to a decrease in the stiffness of cable-stayed bridges."
+  },
+  {
+    "start": "10:24",
+    "input": "This is a major reason limiting the increase in the span of cable-stayed bridges."
+  },
+  {
+    "start": "10:28",
+    "input": "The horizontal component of the stay cables will exert an axial compressive force on the main girder pointing towards the bridge tower."
+  },
+  {
+    "start": "10:35",
+    "input": "so"
+  },
+  {
+    "start": "10:36",
+    "input": "The main beam is not only subjected to bending"
+  },
+  {
+    "start": "10:39",
+    "input": "还受压"
+  },
+  {
+    "start": "10:40",
+    "input": "它的轴力分布如图所示"
+  },
+  {
+    "start": "10:44",
+    "input": "斜拉索的力传到桥塔上"
+  },
+  {
+    "start": "10:47",
+    "input": "水平分量抵消"
+  },
+  {
+    "start": "10:50",
+    "input": "竖向分量使桥塔受压"
+  },
+  {
+    "start": "10:53",
+    "input": "从建造材料上来看"
+  },
+  {
+    "start": "10:55",
+    "input": "目前建成的斜拉桥主要采用抗拉能力强的高强钢丝斜拉索"
+  },
+  {
+    "start": "11:02",
+    "input": "从使用情况来看"
+  },
+  {
+    "start": "11:04",
+    "input": "高强钢丝的腐蚀和疲劳病害是需要认真对待的两个问题"
+  },
+  {
+    "start": "11:10",
+    "input": "现在也有一些桥梁尝试采用碳纤维材料CFRP斜拉索"
+  },
+  {
+    "start": "11:15",
+    "input": "但材料成本及锚固工艺是限制其推广使用的主要原因"
+  },
+  {
+    "start": "11:22",
+    "input": "桥塔以受压为主"
+  },
+  {
+    "start": "11:25",
+    "input": "可采用钢材或钢筋混凝土来建造"
+  },
+  {
+    "start": "11:30",
+    "input": "而主梁是压弯构件"
+  },
+  {
+    "start": "11:33",
+    "input": "同样可以用钢筋混凝土或钢材建造"
+  },
+  {
+    "start": "11:37",
+    "input": "跨度较大时"
+  },
+  {
+    "start": "11:39",
+    "input": "为了减轻自重"
+  },
+  {
+    "start": "11:41",
+    "input": "优先考虑采用钢结构"
+  },
+  {
+    "start": "11:44",
+    "input": "悬索桥通过悬挂在桥塔上的强大缆索吊起整个桥跨结构"
+  },
+  {
+    "start": "11:51",
+    "input": "显然它最主要承重构件就是缆索"
+  },
+  {
+    "start": "11:55",
+    "input": "缆索通过多根吊杆将行驶车辆的桥面结构直接吊起来"
+  },
+  {
+    "start": "12:02",
+    "input": "在悬索桥中"
+  },
+  {
+    "start": "12:03",
+    "input": "桥面结构被称为加劲梁"
+  },
+  {
+    "start": "12:06",
+    "input": "缆索两端则依靠庞大的锚碇结构将其锚固"
+  },
+  {
+    "start": "12:12",
+    "input": "悬索桥的传力路径明确"
+  },
+  {
+    "start": "12:15",
+    "input": "在汽车"
+  },
+  {
+    "start": "12:16",
+    "input": "恒载作用下"
+  },
+  {
+    "start": "12:18",
+    "input": "加劲梁主要受弯"
+  },
+  {
+    "start": "12:20",
+    "input": "由于吊杆的多点弹性支承作用"
+  },
+  {
+    "start": "12:22",
+    "input": "所以和斜拉桥一样"
+  },
+  {
+    "start": "12:25",
+    "input": "桥跨结构的受弯显著减小"
+  },
+  {
+    "start": "12:28",
+    "input": "吊杆和缆索受拉"
+  },
+  {
+    "start": "12:31",
+    "input": "缆索由桥塔支承"
+  },
+  {
+    "start": "12:33",
+    "input": "所以主要承受轴向压力"
+  },
+  {
+    "start": "12:37",
+    "input": "悬索桥是所有桥梁结构体系中跨越能力最强的桥型"
+  },
+  {
+    "start": "12:43",
+    "input": "目前建成的悬索桥已经突破了2000米"
+  },
+  {
+    "start": "12:48",
+    "input": "悬索桥刚度较小"
+  },
+  {
+    "start": "12:50",
+    "input": "结构在横向风荷载作用下容易发生变形和振动"
+  },
+  {
+    "start": "12:54",
+    "input": "随着悬索桥跨度的进一步突破"
+  },
+  {
+    "start": "12:57",
+    "input": "在设计和施工中"
+  },
+  {
+    "start": "12:59",
+    "input": "更要特别注意它的抗风稳定性"
+  },
+  {
+    "start": "13:03",
+    "input": "如果把前边介绍的不同结构体系进行组合应用"
+  },
+  {
+    "start": "13:07",
+    "input": "就形成了组合体系桥"
+  },
+  {
+    "start": "13:10",
+    "input": "例如我们将梁桥和拱桥进行组合"
+  },
+  {
+    "start": "13:14",
+    "input": "形成梁-拱组合体系"
+  },
+  {
+    "start": "13:17",
+    "input": "其中梁和拱都是主要承重结构"
+  },
+  {
+    "start": "13:21",
+    "input": "两者相互配合共同受力"
+  },
+  {
+    "start": "13:24",
+    "input": "此外"
+  },
+  {
+    "start": "13:25",
+    "input": "我们还可以将梁桥和斜拉桥进行组合"
+  },
+  {
+    "start": "13:29",
+    "input": "形成部分斜拉桥"
+  },
+  {
+    "start": "13:31",
+    "input": "还可以将斜拉桥和悬索桥进行组合"
+  },
+  {
+    "start": "13:34",
+    "input": "形成斜拉悬索组合体系"
+  },
+  {
+    "start": "13:38",
+    "input": "组合体系桥通过不同结构体系的合理搭配"
+  },
+  {
+    "start": "13:42",
+    "input": "可以起到优势互补的效果"
+  },
+  {
+    "start": "13:45",
+    "input": "桥梁分类的内容就介绍到这里"
+  },
+  {
+    "start": "13:48",
+    "input": "谢谢大家"
+  }
+]

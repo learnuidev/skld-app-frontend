@@ -31,6 +31,8 @@ export interface Course {
   heroAccent: string;
   /** Optional abacus digits shown in the course hero preview. */
   sample?: number[];
+  /** Bespoke artwork for the course card and hero; courses without one fall back to `sample`. */
+  art?: ArtName;
 }
 
 /**
@@ -47,10 +49,33 @@ export interface AbacusDemo {
   label?: string;
 }
 
+/**
+ * The bridge drawings a lesson can put on screen. Each name is one scene in
+ * `components/bridge/scenes`, drawn in engineering elevation on the shared
+ * light plate; content refers to them by name so the geometry lives in one place.
+ */
+export type BridgeScene =
+  | "overview"
+  | "superstructure"
+  | "bearings"
+  | "supports"
+  | "foundations"
+  | "fittings"
+  | "levels"
+  | "dimensions"
+  | "deck-position"
+  | "beam"
+  | "arch"
+  | "frame"
+  | "cable-stayed"
+  | "suspension"
+  | "composite";
+
 /** An optional visual shown inside an explanation dialog. */
 export type ExplanationVisual =
   | { kind: "abacus"; digits: number[] }
   | ({ kind: "abacus-anim" } & AbacusDemo)
+  | { kind: "scene"; scene: BridgeScene; highlight?: string[]; labels?: boolean; caption?: string }
   | { kind: "image"; src: string; alt?: string };
 
 /** One animated step of an explanation walkthrough. */
@@ -75,7 +100,59 @@ export type LessonBlock =
   | { type: "explore"; label: string; rods: number; initial: number[] }
   | { type: "build"; prompt: string; target: number; rods?: number; explanation?: LessonExplanation }
   | { type: "read"; prompt: string; digits: number[]; choices: number[]; explanation?: LessonExplanation }
-  | { type: "quiz"; prompt: string; choices: number[]; answer: number; explanation?: LessonExplanation };
+  | { type: "quiz"; prompt: string; choices: number[]; answer: number; explanation?: LessonExplanation }
+  // ── Bridge engineering ──────────────────────────────────────────────────
+  // A labelled drawing, a clickable drawing, and four ways to be asked about
+  // one. `scene` names the geometry; part ids come from that scene's registry.
+  | { type: "figure"; scene: BridgeScene; caption?: string; highlight?: string[]; labels?: boolean }
+  | {
+      type: "parts";
+      prompt: string;
+      scene: BridgeScene;
+      /** The parts to hunt for; defaults to every part the scene draws. */
+      parts?: string[];
+      hint?: string;
+    }
+  | { type: "span"; prompt: string }
+  | {
+      type: "hotspot";
+      prompt: string;
+      scene: BridgeScene;
+      /** The parts drawn as pins; the answer must be one of them. */
+      parts: string[];
+      answer: string;
+      labels?: boolean;
+      explanation?: LessonExplanation;
+    }
+  | {
+      type: "choose";
+      prompt: string;
+      choices: string[];
+      answer: number;
+      explanation?: LessonExplanation;
+    }
+  | {
+      type: "sort";
+      prompt: string;
+      buckets: { id: string; label: string }[];
+      items: { id: string; label: string; bucket: string }[];
+      explanation?: LessonExplanation;
+    }
+  | {
+      type: "order";
+      prompt: string;
+      /** Authored in the correct order; the card shuffles them for the learner. */
+      items: { id: string; label: string }[];
+      explanation?: LessonExplanation;
+    }
+  | {
+      type: "assemble";
+      prompt: string;
+      scene: BridgeScene;
+      /** Where each part belongs on the drawing, in scene coordinates. */
+      slots: { id: string; label: string; at: [number, number] }[];
+      explanation?: LessonExplanation;
+    };
 
 export type LessonContent = LessonBlock[];
 
@@ -111,4 +188,5 @@ export type ArtName =
   | "bead"
   | "mental"
   | "suanpan"
-  | "numerals";
+  | "numerals"
+  | "bridge";

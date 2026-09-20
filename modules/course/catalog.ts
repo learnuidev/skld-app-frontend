@@ -2,9 +2,26 @@ import { understandingAbacusCourse } from "./understanding-abacus";
 import { anzanCourse } from "./anzan";
 import { zhuxinsuanCourse } from "./zhuxinsuan";
 import { chineseNumbersCourse } from "./chinese-numbers";
+import { bridgeEngineeringCourse } from "./bridge-engineering";
 import type { Course, CourseSummary } from "./types";
 
 export const courseCatalog: CourseSummary[] = [
+  {
+    slug: bridgeEngineeringCourse.slug,
+    title: bridgeEngineeringCourse.title,
+    tagline: bridgeEngineeringCourse.tagline,
+    description: bridgeEngineeringCourse.description,
+    subject: "Engineering",
+    levelCount: bridgeEngineeringCourse.levels.length,
+    lessonCount: bridgeEngineeringCourse.lessonCount,
+    exerciseCount: bridgeEngineeringCourse.exerciseCount,
+    lessonMinutes: bridgeEngineeringCourse.lessonMinutes,
+    accent: bridgeEngineeringCourse.accent,
+    heroAccent: bridgeEngineeringCourse.heroAccent,
+    status: "available",
+    sample: [],
+    art: "bridge",
+  },
   {
     slug: understandingAbacusCourse.slug,
     title: understandingAbacusCourse.title,
@@ -179,6 +196,9 @@ export const courseCatalog: CourseSummary[] = [
 ];
 
 export function getCourseBySlug(slug: string): Course | undefined {
+  if (slug === bridgeEngineeringCourse.slug) {
+    return bridgeEngineeringCourse;
+  }
   if (slug === understandingAbacusCourse.slug) {
     return understandingAbacusCourse;
   }

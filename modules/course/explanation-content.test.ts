@@ -63,7 +63,6 @@ function endBoard(visual: ExplanationStep["visual"]): number[] | null {
   if (visual.kind === "abacus-anim") return visual.frames[visual.frames.length - 1] ?? null;
   return null;
 }
-
 const courses = Object.entries(courseContentRegistry);
 
 /**
@@ -97,6 +96,9 @@ describe.each(courses)("%s explanation boards", (course, levels) => {
           return;
         }
 
+        // Bridge drawings are not abacus boards; their own suite checks them.
+        if (visual.kind === "scene") return;
+
         const boards = visual.kind === "abacus" ? [visual.digits] : visual.frames;
         if (boards.length === 0) problems.push(`${context}: no frames`);
 
@@ -128,7 +130,7 @@ describe.each(courses)("%s explanation boards", (course, levels) => {
 
       steps.forEach((step, s) => {
         const { visual } = step;
-        if (!visual || visual.kind === "image") return;
+        if (!visual || visual.kind === "image" || visual.kind === "scene") return;
         const boards = visual.kind === "abacus" ? [visual.digits] : visual.frames;
         boards.forEach((board, f) => {
           if (board.length !== rods) {

@@ -2,6 +2,7 @@
 
 import { Abacus } from "@/components/abacus/abacus";
 import { DemoPanel } from "@/components/abacus/animated-abacus";
+import { SceneBoard } from "@/components/bridge/scene-board";
 import { cn } from "@/lib/utils";
 import type { ExplanationStep, ExplanationVisual, LessonExplanation } from "@/modules/course/types";
 
@@ -26,6 +27,21 @@ function StepVisual({ visual }: { visual: ExplanationVisual }) {
           controls
           loop
         />
+      );
+    case "scene":
+      return (
+        <div className="flex w-full flex-col items-center gap-3">
+          <SceneBoard
+            scene={visual.scene}
+            highlight={visual.highlight}
+            labels={visual.labels ?? true}
+          />
+          {visual.caption ? (
+            <p className="max-w-md text-center text-sm leading-5 text-muted-foreground">
+              {visual.caption}
+            </p>
+          ) : null}
+        </div>
       );
     case "image":
       return (

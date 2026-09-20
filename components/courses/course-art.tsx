@@ -5,10 +5,10 @@ import {
   MentalArt,
   SuanpanArt,
 } from "@/components/courses/illustrations/abacus";
+import { BridgeArt } from "@/components/courses/illustrations/bridge";
 import { FractionsArt } from "@/components/courses/illustrations/fractions";
 import { NumeralsArt } from "@/components/courses/illustrations/numerals";
 import { OperatorsArt } from "@/components/courses/illustrations/operators";
-import type { PathCourse } from "@/modules/course/paths";
 import type { ArtName } from "@/modules/course/types";
 
 /** Where the art is being drawn: a course card, or the round path icon. */
@@ -31,11 +31,24 @@ const ICON_SIZE: Record<ArtName, string> = {
   numerals: "size-[78%]",
   fractions: "size-[68%]",
   operators: "size-[84%]",
+  bridge: "size-[90%]",
 };
+
+/**
+ * What the artwork needs from a course: its sample digits for the abacus
+ * fallback, and the name of its own art. `PathCourse` and `Course` both fit.
+ */
+export interface CourseArtSource {
+  title?: string;
+  sample?: number[];
+  art?: ArtName;
+  /** Accepted so a course summary can be passed straight through; unused here. */
+  slug?: string;
+}
 
 export interface CourseArtProps {
   /** Drives the abacus fallback, and the artwork when `art` is not given. */
-  course?: PathCourse;
+  course?: CourseArtSource;
   /** Overrides the course's own artwork — used for path icons. */
   art?: ArtName;
   size?: CourseArtSize;
@@ -69,6 +82,8 @@ export function CourseArt({ course, art, size = "card", label }: CourseArtProps)
       return <FractionsArt className={className} label={name} />;
     case "operators":
       return <OperatorsArt className={className} label={name} />;
+    case "bridge":
+      return <BridgeArt className={className} label={name} />;
     default:
       return (
         <Abacus

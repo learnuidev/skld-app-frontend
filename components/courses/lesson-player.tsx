@@ -13,6 +13,16 @@ import {
   type TaskHandle,
 } from "@/components/abacus/practice";
 import { DemoPanel } from "@/components/abacus/animated-abacus";
+import {
+  AssembleTask,
+  ChooseTask,
+  HotspotTask,
+  OrderTask,
+  PartsExplore,
+  SceneFigure,
+  SortTask,
+} from "@/components/bridge/practice";
+import { SpanPlayground } from "@/components/bridge/span-playground";
 import { LessonNavBar } from "@/components/courses/lesson/nav-bar";
 import { ExplanationRail } from "@/components/courses/lesson/explanation-rail";
 import { ExplanationStage, explanationSteps } from "@/components/courses/lesson/explanation-stage";
@@ -26,7 +36,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { flattenCourse, lessonUrl, nodeKey } from "@/modules/course/utils";
+import { flattenCourse, isTaskBlock, lessonUrl, nodeKey } from "@/modules/course/utils";
 import { readProgress, writeProgress } from "@/modules/course/progress";
 import type { Course, LessonBlock } from "@/modules/course/types";
 
@@ -158,6 +168,87 @@ function BlockContent({
           onHasSelection={onHasSelection}
         />
       );
+    case "figure":
+      return (
+        <SceneFigure
+          scene={block.scene}
+          caption={block.caption}
+          highlight={block.highlight}
+          labels={block.labels ?? true}
+        />
+      );
+    case "parts":
+      return (
+        <PartsExplore
+          prompt={block.prompt}
+          scene={block.scene}
+          parts={block.parts}
+          hint={block.hint}
+        />
+      );
+    case "span":
+      return <SpanPlayground prompt={block.prompt} />;
+    case "hotspot":
+      return (
+        <HotspotTask
+          ref={taskRef}
+          prompt={block.prompt}
+          scene={block.scene}
+          parts={block.parts}
+          answer={block.answer}
+          labels={block.labels}
+          solved={solved}
+          locked={locked}
+          onHasSelection={onHasSelection}
+        />
+      );
+    case "choose":
+      return (
+        <ChooseTask
+          ref={taskRef}
+          prompt={block.prompt}
+          choices={block.choices}
+          answer={block.answer}
+          solved={solved}
+          locked={locked}
+          onHasSelection={onHasSelection}
+        />
+      );
+    case "sort":
+      return (
+        <SortTask
+          ref={taskRef}
+          prompt={block.prompt}
+          buckets={block.buckets}
+          items={block.items}
+          solved={solved}
+          locked={locked}
+          onHasSelection={onHasSelection}
+        />
+      );
+    case "order":
+      return (
+        <OrderTask
+          ref={taskRef}
+          prompt={block.prompt}
+          items={block.items}
+          solved={solved}
+          locked={locked}
+          onHasSelection={onHasSelection}
+        />
+      );
+    case "assemble":
+      return (
+        <AssembleTask
+          ref={taskRef}
+          prompt={block.prompt}
+          scene={block.scene}
+          slots={block.slots}
+          solved={solved}
+          locked={locked}
+          onHasSelection={onHasSelection}
+        />
+      );
     default:
       return null;
   }
@@ -209,7 +300,7 @@ export default function LessonPlayer({
   const total = blocks.length;
   const block = blocks[current];
   const isLast = current === total - 1;
-  const isTask = block?.type === "build" || block?.type === "read" || block?.type === "quiz";
+  const isTask = block ? isTaskBlock(block) : false;
   const answered = isTask ? attempted : true;
   const ready = answered;
   const verdict: Verdict = solved
@@ -317,8 +408,7 @@ export default function LessonPlayer({
     return null;
   }
 
-  const taskBlock =
-    block.type === "build" || block.type === "read" || block.type === "quiz" ? block : null;
+  const taskBlock = block && isTaskBlock(block) ? block : null;
   const canAskWhy = Boolean(taskBlock?.explanation);
   const whySteps = taskBlock?.explanation ? explanationSteps(taskBlock.explanation) : [];
   const whyStep = whySteps[Math.min(whyIndex, Math.max(0, whySteps.length - 1))];

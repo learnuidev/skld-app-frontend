@@ -9,6 +9,7 @@ import {
   SuanpanArt,
 } from "@/components/courses/illustrations/abacus";
 import { FractionsArt } from "@/components/courses/illustrations/fractions";
+import { BridgeArt } from "@/components/courses/illustrations/bridge";
 import { NumeralsArt } from "@/components/courses/illustrations/numerals";
 import { OperatorsArt } from "@/components/courses/illustrations/operators";
 import { PALETTE } from "@/components/courses/illustrations/palette";
@@ -207,6 +208,43 @@ describe("abacus artwork", () => {
     });
 
     expect(new Set(looks).size).toBe(looks.length);
+  });
+});
+
+describe("BridgeArt", () => {
+  it("draws two towers standing on the water", () => {
+    const { container } = render(<BridgeArt />);
+
+    const towers = painted(container, PALETTE.charcoal);
+
+    // Two towers and the two anchorages holding the cable ends.
+    expect(towers).toHaveLength(4);
+    expect(new Set(towers.slice(0, 2).map((tower) => tower.getAttribute("x"))).size).toBe(2);
+  });
+
+  it("hangs the deck from a cable, with the roadway as the bright note", () => {
+    const { container } = render(<BridgeArt />);
+
+    // The girder in ink, the roadway in the bright note, one cable over both towers.
+    expect(painted(container, PALETTE.ink)).toHaveLength(1);
+    expect(painted(container, PALETTE.yellow)).toHaveLength(1);
+    expect(container.querySelectorAll("path")).toHaveLength(1);
+    expect(container.querySelector("path")).toHaveAttribute("stroke", PALETTE.ink);
+    // Five hangers dropping from the cable to the deck.
+    expect(container.querySelectorAll(`[stroke="${PALETTE.gray}"]`)).toHaveLength(5);
+  });
+
+  it("draws the water it crosses", () => {
+    const { container } = render(<BridgeArt />);
+
+    expect(painted(container, PALETTE.butter)).toHaveLength(1);
+    expect(container.querySelector(`[stroke="${PALETTE.yellowDeep}"]`)).toBeInTheDocument();
+  });
+
+  it("is described for screen readers", () => {
+    render(<BridgeArt />);
+
+    expect(screen.getByRole("img")).toHaveAccessibleName(/suspension bridge/i);
   });
 });
 
