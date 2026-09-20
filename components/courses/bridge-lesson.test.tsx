@@ -189,4 +189,210 @@ describe("Bridge Engineering, in the lesson player", () => {
 
     expect(card()).toHaveClass("border-lesson-correct");
   });
+
+  it("tours the deck in plan and answers on the drawing", async () => {
+    renderLesson("deck-layout-and-construction", "deck-in-plan");
+
+    expect(screen.getByRole("heading", { name: "The Deck in Plan" })).toBeInTheDocument();
+    expect(screen.getByText("of 7 steps done")).toBeInTheDocument();
+
+    // Step 2: what a deck is for, step 3: the list of what it is made of.
+    await user.click(primary());
+    expect(await screen.findByText(/protect the main structure underneath it/i)).toBeInTheDocument();
+
+    await user.click(primary());
+    expect(await screen.findByText(/deck protective layer/i)).toBeInTheDocument();
+
+    // Step 4: the guided tour of the plan drawing.
+    await user.click(primary());
+    expect(await screen.findByText("0 of 7 parts found")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Part 3" }));
+    expect(await screen.findByText("1 of 7 parts found")).toBeInTheDocument();
+    expect(screen.getByText("Footway.")).toBeInTheDocument();
+
+    // Step 5: the hotspot on the same drawing.
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(
+      await screen.findByText(/raised walkway that keeps pedestrians off the carriageway/i),
+    ).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Part 2" }));
+    await user.click(screen.getByRole("button", { name: "Check" }));
+
+    expect(card()).toHaveClass("border-lesson-correct");
+    expect(screen.getByRole("button", { name: "Why?" })).toBeInTheDocument();
+  });
+
+  it("paves a deck and files the paving methods", async () => {
+    renderLesson("deck-layout-and-construction", "deck-pavement");
+
+    // Heading, paragraph, list, then the guided tour of the pavement section.
+    await advance(3);
+    expect(await screen.findByText("0 of 4 parts found")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Part 2" }));
+    expect(await screen.findByText("Waterproof layer.")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(await screen.findByText(/keep water out of the concrete/i)).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Part 2" }));
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    expect(card()).toHaveClass("border-lesson-correct");
+  });
+
+  it("checks the whole deck in the level check", async () => {
+    renderLesson("deck-layout-and-construction", "deck-check");
+
+    // Step 1: the heading, step 2: the framing paragraph, step 3: the hotspot.
+    await advance(2);
+    expect(await screen.findByText(/continuous under the whole deck/i)).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Part 2" }));
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    expect(card()).toHaveClass("border-lesson-correct");
+
+    // Step 4: filing every part of the deck under its system.
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(await screen.findByText(/File each part of the deck/i)).toBeInTheDocument();
+
+    const filing: [string, string][] = [
+      ["The wearing course the tyres run on", "Deck pavement"],
+      ["The steel mesh inside the concrete pavement", "Deck pavement"],
+      ["The sheet that turns up at the kerb", "Waterproofing and drainage"],
+      ["The grated inlet at the edge of a lane", "Waterproofing and drainage"],
+      ["The opening between two deck ends", "Expansion joints"],
+      ["The plate that carries wheels across that opening", "Expansion joints"],
+      ["The barrier that keeps pedestrians on the bridge", "Safety facilities"],
+      ["The lighting column at the edge of the footway", "Safety facilities"],
+    ];
+
+    for (const [item, bucket] of filing) {
+      await user.click(screen.getByRole("button", { name: item }));
+      await user.click(screen.getByRole("button", { name: new RegExp(`^${bucket}`) }));
+    }
+
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    expect(card()).toHaveClass("border-lesson-correct");
+
+    // Step 5: building the edge of the deck on the drawing.
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(await screen.findByText(/Put the edge of the deck together/i)).toBeInTheDocument();
+
+    const placement: [string, string][] = [
+      ["Carriageway", "Empty spot 1"],
+      ["Footway", "Empty spot 2"],
+      ["Railing", "Empty spot 3"],
+      ["Lamp post", "Empty spot 4"],
+    ];
+
+    for (const [part, spot] of placement) {
+      await user.click(screen.getByRole("button", { name: part }));
+      await user.click(screen.getByRole("button", { name: spot }));
+    }
+
+    expect(screen.getByText("Every part is on the bridge.")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    expect(card()).toHaveClass("border-lesson-correct");
+  });
+
+  it("reads a steel grade in the materials module", async () => {
+    renderLesson("materials-and-durability", "reading-a-steel-grade");
+
+    expect(screen.getByRole("heading", { name: "Reading a Steel Grade" })).toBeInTheDocument();
+    expect(screen.getByText("of 10 steps done")).toBeInTheDocument();
+
+    // Step 4: the guided tour of the grade, one symbol at a time.
+    await advance(3);
+    expect(await screen.findByText("0 of 5 parts found")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Part 1" }));
+    expect(await screen.findByText("Yield point.")).toBeInTheDocument();
+
+    // Step 5: the grade has to be put back into the order its standard reads it in.
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(await screen.findByText(/Read Q355qD the way its standard does/i)).toBeInTheDocument();
+
+    // The cards start scrambled as [q, D, Q, 355]; two moves each put them right.
+    for (let i = 0; i < 2; i += 1) {
+      await user.click(screen.getByRole("button", { name: /^Move Q .* up$/ }));
+    }
+    for (let i = 0; i < 2; i += 1) {
+      await user.click(screen.getByRole("button", { name: /^Move 355 .* up$/ }));
+    }
+
+    await user.click(screen.getByRole("button", { name: "Check" }));
+
+    expect(card()).toHaveClass("border-lesson-correct");
+  });
+
+  it("checks steel, concrete and durability in the materials level check", async () => {
+    renderLesson("materials-and-durability", "materials-check");
+
+    // Step 1: the heading, step 2: the framing paragraph, step 3: the grade hotspot.
+    await advance(2);
+    expect(
+      await screen.findByText(/tough enough for a cold site/i),
+    ).toBeInTheDocument();
+
+    // The quality grade is the fourth symbol of the grade.
+    await user.click(screen.getByRole("button", { name: "Part 4" }));
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    expect(card()).toHaveClass("border-lesson-correct");
+
+    // Step 4: reading a grade the lesson has not shown before.
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(await screen.findByText(/Q420qE/i)).toBeInTheDocument();
+
+    await user.click(
+      screen.getByRole("button", {
+        name: "Steel with a yield strength of 420 MPa, made to the bridge standard, at quality level E",
+      }),
+    );
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    expect(card()).toHaveClass("border-lesson-correct");
+
+    // Step 5: filing the different kinds of steel an order would list.
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(await screen.findByText(/File each item under the kind of steel/i)).toBeInTheDocument();
+
+    const filing: [string, string][] = [
+      ["Plate welded into the tower of a cable-stayed bridge", "Structural steel"],
+      ["Ribbed bars forming the cage of a pier", "Reinforcing steel"],
+      ["Strand stressed to 0.75 of its standard strength in a stay", "Cable steel"],
+      ["Wire spun into a suspension bridge's main cable", "Cable steel"],
+      ["A rolled-thread bar anchored with a nut in a segment joint", "Reinforcing steel"],
+    ];
+
+    for (const [item, bucket] of filing) {
+      await user.click(screen.getByRole("button", { name: item }));
+      await user.click(screen.getByRole("button", { name: new RegExp(`^${bucket}`) }));
+    }
+
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    expect(card()).toHaveClass("border-lesson-correct");
+
+    // Step 6: putting the four attacks back on the durability drawing.
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    expect(await screen.findByText(/Put each attack back where it belongs/i)).toBeInTheDocument();
+
+    const placement: [string, string][] = [
+      ["Chloride", "Empty spot 1"],
+      ["Carbonation", "Empty spot 2"],
+      ["Freeze-thaw", "Empty spot 3"],
+      ["Reinforcing steel corrosion", "Empty spot 4"],
+    ];
+
+    for (const [part, spot] of placement) {
+      await user.click(screen.getByRole("button", { name: part }));
+      await user.click(screen.getByRole("button", { name: spot }));
+    }
+
+    expect(screen.getByText("Every part is on the bridge.")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    expect(card()).toHaveClass("border-lesson-correct");
+  });
 });

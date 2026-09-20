@@ -70,7 +70,28 @@ export type BridgeScene =
   | "frame"
   | "cable-stayed"
   | "suspension"
-  | "composite";
+  | "composite"
+  // Deck layout and construction: what goes on top of the structure, and how.
+  | "deck-layout"
+  | "pavement"
+  | "waterproofing"
+  | "drainage"
+  | "cross-slope"
+  | "expansion-joint"
+  | "joint-types"
+  | "walkway"
+  | "barriers"
+  // Structural materials and durability: what a bridge is built from, and
+  // what the weather does to it.
+  | "materials"
+  | "bridge-steel"
+  | "steel-grade"
+  | "high-performance-steel"
+  | "reinforcement"
+  | "concrete"
+  | "concrete-strength"
+  | "concrete-modulus"
+  | "durability";
 
 /**
  * Every named concept drawing a step can put on screen: one name per drawing in

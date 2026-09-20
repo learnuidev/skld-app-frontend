@@ -1,3 +1,4 @@
+import { bridgeMaterialsContent } from "./bridge-materials-content";
 import type { CourseContentMap } from "./types";
 
 export type { LessonBlock } from "./types";
@@ -7,8 +8,10 @@ export type { LessonBlock } from "./types";
  *
  * The teaching is done on drawings: nearly every step puts a scene on the card
  * and asks the learner to find, name, sort, order or assemble something on it.
- * Authored from the course's own two modules — components and layout terms,
- * then classification and structural systems.
+ * Authored from the course's own modules — components and layout terms,
+ * classification and structural systems, then the deck layout and the
+ * materials. Module 4 lives in `bridge-materials-content.ts`, which is long
+ * enough to be worth its own file.
  */
 export const bridgeEngineeringContent: CourseContentMap = {
   // ── Module 1 · Components of a Bridge ────────────────────────────────────
@@ -3143,4 +3146,1732 @@ export const bridgeEngineeringContent: CourseContentMap = {
       },
     ],
   },
+
+  // ── Module 3 · Deck Layout & Construction ────────────────────────────────
+  "deck-layout-and-construction": {
+    "deck-in-plan": [
+      {
+        id: "the-deck-in-plan",
+        type: "heading",
+        text: "The Deck in Plan",
+        figure: {
+          visual: { kind: "scene", scene: "deck-layout" },
+          caption: "Everything a deck carries, seen in plan: road, walkways, kerbs and the fittings along the edges.",
+        },
+      },
+      {
+        id: "what-the-deck-is-for",
+        type: "paragraph",
+        text: "The deck is the part of a bridge everybody meets and nobody notices. It is exposed to the weather, it is in direct contact with the traffic and the pedestrians, and its first job is to protect the main structure underneath it. So a deck is not one surface: it is a small system of layers, edges and fittings, each with its own job.",
+        figure: {
+          visual: {
+            kind: "scene",
+            scene: "deck-layout",
+            highlight: ["carriageway", "footway"],
+          },
+          caption: "Vehicles run on the carriageway; pedestrians walk on the raised footways beside it.",
+        },
+      },
+      {
+        id: "deck-construction-includes",
+        type: "list",
+        items: [
+          "Bridge deck pavement — also called the roadway pavement, or the deck protective layer: the part the wheels touch.",
+          "A waterproofing and drainage system, which keeps rainwater out of the structure and off the road.",
+          "Expansion joints, the gaps that let a span grow and shrink without cracking.",
+          "Footways and safety belts, whose width follows the number of pedestrians.",
+          "Kerbs, railings, guardrails and lighting columns — the fittings that turn a structure into a road.",
+        ],
+        figure: {
+          visual: {
+            kind: "scene",
+            scene: "fittings",
+            highlight: ["paving", "drain", "expansion-joint", "railing", "lighting"],
+          },
+          caption: "The same fittings, seen from the side of the bridge.",
+        },
+      },
+      {
+        id: "tour-the-deck-plan",
+        type: "parts",
+        prompt: "Take the tour: tap each pin on the plan.",
+        scene: "deck-layout",
+        hint: "Seven pins: two surfaces, an edge, a joint, a grate and a lamp.",
+      },
+      {
+        id: "raised-walkway",
+        type: "hotspot",
+        prompt: "Tap the raised walkway that keeps pedestrians off the carriageway.",
+        scene: "deck-layout",
+        parts: ["carriageway", "footway", "kerb", "railing"],
+        answer: "footway",
+        explanation: {
+          steps: [
+            {
+              text: "Look for a strip along the edge of the deck, narrower than the road.",
+              visual: { kind: "scene", scene: "deck-layout", labels: true },
+            },
+            {
+              text: "A footway stands a step above the carriageway, and the kerb is the low wall that makes the step.",
+              visual: {
+                kind: "scene",
+                scene: "deck-layout",
+                highlight: ["footway", "kerb"],
+                labels: true,
+              },
+            },
+            {
+              text: "The step is there for two reasons: it protects the people walking, and it lets the deck fall towards the road.",
+              visual: {
+                kind: "scene",
+                scene: "deck-layout",
+                highlight: ["footway"],
+                labels: true,
+                caption: "The footway: a raised walkway along the edge of the deck.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "not-part-of-the-deck-layout",
+        type: "choose",
+        prompt: "A deck layout is everything above the main structure. Which of these is NOT part of it?",
+        choices: [
+          "The pavement and the waterproof layer",
+          "The expansion joints between the spans",
+          "The piles buried under the pier",
+          "The railings and the lighting columns",
+        ],
+        answer: 2,
+        explanation: {
+          steps: [
+            {
+              text: "Everything on a bridge belongs either to the superstructure or to the supports — and the deck equipment all belongs above the supports.",
+              visual: { kind: "scene", scene: "deck-layout", labels: true },
+            },
+            {
+              text: "Piles are the buried part of a foundation: they carry the load into the ground, far below the deck.",
+              visual: {
+                kind: "scene",
+                scene: "foundations",
+                highlight: ["pile"],
+                labels: true,
+              },
+            },
+            {
+              text: "The pavement, the joints, the railings and the lighting are all on the deck, and a driver meets every one of them.",
+              visual: {
+                kind: "scene",
+                scene: "deck-layout",
+                highlight: ["carriageway", "expansion-joint", "railing"],
+                labels: true,
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "sort-the-deck-by-its-job",
+        type: "sort",
+        prompt: "Sort each part of the deck by the user it serves.",
+        buckets: [
+          { id: "traffic", label: "For the traffic" },
+          { id: "pedestrians", label: "For the pedestrians" },
+          { id: "rainwater", label: "For the rainwater" },
+        ],
+        items: [
+          { id: "carriageway", label: "The carriageway", bucket: "traffic" },
+          { id: "lamp", label: "The lighting column", bucket: "traffic" },
+          { id: "footway", label: "The raised footway", bucket: "pedestrians" },
+          { id: "railing", label: "The railing along the edge", bucket: "pedestrians" },
+          { id: "drain", label: "The grated inlet at the kerb", bucket: "rainwater" },
+          { id: "fall", label: "The fall built across the deck", bucket: "rainwater" },
+        ],
+        explanation: {
+          steps: [
+            {
+              text: "The carriageway is sized by traffic and the lamp lights it; the footway and its railing belong to the pedestrians.",
+              visual: {
+                kind: "scene",
+                scene: "deck-layout",
+                highlight: ["carriageway", "footway"],
+                labels: true,
+              },
+            },
+            {
+              text: "Rainwater is handled by two things working together: the fall that moves it, and the inlet that takes it off the surface.",
+              visual: {
+                kind: "scene",
+                scene: "drainage",
+                highlight: ["cross-slope", "kerb-inlet"],
+                labels: true,
+                caption: "A fall and an inlet: the smallest drainage system there is.",
+              },
+            },
+          ],
+        },
+      },
+    ],
+    "deck-pavement": [
+      {
+        id: "deck-pavement",
+        type: "heading",
+        text: "Deck Pavement",
+        figure: {
+          visual: { kind: "scene", scene: "pavement" },
+          caption: "A deck in section: the surface traffic touches, the sheet under it, the slab, and the mesh inside the slab.",
+        },
+      },
+      {
+        id: "what-pavement-does",
+        type: "paragraph",
+        text: "Bridge deck pavement is the layer directly under the wheels. It protects the main structure in three ways at once: it stops the tyres wearing the roadway slab itself, it stops rainwater eroding the main beam, and it spreads each concentrated wheel load out before the slab has to carry it. It also has to meet the layout and appearance of the bridge, which is why the surface is designed rather than merely laid.",
+        figure: {
+          visual: { kind: "scene", scene: "pavement", highlight: ["wearing-course"] },
+          caption: "The wearing course takes the wear so that the structure underneath never has to.",
+        },
+      },
+      {
+        id: "what-a-pavement-must-be",
+        type: "list",
+        items: [
+          "Rutting-resistant, so the wheel tracks do not sink into it.",
+          "Comfortable to drive on, and skid-resistant when it is wet.",
+          "Wear-resistant, because it is the part traffic consumes.",
+          "Resistant to cracking at low temperature.",
+          "Impermeable, so water cannot pass through it.",
+          "Stiff enough to spread the wheel loads into the slab.",
+        ],
+        figure: {
+          visual: {
+            kind: "scene",
+            scene: "pavement",
+            highlight: ["wearing-course", "waterproof-layer"],
+          },
+          caption: "One layer takes the wear; the layer under it makes sure nothing seeps past.",
+        },
+      },
+      {
+        id: "name-the-pavement-layers",
+        type: "parts",
+        prompt: "Tap each pin to name a layer of the deck pavement.",
+        scene: "pavement",
+        hint: "Four pins, from the surface down into the slab.",
+      },
+      {
+        id: "layer-that-keeps-water-out",
+        type: "hotspot",
+        prompt: "Tap the layer whose whole job is to keep water out of the concrete.",
+        scene: "pavement",
+        parts: ["wearing-course", "waterproof-layer", "deck-slab", "steel-mesh"],
+        answer: "waterproof-layer",
+        explanation: {
+          steps: [
+            {
+              text: "The wheels meet the top layer first, and the wheel loads end up in the bottom one.",
+              visual: {
+                kind: "scene",
+                scene: "pavement",
+                highlight: ["wearing-course", "deck-slab"],
+                labels: true,
+              },
+            },
+            {
+              text: "Between them lies a sheet that carries no load at all: it is there to intercept water on its way down.",
+              visual: {
+                kind: "scene",
+                scene: "pavement",
+                highlight: ["waterproof-layer"],
+                labels: true,
+              },
+            },
+            {
+              text: "That sheet is the waterproof layer, and it sits between the cast-in-place concrete and the asphalt above it.",
+              visual: {
+                kind: "scene",
+                scene: "pavement",
+                highlight: ["waterproof-layer"],
+                labels: true,
+                caption: "The waterproof layer: no load, and the reason the slab stays dry.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "concrete-pavement-minimum",
+        type: "choose",
+        prompt: "The General Specification sets two minimums for a cement concrete deck pavement. Which pair is right?",
+        choices: [
+          "At least 80 mm thick, in concrete of grade C40 or better",
+          "At least 40 mm thick, in concrete of grade C20 or better",
+          "At least 120 mm thick, in concrete of grade C60 or better",
+          "At least 50 mm thick, in concrete of grade C25 or better",
+        ],
+        answer: 0,
+        explanation: {
+          steps: [
+            {
+              text: "A deck pavement is not a footpath: it takes wheel loads, freeze-thaw cycles and de-icing salt in the same year.",
+              visual: {
+                kind: "scene",
+                scene: "pavement",
+                highlight: ["wearing-course"],
+                labels: true,
+              },
+            },
+            {
+              text: "The specification therefore asks for a dense pavement at least 80 mm deep and concrete of grade C40 or better.",
+              visual: {
+                kind: "scene",
+                scene: "pavement",
+                highlight: ["deck-slab", "steel-mesh"],
+                labels: true,
+              },
+            },
+            {
+              text: "A cement concrete pavement follows the cement concrete pavement specification, and an asphalt one follows the asphalt specification — two different documents, one deck.",
+              visual: {
+                kind: "scene",
+                scene: "pavement",
+                labels: true,
+                caption: "Whichever surface is chosen, the layer under it is always the waterproofing.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "mesh-inside-the-pavement",
+        type: "choose",
+        prompt: "Steel mesh goes inside a cement concrete deck pavement. Which specification is right?",
+        choices: [
+          "Bars of 8 mm or more, spaced no further apart than 100 mm",
+          "Bars of 4 mm, spaced at 200 mm",
+          "Bars of 12 mm, spaced at 250 mm",
+          "No mesh at all — the concrete carries the tension itself",
+        ],
+        answer: 0,
+        explanation: {
+          steps: [
+            {
+              text: "Concrete cracks when it is pulled, and a pavement on a bridge is pulled constantly by the deck moving under it.",
+              visual: {
+                kind: "scene",
+                scene: "pavement",
+                highlight: ["steel-mesh"],
+                labels: true,
+              },
+            },
+            {
+              text: "The mesh holds those cracks closed, so the specification asks for bars of at least 8 mm at no more than 100 mm centres.",
+              visual: {
+                kind: "scene",
+                scene: "pavement",
+                highlight: ["steel-mesh", "deck-slab"],
+                labels: true,
+                caption: "Mesh inside the pavement: it keeps the cracks small and evenly spread.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "two-ways-to-pave",
+        type: "sort",
+        prompt: "Sort each statement into the paving method it belongs to.",
+        buckets: [
+          { id: "asphalt", label: "Asphalt over a waterproof layer" },
+          { id: "concrete", label: "Waterproof concrete" },
+        ],
+        items: [
+          {
+            id: "critical",
+            label: "Used where waterproofing is critical, or where the deck is in the tension zone and may crack",
+            bucket: "asphalt",
+          },
+          {
+            id: "membrane",
+            label: "A flexible adhesive or coating waterproof layer goes between the concrete and the asphalt",
+            bucket: "asphalt",
+          },
+          {
+            id: "eighty",
+            label: "At least 80 mm of watertight concrete laid straight on the deck",
+            bucket: "concrete",
+          },
+          {
+            id: "grade",
+            label: "Its grade is no lower than the concrete of the deck itself",
+            bucket: "concrete",
+          },
+          {
+            id: "renewable",
+            label: "A 20 to 30 mm asphalt surface treatment is added on top as a layer that can be renewed",
+            bucket: "concrete",
+          },
+        ],
+        explanation: {
+          steps: [
+            {
+              text: "The first method trusts a sheet; the second trusts the concrete itself to be watertight.",
+              visual: {
+                kind: "scene",
+                scene: "pavement",
+                highlight: ["waterproof-layer"],
+                labels: true,
+              },
+            },
+            {
+              text: "Where the deck can crack, or where water would be disastrous, the layer of asphalt over a waterproof membrane is used.",
+              visual: {
+                kind: "scene",
+                scene: "waterproofing",
+                highlight: ["waterproof-layer", "wearing-course"],
+                labels: true,
+              },
+            },
+            {
+              text: "In a region that never freezes, 80 mm of waterproof concrete can simply be laid on the deck, with a thin asphalt surface treatment on top to take the wear.",
+              visual: {
+                kind: "scene",
+                scene: "pavement",
+                highlight: ["wearing-course", "deck-slab"],
+                labels: true,
+                caption: "Waterproof concrete with a renewable surface treatment above it.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "order-the-layers",
+        type: "order",
+        prompt: "Order these from the surface the tyres touch down to the member that spans.",
+        items: [
+          { id: "wearing", label: "The wearing course, which the tyres run on" },
+          { id: "waterproof", label: "The waterproof layer, laid on the slab" },
+          { id: "slab", label: "The deck slab, which spreads the wheel loads" },
+          { id: "girder", label: "The main girder, which spans between the supports and bends" },
+        ],
+        explanation: {
+          steps: [
+            {
+              text: "A wheel load arrives at the top of the deck, and every layer below it does one job before passing the load on.",
+              visual: {
+                kind: "scene",
+                scene: "pavement",
+                highlight: ["wearing-course", "waterproof-layer"],
+                labels: true,
+              },
+            },
+            {
+              text: "The slab spreads the load across the width, and the girder carries it to the bearings as bending.",
+              visual: {
+                kind: "scene",
+                scene: "superstructure",
+                highlight: ["deck-slab", "main-girder"],
+                labels: true,
+              },
+            },
+          ],
+        },
+      },
+    ],
+    waterproofing: [
+      {
+        id: "waterproofing",
+        type: "heading",
+        text: "Waterproofing",
+        figure: {
+          visual: { kind: "scene", scene: "waterproofing" },
+          caption: "The waterproof layer runs under the pavement, turns up at the kerb, and hands the water to a drain.",
+        },
+      },
+      {
+        id: "what-waterproofing-does",
+        type: "paragraph",
+        text: "Waterproofing exists because concrete is porous and steel rusts. Rainwater that soaks through the paving is intercepted by a waterproof layer, collected, and passed into the drainage system, so that it never reaches the structural concrete or the reinforcement inside it. The layer is laid under the deck pavement, and it has to be continuous: water is very good at finding the one place where it stops.",
+        figure: {
+          visual: { kind: "scene", scene: "waterproofing", highlight: ["waterproof-layer"] },
+          caption: "One unbroken sheet, from the low edge of the pavement to the top of the kerb.",
+        },
+      },
+      {
+        id: "slope-does-the-work",
+        type: "list",
+        items: [
+          "The deck needs enough longitudinal and transverse slope for rainwater to run off quickly.",
+          "That fall is what prevents — or at least reduces — water soaking into the pavement layer.",
+          "Protecting the roadway slab this way is one of the cheapest ways to extend a bridge's life.",
+          "The transverse drainage slope of a bridge deck is made to match the transverse slope of the road.",
+          "Where a footway is provided, its cross slope runs at 0.5 % to 1.5 % towards the roadway, so that it sheds onto the road and not over the edge.",
+        ],
+        figure: {
+          visual: {
+            kind: "scene",
+            scene: "waterproofing",
+            highlight: ["wearing-course", "kerb"],
+          },
+          caption: "The fall is what moves the water; the waterproof layer only stops it going down.",
+        },
+      },
+      {
+        id: "two-kinds-of-layer",
+        type: "concepts",
+        prompt: "Two things are called a waterproof layer on a bridge. Page through them.",
+        concepts: [
+          {
+            id: "coating",
+            label: "A waterproof coating",
+            summary:
+              "A flexible adhesive or coating applied to the concrete itself: it seals the surface the water is standing on.",
+            scene: "waterproofing",
+            highlight: ["waterproof-layer", "deck-slab"],
+          },
+          {
+            id: "membrane",
+            label: "A waterproof membrane",
+            summary:
+              "An asphalt or modified asphalt sheet laid in lapped strips, so that no two joints ever line up.",
+            scene: "pavement",
+            highlight: ["waterproof-layer"],
+          },
+        ],
+      },
+      {
+        id: "tour-the-waterproofing",
+        type: "parts",
+        prompt: "Tap each pin: where the waterproofing runs, and what it protects.",
+        scene: "waterproofing",
+        hint: "Six pins, from the wearing course down to the pipe inside the deck.",
+      },
+      {
+        id: "the-layer-that-intercepts-water",
+        type: "hotspot",
+        prompt: "Tap the layer that stops rainwater reaching the concrete.",
+        scene: "waterproofing",
+        parts: ["wearing-course", "waterproof-layer", "deck-slab", "kerb", "drain"],
+        answer: "waterproof-layer",
+        explanation: {
+          steps: [
+            {
+              text: "Follow the water down: the wearing course lets it through, and the slab below must never see it.",
+              visual: {
+                kind: "scene",
+                scene: "waterproofing",
+                highlight: ["wearing-course", "deck-slab"],
+                labels: true,
+              },
+            },
+            {
+              text: "Between the two sits a thin sheet, turned up at the kerb and joined to the drain.",
+              visual: {
+                kind: "scene",
+                scene: "waterproofing",
+                highlight: ["waterproof-layer", "kerb", "drain"],
+                labels: true,
+              },
+            },
+            {
+              text: "That sheet is the waterproof layer: it carries no load, and it is the only thing keeping the reinforcement dry.",
+              visual: {
+                kind: "scene",
+                scene: "waterproofing",
+                highlight: ["waterproof-layer"],
+                labels: true,
+                caption: "The waterproof layer, turning up at the kerb so the water cannot walk round it.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "where-the-layer-goes",
+        type: "choose",
+        prompt: "Where is the waterproof layer of a bridge deck placed?",
+        choices: [
+          "Under the deck pavement, on top of the structural concrete",
+          "On top of the asphalt, so the rain runs off the surface",
+          "Inside the slab, between the reinforcing bars",
+          "Under the bridge, on the soffit of the girder",
+        ],
+        answer: 0,
+        explanation: {
+          steps: [
+            {
+              text: "The layer has to be above the concrete it protects, and below everything traffic wears away.",
+              visual: {
+                kind: "scene",
+                scene: "pavement",
+                highlight: ["wearing-course", "waterproof-layer"],
+                labels: true,
+              },
+            },
+            {
+              text: "That puts it directly under the pavement, laid on the cast-in-place concrete of the slab.",
+              visual: {
+                kind: "scene",
+                scene: "waterproofing",
+                highlight: ["waterproof-layer", "deck-slab"],
+                labels: true,
+                caption: "Under the pavement, on the slab: the only position that works.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "path-of-a-raindrop",
+        type: "order",
+        prompt: "Order the path a drop of rainwater takes once it lands on the deck.",
+        items: [
+          { id: "lands", label: "It lands on the deck pavement" },
+          { id: "seeps", label: "It seeps through the paving layer" },
+          { id: "caught", label: "The waterproof layer catches it" },
+          { id: "kerb", label: "It runs down the fall to the inlet at the kerb" },
+          { id: "away", label: "The drain pipe carries it clear of the structure" },
+        ],
+        explanation: {
+          steps: [
+            {
+              text: "Waterproofing and drainage are one system: the layer collects, the fall and the pipes remove.",
+              visual: {
+                kind: "scene",
+                scene: "waterproofing",
+                highlight: ["waterproof-layer"],
+                labels: true,
+              },
+            },
+            {
+              text: "If either half fails, the other is wasted — a perfect sheet with nowhere to drain simply holds a puddle against the concrete.",
+              visual: {
+                kind: "scene",
+                scene: "drainage",
+                highlight: ["kerb-inlet", "downpipe"],
+                labels: true,
+              },
+            },
+          ],
+        },
+      },
+    ],
+    drainage: [
+      {
+        id: "drainage",
+        type: "heading",
+        text: "Drainage",
+        figure: {
+          visual: { kind: "scene", scene: "drainage" },
+          caption: "Fall, inlet, trough and downpipe: the four things every deck drainage system is made of.",
+        },
+      },
+      {
+        id: "what-drainage-does",
+        type: "paragraph",
+        text: "The waterproofing and drainage system has two jobs: to stop water reaching the structure, so that the bridge keeps its durability, and to take the water off the road surface, so that traffic stays safe. Waterproofing is done with a layer. Drainage is done with the longitudinal and transverse slopes of the deck, working with a certain number of inlets, drains and pipes.",
+        figure: {
+          visual: {
+            kind: "scene",
+            scene: "drainage",
+            highlight: ["cross-slope", "kerb-inlet"],
+          },
+          caption: "The fall brings the water to the inlet, and the pipe takes it from there.",
+        },
+      },
+      {
+        id: "drainage-numbers",
+        type: "list",
+        items: [
+          "The drainage system has to suit the bridge structure and the drainage conditions under it; on large and extra-large bridges it is coordinated with the deck pavement design.",
+          "Where the longitudinal slope of the deck is under 0.5 %, a longitudinal drainage trough is laid along the low edge of the pavement.",
+          "A longitudinal drain or trough falls at not less than 0.5 %.",
+          "A trough is aluminium, steel or glass fibre, rectangular or U-shaped, and neither its width nor its depth is less than 20 cm.",
+          "A drainpipe may be cast iron, PVC, polyethylene, glass fibre or steel, and its inside diameter is never smaller than the downpipe it serves.",
+          "Rainwater flows into the drainholes through inlets built into the kerb or the footway edge, and is discharged into the ground drainage or the river.",
+        ],
+        figure: {
+          visual: { kind: "scene", scene: "drainage", highlight: ["drain", "downpipe"] },
+          caption: "Every one of those numbers exists to stop water standing anywhere on the deck.",
+        },
+      },
+      {
+        id: "tour-the-drainage",
+        type: "parts",
+        prompt: "Tap each pin, and follow the water off the bridge.",
+        scene: "drainage",
+        hint: "Six pins: the road, the fall, the inlet, the trough, the pipe and the pier it hangs on.",
+      },
+      {
+        id: "water-down-the-pier",
+        type: "hotspot",
+        prompt: "Tap the part that carries the water down the pier.",
+        scene: "drainage",
+        parts: ["roadway", "cross-slope", "kerb-inlet", "drain", "downpipe", "pier"],
+        answer: "downpipe",
+        explanation: {
+          steps: [
+            {
+              text: "Water first has to leave the surface, so look past the fall and the inlet.",
+              visual: {
+                kind: "scene",
+                scene: "drainage",
+                highlight: ["cross-slope", "kerb-inlet"],
+                labels: true,
+              },
+            },
+            {
+              text: "The trough then runs it along the deck to the lowest point, which is usually at a pier.",
+              visual: {
+                kind: "scene",
+                scene: "drainage",
+                highlight: ["drain"],
+                labels: true,
+              },
+            },
+            {
+              text: "From there a vertical pipe fixed to the pier takes it to the ground: that pipe is the downpipe.",
+              visual: {
+                kind: "scene",
+                scene: "drainage",
+                highlight: ["downpipe", "pier"],
+                labels: true,
+                caption: "The downpipe: the last length of the journey, and the easiest one to forget.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "closed-system",
+        type: "choose",
+        prompt: "An urban bridge crosses a navigable river. What does its drainage have to be?",
+        choices: [
+          "A closed system that collects the water and discharges it clear of the river and the road below",
+          "An open system, letting the water fall straight off the deck",
+          "No drainage at all, because the deck is high above the water",
+          "A single hole at the lowest point of the deck",
+        ],
+        answer: 0,
+        explanation: {
+          steps: [
+            {
+              text: "Where a bridge crosses a highway, a railway, a navigable river or a reservoir, the water cannot simply be dropped.",
+              visual: {
+                kind: "scene",
+                scene: "drainage",
+                highlight: ["roadway"],
+                labels: true,
+              },
+            },
+            {
+              text: "Those crossings need a closed system: inlets into a longitudinal drain or trough, then downpipes at the piers, and out into the ground drainage — the arrangement a building uses.",
+              visual: {
+                kind: "scene",
+                scene: "drainage",
+                highlight: ["kerb-inlet", "drain", "downpipe"],
+                labels: true,
+                caption: "A closed system: nothing leaves the bridge except through a pipe.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "sort-the-drainage-parts",
+        type: "sort",
+        prompt: "Sort each part of the system by the stage of the journey it works at.",
+        buckets: [
+          { id: "off", label: "Off the road surface" },
+          { id: "along", label: "Along the deck" },
+          { id: "down", label: "Down to the ground" },
+        ],
+        items: [
+          { id: "inlet", label: "The kerb inlet that swallows the water", bucket: "off" },
+          { id: "fall", label: "The cross fall that sends it to the kerb", bucket: "off" },
+          { id: "trough", label: "The longitudinal trough under the pavement edge", bucket: "along" },
+          { id: "pipe", label: "The downpipe bolted to the pier", bucket: "down" },
+          { id: "outfall", label: "The outfall into the ground drainage", bucket: "down" },
+        ],
+        explanation: {
+          steps: [
+            {
+              text: "Think of the system as three stages, and of the fall as the thing that starts all of them.",
+              visual: {
+                kind: "scene",
+                scene: "drainage",
+                highlight: ["cross-slope", "kerb-inlet"],
+                labels: true,
+              },
+            },
+            {
+              text: "Then the trough carries it along, and the downpipe takes it down — one stage each, never mixed up.",
+              visual: {
+                kind: "scene",
+                scene: "drainage",
+                highlight: ["drain", "downpipe"],
+                labels: true,
+                caption: "Along the deck, then down the pier: two stages, two different parts.",
+              },
+            },
+          ],
+        },
+      },
+    ],
+    "cross-slopes": [
+      {
+        id: "cross-slopes",
+        type: "heading",
+        text: "Cross Slopes",
+        figure: {
+          visual: { kind: "scene", scene: "cross-slope" },
+          caption: "Four ways to give a deck its fall: an inclined pier top, a thicker slab, pad stones, or the slab itself.",
+        },
+      },
+      {
+        id: "why-a-cross-slope",
+        type: "paragraph",
+        text: "A deck is never built dead level across its width. It is given a cross slope — a fall from the crown of the road down to the kerbs — so that rainwater leaves the surface quickly instead of soaking into the pavement and standing against the waterproofing. The transverse drainage slope of the deck is made to match the transverse slope of the road surface, so a vehicle never meets a step where the bridge begins.",
+        figure: {
+          visual: { kind: "scene", scene: "drainage", highlight: ["cross-slope"] },
+          caption: "The fall is measured across the deck rather than along it.",
+        },
+      },
+      {
+        id: "four-configurations",
+        type: "concepts",
+        prompt: "Four configurations. Page through them and see where the slope is made.",
+        concepts: [
+          {
+            id: "inclined-pier",
+            label: "(a) An inclined pier top",
+            summary:
+              "The top of the pier is cut to the fall, so the whole superstructure tilts and the pavement keeps one thickness throughout.",
+            scene: "cross-slope",
+            highlight: ["inclined-pier-top"],
+          },
+          {
+            id: "slab-thickness",
+            label: "(b) A slab of varying thickness",
+            summary:
+              "On a narrow bridge the cast-in-place slab is simply poured thicker on one side, above a main beam that stays level.",
+            scene: "cross-slope",
+            highlight: ["slab-thickness"],
+          },
+          {
+            id: "pad-stones",
+            label: "(c) Pad stones",
+            summary:
+              "On a prefabricated deck the pier can no longer tilt enough, so the pad stones on the pier cap are packed to different depths.",
+            scene: "cross-slope",
+            highlight: ["pad-stone"],
+          },
+          {
+            id: "sloped-slab",
+            label: "(d) A slab set to the slope",
+            summary:
+              "On a wide cast-in-place bridge, the roadway slab itself is set to the direction of the cross slope and nothing else is adjusted.",
+            scene: "cross-slope",
+            highlight: ["sloped-slab"],
+          },
+        ],
+      },
+      {
+        id: "tap-the-inclined-pier-top",
+        type: "hotspot",
+        prompt: "Tap the panel where the pier is cut to the fall so the pavement keeps one thickness.",
+        scene: "cross-slope",
+        parts: ["inclined-pier-top", "slab-thickness", "pad-stone", "sloped-slab"],
+        answer: "inclined-pier-top",
+        labels: true,
+        explanation: {
+          steps: [
+            {
+              text: "Look at where the slope is being made in each panel: in the pier, in the slab, in the bearings, or in the slab again.",
+              visual: { kind: "scene", scene: "cross-slope", labels: true },
+            },
+            {
+              text: "In the first panel the top of the pier itself is inclined, and everything above it tilts with it.",
+              visual: {
+                kind: "scene",
+                scene: "cross-slope",
+                highlight: ["inclined-pier-top"],
+                labels: true,
+              },
+            },
+            {
+              text: "That is the configuration that saves paving material and reduces dead load, because the pavement is one thickness right across the bridge.",
+              visual: {
+                kind: "scene",
+                scene: "cross-slope",
+                highlight: ["inclined-pier-top"],
+                labels: true,
+                caption: "An inclined pier top: the whole superstructure takes the fall together.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "saves-paving-material",
+        type: "choose",
+        prompt: "Which configuration saves paving material and reduces the dead load on the structure?",
+        choices: [
+          "The inclined pier top, which lets the pavement keep one thickness",
+          "Pouring a thicker slab on one side of the deck",
+          "Packing pad stones to different depths on the pier cap",
+          "Building the deck level and letting the water stand",
+        ],
+        answer: 0,
+        explanation: {
+          steps: [
+            {
+              text: "Every extra millimetre of pavement is weight the whole bridge has to carry for the rest of its life.",
+              visual: {
+                kind: "scene",
+                scene: "cross-slope",
+                highlight: ["slab-thickness"],
+                labels: true,
+              },
+            },
+            {
+              text: "Tilting the superstructure instead of thickening the surface keeps the paving at one uniform depth across the full width.",
+              visual: {
+                kind: "scene",
+                scene: "cross-slope",
+                highlight: ["inclined-pier-top"],
+                labels: true,
+                caption: "The saving is not in the pavement; it is in everything the pavement sits on.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "sort-the-cross-slope-decks",
+        type: "sort",
+        prompt: "Sort each statement into the kind of deck it describes.",
+        buckets: [
+          { id: "narrow", label: "A narrow deck" },
+          { id: "precast", label: "A prefabricated deck" },
+          { id: "wide", label: "A wide cast-in-place deck" },
+        ],
+        items: [
+          {
+            id: "thicker",
+            label: "The cast-in-place slab is poured thicker on one side",
+            bucket: "narrow",
+          },
+          { id: "level-beam", label: "The main beam stays level and the fall is made above it", bucket: "narrow" },
+          {
+            id: "pads",
+            label: "Pad stones of different depths are packed on the pier cap",
+            bucket: "precast",
+          },
+          {
+            id: "transition",
+            label: "The deck sits on the transition curve of the route, so tilting the pier is not enough",
+            bucket: "precast",
+          },
+          {
+            id: "set-slab",
+            label: "The roadway slab itself is set to the direction of the slope",
+            bucket: "wide",
+          },
+          {
+            id: "no-pier",
+            label: "There is no narrow pier top that could carry the whole fall",
+            bucket: "wide",
+          },
+        ],
+        explanation: {
+          steps: [
+            {
+              text: "Ask what each deck has to work with: a narrow slab, prefabricated beams and a pier cap, or a very wide deck.",
+              visual: { kind: "scene", scene: "cross-slope", labels: true },
+            },
+            {
+              text: "A narrow deck can afford to thicken its slab; a prefabricated one cannot, so it adjusts the pad stones; a wide one sets the slab itself.",
+              visual: {
+                kind: "scene",
+                scene: "cross-slope",
+                highlight: ["pad-stone", "sloped-slab"],
+                labels: true,
+                caption: "Same fall, three different places to make it.",
+              },
+            },
+          ],
+        },
+      },
+    ],
+    "expansion-joints": [
+      {
+        id: "expansion-joints",
+        type: "heading",
+        text: "Expansion Joints",
+        figure: {
+          visual: { kind: "scene", scene: "expansion-joint" },
+          caption: "A joint opened up: the gap, the device that crosses it, and the seal that catches the water.",
+        },
+      },
+      {
+        id: "why-a-bridge-needs-gaps",
+        type: "paragraph",
+        text: "A bridge moves. Temperature changes it, concrete shrinks and creeps, and traffic bends it. So that the span structure can deform freely and still carry vehicles smoothly, an expansion joint is fitted between two neighbouring beam ends, and between a beam end and the back wall of the abutment. The joint is exposed to the weather and takes repeated vehicle and pedestrian loading, so a very small defect is enough to make vehicles jump, which loads the joint with impact — and it becomes the part of a bridge most easily damaged and hardest to repair.",
+        figure: {
+          visual: {
+            kind: "scene",
+            scene: "expansion-joint",
+            highlight: ["expansion-gap"],
+          },
+          caption: "A gap that is never allowed to close, and can never be sealed permanently.",
+        },
+      },
+      {
+        id: "what-a-joint-must-do",
+        type: "list",
+        items: [
+          "Allow the bridge to expand and contract freely, with enough movement capacity for the worst case.",
+          "Be firmly and reliably connected to the structure, impact-resistant and durable.",
+          "Let vehicles ride across it smoothly, with no jump and as little noise as possible.",
+          "Contain safe waterproofing and drainage, so rainwater cannot seep in below.",
+          "Keep rubbish out, so the movement cannot be blocked.",
+          "Be simple to make and install, and easy to inspect, maintain and replace.",
+          "Be inexpensive.",
+        ],
+        figure: {
+          visual: {
+            kind: "scene",
+            scene: "expansion-joint",
+            highlight: ["joint-device", "water-seal"],
+          },
+          caption: "The device takes the wheels; the seal takes the water; the two jobs are never given to one part.",
+        },
+      },
+      {
+        id: "joint-types",
+        type: "concepts",
+        prompt: "The joints a bridge can be built with. Page through them.",
+        concepts: [
+          {
+            id: "butt",
+            label: "Butt joint",
+            summary:
+              "The simplest form: the two deck ends are butted together with a filler, and a plate covers the seam between them.",
+            scene: "joint-types",
+            highlight: ["butt-joint"],
+          },
+          {
+            id: "shear",
+            label: "Shear joint",
+            summary:
+              "Overlapping plates let the two ends slide past one another, taking up the movement by shearing rather than by opening.",
+            scene: "joint-types",
+            highlight: ["shear-joint"],
+          },
+          {
+            id: "steel-supported",
+            label: "Steel supported joint",
+            summary:
+              "A steel beam spans the gap and carries the wheels across it, sliding on its own seat as the deck moves.",
+            scene: "joint-types",
+            highlight: ["steel-supported"],
+          },
+          {
+            id: "modular",
+            label: "Modular joint",
+            summary:
+              "Several sealed gaps held side by side in one steel frame, for the very largest movements on the longest spans.",
+            scene: "joint-types",
+            highlight: ["modular-joint"],
+          },
+        ],
+      },
+      {
+        id: "tour-the-joint",
+        type: "parts",
+        prompt: "Tap each pin on the joint detail.",
+        scene: "expansion-joint",
+        hint: "Five pins: pavement, gap, device, seal and the pier under all of it.",
+      },
+      {
+        id: "the-gap-that-lets-it-move",
+        type: "hotspot",
+        prompt: "Tap the part that lets the deck grow and shrink.",
+        scene: "expansion-joint",
+        parts: ["pavement", "expansion-gap", "joint-device", "water-seal", "pier"],
+        answer: "expansion-gap",
+        explanation: {
+          steps: [
+            {
+              text: "Start with what the joint is for: movement between two pieces of structure that must not touch.",
+              visual: {
+                kind: "scene",
+                scene: "expansion-joint",
+                highlight: ["joint-device"],
+                labels: true,
+              },
+            },
+            {
+              text: "The device, the seal and the pier are all there to serve the opening between the two deck ends.",
+              visual: {
+                kind: "scene",
+                scene: "expansion-joint",
+                highlight: ["water-seal", "pier"],
+                labels: true,
+              },
+            },
+            {
+              text: "That opening is the expansion gap: everything else in the detail exists to get a vehicle, and its water, safely past it.",
+              visual: {
+                kind: "scene",
+                scene: "expansion-joint",
+                highlight: ["expansion-gap"],
+                labels: true,
+                caption: "The expansion gap: the one part of a deck that is designed to be open.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "why-make-the-deck-continuous",
+        type: "choose",
+        prompt: "On a multi-span simply supported bridge, what is the point of making two to seven spans continuous in the deck?",
+        choices: [
+          "It reduces the number of expansion joints, and driving becomes smoother",
+          "It turns the main beams into continuous beams",
+          "It removes the need for bearings at the piers",
+          "It lets the bridge carry heavier traffic without any change to the design",
+        ],
+        answer: 0,
+        explanation: {
+          steps: [
+            {
+              text: "A deck continuity is made in the pavement over the piers: the two simply supported spans are joined by a strengthened strip of the deck surface.",
+              visual: {
+                kind: "scene",
+                scene: "beam",
+                highlight: ["simply-supported"],
+                labels: true,
+              },
+            },
+            {
+              text: "The main beams are still simply supported. What has gone is the joint, and with it the jump, the noise and one more thing to maintain.",
+              visual: {
+                kind: "scene",
+                scene: "beam",
+                highlight: ["simply-supported", "continuous"],
+                labels: true,
+              },
+            },
+            {
+              text: "Taken further, a seamless bridge removes the joints at the piers altogether — with an integral pier cap, a continuous deck, or a structure made continuous under live load.",
+              visual: {
+                kind: "scene",
+                scene: "frame",
+                highlight: ["portal-frame", "rigid-joint"],
+                labels: true,
+                caption: "Monolithic joints: the structure that would have needed a joint is cast as one piece.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "order-the-joints",
+        type: "order",
+        prompt: "Order these joints by the movement they are built to take, from the least to the most.",
+        items: [
+          { id: "butt", label: "Butt joint — a filler and a cover plate over a narrow gap" },
+          { id: "shear", label: "Shear joint — overlapping plates that slide past one another" },
+          { id: "steel", label: "Steel supported joint — a steel beam sliding on its own seat" },
+          { id: "modular", label: "Modular joint — several sealed gaps in one steel frame" },
+        ],
+        explanation: {
+          steps: [
+            {
+              text: "The bigger the movement a joint has to swallow, the more steel it needs and the more parts it is made of.",
+              visual: {
+                kind: "scene",
+                scene: "joint-types",
+                highlight: ["butt-joint", "shear-joint"],
+                labels: true,
+              },
+            },
+            {
+              text: "A butt joint takes the least; a modular joint, with several gaps working together, takes the most.",
+              visual: {
+                kind: "scene",
+                scene: "joint-types",
+                highlight: ["steel-supported", "modular-joint"],
+                labels: true,
+                caption: "Four joints, in the order their movement capacity grows.",
+              },
+            },
+          ],
+        },
+      },
+    ],
+    "footways-and-railings": [
+      {
+        id: "footways-and-railings",
+        type: "heading",
+        text: "Footways, Railings & Lighting",
+        figure: {
+          visual: { kind: "scene", scene: "walkway" },
+          caption: "A deck edge in section: road, kerb, raised footway, railing and lamp, with the two limits that shape them.",
+        },
+      },
+      {
+        id: "who-gets-a-footway",
+        type: "paragraph",
+        text: "Urban bridges are generally provided with footways. A bridge on an expressway should not have one, and on first- to fourth-class highways it depends on need. The width is set by the volume of pedestrians: 1.0 m is the starting width, and beyond that it grows in steps of half a metre. A safety belt is built like a footway but narrower, and as safety awareness has risen it has gradually been replaced by a proper railing.",
+        figure: {
+          visual: { kind: "scene", scene: "walkway", highlight: ["footway"] },
+          caption: "A footway is a step higher than the road, and how wide it is follows how many people use it.",
+        },
+      },
+      {
+        id: "railing-requirements",
+        type: "list",
+        items: [
+          "A railing has to be strong, durable, economical and visually appropriate to the bridge.",
+          "Outside a footway or a safety belt it is at least 1.10 m high.",
+          "The clear gap between railing members is never more than 14 cm, and horizontal-bar railings are not preferred.",
+          "Beside a cycle track the railing is at least 1.40 m high.",
+          "A railing at an expansion joint must be free to deform with the deck, while staying safe and looking right.",
+        ],
+        figure: {
+          visual: { kind: "scene", scene: "walkway", highlight: ["railing"] },
+          caption: "Height and the size of the gaps are the two things a railing is checked for.",
+        },
+      },
+      {
+        id: "lighting-requirements",
+        type: "list",
+        items: [
+          "Bridges in cities and suburbs, and highway bridges where pedestrians and vehicles are numerous, are all lit.",
+          "Lighting is normally by column lamps standing on the deck.",
+          "The columns are set at the outer railing of the footway, or on the inner side, or in the median, according to the width of the footway and the lighting level required.",
+          "The edge of a lamp base stands at least 0.25 m clear of the carriageway surface.",
+          "The lamps are about 5 m above the traffic lanes.",
+        ],
+        figure: {
+          visual: { kind: "scene", scene: "walkway", highlight: ["lamp"] },
+          caption: "A lamp base too close to the traffic is a hazard of its own making.",
+        },
+      },
+      {
+        id: "tour-the-deck-edge",
+        type: "parts",
+        prompt: "Tap each pin along the edge of the deck.",
+        scene: "walkway",
+        hint: "Six pins, from the road surface across the kerb to the railing above.",
+      },
+      {
+        id: "the-part-that-must-be-1-10-m",
+        type: "hotspot",
+        prompt: "Tap the part a designer must keep at least 1.10 m high.",
+        scene: "walkway",
+        parts: ["carriageway", "kerb", "footway", "railing", "lamp"],
+        answer: "railing",
+        explanation: {
+          steps: [
+            {
+              text: "The height limit belongs to the thing that stops people falling off the bridge.",
+              visual: {
+                kind: "scene",
+                scene: "walkway",
+                highlight: ["footway", "kerb"],
+                labels: true,
+              },
+            },
+            {
+              text: "It is the railing: at least 1.10 m outside a footway or a safety belt, and 1.40 m beside a cycle track.",
+              visual: {
+                kind: "scene",
+                scene: "walkway",
+                highlight: ["railing"],
+                labels: true,
+              },
+            },
+            {
+              text: "The gap between its members is limited too, to 14 cm, because a child is narrower than an adult and a railing is built for both.",
+              visual: {
+                kind: "scene",
+                scene: "walkway",
+                highlight: ["railing"],
+                labels: true,
+                caption: "The railing: one number for its height and one for the space between its bars.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "how-wide-is-a-footway",
+        type: "choose",
+        prompt: "How wide is a footway on a bridge?",
+        choices: [
+          "At least 1.0 m, and wider in steps of 0.5 m as the pedestrian traffic grows",
+          "Exactly 1.0 m on every bridge",
+          "At least 2.5 m, whatever the traffic",
+          "Whatever width is left once the railing is fixed",
+        ],
+        answer: 0,
+        explanation: {
+          steps: [
+            {
+              text: "The width is a design decision based on the pedestrian traffic volume, not on the width of the bridge.",
+              visual: {
+                kind: "scene",
+                scene: "walkway",
+                highlight: ["footway"],
+                labels: true,
+              },
+            },
+            {
+              text: "It starts at 1.0 m, and above that it is increased in multiples of 0.5 m — a narrow footway cannot be widened later without rebuilding the edge.",
+              visual: {
+                kind: "scene",
+                scene: "walkway",
+                highlight: ["footway", "kerb"],
+                labels: true,
+                caption: "One metre, then half-metre steps: the only widths a footway comes in.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "order-across-the-edge",
+        type: "order",
+        prompt: "Order these from the traffic outwards across the edge of a deck.",
+        items: [
+          { id: "carriageway", label: "The carriageway the vehicles use" },
+          { id: "kerb", label: "The kerb that makes the step" },
+          { id: "footway", label: "The raised footway the pedestrians use" },
+          { id: "railing", label: "The railing along the outer edge" },
+        ],
+        explanation: {
+          steps: [
+            {
+              text: "Everything at the edge of a deck is arranged in a fixed order, and the order is what keeps the two kinds of traffic apart.",
+              visual: {
+                kind: "scene",
+                scene: "walkway",
+                highlight: ["carriageway", "kerb"],
+                labels: true,
+              },
+            },
+            {
+              text: "Road, then kerb, then footway, then railing — and the lamp stands at the edge of the footway, clear of the traffic.",
+              visual: {
+                kind: "scene",
+                scene: "walkway",
+                highlight: ["footway", "railing", "lamp"],
+                labels: true,
+                caption: "The section of a deck edge, from the traffic outwards.",
+              },
+            },
+          ],
+        },
+      },
+    ],
+    "safety-barriers": [
+      {
+        id: "safety-barriers",
+        type: "heading",
+        text: "Safety Barriers",
+        figure: {
+          visual: { kind: "scene", scene: "barriers" },
+          caption: "Three classes of barrier: a concrete wall, a corrugated beam on posts, and cables strung between posts.",
+        },
+      },
+      {
+        id: "what-a-barrier-is-for",
+        type: "paragraph",
+        text: "As public safety awareness has grown, protective facilities have become an essential part of bridge design rather than an addition to it. Every class of highway bridge must have a roadside barrier, and expressways and first-class highways must also have one in the median. A barrier closes the sides of the road against people, animals and non-motor vehicles; it guides the driver's line of sight; it keeps vehicles inside the carriageway and gives the driver confidence; and it absorbs the energy of a crash, turning a vehicle that has gone out of control back towards its own direction instead of letting it leave the bridge.",
+        figure: {
+          visual: {
+            kind: "scene",
+            scene: "barriers",
+            highlight: ["semi-rigid-barrier"],
+          },
+          caption: "A barrier does not merely stop a vehicle; it steers it back onto the road.",
+        },
+      },
+      {
+        id: "three-classes-of-barrier",
+        type: "concepts",
+        prompt: "Three classes, told apart by what they do when they are hit. Page through them.",
+        concepts: [
+          {
+            id: "rigid",
+            label: "Rigid barrier",
+            summary:
+              "A concrete wall that barely deforms when it is struck: the vehicle is stopped by the barrier's own strength, and the barrier needs little repair.",
+            scene: "barriers",
+            highlight: ["rigid-barrier"],
+          },
+          {
+            id: "semi-rigid",
+            label: "Semi-rigid barrier",
+            summary:
+              "The corrugated beam is the classic form: it deforms under the impact, yet keeps enough strength and stiffness to redirect the vehicle.",
+            scene: "barriers",
+            highlight: ["semi-rigid-barrier"],
+          },
+          {
+            id: "flexible",
+            label: "Flexible barrier",
+            summary:
+              "Cables stretch a long way between their posts, so the stop is gentle on the occupants but the movement is large.",
+            scene: "barriers",
+            highlight: ["flexible-barrier"],
+          },
+        ],
+      },
+      {
+        id: "tour-the-barriers",
+        type: "parts",
+        prompt: "Tap each panel to name the barrier it draws.",
+        scene: "barriers",
+        hint: "Three panels, three classes: rigid, semi-rigid and flexible.",
+      },
+      {
+        id: "the-corrugated-beam",
+        type: "hotspot",
+        prompt: "Tap the class of barrier whose classic form is the corrugated beam.",
+        scene: "barriers",
+        parts: ["rigid-barrier", "semi-rigid-barrier", "flexible-barrier"],
+        answer: "semi-rigid-barrier",
+        explanation: {
+          steps: [
+            {
+              text: "Sort the three by how much each one moves: none, some, or a great deal.",
+              visual: { kind: "scene", scene: "barriers", labels: true },
+            },
+            {
+              text: "A rigid barrier is concrete and hardly deforms; a flexible one is cables and stretches a long way.",
+              visual: {
+                kind: "scene",
+                scene: "barriers",
+                highlight: ["rigid-barrier", "flexible-barrier"],
+                labels: true,
+              },
+            },
+            {
+              text: "Between them sits the corrugated steel beam: it deforms on impact, and that deformation is exactly what redirects the vehicle.",
+              visual: {
+                kind: "scene",
+                scene: "barriers",
+                highlight: ["semi-rigid-barrier"],
+                labels: true,
+                caption: "The corrugated beam: the semi-rigid barrier, and the commonest form on a highway bridge.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "the-jobs-of-a-barrier",
+        type: "choose",
+        prompt: "Which of these is NOT one of the jobs of a bridge barrier?",
+        choices: [
+          "Absorbing the energy of a collision and guiding the vehicle back",
+          "Closing the road edge against people, animals and non-motor vehicles",
+          "Carrying the deck loads down to the piers",
+          "Giving the driver a line to follow and a sense of safety",
+        ],
+        answer: 2,
+        explanation: {
+          steps: [
+            {
+              text: "A barrier is a safety facility: it works on the traffic, not on the structure.",
+              visual: {
+                kind: "scene",
+                scene: "barriers",
+                highlight: ["semi-rigid-barrier"],
+                labels: true,
+              },
+            },
+            {
+              text: "Carrying deck loads down to the piers is the job of the superstructure and its bearings, and nothing at the edge of the deck does any of it.",
+              visual: {
+                kind: "scene",
+                scene: "bearings",
+                highlight: ["bearing", "pier-cap"],
+                labels: true,
+              },
+            },
+            {
+              text: "A barrier closes the edge, guides the eye and absorbs energy — and every one of those is a job done for the driver.",
+              visual: {
+                kind: "scene",
+                scene: "barriers",
+                highlight: ["rigid-barrier", "flexible-barrier"],
+                labels: true,
+                caption: "Three barriers, one purpose: keep the vehicle on the bridge.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "sort-the-barriers",
+        type: "sort",
+        prompt: "File each description under the class of barrier it belongs to.",
+        buckets: [
+          { id: "rigid", label: "Rigid" },
+          { id: "semi", label: "Semi-rigid" },
+          { id: "flexible", label: "Flexible" },
+        ],
+        items: [
+          { id: "wall", label: "A concrete wall that barely deforms when it is struck", bucket: "rigid" },
+          { id: "parapet", label: "A solid parapet in which the vehicle is stopped at once", bucket: "rigid" },
+          { id: "beam", label: "A corrugated steel beam that bends, then redirects", bucket: "semi" },
+          { id: "posts", label: "A beam on posts, with strength and stiffness left after the impact", bucket: "semi" },
+          { id: "cables", label: "Cables between posts that stretch a long way", bucket: "flexible" },
+          { id: "gentle", label: "The barrier that gives the gentlest stop of the three", bucket: "flexible" },
+        ],
+        explanation: {
+          steps: [
+            {
+              text: "The classes are named for how the barrier behaves in a collision, so the question to ask is always: what moves, and how much?",
+              visual: { kind: "scene", scene: "barriers", labels: true },
+            },
+            {
+              text: "Concrete barely moves, a corrugated beam deforms and recovers the vehicle's direction, and cables move a long way.",
+              visual: {
+                kind: "scene",
+                scene: "barriers",
+                highlight: ["rigid-barrier", "semi-rigid-barrier", "flexible-barrier"],
+                labels: true,
+                caption: "Rigid, semi-rigid, flexible: the same protection delivered three different ways.",
+              },
+            },
+          ],
+        },
+      },
+    ],
+    "deck-check": [
+      {
+        id: "level-check-build-the-deck",
+        type: "heading",
+        text: "Level Check: Build the Deck",
+        figure: {
+          visual: { kind: "scene", scene: "deck-layout" },
+          caption: "The whole of Module 3 on one deck: layers, water, movement and safety.",
+        },
+      },
+      {
+        id: "the-deck-in-one-set-of-questions",
+        type: "paragraph",
+        text: "Nearly everything above the main structure belongs to one of four systems: the deck pavement, the waterproofing and drainage, the expansion joints, and the safety facilities — the footways, railings, barriers and lighting. Here is the whole module as one set of questions.",
+        figure: {
+          visual: {
+            kind: "scene",
+            scene: "walkway",
+            highlight: ["footway", "railing", "lamp"],
+          },
+          caption: "The safety facilities of a deck: a walkway, a railing and a lamp, all on one section.",
+        },
+      },
+      {
+        id: "the-layer-under-everything",
+        type: "hotspot",
+        prompt: "Tap the layer that has to be continuous under the whole deck.",
+        scene: "waterproofing",
+        parts: ["wearing-course", "waterproof-layer", "deck-slab", "kerb", "drain"],
+        answer: "waterproof-layer",
+        explanation: {
+          steps: [
+            {
+              text: "Only one layer has to run from edge to edge without a break, and it is the one that carries no load.",
+              visual: {
+                kind: "scene",
+                scene: "waterproofing",
+                highlight: ["wearing-course", "deck-slab"],
+                labels: true,
+              },
+            },
+            {
+              text: "It is the waterproof layer, turned up at the kerb and joined into the drain, so that water has nowhere to go but away.",
+              visual: {
+                kind: "scene",
+                scene: "waterproofing",
+                highlight: ["waterproof-layer"],
+                labels: true,
+                caption: "The one layer of a deck that must never be interrupted.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "file-the-deck-parts",
+        type: "sort",
+        prompt: "File each part of the deck under the system it belongs to.",
+        buckets: [
+          { id: "pavement", label: "Deck pavement" },
+          { id: "water", label: "Waterproofing and drainage" },
+          { id: "joints", label: "Expansion joints" },
+          { id: "safety", label: "Safety facilities" },
+        ],
+        items: [
+          { id: "wearing", label: "The wearing course the tyres run on", bucket: "pavement" },
+          { id: "mesh", label: "The steel mesh inside the concrete pavement", bucket: "pavement" },
+          { id: "sheet", label: "The sheet that turns up at the kerb", bucket: "water" },
+          { id: "inlet", label: "The grated inlet at the edge of a lane", bucket: "water" },
+          { id: "gap", label: "The opening between two deck ends", bucket: "joints" },
+          { id: "device", label: "The plate that carries wheels across that opening", bucket: "joints" },
+          { id: "rail", label: "The barrier that keeps pedestrians on the bridge", bucket: "safety" },
+          { id: "column", label: "The lighting column at the edge of the footway", bucket: "safety" },
+        ],
+        explanation: {
+          steps: [
+            {
+              text: "Each system is a group of parts that only makes sense together, and each part belongs to exactly one of them.",
+              visual: {
+                kind: "scene",
+                scene: "deck-layout",
+                highlight: ["carriageway", "footway", "railing"],
+                labels: true,
+              },
+            },
+            {
+              text: "Pavement takes the wear, the sheet and the pipes deal with water, the joint lets the deck move, and the rest keeps people safe.",
+              visual: {
+                kind: "scene",
+                scene: "deck-layout",
+                highlight: ["expansion-joint", "drain", "lamp"],
+                labels: true,
+                caption: "Four systems, one deck, and every part filed under one of them.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "build-the-deck-edge",
+        type: "assemble",
+        prompt: "Put the edge of the deck together: place each part where it belongs on the section.",
+        scene: "walkway",
+        slots: [
+          { id: "carriageway", label: "Carriageway", at: [60, 116] },
+          { id: "footway", label: "Footway", at: [240, 116] },
+          { id: "railing", label: "Railing", at: [296, 88] },
+          { id: "lamp", label: "Lamp post", at: [214, 60] },
+        ],
+        explanation: {
+          steps: [
+            {
+              text: "Work from the road outwards: the traffic lanes are lowest, and the walkway stands a step above them.",
+              visual: {
+                kind: "scene",
+                scene: "walkway",
+                highlight: ["carriageway", "kerb"],
+                labels: true,
+              },
+            },
+            {
+              text: "The railing closes the outer edge, and the lamp belongs on the walkway, its base clear of the traffic.",
+              visual: {
+                kind: "scene",
+                scene: "walkway",
+                highlight: ["railing", "lamp"],
+                labels: true,
+                caption: "The finished edge: road, kerb, footway, railing, and a lamp where nobody drives.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "order-the-design-work",
+        type: "order",
+        prompt: "Order the work of designing a deck, as a designer would do it.",
+        items: [
+          { id: "read", label: "Read what the bridge has to carry: vehicles, pedestrians, and how many of each" },
+          { id: "slope", label: "Set the cross slope, so the water has somewhere to go" },
+          { id: "pave", label: "Lay the pavement and the waterproofing under it" },
+          { id: "joint", label: "Detail the expansion joints where the deck must move" },
+          { id: "safe", label: "Add the footways, railings, barriers and lighting" },
+        ],
+        explanation: {
+          steps: [
+            {
+              text: "The drainage comes before the surfaces, because the fall has to be built into the structure, not laid on top of it.",
+              visual: {
+                kind: "scene",
+                scene: "cross-slope",
+                highlight: ["sloped-slab"],
+                labels: true,
+              },
+            },
+            {
+              text: "The joints follow the surfaces, and the safety facilities come last, where they can be adjusted to the widths that are left.",
+              visual: {
+                kind: "scene",
+                scene: "expansion-joint",
+                highlight: ["pavement", "expansion-gap"],
+                labels: true,
+                caption: "Water first, then surfaces, then movement, then the things that keep people safe.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        id: "a-deck-for-a-cold-city",
+        type: "choose",
+        prompt: "One last one. A new urban bridge over a river, well used by pedestrians, in a city with freezing winters. Which deck is the sensible one?",
+        choices: [
+          "Waterproofed asphalt pavement, a closed drainage system, continuous joints where possible, and footways with 1.10 m railings and lighting",
+          "Waterproof concrete with no drainage, because the deck already has a fall",
+          "No waterproofing, because the deck is in compression",
+          "A dead-level deck, so that the water can evaporate instead of running off",
+        ],
+        answer: 0,
+        explanation: {
+          steps: [
+            {
+              text: "Freezing winters mean water in the deck is a durability problem, not only a driving one, so waterproofing and drainage have to work together.",
+              visual: {
+                kind: "scene",
+                scene: "waterproofing",
+                highlight: ["waterproof-layer", "drain"],
+                labels: true,
+              },
+            },
+            {
+              text: "An urban bridge over a river needs a closed system, and every joint that can be removed makes driving smoother and maintenance cheaper.",
+              visual: {
+                kind: "scene",
+                scene: "drainage",
+                highlight: ["kerb-inlet", "drain", "downpipe"],
+                labels: true,
+              },
+            },
+            {
+              text: "Pedestrians get a footway with a railing of the right height and lighting above it — and a level deck is never an option, because water that cannot run off has to be carried.",
+              visual: {
+                kind: "scene",
+                scene: "walkway",
+                highlight: ["footway", "railing", "lamp"],
+                labels: true,
+                caption: "The deck this bridge needs: protected, drained, walkable and lit.",
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+
+  // ── Module 4 · Materials & Durability ────────────────────────────────────
+  ...bridgeMaterialsContent,
 };
