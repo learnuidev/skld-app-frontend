@@ -324,15 +324,20 @@ export default function LessonPlayer({
     router.push(path);
   };
 
-  const goToStep = useCallback((step: number) => {
-    setSolved(false);
-    setAttempted(false);
-    setHasSel(false);
-    setShowWhy(false);
-    setWhyIndex(0);
-    setMisses(0);
-    setCurrent(Math.max(0, step));
-  }, []);
+  const goToStep = useCallback(
+    (step: number) => {
+      setSolved(false);
+      setAttempted(false);
+      setHasSel(false);
+      setShowWhy(false);
+      setWhyIndex(0);
+      setMisses(0);
+      // Clamped both ways: a step button at either end asks for a step that
+      // does not exist, and landing on nothing would blank the card.
+      setCurrent(Math.min(Math.max(0, step), total - 1));
+    },
+    [total],
+  );
 
   const advance = () => {
     if (!ready) return;
@@ -415,6 +420,19 @@ export default function LessonPlayer({
     cardRef.current.scrollTop = 0;
   }, [showWhy, whyIndex]);
 
+  /** Every question in the lesson, and how each one went. */
+  const questions: QuestionMark[] = useMemo(
+    () =>
+      blocks
+        .map((entry, step) => ({ step, task: isTaskBlock(entry) }))
+        .filter((entry) => entry.task)
+        .map(({ step }) => ({
+          step,
+          state: done.has(step) ? "correct" : failed.has(step) ? "wrong" : "todo",
+        })),
+    [blocks, done, failed],
+  );
+
   if (!block) {
     return null;
   }
@@ -433,18 +451,6 @@ export default function LessonPlayer({
         : "Finish course"
       : "Continue";
 
-  /** Every question in the lesson, and how each one went. */
-  const questions: QuestionMark[] = useMemo(
-    () =>
-      blocks
-        .map((entry, step) => ({ step, task: isTaskBlock(entry) }))
-        .filter((entry) => entry.task)
-        .map(({ step }) => ({
-          step,
-          state: done.has(step) ? "correct" : failed.has(step) ? "wrong" : "todo",
-        })),
-    [blocks, done, failed],
-  );
   /** The steps behind the learner: the bar starts empty and fills as they go. */
   const completed = current + (isTask && (solved || attempted) ? 1 : 0);
 
@@ -456,6 +462,8 @@ export default function LessonPlayer({
         completed={completed}
         questions={questions}
         onExit={() => setShowQuit(true)}
+        onPrevious={() => goToStep(current - 1)}
+        onNext={() => goToStep(current + 1)}
       />
 
       <div className="flex min-h-0 flex-1 flex-col-reverse gap-3 px-3 pb-3 sm:gap-4 sm:px-8 sm:pb-8 lg:flex-row">

@@ -1,6 +1,6 @@
 "use client";
 
-import { Sparkles, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles, X } from "lucide-react";
 
 import { ThemeSelector } from "@/components/courses/lesson/theme-selector";
 import { cn } from "@/lib/utils";
@@ -23,8 +23,46 @@ const DOT: Record<QuestionState, string> = {
 };
 
 /**
- * The lesson navbar: leave the lesson, watch the bar, see how the questions
- * went.
+ * A step button at the end of the progress bar. It stays out of the way until
+ * the learner reaches for the bar — and on a touch screen, where there is no
+ * hover to reveal it, it is simply always there.
+ */
+function StepArrow({
+  direction,
+  disabled,
+  onClick,
+}: {
+  direction: "previous" | "next";
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  const Icon = direction === "previous" ? ChevronLeft : ChevronRight;
+
+  return (
+    <button
+      type="button"
+      aria-label={direction === "previous" ? "Previous step" : "Next step"}
+      disabled={disabled}
+      onClick={onClick}
+      className={cn(
+        "flex size-7 shrink-0 items-center justify-center rounded-full border border-lesson-line bg-card text-muted-foreground transition-[opacity,color,background-color] duration-200",
+        "hover:bg-lesson-soft hover:text-foreground",
+        "disabled:opacity-0 disabled:pointer-events-none",
+        // Hidden until the pointer is on the bar — but never hidden from a
+        // keyboard, and never hidden where hovering is impossible.
+        "opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto",
+        "focus-visible:opacity-100 focus-visible:pointer-events-auto",
+        "[@media(hover:none)]:opacity-100 [@media(hover:none)]:pointer-events-auto",
+      )}
+    >
+      <Icon className="size-4" />
+    </button>
+  );
+}
+
+/**
+ * The lesson navbar: leave the lesson, step back and on, watch the bar, see how
+ * the questions went.
  *
  * The bar tracks how much of the lesson is behind you — it starts empty and
  * fills as steps are finished. The dots are the lesson's questions, one each,
@@ -37,6 +75,8 @@ export function LessonNavBar({
   completed,
   questions,
   onExit,
+  onPrevious,
+  onNext,
   className,
 }: {
   /** Zero-based index of the step on screen. */
@@ -47,6 +87,10 @@ export function LessonNavBar({
   /** Every question in the lesson, in the order they are asked. */
   questions: QuestionMark[];
   onExit: () => void;
+  /** Step back one, like the "p" key. */
+  onPrevious: () => void;
+  /** Step on one, like the "n" key. */
+  onNext: () => void;
   className?: string;
 }) {
   const behind = Math.min(Math.max(completed, 0), total);
@@ -73,19 +117,31 @@ export function LessonNavBar({
       </button>
 
       <div className="flex min-w-0 flex-1 items-center justify-center gap-4">
-        <div
-          role="progressbar"
-          aria-label="Lesson progress"
-          aria-valuemin={0}
-          aria-valuemax={total}
-          aria-valuenow={behind}
-          aria-valuetext={`${behind} of ${total} steps done`}
-          className="h-3 w-full max-w-[592px] overflow-hidden rounded-full bg-lesson-dot-todo"
-        >
-          <div
-            className="h-full rounded-full bg-lesson-correct transition-[width] duration-500 ease-out motion-reduce:transition-none"
-            style={{ width: `${percent}%` }}
+        {/* The bar and its two step buttons share one hover target, so reaching
+            for the bar is what brings them out. */}
+        <div className="group flex w-full min-w-0 max-w-[648px] items-center gap-1">
+          <StepArrow
+            direction="previous"
+            disabled={current === 0}
+            onClick={onPrevious}
           />
+
+          <div
+            role="progressbar"
+            aria-label="Lesson progress"
+            aria-valuemin={0}
+            aria-valuemax={total}
+            aria-valuenow={behind}
+            aria-valuetext={`${behind} of ${total} steps done`}
+            className="h-3 w-full min-w-0 overflow-hidden rounded-full bg-lesson-dot-todo"
+          >
+            <div
+              className="h-full rounded-full bg-lesson-correct transition-[width] duration-500 ease-out motion-reduce:transition-none"
+              style={{ width: `${percent}%` }}
+            />
+          </div>
+
+          <StepArrow direction="next" disabled={current >= total - 1} onClick={onNext} />
         </div>
 
         {questions.length > 0 ? (

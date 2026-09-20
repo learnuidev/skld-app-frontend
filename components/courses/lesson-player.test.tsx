@@ -296,7 +296,25 @@ describe("LessonPlayer", () => {
     await user.click(screen.getByRole("button", { name: "Check" }));
     expect(states()).toEqual(["correct", "correct"]);
   });
-  it("offers the next lesson when the lesson ends", async () => {
+  it("steps back and on from the bar, without answering anything", async () => {
+    const user = userEvent.setup();
+    renderLesson();
+
+    // Step on past the heading, then back onto the question, then on again.
+    await user.click(screen.getByRole("button", { name: "Next step" }));
+    expect(await screen.findByRole("button", { name: "Check" })).toBeDisabled();
+
+    await user.click(screen.getByRole("button", { name: "Previous step" }));
+    expect(await screen.findByRole("heading", { name: "Reading a rod" })).toBeInTheDocument();
+
+    await user.click(screen.getByRole("button", { name: "Next step" }));
+    expect(await screen.findByRole("button", { name: "Check" })).toBeInTheDocument();
+
+    // Jumping over a question leaves it unanswered: its dot stays grey.
+    expect(screen.getByRole("img", { name: /0 answered correctly, 0 answered wrongly/ })).toBeInTheDocument();
+  });
+
+  it("offers the next step when the lesson ends", async () => {
     const user = userEvent.setup();
     renderLesson([{ type: "heading", text: "One step" }]);
 
