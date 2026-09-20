@@ -1,6 +1,10 @@
 /**
  * The bridge drawings: every scene a lesson can put on screen, drawn in
- * engineering elevation on the shared light plate.
+ * engineering elevation and washed in ink, the way a Chinese landscape is
+ * painted. Tone carries the depth — the water, the banks, the distance — and
+ * line carries the structure, so a figure reads as a bridge before a single
+ * name is written on it. What is left unpainted is sky, and that empty paper
+ * is doing as much work as the strokes.
  *
  * Each scene is a pure function of `SceneShapes` — which parts are being
  * pointed at, and whether the names are written on — so one drawing can serve
@@ -10,8 +14,12 @@
  * geometry and the vocabulary therefore live together, and lesson content only
  * has to name the scene and the part ids it wants.
  *
- * Colours come from the one course palette — black in shades, yellow as the
- * bright note — so these drawings belong to the same set as the abacus art.
+ * These are still engineering drawings, and the atmosphere never gets to cost
+ * a learner the answer: the geometry, the pins and the vocabulary are
+ * untouched, every part still fades back when another is in hand, and `yellow`
+ * still means exactly one thing — the part being read. The rest of the colour
+ * comes from the one course palette, black in shades, so these drawings belong
+ * to the same set as the abacus art.
  */
 
 import type { ReactNode } from "react";
@@ -64,20 +72,202 @@ function washColour(lit: boolean) {
   return lit ? PALETTE.yellow : PALETTE.butter;
 }
 
+/**
+ * The washes that have to fade rather than stop: sky, water and mist. Every
+ * scene defines them and every definition is identical, so a page carrying
+ * several drawings shares one gradient without the copies ever disagreeing.
+ */
+function Washes() {
+  return (
+    <defs>
+      {/* Paper catching the light, so the top of a drawing breathes. */}
+      <linearGradient id="bridge-wash-sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stopColor={PALETTE.paper} stopOpacity="0.92" />
+        <stop offset="1" stopColor={PALETTE.paper} stopOpacity="0" />
+      </linearGradient>
+      {/* Water: palest at the far bank, deepening towards the viewer. */}
+      <linearGradient id="bridge-wash-water" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stopColor={PALETTE.charcoal} stopOpacity="0.05" />
+        <stop offset="1" stopColor={PALETTE.charcoal} stopOpacity="0.13" />
+      </linearGradient>
+      {/* Air: paper laid back over the distance until the distance dissolves. */}
+      <linearGradient id="bridge-wash-mist" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stopColor={PALETTE.fog} stopOpacity="0" />
+        <stop offset="0.7" stopColor={PALETTE.fog} stopOpacity="0.7" />
+        <stop offset="1" stopColor={PALETTE.fog} stopOpacity="1" />
+      </linearGradient>
+    </defs>
+  );
+}
+
+/** A wash of tone, the way a loaded brush lays one down. */
+function Wash({
+  y,
+  height,
+  x = 0,
+  width = SCENE_WIDTH,
+  tone = PALETTE.charcoal,
+  opacity = 0.07,
+}: {
+  y: number;
+  height: number;
+  x?: number;
+  width?: number;
+  tone?: string;
+  opacity?: number;
+}) {
+  return <rect x={x} y={y} width={width} height={height} fill={tone} opacity={opacity} />;
+}
+
+/** Paper catching the light across the top of an outdoor drawing. */
+function Sky({ height = 104 }: { height?: number }) {
+  return (
+    <rect x={0} y={0} width={SCENE_WIDTH} height={height} fill="url(#bridge-wash-sky)" />
+  );
+}
+
+/** Air laid over the distance: a band of mist that dissolves what stands behind it. */
+function Mist({ y, height = 24, opacity = 1 }: { y: number; height?: number; opacity?: number }) {
+  return (
+    <path
+      d={`M 0 ${y} H ${SCENE_WIDTH} V ${y + height} H 0 Z`}
+      fill="url(#bridge-wash-mist)"
+      opacity={opacity}
+    />
+  );
+}
+
+/**
+ * A distant range, built from one fixed profile so every scene's hills belong
+ * to the same landscape, and slid sideways by `shift` so two ranges standing
+ * behind one another never line up. Heights are read as fractions of the
+ * tallest peak, which is `height` above the line the hills are set down on.
+ */
+const RIDGE = [0, 0.44, 0.16, 0.8, 0.32, 1, 0.38, 0.62, 0.12, 0.56, 0.24, 0.46, 0];
+
+function ridgePath(base: number, height: number, shift: number): string {
+  const last = RIDGE.length - 1;
+  const points = RIDGE.map((_, index) => {
+    const rise = RIDGE[(index + shift) % RIDGE.length];
+    return [(index / last) * SCENE_WIDTH, base - rise * height] as const;
+  });
+
+  let d = `M ${points[0][0]} ${points[0][1]}`;
+  for (let index = 0; index < points.length - 1; index += 1) {
+    const [x, y] = points[index];
+    const [nextX, nextY] = points[index + 1];
+    // Each curve aims at the midpoint of its pair, which rounds the peaks off.
+    d += ` Q ${x} ${y} ${(x + nextX) / 2} ${(y + nextY) / 2}`;
+  }
+
+  return `${d} L ${SCENE_WIDTH} ${base} L 0 ${base} Z`;
+}
+
+/**
+ * Two ranges and the mist between them — which is the whole of aerial
+ * perspective, and it costs two shapes. The far range is taller and paler
+ * than the near one, so the drawing gains depth without gaining detail.
+ */
+/**
+ * Two ranges and the mist between them — which is the whole of aerial
+ * perspective, and it costs two shapes. The far range is taller and paler
+ * than the near one, and only their feet dissolve: the peaks have to stay
+ * above the mist or the distance stops reading as distance.
+ */
+function Distance({ base, height = 30 }: { base: number; height?: number }) {
+  return (
+    <>
+      <path d={ridgePath(base, height, 4)} fill={PALETTE.charcoal} opacity={0.07} />
+      <path d={ridgePath(base, height * 0.68, 9)} fill={PALETTE.charcoal} opacity={0.11} />
+      <Mist y={base - height * 0.26} height={height * 0.26} />
+    </>
+  );
+}
+
+/**
+ * Still water, drawn the way a brush draws it: rows of short strokes that grow
+ * longer and further apart as they come towards the viewer, each one sitting a
+ * little off its own line. Nothing runs the full width of the drawing — water
+ * is suggested here, not ruled.
+ */
+const RIPPLE_ROWS = [
+  { dy: 6, length: 13, gap: 29, width: 1.1, opacity: 0.34, offset: 13 },
+  { dy: 15, length: 19, gap: 43, width: 1.3, opacity: 0.3, offset: 33 },
+  { dy: 26, length: 26, gap: 57, width: 1.5, opacity: 0.25, offset: 9 },
+  { dy: 39, length: 33, gap: 75, width: 1.7, opacity: 0.2, offset: 29 },
+];
+
+/** How far each stroke in a row sits off the row's own line. */
+const RIPPLE_JITTER = [0, 1.4, -1, 0.7, -1.5, 1.1];
+
+/** How much longer or shorter than its row each stroke is drawn. */
+const RIPPLE_REACH = [1, 0.64, 1.24, 0.82, 1.1, 0.72];
+
+/** And how much darker or lighter: no two strokes in a row carry the same ink. */
+const RIPPLE_INK = [1, 0.78, 1.14, 0.68, 0.92, 0.84];
+
+function Ripples({ y, x1 = 0, x2 = SCENE_WIDTH }: { y: number; x1?: number; x2?: number }) {
+  const strokes: ReactNode[] = [];
+
+  RIPPLE_ROWS.forEach((row, rowIndex) => {
+    const at = y + row.dy;
+    if (at > SCENE_HEIGHT - 3) return;
+
+    let stroke = 0;
+    for (let x = x1 + row.offset; x < x2 - 12; x += row.gap) {
+      const turn = stroke % RIPPLE_REACH.length;
+      const length = row.length * RIPPLE_REACH[turn];
+      if (x + length > x2 - 5) break;
+
+      strokes.push(
+        <line
+          key={`${rowIndex}-${x}`}
+          x1={x}
+          y1={at + RIPPLE_JITTER[turn]}
+          x2={x + length}
+          y2={at + RIPPLE_JITTER[turn]}
+          stroke={PALETTE.charcoal}
+          strokeWidth={row.width}
+          strokeLinecap="round"
+          opacity={row.opacity * RIPPLE_INK[turn]}
+        />,
+      );
+      stroke += 1;
+    }
+  });
+
+  return <>{strokes}</>;
+}
+
+/** A structure's reflection: a few pale strokes beneath it, never a mirror. */
+function Reflection({
+  cx,
+  y,
+  width = 14,
+  opacity = 0.16,
+}: {
+  cx: number;
+  y: number;
+  width?: number;
+  opacity?: number;
+}) {
+  return (
+    <g stroke={PALETTE.charcoal} strokeLinecap="round" opacity={opacity}>
+      <line x1={cx - width / 2} y1={y + 3} x2={cx + width / 2} y2={y + 3} strokeWidth={1.4} />
+      <line x1={cx - width / 3} y1={y + 8} x2={cx + width / 3} y2={y + 8} strokeWidth={1.2} />
+      <line x1={cx - width / 4.5} y1={y + 12} x2={cx + width / 4.5} y2={y + 12} strokeWidth={1} />
+    </g>
+  );
+}
+
+/** The river: a graded wash, its waterline, and a few strokes of ripple. */
 function Water({ y, x1 = 0, x2 = SCENE_WIDTH }: { y: number; x1?: number; x2?: number }) {
   return (
-    <g>
-      <rect x={x1} y={y} width={x2 - x1} height={SCENE_HEIGHT - y} fill={PALETTE.butter} opacity={0.6} />
-      <line
-        x1={x1}
-        y1={y}
-        x2={x2}
-        y2={y}
-        stroke={PALETTE.yellowDeep}
-        strokeWidth={1.6}
-        strokeDasharray="8 5"
-      />
-    </g>
+    <>
+      <path d={`M ${x1} ${y} H ${x2} V ${SCENE_HEIGHT} H ${x1} Z`} fill="url(#bridge-wash-water)" />
+      <line x1={x1} y1={y} x2={x2} y2={y} stroke={PALETTE.ink} strokeWidth={1.2} opacity={0.42} />
+      <Ripples y={y} x1={x1} x2={x2} />
+    </>
   );
 }
 
@@ -88,16 +278,114 @@ function Ground({ y, x1 = 0, x2 = SCENE_WIDTH }: { y: number; x1?: number; x2?: 
     ticks.push(<line key={x} x1={x} y1={y} x2={x - 7} y2={y + 8} />);
   }
   return (
-    <g stroke={PALETTE.gray} strokeWidth={1} opacity={0.55}>
-      <line x1={x1} y1={y} x2={x2} y2={y} strokeWidth={1.8} />
-      {ticks}
-    </g>
+    <>
+      {/* Earth reads as a thin mass under the line rather than as a rule. */}
+      <rect x={x1} y={y} width={x2 - x1} height={4} fill={PALETTE.charcoal} opacity={0.07} />
+      <line x1={x1} y1={y} x2={x2} y2={y} stroke={PALETTE.ink} strokeWidth={1.4} opacity={0.55} />
+      <g stroke={PALETTE.gray} strokeWidth={1} opacity={0.42}>
+        {ticks}
+      </g>
+    </>
   );
 }
 
-/** Land, drawn as a quiet neutral mass so structure and water stay the subject. */
-function Land({ points, opacity = 0.16 }: { points: string; opacity?: number }) {
-  return <polygon points={points} fill={PALETTE.charcoal} opacity={opacity} />;
+/**
+ * A bank: a wash of tone that stops being painted where the water begins. The
+ * wash is one shape and the shore is another, because a stroke around a closed
+ * bank would draw the frame of the drawing instead of the edge of the land.
+ */
+function Land({ d, shore, opacity = 0.11 }: { d: string; shore?: string; opacity?: number }) {
+  return (
+    <>
+      <path d={d} fill={PALETTE.charcoal} opacity={opacity} />
+      {shore ? (
+        <path d={shore} fill="none" stroke={PALETTE.ink} strokeWidth={1.3} opacity={0.4} />
+      ) : null}
+    </>
+  );
+}
+
+/**
+ * A structural mass. A flat block reads as a block; the same block given a lit
+ * crest, a shaded foot and a drawn edge reads as something built. The body is
+ * laid on slightly translucent, because ink on paper is never quite opaque —
+ * that is what stops the deck of a bridge reading as a black bar. Anything too
+ * thin to carry the shading stays a plain drawn block, since a bearing four
+ * units tall has no room to be a solid.
+ */
+function Mass({
+  x,
+  y,
+  width,
+  height,
+  fill,
+  rx = 0,
+  opacity = 1,
+}: {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  fill: string;
+  rx?: number;
+  opacity?: number;
+}) {
+  const solid = height >= 7;
+
+  return (
+    <g opacity={opacity}>
+      {/* A big mass is ink laid on clean paper: the primer keeps the distance
+          behind it from showing through, and the wash on top keeps the deck of
+          a bridge from becoming a black bar. */}
+      {solid ? (
+        <rect x={x} y={y} width={width} height={height} rx={rx} fill={PALETTE.paper} opacity={0.95} />
+      ) : null}
+      <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        rx={rx}
+        fill={fill}
+        opacity={solid ? 0.85 : 0.96}
+      />
+      {solid ? (
+        <>
+          {/* Both bands are capped in size: on a tall, narrow pile a band
+              scaled to its height would read as three stacked blocks. */}
+          <rect
+            x={x}
+            y={y + height - Math.min(5, height * 0.4)}
+            width={width}
+            height={Math.min(5, height * 0.4)}
+            rx={rx}
+            fill={PALETTE.ink}
+            opacity={0.16}
+          />
+          <rect
+            x={x}
+            y={y}
+            width={width}
+            height={Math.min(3.2, Math.max(1.4, height * 0.24))}
+            rx={rx}
+            fill={PALETTE.paper}
+            opacity={0.3}
+          />
+        </>
+      ) : null}
+      <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        rx={rx}
+        fill="none"
+        stroke={PALETTE.ink}
+        strokeWidth={solid ? 1.3 : 1.1}
+        opacity={solid ? 0.6 : 0.45}
+      />
+    </g>
+  );
 }
 
 function Deck({
@@ -115,10 +403,15 @@ function Deck({
   fill?: string;
   opacity?: number;
 }) {
-  return <rect x={x1} y={y} width={x2 - x1} height={height} rx={1.5} fill={fill} opacity={opacity} />;
+  return <Mass x={x1} y={y} width={x2 - x1} height={height} rx={1.5} fill={fill} opacity={opacity} />;
 }
 
-/** A pier or an abutment: a block that widens as it reaches the ground. */
+/**
+ * A pier or an abutment: a block that widens as it reaches the ground, with
+ * the foot it stands on shaded, the light it catches at its head, and the cap
+ * its load arrives through. Its sides stay straight, so a learner can still
+ * read the batter that tells an abutment from a pier.
+ */
 function Support({
   cx,
   top,
@@ -136,14 +429,42 @@ function Support({
   fill: string;
   opacity?: number;
 }) {
-  const d = [
-    `M ${cx - topWidth / 2} ${top}`,
-    `L ${cx + topWidth / 2} ${top}`,
-    `L ${cx + bottomWidth / 2} ${bottom}`,
-    `L ${cx - bottomWidth / 2} ${bottom}`,
-    "Z",
-  ].join(" ");
-  return <path d={d} fill={fill} opacity={opacity} />;
+  const widthAt = (t: number) => topWidth + (bottomWidth - topWidth) * t;
+  const yAt = (t: number) => top + (bottom - top) * t;
+
+  /** The block between two heights, as a slice across the taper. */
+  const slice = (from: number, to: number) =>
+    [
+      `M ${cx - widthAt(from) / 2} ${yAt(from)}`,
+      `L ${cx + widthAt(from) / 2} ${yAt(from)}`,
+      `L ${cx + widthAt(to) / 2} ${yAt(to)}`,
+      `L ${cx - widthAt(to) / 2} ${yAt(to)}`,
+      "Z",
+    ].join(" ");
+
+  const body = slice(0, 1);
+  const capX = cx - topWidth / 2 - 1.6;
+  const capWidth = topWidth + 3.2;
+
+  return (
+    <g opacity={opacity}>
+      <path d={body} fill={fill} opacity={0.92} />
+      <path d={slice(0.74, 1)} fill={PALETTE.ink} opacity={0.15} />
+      <rect x={capX} y={top - 3} width={capWidth} height={3} rx={0.8} fill={fill} opacity={0.92} />
+      <path d={body} fill="none" stroke={PALETTE.ink} strokeWidth={1.2} opacity={0.55} />
+      <rect
+        x={capX}
+        y={top - 3}
+        width={capWidth}
+        height={3}
+        rx={0.8}
+        fill="none"
+        stroke={PALETTE.ink}
+        strokeWidth={1.1}
+        opacity={0.55}
+      />
+    </g>
+  );
 }
 
 /** The arch curve and the height of any point on it, so hangers can land on it. */
@@ -155,6 +476,23 @@ function archPath(x1: number, x2: number, base: number, rise: number) {
 function archPoint(x: number, x1: number, x2: number, base: number, rise: number) {
   const t = (x - x1) / (x2 - x1);
   return base - 4 * rise * t * (1 - t);
+}
+
+/**
+ * The band of an arch ring, between the curve it springs from and the curve it
+ * carries. Written as a closed shape between two parallel quadratics, so the
+ * ring has both its edge lines instead of being one fat stroke.
+ */
+function archRingPath(x1: number, x2: number, base: number, rise: number, thickness: number) {
+  const mid = (x1 + x2) / 2;
+  const foot = base + thickness;
+  return [
+    `M ${x1} ${base}`,
+    `Q ${mid} ${base - 2 * rise} ${x2} ${base}`,
+    `L ${x2} ${foot}`,
+    `Q ${mid} ${foot - 2 * rise} ${x1} ${foot}`,
+    "Z",
+  ].join(" ");
 }
 
 function Arch({
@@ -175,14 +513,24 @@ function Arch({
   opacity?: number;
 }) {
   return (
-    <path
-      d={archPath(x1, x2, base, rise)}
-      fill="none"
-      stroke={stroke}
-      strokeWidth={width}
-      strokeLinecap="round"
-      opacity={opacity}
-    />
+    <g opacity={opacity}>
+      <path d={archRingPath(x1, x2, base, rise, width)} fill={stroke} />
+      {/* Both edges of the ring drawn, the way an arch is set out on paper. */}
+      <path
+        d={archPath(x1, x2, base, rise)}
+        fill="none"
+        stroke={PALETTE.ink}
+        strokeWidth={1}
+        opacity={0.3}
+      />
+      <path
+        d={archPath(x1, x2, base + width, rise)}
+        fill="none"
+        stroke={PALETTE.ink}
+        strokeWidth={1}
+        opacity={0.3}
+      />
+    </g>
   );
 }
 
@@ -206,15 +554,20 @@ function Cable({
   width?: number;
   opacity?: number;
 }) {
+  const d = `M ${x1} ${y1} Q ${(x1 + x2) / 2} ${controlY} ${x2} ${y2}`;
   return (
-    <path
-      d={`M ${x1} ${y1} Q ${(x1 + x2) / 2} ${controlY} ${x2} ${y2}`}
-      fill="none"
-      stroke={stroke}
-      strokeWidth={width}
-      strokeLinecap="round"
-      opacity={opacity}
-    />
+    <g opacity={opacity}>
+      <path d={d} fill="none" stroke={stroke} strokeWidth={width} strokeLinecap="round" />
+      {/* A cable catches the light along its length, which is what makes it read as wire. */}
+      <path
+        d={d}
+        fill="none"
+        stroke={PALETTE.paper}
+        strokeWidth={width * 0.3}
+        strokeLinecap="round"
+        opacity={0.3}
+      />
+    </g>
   );
 }
 
@@ -290,9 +643,9 @@ function DimensionLine({
 }) {
   return (
     <g opacity={opacity}>
-      <line x1={x1} y1={y} x2={x2} y2={y} stroke={PALETTE.yellow} strokeWidth={1.6} />
-      <line x1={x1} y1={y - 4} x2={x1} y2={y + 4} stroke={PALETTE.yellow} strokeWidth={1.6} />
-      <line x1={x2} y1={y - 4} x2={x2} y2={y + 4} stroke={PALETTE.yellow} strokeWidth={1.6} />
+      <line x1={x1} y1={y} x2={x2} y2={y} stroke={PALETTE.yellow} strokeWidth={1.3} />
+      <line x1={x1} y1={y - 4} x2={x1} y2={y + 4} stroke={PALETTE.yellow} strokeWidth={1.3} />
+      <line x1={x2} y1={y - 4} x2={x2} y2={y + 4} stroke={PALETTE.yellow} strokeWidth={1.3} />
       <Tag x={(x1 + x2) / 2} y={y - 3}>
         {label}
       </Tag>
@@ -345,7 +698,11 @@ function Tag({
   );
 }
 
-/** The frame every scene draws inside: three panels for a set of comparisons. */
+/**
+ * The frame a comparison draws inside: one sheet per system, on the same
+ * paper. A sheet is lighter than the plate and only faintly ruled, so three
+ * systems read as three drawings rather than three grey boxes.
+ */
 function Panels({ count }: { count: number }) {
   const gap = 4;
   const height = (SCENE_HEIGHT - gap * (count + 1)) / count;
@@ -354,16 +711,28 @@ function Panels({ count }: { count: number }) {
       {Array.from({ length: count }, (_, i) => {
         const y = gap + i * (height + gap);
         return (
-          <rect
-            key={i}
-            x={gap}
-            y={y}
-            width={SCENE_WIDTH - gap * 2}
-            height={height}
-            rx={5}
-            fill={PALETTE.charcoal}
-            opacity={0.06}
-          />
+          <g key={i}>
+            <rect
+              x={gap}
+              y={y}
+              width={SCENE_WIDTH - gap * 2}
+              height={height}
+              rx={6}
+              fill={PALETTE.paper}
+              opacity={0.72}
+            />
+            <rect
+              x={gap}
+              y={y}
+              width={SCENE_WIDTH - gap * 2}
+              height={height}
+              rx={6}
+              fill="none"
+              stroke={PALETTE.ink}
+              strokeWidth={1}
+              opacity={0.1}
+            />
+          </g>
         );
       })}
     </>
@@ -377,8 +746,20 @@ function panelTop(count: number, i: number) {
   return gap + i * (height + gap);
 }
 
-function Plate() {
-  return <rect x={0} y={0} width={SCENE_WIDTH} height={SCENE_HEIGHT} fill={PALETTE.fog} />;
+/**
+ * The paper every scene is drawn on, and always the first thing a scene draws.
+ * It carries the washes with it, so no drawing can reach for a gradient the
+ * page has not defined, and it lays the paper's own light across the top:
+ * `sky` is how far down that light reaches before it gives out.
+ */
+function Plate({ sky = 104 }: { sky?: number }) {
+  return (
+    <>
+      <Washes />
+      <rect x={0} y={0} width={SCENE_WIDTH} height={SCENE_HEIGHT} fill={PALETTE.fog} />
+      <Sky height={sky} />
+    </>
+  );
 }
 
 // ── Scenes ─────────────────────────────────────────────────────────────────
@@ -388,16 +769,30 @@ function Overview({ highlight, labels }: SceneShapes) {
   const { fade } = painter({ highlight, labels });
   return (
     <>
-      <Plate />
+      <Plate sky={122} />
+      {/* A river crossing: a far range, the water, the banks it runs between. */}
+      <Distance base={126} />
       <Water y={126} />
-      <Land points="0,180 0,120 22,122 48,138 48,180" />
-      <Land points="320,180 320,120 298,122 272,138 272,180" />
+      <Land
+        d="M 0 110 Q 14 110 24 120 Q 36 130 42 144 Q 50 164 64 180 L 0 180 Z"
+        shore="M 0 110 Q 14 110 24 120 Q 36 130 42 144 Q 50 164 64 180"
+        opacity={0.19}
+      />
+      <Land
+        d="M 320 110 Q 306 110 296 120 Q 284 130 278 144 Q 270 164 256 180 L 320 180 Z"
+        shore="M 320 110 Q 306 110 296 120 Q 284 130 278 144 Q 270 164 256 180"
+        opacity={0.19}
+      />
       <g opacity={fade("foundation")}>
-        <rect x={104} y={156} width={28} height={11} fill={PALETTE.gray} opacity={0.75} />
-        <rect x={188} y={156} width={28} height={11} fill={PALETTE.gray} opacity={0.75} />
-        <rect x={24} y={138} width={30} height={11} fill={PALETTE.gray} opacity={0.75} />
-        <rect x={266} y={138} width={30} height={11} fill={PALETTE.gray} opacity={0.75} />
+        {/* Set into the bed, so they are read through the water rather than on it. */}
+        <Mass x={104} y={156} width={28} height={11} rx={2} fill={blockColour(highlight?.includes("foundation") ?? false, true)} opacity={0.6} />
+        <Mass x={188} y={156} width={28} height={11} rx={2} fill={blockColour(highlight?.includes("foundation") ?? false, true)} opacity={0.6} />
+        <Mass x={24} y={138} width={30} height={11} rx={2} fill={blockColour(highlight?.includes("foundation") ?? false, true)} opacity={0.6} />
+        <Mass x={266} y={138} width={30} height={11} rx={2} fill={blockColour(highlight?.includes("foundation") ?? false, true)} opacity={0.6} />
       </g>
+      {/* The piers stand in the river, so the river answers them. */}
+      <Reflection cx={118} y={166} width={22} />
+      <Reflection cx={202} y={166} width={22} />
       <g opacity={fade("abutment")}>
         <Support cx={40} top={100} bottom={138} topWidth={26} bottomWidth={34} fill={blockColour(highlight?.includes("abutment") ?? false, true)} />
         <Support cx={280} top={100} bottom={138} topWidth={26} bottomWidth={34} fill={blockColour(highlight?.includes("abutment") ?? false, true)} />
@@ -411,10 +806,10 @@ function Overview({ highlight, labels }: SceneShapes) {
       </g>
       {/* The bearings sit where the deck meets its supports. */}
       <g opacity={fade("bearing")}>
-        <rect x={112} y={98} width={12} height={4} fill={blockColour(highlight?.includes("bearing") ?? false, true)} />
-        <rect x={196} y={98} width={12} height={4} fill={blockColour(highlight?.includes("bearing") ?? false, true)} />
-        <rect x={33} y={98} width={14} height={4} fill={blockColour(highlight?.includes("bearing") ?? false, true)} />
-        <rect x={273} y={98} width={14} height={4} fill={blockColour(highlight?.includes("bearing") ?? false, true)} />
+        <rect x={112} y={98} width={12} height={4} rx={1} fill={blockColour(highlight?.includes("bearing") ?? false, true)} />
+        <rect x={196} y={98} width={12} height={4} rx={1} fill={blockColour(highlight?.includes("bearing") ?? false, true)} />
+        <rect x={33} y={98} width={14} height={4} rx={1} fill={blockColour(highlight?.includes("bearing") ?? false, true)} />
+        <rect x={273} y={98} width={14} height={4} rx={1} fill={blockColour(highlight?.includes("bearing") ?? false, true)} />
       </g>
       {labels ? (
         <>
@@ -441,25 +836,53 @@ function Superstructure({ highlight, labels }: SceneShapes) {
     <>
       <Plate />
       <g opacity={fade("railing")}>
-        <line x1={24} y1={58} x2={104} y2={58} stroke={blockColour(on("railing"), true)} strokeWidth={2.4} />
-        <line x1={30} y1={58} x2={30} y2={68} stroke={blockColour(on("railing"), true)} strokeWidth={2.4} />
-        <line x1={64} y1={58} x2={64} y2={68} stroke={blockColour(on("railing"), true)} strokeWidth={2.4} />
-        <line x1={98} y1={58} x2={98} y2={68} stroke={blockColour(on("railing"), true)} strokeWidth={2.4} />
+        {[30, 64, 98].map((post) => (
+          <line
+            key={post}
+            x1={post}
+            y1={58}
+            x2={post}
+            y2={68}
+            stroke={blockColour(on("railing"), true)}
+            strokeWidth={2.2}
+            strokeLinecap="round"
+          />
+        ))}
+        <line
+          x1={24}
+          y1={58}
+          x2={104}
+          y2={58}
+          stroke={blockColour(on("railing"), true)}
+          strokeWidth={2.2}
+          strokeLinecap="round"
+        />
       </g>
       <g opacity={fade("paving")}>
-        <rect x={30} y={68} width={260} height={7} fill={washColour(on("paving"))} />
+        <Mass x={30} y={68} width={260} height={7} fill={washColour(on("paving"))} />
       </g>
       <g opacity={fade("deck-slab")}>
         {/* A shade lighter than the girder, so the three layers read apart. */}
-        <rect x={30} y={75} width={260} height={10} fill={blockColour(on("deck-slab"), true)} />
+        <Mass x={30} y={75} width={260} height={10} fill={blockColour(on("deck-slab"), true)} />
       </g>
       <g opacity={fade("main-girder")}>
-        <rect x={30} y={85} width={260} height={22} fill={blockColour(on("main-girder"), false)} />
-        <line x1={36} y1={96} x2={284} y2={96} stroke={PALETTE.gray} strokeWidth={1} strokeDasharray="6 6" />
+        <Mass x={30} y={85} width={260} height={22} fill={blockColour(on("main-girder"), false)} />
+        <line
+          x1={38}
+          y1={96}
+          x2={282}
+          y2={96}
+          stroke={PALETTE.gray}
+          strokeWidth={0.8}
+          strokeDasharray="9 8"
+          opacity={0.85}
+        />
       </g>
       <g opacity={fade("cross-beam")}>
-        <rect x={244} y={85} width={12} height={22} fill={blockColour(on("cross-beam"), true)} />
+        <Mass x={244} y={85} width={12} height={22} fill={blockColour(on("cross-beam"), true)} />
       </g>
+      {/* The shadow the deck lays on the paper, so the drawing sits rather than floats. */}
+      <Wash y={107} height={7} opacity={0.05} />
       {labels ? (
         <>
           <Tag x={40} y={140}>
@@ -491,14 +914,15 @@ function Bearings({ highlight, labels }: SceneShapes) {
     <>
       <Plate />
       <g opacity={fade("main-girder")}>
-        <rect x={30} y={78} width={260} height={22} fill={blockColour(on("main-girder"), false)} />
+        <Mass x={30} y={78} width={260} height={22} fill={blockColour(on("main-girder"), false)} />
       </g>
       <g opacity={fade("bearing")}>
-        <rect x={118} y={100} width={24} height={16} rx={2} fill={bearing} />
-        <rect x={198} y={100} width={24} height={16} rx={2} fill={bearing} />
+        {/* The bearing is small and it is the subject, so it is drawn sharp. */}
+        <Mass x={118} y={100} width={24} height={16} rx={2} fill={bearing} />
+        <Mass x={198} y={100} width={24} height={16} rx={2} fill={bearing} />
       </g>
       <g opacity={fade("pier-cap")}>
-        <rect x={96} y={116} width={148} height={14} fill={blockColour(on("pier-cap"), true)} />
+        <Mass x={96} y={116} width={148} height={14} fill={blockColour(on("pier-cap"), true)} />
       </g>
       <g opacity={fade("pier")}>
         <Support cx={170} top={130} bottom={180} topWidth={46} bottomWidth={58} fill={blockColour(on("pier"), true)} />
@@ -537,11 +961,15 @@ function Supports({ highlight, labels }: SceneShapes) {
   return (
     <>
       <Plate />
-      <Land points="0,84 44,84 44,156 0,180" />
+      {/* A cutting through the bank: earth on the left, the deck running out of frame. */}
+      <Wash y={156} height={24} opacity={0.05} />
+      <Land d="M 0 84 L 44 84 L 44 156 L 0 180 Z" opacity={0.16} />
+      <line x1={0} y1={84} x2={44} y2={84} stroke={PALETTE.ink} strokeWidth={1.2} opacity={0.3} />
       <Ground y={156} />
       <g opacity={fade("cone-slope")}>
-        <polygon points="82,156 116,156 82,114" fill={PALETTE.gray} opacity={0.5} />
-        <g stroke={PALETTE.gray} strokeWidth={1} opacity={0.9}>
+        {/* Stone pitching over the slope, drawn as courses of stone. */}
+        <polygon points="82,156 116,156 82,114" fill={PALETTE.gray} opacity={0.42} />
+        <g stroke={PALETTE.charcoal} strokeWidth={0.9} opacity={0.5}>
           <line x1={82} y1={128} x2={92} y2={122} />
           <line x1={82} y1={142} x2={104} y2={132} />
           <line x1={82} y1={156} x2={116} y2={144} />
@@ -589,36 +1017,22 @@ function Foundations({ highlight, labels }: SceneShapes) {
   return (
     <>
       <Plate />
-      <rect x={0} y={140} width={SCENE_WIDTH} height={40} fill={PALETTE.butter} opacity={0.75} />
-      <g stroke={PALETTE.yellowDeep} strokeWidth={1.2} opacity={0.75}>
-        <line x1={0} y1={152} x2={26} y2={144} />
-        <line x1={26} y1={152} x2={52} y2={144} />
-        <line x1={52} y1={152} x2={78} y2={144} />
-        <line x1={78} y1={152} x2={104} y2={144} />
-        <line x1={104} y1={152} x2={130} y2={144} />
-        <line x1={130} y1={152} x2={156} y2={144} />
-        <line x1={156} y1={152} x2={182} y2={144} />
-        <line x1={182} y1={152} x2={208} y2={144} />
-        <line x1={208} y1={152} x2={234} y2={144} />
-        <line x1={234} y1={152} x2={260} y2={144} />
-        <line x1={260} y1={152} x2={286} y2={144} />
-        <line x1={286} y1={152} x2={312} y2={144} />
+      {/* The ground the piles are driven into: a wash for the soil, strokes for its grain. */}
+      <Wash y={140} height={40} opacity={0.08} />
+      <line x1={0} y1={140} x2={SCENE_WIDTH} y2={140} stroke={PALETTE.ink} strokeWidth={1.1} opacity={0.28} />
+      <g stroke={PALETTE.charcoal} strokeWidth={1} opacity={0.35}>
+        {Array.from({ length: 12 }, (_, course) => (
+          <line key={course} x1={course * 26} y1={152} x2={course * 26 + 26} y2={144} />
+        ))}
       </g>
       <Ground y={64} />
       <g opacity={fade("pile")}>
         {[106, 138, 170, 202].map((x) => (
-          <rect
-            key={x}
-            x={x}
-            y={82}
-            width={14}
-            height={66}
-            fill={blockColour(on("pile"), true)}
-          />
+          <Mass key={x} x={x} y={82} width={14} height={66} fill={blockColour(on("pile"), true)} />
         ))}
       </g>
       <g opacity={fade("pile-cap")}>
-        <rect x={100} y={64} width={122} height={18} rx={2} fill={blockColour(on("pile-cap"), true)} />
+        <Mass x={100} y={64} width={122} height={18} rx={2} fill={blockColour(on("pile-cap"), true)} />
       </g>
       <g opacity={fade("pier")}>
         <Support cx={160} top={16} bottom={64} topWidth={26} bottomWidth={34} fill={blockColour(on("pier"), true)} />
@@ -650,12 +1064,14 @@ function Fittings({ highlight, labels }: SceneShapes) {
     <>
       <Plate />
       <g opacity={fade("lighting")}>
+        {/* A lamp at dusk: the one warm note on an otherwise inked deck. */}
+        <circle cx={251} cy={60} r={11} fill={PALETTE.butter} opacity={0.22} />
         <line x1={250} y1={52} x2={250} y2={96} stroke={blockColour(on("lighting"), true)} strokeWidth={3} />
         <rect x={242} y={48} width={18} height={5} rx={2} fill={blockColour(on("lighting"), true)} />
-        <circle cx={251} cy={60} r={4} fill={PALETTE.yellow} opacity={0.8} />
+        <circle cx={251} cy={60} r={4} fill={PALETTE.yellow} opacity={0.9} />
       </g>
       <g opacity={fade("paving")}>
-        <rect x={20} y={88} width={280} height={9} fill={washColour(on("paving"))} />
+        <Mass x={20} y={88} width={280} height={9} fill={washColour(on("paving"))} />
       </g>
       <g opacity={fade("drain")}>
         <line x1={128} y1={94} x2={128} y2={126} stroke={blockColour(on("drain"), true)} strokeWidth={3} />
@@ -667,7 +1083,7 @@ function Fittings({ highlight, labels }: SceneShapes) {
         <line x1={165} y1={88} x2={155} y2={97} stroke={PALETTE.yellow} strokeWidth={2} />
       </g>
       <g opacity={fade("superstructure")}>
-        <rect x={20} y={97} width={280} height={16} fill={PALETTE.ink} />
+        <Mass x={20} y={97} width={280} height={16} fill={PALETTE.ink} />
       </g>
       <g opacity={fade("railing")}>
         <line x1={16} y1={74} x2={112} y2={74} stroke={blockColour(on("railing"), true)} strokeWidth={2.6} />
@@ -706,10 +1122,15 @@ function Carries({ highlight, labels }: SceneShapes) {
     <>
       <Plate />
       <Water y={144} />
-      {/* A boat on the water the bridge crosses. */}
+      <Reflection cx={140} y={164} width={40} opacity={0.13} />
+      {/* A boat on the waterway the bridge crosses, drawn as one stroke of a hull. */}
       <g opacity={fade("waterway")}>
-        <polygon points="110,152 170,152 160,164 120,164" fill={PALETTE.ink} />
-        <rect x={128} y={142} width={24} height={10} rx={2} fill={PALETTE.charcoal} />
+        <path
+          d="M 108 150 Q 140 148 172 150 Q 166 163 140 164 Q 114 163 108 150 Z"
+          fill={PALETTE.ink}
+          opacity={0.9}
+        />
+        <rect x={128} y={141} width={24} height={9} rx={1.5} fill={PALETTE.charcoal} />
       </g>
 
       {/* The supports, standing in the water. */}
@@ -740,9 +1161,19 @@ function Carries({ highlight, labels }: SceneShapes) {
       </g>
 
       <g opacity={fade("footpath")}>
-        <rect x={270} y={93} width={26} height={7} fill={washColour(on("footpath"))} />
-        <circle cx={283} cy={84} r={4} fill={on("footpath") ? PALETTE.yellowDeep : PALETTE.ink} />
-        <rect x={281} y={88} width={4} height={6} fill={on("footpath") ? PALETTE.yellowDeep : PALETTE.ink} />
+        <Mass x={270} y={93} width={26} height={7} fill={washColour(on("footpath"))} />
+        {/* A person on the footpath: the only figure in these drawings, and the
+            reason a bridge has a footpath at all. */}
+        <g
+          stroke={on("footpath") ? PALETTE.yellowDeep : PALETTE.ink}
+          strokeWidth={1.6}
+          strokeLinecap="round"
+        >
+          <line x1={283} y1={86} x2={283} y2={91.5} />
+          <line x1={283} y1={91.5} x2={280.5} y2={93} />
+          <line x1={283} y1={91.5} x2={285.5} y2={93} />
+        </g>
+        <circle cx={283} cy={83.6} r={2.4} fill={on("footpath") ? PALETTE.yellowDeep : PALETTE.ink} />
       </g>
 
       {labels ? (
@@ -780,21 +1211,42 @@ function Levels({ highlight, labels }: SceneShapes) {
   ];
   return (
     <>
-      <Plate />
-      <rect x={0} y={78} width={SCENE_WIDTH} height={74} fill={PALETTE.butter} opacity={0.65} />
-      <path d="M 0 152 Q 160 132 320 152" fill="none" stroke={PALETTE.gray} strokeWidth={2} opacity={0.7} />
-      <rect x={0} y={152} width={SCENE_WIDTH} height={28} fill={PALETTE.charcoal} opacity={0.14} />
+      <Plate sky={78} />
+      {/* The river in section: water down to the bed line, and the bed below it. */}
+      <path d="M 0 78 H 320 V 152 Q 160 132 0 152 Z" fill="url(#bridge-wash-water)" />
+      <line x1={0} y1={78} x2={SCENE_WIDTH} y2={78} stroke={PALETTE.ink} strokeWidth={1.2} opacity={0.42} />
+      {/* Water in section is drawn with short strokes, the way a cut face is. */}
+      <Ripples y={78} />
+      <path d="M 0 152 Q 160 132 320 152" fill="none" stroke={PALETTE.ink} strokeWidth={1.3} opacity={0.45} />
+      <path
+        d="M 0 152 Q 160 132 320 152 L 320 180 L 0 180 Z"
+        fill={PALETTE.charcoal}
+        opacity={0.12}
+      />
       <g opacity={fade("clearance")}>
-        <rect x={104} y={62} width={116} height={52} fill={PALETTE.yellow} opacity={0.28} />
-        <Arrow x1={160} y1={112} x2={160} y2={66} head={5} />
-        <Arrow x1={160} y1={66} x2={160} y2={112} head={5} />
+        {/* The space kept clear under the deck: measured, and only washed in
+            with the bright note when the clearance is the part being read. */}
+        <rect
+          x={104}
+          y={62}
+          width={116}
+          height={52}
+          fill={on("clearance") ? PALETTE.yellow : "none"}
+          fillOpacity={on("clearance") ? 0.2 : 0}
+          stroke={PALETTE.yellowDeep}
+          strokeWidth={1.1}
+          strokeDasharray="7 6"
+          strokeOpacity={0.55}
+        />
+        <Arrow x1={160} y1={112} x2={160} y2={68} head={7} width={1.6} />
+        <Arrow x1={160} y1={66} x2={160} y2={110} head={7} width={1.6} />
       </g>
       <g opacity={fade("superstructure")}>
         <Deck x1={20} x2={300} y={52} height={10} />
       </g>
       <g opacity={fade("abutment")}>
-        <rect x={8} y={62} width={22} height={90} fill={PALETTE.charcoal} />
-        <rect x={290} y={62} width={22} height={90} fill={PALETTE.charcoal} />
+        <Mass x={8} y={62} width={22} height={90} fill={PALETTE.charcoal} />
+        <Mass x={290} y={62} width={22} height={90} fill={PALETTE.charcoal} />
       </g>
       <g opacity={fade("pier")}>
         <Support cx={92} top={62} bottom={150} topWidth={13} bottomWidth={18} fill={PALETTE.charcoal} />
@@ -802,14 +1254,16 @@ function Levels({ highlight, labels }: SceneShapes) {
       </g>
       {water.map(({ id, y, name }) => (
         <g key={id} opacity={fade(id)}>
+          {/* A level is a quiet line across the river until it is the one in hand. */}
           <line
             x1={0}
             y1={y}
             x2={SCENE_WIDTH}
             y2={y}
             stroke={on(id) ? PALETTE.yellow : PALETTE.yellowDeep}
-            strokeWidth={on(id) ? 3 : 1.6}
-            strokeDasharray={id === "design-flood-level" ? undefined : "9 5"}
+            strokeWidth={on(id) ? 2.6 : 0.9}
+            opacity={on(id) ? 1 : 0.4}
+            strokeDasharray={id === "design-flood-level" ? undefined : "14 9"}
           />
           {labels ? (
             <Tag x={296} y={y - 6} anchor="end" colour={PALETTE.yellowDeep}>
@@ -1002,7 +1456,7 @@ function ArchScene({ highlight, labels }: SceneShapes) {
   const ring = blockColour(on("arch-ring"), false);
   return (
     <>
-      <Plate />
+      <Plate sky={88} />
       <Ground y={88} />
       <Ground y={176} />
       <g opacity={fade("thrust")}>
@@ -1118,11 +1572,13 @@ function CableStayed({ highlight, labels }: SceneShapes) {
   const anchors = [40, 72, 104, 136, 184, 216, 248, 280];
   return (
     <>
-      <Plate />
+      <Plate sky={140} />
+      {/* A stay-cable span over open country: a far range, then the bridge. */}
+      <Distance base={150} height={38} />
       <Ground y={150} />
       <g opacity={fade("anchor")}>
-        <rect x={4} y={138} width={22} height={14} fill={PALETTE.charcoal} />
-        <rect x={294} y={138} width={22} height={14} fill={PALETTE.charcoal} />
+        <Mass x={4} y={138} width={22} height={14} fill={PALETTE.charcoal} />
+        <Mass x={294} y={138} width={22} height={14} fill={PALETTE.charcoal} />
       </g>
       <g opacity={fade("stay-cable")}>
         {anchors.map((x) => (
@@ -1143,7 +1599,7 @@ function CableStayed({ highlight, labels }: SceneShapes) {
         <Support cx={160} top={22} bottom={150} topWidth={12} bottomWidth={22} fill={blockColour(on("tower"), true)} />
       </g>
       <g opacity={fade("main-girder")}>
-        <rect x={20} y={deckY} width={280} height={12} fill={blockColour(on("main-girder"), false)} />
+        <Mass x={20} y={deckY} width={280} height={12} fill={blockColour(on("main-girder"), false)} />
       </g>
       <g opacity={fade("elastic-support")}>
         <Arrow x1={104} y1={148} x2={104} y2={deckY + 14} head={5} />
@@ -1179,7 +1635,9 @@ function Suspension({ highlight, labels }: SceneShapes) {
   const hangers = [104, 124, 144, 176, 196, 216];
   return (
     <>
-      <Plate />
+      <Plate sky={142} />
+      {/* The longest span there is, over open country. */}
+      <Distance base={152} height={38} />
       <Ground y={152} />
       <g opacity={fade("hanger")}>
         {hangers.map((x) => (
@@ -1195,6 +1653,7 @@ function Suspension({ highlight, labels }: SceneShapes) {
         ))}
       </g>
       <g opacity={fade("main-cable")}>
+        {/* One cable: down to the anchorages, over both towers, sagging between them. */}
         <path
           d={`M 15 126 L 84 ${top} Q 160 ${control} 236 ${top} L 305 126`}
           fill="none"
@@ -1202,18 +1661,26 @@ function Suspension({ highlight, labels }: SceneShapes) {
           strokeWidth={on("main-cable") ? 6 : 4.5}
           strokeLinecap="round"
         />
+        <path
+          d={`M 15 126 L 84 ${top} Q 160 ${control} 236 ${top} L 305 126`}
+          fill="none"
+          stroke={PALETTE.paper}
+          strokeWidth={1.4}
+          strokeLinecap="round"
+          opacity={0.28}
+        />
       </g>
       <g opacity={fade("tower")}>
         <Support cx={84} top={top - 6} bottom={152} topWidth={12} bottomWidth={20} fill={blockColour(on("tower"), true)} />
         <Support cx={236} top={top - 6} bottom={152} topWidth={12} bottomWidth={20} fill={blockColour(on("tower"), true)} />
       </g>
       <g opacity={fade("stiffening-girder")}>
-        <rect x={18} y={deckY} width={284} height={12} fill={blockColour(on("stiffening-girder"), false)} />
+        <Mass x={18} y={deckY} width={284} height={12} fill={blockColour(on("stiffening-girder"), false)} />
       </g>
       <g opacity={fade("anchorage")}>
         {/* The block the cable's pull is tied down into, standing on the bank. */}
-        <rect x={0} y={122} width={30} height={30} rx={3} fill={blockColour(on("anchorage"), true)} />
-        <rect x={290} y={122} width={30} height={30} rx={3} fill={blockColour(on("anchorage"), true)} />
+        <Mass x={0} y={122} width={30} height={30} rx={3} fill={blockColour(on("anchorage"), true)} />
+        <Mass x={290} y={122} width={30} height={30} rx={3} fill={blockColour(on("anchorage"), true)} />
       </g>
       {labels ? (
         <>

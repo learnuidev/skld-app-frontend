@@ -212,39 +212,139 @@ describe("abacus artwork", () => {
 });
 
 describe("BridgeArt", () => {
-  it("draws two towers standing on the water", () => {
+  it("draws the bridge as one stone body, with its arch cut into it", () => {
     const { container } = render(<BridgeArt />);
+    const stone = painted(container, PALETTE.charcoal);
 
-    const towers = painted(container, PALETTE.charcoal);
+    // The whole bridge is one silhouette: not a stack of bars.
+    expect(stone).toHaveLength(1);
+    expect(stone[0].tagName.toLowerCase()).toBe("path");
 
-    // Two towers and the two anchorages holding the cable ends.
-    expect(towers).toHaveLength(4);
-    expect(new Set(towers.slice(0, 2).map((tower) => tower.getAttribute("x"))).size).toBe(2);
+    const d = stone[0].getAttribute("d") ?? "";
+    // The deck crossing the top, and the wide arch cut back beneath it — the
+    // two curves that make the shape a bridge rather than a block of stone.
+    expect(d).toContain("Q 50 40.5 96 47.5");
+    expect(d).toContain("Q 50 38 17 68");
+    expect(d.endsWith("Z")).toBe(true);
   });
 
-  it("hangs the deck from a cable, with the roadway as the bright note", () => {
+  it("inks the deck slab and the arch ring over that stone", () => {
     const { container } = render(<BridgeArt />);
 
-    // The girder in ink, the roadway in the bright note, one cable over both towers.
-    expect(painted(container, PALETTE.ink)).toHaveLength(1);
+    // Two filled shapes in the subject's own ink: the roadway and the ring of
+    // stones carrying the span. Everything else the bridge is drawn with is a
+    // stroke.
+    const inked = painted(container, PALETTE.ink);
+    expect(inked).toHaveLength(2);
+    for (const shape of inked) {
+      expect(shape.tagName.toLowerCase()).toBe("path");
+    }
+
+    // Joints square on the soffit, cut into the stone in the paper's tone.
+    expect(
+      container.querySelectorAll(`[stroke="${PALETTE.paper}"]`).length,
+    ).toBeGreaterThan(4);
+  });
+
+  it("carries a parapet above the deck, on a post in every bay", () => {
+    const { container } = render(<BridgeArt />);
+    const ink = [...container.querySelectorAll(`[stroke="${PALETTE.ink}"]`)];
+    const posts = ink.filter((stroke) => stroke.tagName.toLowerCase() === "line");
+
+    // One rail, and the posts holding it clear of the deck.
+    expect(ink.filter((stroke) => stroke.tagName.toLowerCase() === "path")).toHaveLength(1);
+    expect(posts.length).toBeGreaterThan(3);
+  });
+
+  it("crosses water painted as a wash, never a coloured band", () => {
+    const { container } = render(<BridgeArt />);
+    const wash = container.querySelector(`[fill="url(#bridge-art-water)"]`);
+
+    expect(wash).toBeInTheDocument();
+    // The horizon is set low, as a landscape sets it: the water is the bottom
+    // third of the frame.
+    expect(Number(wash!.getAttribute("y"))).toBeGreaterThanOrEqual(60);
+    expect(Number(wash!.getAttribute("height"))).toBeGreaterThanOrEqual(25);
+
+    // Nothing warm is laid on it as a band — no mustard stripe, no yellow
+    // dashes. The only warm mark in the water is the moon's own whisper.
+    for (const rect of container.querySelectorAll("rect")) {
+      expect([PALETTE.yellow, PALETTE.butter]).not.toContain(rect.getAttribute("fill"));
+    }
     expect(painted(container, PALETTE.yellow)).toHaveLength(1);
-    expect(container.querySelectorAll("path")).toHaveLength(1);
-    expect(container.querySelector("path")).toHaveAttribute("stroke", PALETTE.ink);
-    // Five hangers dropping from the cable to the deck.
-    expect(container.querySelectorAll(`[stroke="${PALETTE.gray}"]`)).toHaveLength(5);
   });
 
-  it("draws the water it crosses", () => {
+  it("textures the water with pale ripples, every one below the horizon", () => {
     const { container } = render(<BridgeArt />);
+    const ripples = [...container.querySelectorAll(`[stroke="${PALETTE.gray}"]`)];
 
-    expect(painted(container, PALETTE.butter)).toHaveLength(1);
-    expect(container.querySelector(`[stroke="${PALETTE.yellowDeep}"]`)).toBeInTheDocument();
+    expect(ripples.length).toBeGreaterThanOrEqual(5);
+    for (const ripple of ripples) {
+      // Its first point: the start of the stroke, which is drawn on the water.
+      const [, , y] = (ripple.getAttribute("d") ?? "").split(" ");
+      expect(Number(y)).toBeGreaterThanOrEqual(68);
+      expect(Number(ripple.getAttribute("opacity"))).toBeLessThan(0.5);
+    }
   });
 
-  it("is described for screen readers", () => {
-    render(<BridgeArt />);
+  it("sets the bridge in front of two washed ranges, the far one paler", () => {
+    const { container } = render(<BridgeArt />);
+    const ranges = [...container.querySelectorAll(`[fill="url(#bridge-art-ridge)"]`)];
 
-    expect(screen.getByRole("img")).toHaveAccessibleName(/suspension bridge/i);
+    // Two ranges, the further one drawn first and washed more faintly.
+    expect(ranges).toHaveLength(2);
+    expect(Number(ranges[0].getAttribute("opacity"))).toBeLessThan(
+      Number(ranges[1].getAttribute("opacity") ?? 1),
+    );
+    // And mist, laid between them and the water.
+    expect(container.querySelector(`[fill="url(#bridge-art-mist)"]`)).toBeInTheDocument();
+  });
+
+  it("keeps the bright note for the moon, high in the empty sky", () => {
+    const { container } = render(<BridgeArt />);
+    const bright = painted(container, PALETTE.yellow);
+
+    // Exactly one shape in the drawing's warmest colour: the moon's disc.
+    expect(bright).toHaveLength(1);
+    expect(bright[0].tagName.toLowerCase()).toBe("circle");
+    expect(Number(bright[0].getAttribute("cy"))).toBeLessThan(40);
+    // With a halo to glow into, rather than a disc sitting flat.
+    expect(container.querySelector(`[fill="url(#bridge-art-moon-halo)"]`)).toBeInTheDocument();
+  });
+
+  it("paints only in the shared palette, and never draws text", () => {
+    const { container } = render(<BridgeArt />);
+    const allowed = new Set<string>(Object.values(PALETTE));
+    const colours = [...container.querySelectorAll("[fill], [stroke], [stop-color]")]
+      .flatMap((shape) => [
+        shape.getAttribute("fill"),
+        shape.getAttribute("stroke"),
+        shape.getAttribute("stop-color"),
+      ])
+      .filter((colour): colour is string => colour !== null && colour !== "none");
+
+    expect(colours.length).toBeGreaterThan(0);
+    for (const colour of colours) {
+      // Washes are referenced by id rather than painted directly.
+      if (colour.startsWith("url(#")) {
+        expect(colour).toMatch(/^url\(#bridge-art-/);
+        continue;
+      }
+      expect(allowed.has(colour)).toBe(true);
+    }
+
+    // Every wash is this drawing's own, defined once under its own prefix, so
+    // the copies of it that share a page can never disagree.
+    const washes = [...container.querySelectorAll("[id]")];
+    expect(washes.length).toBeGreaterThan(1);
+    for (const wash of washes) {
+      expect(wash.getAttribute("id")).toMatch(/^bridge-art-/);
+    }
+    expect(new Set(washes.map((wash) => wash.getAttribute("id"))).size).toBe(washes.length);
+
+    expect(container.querySelectorAll("text")).toHaveLength(0);
+    expect(screen.getByRole("img")).toHaveAccessibleName(/arch bridge/i);
+    expect(screen.getByRole("img")).toHaveAccessibleName(/moon/i);
   });
 });
 
