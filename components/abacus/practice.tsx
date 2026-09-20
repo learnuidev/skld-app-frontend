@@ -131,16 +131,23 @@ export function AbacusExplorer({
     <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-8">
       <Abacus
         digits={digits}
-        onChange={(i, d) => setDigits((prev) => prev.map((v, j) => (j === i ? d : v)))}
+        onChange={(i, d) =>
+          setDigits((prev) => prev.map((v, j) => (j === i ? d : v)))
+        }
         label={label}
       />
       <div className="w-full max-w-60 sm:pt-2">
-        {prompt ? <p className="mb-3 text-sm text-muted-foreground">{prompt}</p> : null}
+        {prompt ? (
+          <p className="mb-3 text-sm text-muted-foreground">{prompt}</p>
+        ) : null}
         <div className="flex items-end gap-2 rounded-2xl border bg-card p-4 shadow-sm">
-          <span className="text-4xl font-bold tabular-nums">{placeLabel(value)}</span>
+          <span className="text-4xl font-bold tabular-nums">
+            {placeLabel(value)}
+          </span>
         </div>
         <p className="mt-3 text-xs text-muted-foreground">
-          Only beads touching the beam count. Heaven beads are worth 5; earth beads are worth 1.
+          Only beads touching the beam count. Heaven beads are worth 5; earth
+          beads are worth 1.
         </p>
         <Button
           variant="ghost"
@@ -165,7 +172,10 @@ export const BuildTask = forwardRef<
     locked?: boolean;
     onHasSelection: (has: boolean) => void;
   }
->(function BuildTask({ prompt, target, rods = 2, solved, locked = false, onHasSelection }, ref) {
+>(function BuildTask(
+  { prompt, target, rods = 2, solved, locked = false, onHasSelection },
+  ref,
+) {
   const [digits, setDigits] = useState<number[]>(() => clearDigits(rods));
   const [wrong, setWrong] = useState(false);
   const shown = digitsToValue(digits);
@@ -191,14 +201,18 @@ export const BuildTask = forwardRef<
   return (
     <div className="flex flex-col items-center gap-6">
       <p className={PROMPT}>{prompt}</p>
-      <Abacus digits={digits} onChange={change} readOnly={solved || locked} label="Your abacus" />
+      <Abacus
+        digits={digits}
+        onChange={change}
+        readOnly={solved || locked}
+        label="Your abacus"
+      />
       <div className="flex h-10 items-center">
         {wrong ? (
           <p className="rounded-2xl bg-lesson-soft px-4 py-3 text-sm font-medium text-foreground/70">
-            That board shows {placeLabel(shown)}. Remember: heaven = 5, earth beads = 1.
+            That board shows {placeLabel(shown)}. Remember: heaven = 5, earth
+            beads = 1.
           </p>
-        ) : solved ? (
-          <p className="text-sm font-medium text-lesson-correct-fg">That&apos;s {placeLabel(target)}!</p>
         ) : null}
       </div>
     </div>
@@ -215,7 +229,10 @@ export const ReadTask = forwardRef<
     locked?: boolean;
     onHasSelection: (has: boolean) => void;
   }
->(function ReadTask({ prompt, digits, choices, solved, locked = false, onHasSelection }, ref) {
+>(function ReadTask(
+  { prompt, digits, choices, solved, locked = false, onHasSelection },
+  ref,
+) {
   const [picked, setPicked] = useState<number | null>(null);
   const [wrong, setWrong] = useState<Set<number>>(new Set());
   const answer = digitsToValue(digits);
@@ -249,11 +266,6 @@ export const ReadTask = forwardRef<
           onHasSelection(true);
         }}
       />
-      {solved ? (
-        <p className="text-sm font-medium text-lesson-correct-fg">
-          That&apos;s {placeLabel(answer)}!
-        </p>
-      ) : null}
     </div>
   );
 });
@@ -268,7 +280,10 @@ export const QuizTask = forwardRef<
     locked?: boolean;
     onHasSelection: (has: boolean) => void;
   }
->(function QuizTask({ prompt, choices, answer, solved, locked = false, onHasSelection }, ref) {
+>(function QuizTask(
+  { prompt, choices, answer, solved, locked = false, onHasSelection },
+  ref,
+) {
   const [picked, setPicked] = useState<number | null>(null);
   const [wrong, setWrong] = useState<Set<number>>(new Set());
 
@@ -300,11 +315,6 @@ export const QuizTask = forwardRef<
           onHasSelection(true);
         }}
       />
-      {solved ? (
-        <p className="text-sm font-medium text-lesson-correct-fg">
-          That&apos;s {placeLabel(answer)}!
-        </p>
-      ) : null}
     </div>
   );
 });
