@@ -63,6 +63,7 @@ export type BridgeScene =
   | "fittings"
   | "levels"
   | "dimensions"
+  | "carries"
   | "deck-position"
   | "beam"
   | "arch"
@@ -114,6 +115,21 @@ export type LessonBlock =
       hint?: string;
     }
   | { type: "span"; prompt: string }
+  | {
+      type: "concepts";
+      prompt: string;
+      /** Shown one at a time, each with its own drawing. */
+      concepts: {
+        id: string;
+        /** What the concept is called, e.g. "By material". */
+        label: string;
+        /** One line of explanation — the drawing does the rest. */
+        summary: string;
+        scene: BridgeScene;
+        /** The parts of the drawing this concept is about. */
+        highlight?: string[];
+      }[];
+    }
   | {
       type: "hotspot";
       prompt: string;

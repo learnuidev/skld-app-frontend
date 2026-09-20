@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { SCENE_PARTS, SCENES, type ScenePart } from "@/components/bridge/scenes";
-import { bridgeEngineeringContent } from "@/modules/course/bridge-engineering-content";
+import { SCENE_PARTS, SCENES, type ScenePart } from "@/components/bridge/scenes";import { bridgeEngineeringContent } from "@/modules/course/bridge-engineering-content";
 import { bridgeEngineeringCourse } from "@/modules/course/bridge-engineering";
 import { courseContentRegistry } from "@/modules/course/content";
 import { getCourseBySlug } from "@/modules/course/catalog";
@@ -27,6 +26,7 @@ function blocks(): { where: string; block: Block }[] {
 
 /** The scenes a block puts on screen. */
 function scenesIn(block: Block): BridgeScene[] {
+  if (block.type === "concepts") return block.concepts.map((concept) => concept.scene);
   if ("scene" in block) return [block.scene];
   return [];
 }
@@ -209,6 +209,102 @@ describe("bridge engineering content", () => {
     );
 
     expect(explained.length).toBeGreaterThan(all.length / 4);
+  });
+
+  it("teaches the vocabulary of a box before asking anything to be sorted into it", () => {
+    /** Words too common to prove that a concept has been taught. */
+    const TOO_COMMON = new Set([
+      "bridge", "bridges", "deck", "part", "parts", "question", "questions", "sort", "box",
+      "boxes", "card", "cards", "these", "those", "this", "that", "them", "they", "their",
+      "with", "from", "into", "when", "what", "which", "does", "each", "than", "then",
+      "keeps", "lets", "made", "used", "means", "kind", "kinds", "other", "under",
+    ]);
+
+    /** The longest word in a label, which is the one carrying the concept. */
+    const subject = (label: string) =>
+      (label.toLowerCase().match(/[a-z][a-z-]{3,}/g) ?? [])
+        .flatMap((word) => word.split("-"))
+        .filter((word) => word.length >= 4 && !TOO_COMMON.has(word))
+        .sort((a, b) => b.length - a.length)[0] ?? null;
+
+    const mentions = (text: string, word: string) =>
+      new RegExp(`\\b${word.replace(/s$/, "")}s?\\b`).test(text);
+
+    /**
+     * What a learner could have read in a block before reaching the next one:
+     * prose for the explained words, everything for the mentioned ones.
+     */
+    const taught = (block: LessonBlock): { prose: string[]; all: string[] } => {
+      const drawing =
+        "scene" in block
+          ? SCENE_PARTS[block.scene].map((part) => `${part.label} ${part.note}`).join(" ")
+          : "";
+
+      switch (block.type) {
+        case "heading":
+        case "paragraph":
+          return { prose: [block.text], all: [block.text, drawing] };
+        case "list":
+          return { prose: [block.items.join(" ")], all: [block.items.join(" "), drawing] };
+        case "concepts":
+          // A concept shown one at a time is teaching: its name and its line.
+          return {
+            prose: [block.concepts.map((concept) => `${concept.label} ${concept.summary}`).join(" ")],
+            all: [
+              block.concepts.map((concept) => `${concept.label} ${concept.summary}`).join(" "),
+              ...block.concepts.map(
+                (concept) => SCENE_PARTS[concept.scene].map((part) => `${part.label} ${part.note}`).join(" "),
+              ),
+            ],
+          };
+        case "figure":
+          return { prose: [], all: [block.caption ?? "", drawing] };
+        case "parts":
+          return { prose: [], all: [block.prompt, block.hint ?? "", drawing] };
+        default:
+          // A question is not teaching: its prompt, choices and explanation
+          // only count once the learner has already been asked it.
+          return { prose: [], all: [] };
+      }
+    };
+
+    const problems: string[] = [];
+
+    for (const [level, lessons] of Object.entries(bridgeEngineeringContent)) {
+      let levelSoFar: { prose: string[]; all: string[] }[] = [];
+
+      for (const [lesson, blocks] of Object.entries(lessons)) {
+        const said = [...levelSoFar];
+
+        blocks.forEach((block, index) => {
+          if (block.type === "sort") {
+            const everything = said.flatMap((entry) => entry.all).join(" ").toLowerCase();
+            const prose = said.flatMap((entry) => entry.prose).join(" ").toLowerCase();
+
+            for (const bucket of block.buckets) {
+              const word = subject(bucket.label);
+              if (!word) continue;
+              if (!mentions(everything, word)) {
+                problems.push(
+                  `${level}/${lesson} #${index}: sorting into "${bucket.label}" — nothing before it says "${word}"`,
+                );
+              } else if (block.buckets.length >= 4 && !mentions(prose, word)) {
+                // Six boxes is a lot to fill in from a caption alone: a big
+                // sort needs the words explained, not just pointed at.
+                problems.push(
+                  `${level}/${lesson} #${index}: sorting into "${bucket.label}" — "${word}" is only ever mentioned, never explained before this question`,
+                );
+              }
+            }
+          }
+          said.push(taught(block));
+        });
+
+        levelSoFar = [...levelSoFar, ...blocks.map(taught)];
+      }
+    }
+
+    expect(problems).toEqual([]);
   });
 
   it("keeps every part of the course about bridges", () => {

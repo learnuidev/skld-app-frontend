@@ -698,6 +698,76 @@ function Fittings({ highlight, labels }: SceneShapes) {
   );
 }
 
+/** A section through a deck, showing everything one bridge can carry at once. */
+function Carries({ highlight, labels }: SceneShapes) {
+  const { fade } = painter({ highlight, labels });
+  const on = (id: string) => highlight?.includes(id) ?? false;
+  return (
+    <>
+      <Plate />
+      <Water y={144} />
+      {/* A boat on the water the bridge crosses. */}
+      <g opacity={fade("waterway")}>
+        <polygon points="110,152 170,152 160,164 120,164" fill={PALETTE.ink} />
+        <rect x={128} y={142} width={24} height={10} rx={2} fill={PALETTE.charcoal} />
+      </g>
+
+      {/* The supports, standing in the water. */}
+      <rect x={48} y={114} width={24} height={32} fill={PALETTE.charcoal} />
+      <rect x={248} y={114} width={24} height={32} fill={PALETTE.charcoal} />
+
+      {/* The deck itself, carrying everything on top of it. */}
+      <rect x={20} y={100} width={280} height={16} fill={PALETTE.ink} />
+
+      <g opacity={fade("pipe-duct")}>
+        {/* Space left under the deck for pipes and cables. */}
+        <rect x={56} y={116} width={56} height={16} rx={3} fill={PALETTE.charcoal} />
+        <circle cx={70} cy={124} r={5} fill={PALETTE.butter} stroke={PALETTE.gray} strokeWidth={1} />
+        <circle cx={96} cy={124} r={5} fill={PALETTE.butter} stroke={PALETTE.gray} strokeWidth={1} />
+      </g>
+
+      <g opacity={fade("roadway")}>
+        <rect x={26} y={93} width={124} height={7} fill={washColour(on("roadway"))} />
+        <line x1={30} y1={96.5} x2={146} y2={96.5} stroke={PALETTE.paper} strokeWidth={1} strokeDasharray="6 6" />
+        <rect x={40} y={84} width={24} height={9} rx={2} fill={on("roadway") ? PALETTE.yellowDeep : PALETTE.charcoal} />
+        <rect x={104} y={84} width={24} height={9} rx={2} fill={on("roadway") ? PALETTE.yellowDeep : PALETTE.charcoal} />
+      </g>
+
+      <g opacity={fade("railway")}>
+        <rect x={180} y={96} width={78} height={4} fill={PALETTE.gray} opacity={0.7} />
+        <rect x={198} y={90} width={8} height={8} fill={on("railway") ? PALETTE.yellowDeep : PALETTE.ink} />
+        <rect x={234} y={90} width={8} height={8} fill={on("railway") ? PALETTE.yellowDeep : PALETTE.ink} />
+      </g>
+
+      <g opacity={fade("footpath")}>
+        <rect x={270} y={93} width={26} height={7} fill={washColour(on("footpath"))} />
+        <circle cx={283} cy={84} r={4} fill={on("footpath") ? PALETTE.yellowDeep : PALETTE.ink} />
+        <rect x={281} y={88} width={4} height={6} fill={on("footpath") ? PALETTE.yellowDeep : PALETTE.ink} />
+      </g>
+
+      {labels ? (
+        <>
+          <Tag x={70} y={78}>
+            roadway
+          </Tag>
+          <Tag x={220} y={82}>
+            railway
+          </Tag>
+          <Tag x={283} y={74}>
+            footpath
+          </Tag>
+          <Tag x={84} y={140}>
+            pipes
+          </Tag>
+          <Tag x={60} y={170}>
+            waterway
+          </Tag>
+        </>
+      ) : null}
+    </>
+  );
+}
+
 /** A river in section: the water levels that decide how high a bridge must be. */
 function Levels({ highlight, labels }: SceneShapes) {
   const { fade } = painter({ highlight, labels });
@@ -1229,6 +1299,7 @@ export const SCENES: Record<BridgeScene, (shapes: SceneShapes) => ReactNode> = {
   fittings: Fittings,
   levels: Levels,
   dimensions: Dimensions,
+  carries: Carries,
   "deck-position": DeckPosition,
   beam: Beam,
   arch: ArchScene,
@@ -1248,6 +1319,7 @@ export const SCENE_LABELS: Record<BridgeScene, string> = {
   fittings: "A bridge deck fitted with paving, railing, drainage, an expansion joint and a lamp",
   levels: "A river in section with the low water, navigable, design flood and high water levels marked",
   dimensions: "A two-span bridge dimensioned with net span l-zero, computed span l, total length L and construction height h",
+  carries: "A section through a bridge deck showing what it carries: a roadway with cars, a railway track, a footpath with a person, a pipe duct, and the waterway below",
   "deck-position": "Three arch bridges comparing a deck bridge, a through bridge and a half-through bridge",
   beam: "Three beam bridges: simply supported, continuous over three supports, and cantilever with a hanging span",
   arch: "An arch bridge with thrust arrows at its feet, and below it a tied arch whose tie balances the thrust",
@@ -1505,6 +1577,38 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
       label: "Computed span l",
       note: "Centre to centre of the supports — the span the calculations use.",
       at: [185, 134],
+    },
+  ],
+  carries: [
+    {
+      id: "roadway",
+      label: "Roadway",
+      note: "Lanes for vehicles — the purpose most bridges are built for.",
+      at: [88, 96],
+    },
+    {
+      id: "railway",
+      label: "Railway",
+      note: "A track sharing the deck: railway bridges, and bridges that carry road and rail together.",
+      at: [220, 95],
+    },
+    {
+      id: "footpath",
+      label: "Footpath",
+      note: "A path along the edge for people walking across.",
+      at: [280, 97],
+    },
+    {
+      id: "pipe-duct",
+      label: "Pipe duct",
+      note: "Space left under the deck so pipes and cables can cross with the bridge.",
+      at: [84, 126],
+    },
+    {
+      id: "waterway",
+      label: "Waterway",
+      note: "What passes underneath — the river, or the boats that have to keep their clearance.",
+      at: [60, 168],
     },
   ],
   "deck-position": [

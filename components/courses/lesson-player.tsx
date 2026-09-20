@@ -22,6 +22,7 @@ import {
   SceneFigure,
   SortTask,
 } from "@/components/bridge/practice";
+import { ConceptCards } from "@/components/bridge/concepts";
 import { SpanPlayground } from "@/components/bridge/span-playground";
 import { LessonNavBar, type QuestionMark } from "@/components/courses/lesson/nav-bar";
 import { ExplanationRail } from "@/components/courses/lesson/explanation-rail";
@@ -200,6 +201,8 @@ function BlockContent({
       );
     case "span":
       return <SpanPlayground prompt={block.prompt} />;
+    case "concepts":
+      return <ConceptCards prompt={block.prompt} concepts={block.concepts} />;
     case "hotspot":
       return (
         <HotspotTask

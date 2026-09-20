@@ -489,6 +489,35 @@ export const bridgeEngineeringContent: CourseContentMap = {
         scene: "fittings",
       },
       {
+        type: "concepts",
+        prompt: "Three jobs the fittings do.",
+        concepts: [
+          {
+            id: "safe",
+            label: "They keep traffic safe on the deck",
+            summary: "Railings, crash barriers, paving and lighting — everything that makes the deck usable and safe.",
+            scene: "fittings",
+            highlight: ["railing", "paving"],
+          },
+          {
+            id: "dry",
+            label: "They keep water out of the structure",
+            summary:
+              "Waterproofing and drainage: rain is caught and piped off the bridge before it can soak into the concrete and rust the steel inside it.",
+            scene: "fittings",
+            highlight: ["drain"],
+          },
+          {
+            id: "move",
+            label: "They let the bridge move",
+            summary:
+              "The expansion joint is a gap that opens and closes as the deck grows in summer and shrinks in winter.",
+            scene: "fittings",
+            highlight: ["expansion-joint"],
+          },
+        ],
+      },
+      {
         type: "hotspot",
         prompt: "Tap the fitting that lets the deck grow and shrink without cracking.",
         scene: "fittings",
@@ -822,14 +851,58 @@ export const bridgeEngineeringContent: CourseContentMap = {
         text: "We meet bridges every day: a small footbridge on the way to work, or a bridge that turns a journey into a view. To study them systematically, engineers sort them — and there is more than one way to sort the same bridge.",
       },
       {
-        type: "figure",
-        scene: "overview",
-        caption:
-          "One bridge, six descriptions. This single drawing is a highway bridge by purpose, a river-crossing bridge by the nature of its crossing, a deck bridge by deck position, a medium-span bridge by span, a concrete bridge by material — and a beam bridge by structural system.",
+        type: "concepts",
+        prompt: "Six ways to sort the bridge.",
+        concepts: [
+          {
+            id: "material",
+            label: "By material",
+            summary:
+              "What the load-bearing structure is made of: reinforced concrete, steel, or one of the newer high-performance materials.",
+            scene: "superstructure",
+            highlight: ["main-girder"],
+          },
+          {
+            id: "purpose",
+            label: "By purpose",
+            summary: "Who or what the bridge exists for — and it is not always people.",
+            scene: "carries",
+            highlight: ["roadway", "railway", "footpath"],
+          },
+          {
+            id: "span",
+            label: "By span",
+            summary:
+              "How far one span reaches — from a few metres to more than two kilometres, and every metre of it is measured from support to support.",
+            scene: "dimensions",
+            highlight: ["net-span", "computed-span"],
+          },
+          {
+            id: "deck-position",
+            label: "By deck position",
+            summary:
+              "Where the traffic sits in the structure: on top of it, inside it, or through its middle.",
+            scene: "deck-position",
+          },
+          {
+            id: "crossing",
+            label: "By nature of crossing",
+            summary: "What the bridge goes over: a river, the sea, or another road.",
+            scene: "levels",
+            highlight: ["clearance"],
+          },
+          {
+            id: "system",
+            label: "By structural system",
+            summary:
+              "How the load is actually carried: beam, arch, rigid frame, cable-stayed or suspension.",
+            scene: "composite",
+          },
+        ],
       },
       {
         type: "sort",
-        prompt: "Sort these questions into the six ways bridges are classified.",
+        prompt: "Now sort these questions into the six ways bridges are classified.",
         buckets: [
           { id: "material", label: "By material" },
           { id: "purpose", label: "By purpose" },
@@ -958,17 +1031,48 @@ export const bridgeEngineeringContent: CourseContentMap = {
       },
       {
         type: "paragraph",
-        text: "Not every bridge is for people. In Australia a bridge was built to meet the migration needs of crabs. The principle behind it matters in bridge engineering: pay attention to environmental protection and ecological sustainability.",
+        text: "Not every bridge is for people. In Australia a bridge was built for wildlife: crabs making their yearly migration across a road. The principle behind it matters in bridge engineering — pay attention to environmental protection and ecological sustainability.",
       },
       {
-        type: "figure",
-        scene: "levels",
-        caption:
-          "Purpose decides the drawing. A highway bridge has to clear traffic on top; a waterway bridge also has to keep the navigable level clear underneath — and a pipeline bridge carries neither.",
+        type: "concepts",
+        prompt: "Bridges by purpose.",
+        concepts: [
+          {
+            id: "vehicles",
+            label: "Vehicles and trains",
+            summary:
+              "Highway bridges, urban road bridges and railway bridges — and bridges that carry road and rail together.",
+            scene: "carries",
+            highlight: ["roadway", "railway"],
+          },
+          {
+            id: "people",
+            label: "People",
+            summary: "A pedestrian bridge, or a footbridge over a busy road, keeping walkers clear of the traffic.",
+            scene: "carries",
+            highlight: ["footpath"],
+          },
+          {
+            id: "pipes",
+            label: "Pipes and goods",
+            summary:
+              "Pipeline bridges, the transport bridges inside a factory, and the ducts left in a road bridge for services.",
+            scene: "carries",
+            highlight: ["pipe-duct"],
+          },
+          {
+            id: "water",
+            label: "Water",
+            summary:
+              "An aqueduct carrying a canal, or an inverted siphon carrying a stream across a valley — and under any waterway bridge, boats keep their clearance.",
+            scene: "carries",
+            highlight: ["waterway"],
+          },
+        ],
       },
       {
         type: "sort",
-        prompt: "What is each of these bridges for?",
+        prompt: "Now sort these bridges by the group each one serves.",
         buckets: [
           { id: "vehicles", label: "Vehicles or trains" },
           { id: "people", label: "People" },
@@ -1143,10 +1247,34 @@ export const bridgeEngineeringContent: CourseContentMap = {
         text: "A beam laid on a pier gives the simplest bridge of all: the simply supported beam bridge. Under a vertical load, a beam's supports produce only vertical reactions — no horizontal force — and the main beam is primarily in bending. That is why beam bridges are built from materials that resist bending well, such as steel and reinforced concrete.",
       },
       {
-        type: "figure",
-        scene: "beam",
-        caption:
-          "Three beam bridges. One span on two supports; a girder running unbroken over three; and cantilever arms with a hanging span between them.",
+        type: "concepts",
+        prompt: "The three beam bridges.",
+        concepts: [
+          {
+            id: "simply-supported",
+            label: "Simply supported",
+            summary:
+              "One span resting on two supports. The simplest beam bridge there is, and the easiest to build.",
+            scene: "beam",
+            highlight: ["simply-supported"],
+          },
+          {
+            id: "continuous",
+            label: "Continuous",
+            summary:
+              "The girder runs unbroken over the piers, so neighbouring spans help each other and the ride is smoother.",
+            scene: "beam",
+            highlight: ["continuous"],
+          },
+          {
+            id: "cantilever",
+            label: "Cantilever",
+            summary:
+              "Arms reach out from the piers, with a hanging span between them, joined at complex details.",
+            scene: "beam",
+            highlight: ["cantilever"],
+          },
+        ],
       },
       {
         type: "sort",
@@ -1159,7 +1287,7 @@ export const bridgeEngineeringContent: CourseContentMap = {
         items: [
           { id: "easiest", label: "Simple stress, easy to build, used for short spans", bucket: "simple" },
           { id: "smooth", label: "Vehicles ride more smoothly because the girder is unbroken over the piers", bucket: "continuous" },
-          { id: "common", label: "The most commonly used beam bridge on highways and city roads", bucket: "continuous" },
+          { id: "common", label: "Neighbouring spans help each other, so this is the usual choice on highways and city roads", bucket: "continuous" },
           { id: "holes", label: "Has hanging spans between the cantilever ends", bucket: "cantilever" },
           { id: "weak", label: "The joints at the ends are a weak point where defects appear", bucket: "cantilever" },
         ],

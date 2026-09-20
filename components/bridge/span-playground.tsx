@@ -30,7 +30,7 @@ const BANDS: {
     scene: "beam",
     name: "Beam",
     max: 100,
-    why: "Beams bend. Concrete and steel are strong in bending, so a beam bridge is the simple, cheap choice for a short span.",
+    why: "Beams bend, and concrete and steel are strong in bending — so a beam bridge is the simple, cheap choice for a short span. The standard spans of concrete beam bridges are mostly under 30 m.",
   },
   {
     scene: "arch",
