@@ -13,6 +13,7 @@ import {
   reorder,
   SceneFigure,
   SortTask,
+  zoneAtPoint,
 } from "@/components/bridge/practice";
 import { SpanPlayground } from "@/components/bridge/span-playground";
 
@@ -161,6 +162,18 @@ describe("SortTask", () => {
     onHasSelection: vi.fn(),
   };
 
+  it("offers every card as a drag handle, and every box as a drop target", () => {
+    render(<SortTask {...props} ref={createRef<TaskHandle>()} />);
+
+    // The drag itself is a pointer gesture, which jsdom cannot run; what the
+    // cards must carry is the grab cursor and what the boxes must carry is the
+    // marker the drop is tested against.
+    for (const label of ["Abutment", "Pier"]) {
+      expect(screen.getByRole("button", { name: label })).toHaveClass("cursor-grab");
+    }
+    expect(document.querySelectorAll("[data-sort-bucket]")).toHaveLength(2);
+  });
+
   it("will not check until every card is filed", async () => {
     const user = userEvent.setup();
     const ref = createRef<TaskHandle>();
@@ -278,8 +291,30 @@ describe("OrderTask", () => {
   });
 });
 
-describe("reorder", () => {
-  const items = ["a", "b", "c", "d"];
+describe("zoneAtPoint", () => {
+  const zones = [
+    { id: "ends", box: { left: 0, top: 0, right: 100, bottom: 50 } },
+    { id: "middle", box: { left: 0, top: 60, right: 100, bottom: 110 } },
+  ];
+
+  it("finds the box a drop landed in", () => {
+    expect(zoneAtPoint({ x: 50, y: 25 }, zones)).toBe("ends");
+    expect(zoneAtPoint({ x: 50, y: 85 }, zones)).toBe("middle");
+  });
+
+  it("counts the box's own edges as inside it", () => {
+    expect(zoneAtPoint({ x: 0, y: 0 }, zones)).toBe("ends");
+    expect(zoneAtPoint({ x: 100, y: 110 }, zones)).toBe("middle");
+  });
+
+  it("returns nothing for a drop between the boxes", () => {
+    expect(zoneAtPoint({ x: 50, y: 55 }, zones)).toBeNull();
+    expect(zoneAtPoint({ x: 150, y: 25 }, zones)).toBeNull();
+    expect(zoneAtPoint({ x: 50, y: -10 }, zones)).toBeNull();
+  });
+});
+
+describe("reorder", () => {  const items = ["a", "b", "c", "d"];
 
   it("moves a card to the front, the back, or the middle", () => {
     expect(reorder(items, 2, 0)).toEqual(["c", "a", "b", "d"]);

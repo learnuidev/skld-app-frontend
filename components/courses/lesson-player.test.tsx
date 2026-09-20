@@ -56,6 +56,13 @@ const blocksWithBoard: LessonBlock[] = [
   { type: "paragraph", text: "Now read a rod on your own." },
 ];
 
+/** A lesson whose two questions are both reads, so a wrong answer is easy to make. */
+const twoQuestions: LessonBlock[] = [
+  { type: "heading", text: "Two questions" },
+  { type: "read", prompt: "Which number is this abacus showing?", digits: [1], choices: [1, 2, 5, 10] },
+  { type: "read", prompt: "And this one?", digits: [2], choices: [1, 2, 5, 10] },
+];
+
 function renderLesson(lessonBlocks: LessonBlock[] = blocks, lessonSlug = "first-bead") {
   return render(
     <LessonPlayer
@@ -77,14 +84,15 @@ function primaryButton() {
 }
 
 describe("LessonPlayer", () => {
-  it("opens on the first step with the progress bar at the start", () => {
+  it("opens on the first step with the progress bar empty", () => {
     renderLesson();
 
     expect(screen.getByRole("heading", { name: "Reading a rod" })).toBeInTheDocument();
-    expect(screen.getByRole("progressbar", { name: "Lesson progress" })).toHaveAttribute(
-      "aria-valuenow",
-      "1",
-    );
+
+    const bar = screen.getByRole("progressbar", { name: "Lesson progress" });
+    expect(bar).toHaveAttribute("aria-valuenow", "0");
+    expect(bar.firstElementChild).toHaveStyle({ width: "0%" });
+
     expect(primaryButton()).toHaveTextContent("Continue");
   });
 
@@ -236,15 +244,58 @@ describe("LessonPlayer", () => {
     await user.click(screen.getByRole("button", { name: "Continue" }));
 
     expect(await screen.findByText("Now read a rod on your own.")).toBeInTheDocument();
-    expect(screen.getByRole("progressbar", { name: "Lesson progress" })).toHaveAttribute(
-      "aria-valuenow",
-      "3",
-    );
+
+    // Two steps are behind the learner: the heading and the answered question.
+    const bar = screen.getByRole("progressbar", { name: "Lesson progress" });
+    expect(bar).toHaveAttribute("aria-valuenow", "2");
+    expect(bar.firstElementChild).toHaveStyle({ width: "67%" });
+
     // The step starts fresh: no answer picked, nothing to check yet.
     expect(screen.queryByRole("button", { name: "1" })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Next lesson" })).toBeInTheDocument();
   });
 
+  it("marks each question green, red or grey as the lesson goes", async () => {
+    const user = userEvent.setup();
+    renderLesson(twoQuestions);
+
+    /** The dots, in the order the questions are asked. */
+    const states = () =>
+      [...screen.getByRole("img", { name: /^Questions:/ }).children].map((dot) => {
+        if (dot.classList.contains("bg-lesson-correct")) return "correct";
+        if (dot.classList.contains("bg-destructive")) return "wrong";
+        return "todo";
+      });
+
+    // One dot per question, all waiting.
+    expect(states()).toEqual(["todo", "todo"]);
+    expect(
+      screen.getByRole("img", { name: "Questions: 0 answered correctly, 0 answered wrongly, 2 not answered" }),
+    ).toBeInTheDocument();
+
+    // The first one right: its dot goes green.
+    await user.click(primaryButton());
+    await screen.findByText("Which number is this abacus showing?");
+    await user.click(screen.getByRole("button", { name: "1" }));
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    expect(states()).toEqual(["correct", "todo"]);
+
+    // The second one wrong: its dot goes red. Wait for its own question to be
+    // on the card, since the first one is still animating out with the same
+    // choice buttons on it.
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    await screen.findByText("And this one?");
+    await user.click(screen.getByRole("button", { name: "5" }));
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    expect(states()).toEqual(["correct", "wrong"]);
+
+    // Putting it right takes the red back to green.
+    await user.click(screen.getByRole("button", { name: "Try again" }));
+    await waitFor(() => expect(screen.getByRole("button", { name: "2" })).toBeEnabled());
+    await user.click(screen.getByRole("button", { name: "2" }));
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    expect(states()).toEqual(["correct", "correct"]);
+  });
   it("offers the next lesson when the lesson ends", async () => {
     const user = userEvent.setup();
     renderLesson([{ type: "heading", text: "One step" }]);

@@ -23,7 +23,7 @@ import {
   SortTask,
 } from "@/components/bridge/practice";
 import { SpanPlayground } from "@/components/bridge/span-playground";
-import { LessonNavBar } from "@/components/courses/lesson/nav-bar";
+import { LessonNavBar, type QuestionMark } from "@/components/courses/lesson/nav-bar";
 import { ExplanationRail } from "@/components/courses/lesson/explanation-rail";
 import { ExplanationStage, explanationSteps } from "@/components/courses/lesson/explanation-stage";
 import { PillButton } from "@/components/courses/lesson/pill-button";
@@ -292,8 +292,10 @@ export default function LessonPlayer({
   const [whyIndex, setWhyIndex] = useState(0);
   /** Wrong checks on this step: the second one turns the card yellow. */
   const [misses, setMisses] = useState(0);
-  /** Steps answered correctly so far — the navbar's tally. */
+  /** Steps answered correctly so far — the navbar's sparkle. */
   const [done, setDone] = useState<Set<number>>(new Set());
+  /** Steps answered wrongly and not yet put right — the navbar's red dots. */
+  const [failed, setFailed] = useState<Set<number>>(new Set());
   const taskRef = useRef<TaskHandle | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
 
@@ -349,8 +351,16 @@ export default function LessonPlayer({
       if (taskRef.current?.check()) {
         setSolved(true);
         setDone((prev) => new Set(prev).add(current));
+        // Putting a question right takes its red dot back to green.
+        setFailed((prev) => {
+          if (!prev.has(current)) return prev;
+          const next = new Set(prev);
+          next.delete(current);
+          return next;
+        });
       } else {
         setMisses((m) => m + 1);
+        setFailed((prev) => new Set(prev).add(current));
       }
       return;
     }
@@ -359,6 +369,7 @@ export default function LessonPlayer({
 
   const startOver = useCallback(() => {
     setDone(new Set());
+    setFailed(new Set());
     goToStep(0);
     setResetKey((k) => k + 1);
   }, [goToStep]);
@@ -422,12 +433,28 @@ export default function LessonPlayer({
         : "Finish course"
       : "Continue";
 
+  /** Every question in the lesson, and how each one went. */
+  const questions: QuestionMark[] = useMemo(
+    () =>
+      blocks
+        .map((entry, step) => ({ step, task: isTaskBlock(entry) }))
+        .filter((entry) => entry.task)
+        .map(({ step }) => ({
+          step,
+          state: done.has(step) ? "correct" : failed.has(step) ? "wrong" : "todo",
+        })),
+    [blocks, done, failed],
+  );
+  /** The steps behind the learner: the bar starts empty and fills as they go. */
+  const completed = current + (isTask && (solved || attempted) ? 1 : 0);
+
   return (
     <div className="flex h-dvh flex-col bg-background">
       <LessonNavBar
         current={current}
         total={total}
-        done={done.size}
+        completed={completed}
+        questions={questions}
         onExit={() => setShowQuit(true)}
       />
 

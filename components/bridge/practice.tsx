@@ -1,7 +1,7 @@
 "use client";
 
-import { forwardRef, useImperativeHandle, useState } from "react";
-import { Reorder } from "framer-motion";
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
+import { motion, Reorder } from "framer-motion";
 import { ArrowDown, ArrowUp, Check, GripVertical } from "lucide-react";
 
 import type { TaskHandle } from "@/components/abacus/practice";
@@ -298,9 +298,41 @@ export const ChooseTask = forwardRef<
   );
 });
 
+/** The pointer's place on screen, whichever kind of drag event carried it. */
+function clientPoint(event: MouseEvent | TouchEvent | PointerEvent): { x: number; y: number } | null {
+  if ("clientX" in event && typeof event.clientX === "number") {
+    return { x: event.clientX, y: event.clientY };
+  }
+  const touch = (event as TouchEvent).changedTouches?.[0] ?? (event as TouchEvent).touches?.[0];
+  return touch ? { x: touch.clientX, y: touch.clientY } : null;
+}
+
+/** A box on screen, in the coordinates `getBoundingClientRect` hands back. */
+export interface DropZone {
+  id: string;
+  box: { left: number; top: number; right: number; bottom: number };
+}
+
+/** Which drop zone holds the point, if any. */
+export function zoneAtPoint(
+  point: { x: number; y: number },
+  zones: DropZone[],
+): string | null {
+  for (const zone of zones) {
+    const { left, top, right, bottom } = zone.box;
+    if (point.x >= left && point.x <= right && point.y >= top && point.y <= bottom) {
+      return zone.id;
+    }
+  }
+  return null;
+}
+
 /**
- * Sorting bridges into boxes: pick a card, then pick the box it belongs in.
- * Everything has to be filed before it can be checked.
+ * Sorting cards into boxes: drag a card into the box it belongs in, or tap a
+ * card and then the box. Everything has to be filed before it can be checked.
+ *
+ * The drag is a pointer gesture, so it works the same with a finger as with a
+ * mouse; a card dropped anywhere else springs back to the tray.
  */
 export const SortTask = forwardRef<
   TaskHandle,
@@ -316,6 +348,12 @@ export const SortTask = forwardRef<
   const [placed, setPlaced] = useState<Record<string, string>>({});
   const [held, setHeld] = useState<string | null>(null);
   const [wrong, setWrong] = useState<string[]>([]);
+  /** The card in hand, and the box it is being held over. */
+  const [dragging, setDragging] = useState<string | null>(null);
+  const [over, setOver] = useState<string | null>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  /** A drag ends by starting a click; that click must not also file the card. */
+  const justDropped = useRef(false);
 
   const loose = items.filter((item) => !(item.id in placed));
   const complete = loose.length === 0 && held === null;
@@ -333,8 +371,60 @@ export const SortTask = forwardRef<
     [complete, items, placed],
   );
 
+  const file = (itemId: string, bucketId: string) => {
+    setPlaced((prev) => ({ ...prev, [itemId]: bucketId }));
+    setHeld(null);
+    setWrong([]);
+  };
+
+  const unfile = (itemId: string) => {
+    setPlaced((prev) => {
+      const next = { ...prev };
+      delete next[itemId];
+      return next;
+    });
+    setWrong([]);
+  };
+
+  /** The box under the pointer, measured off the boxes actually on screen. */
+  const zoneAt = (point: { x: number; y: number }) => {
+    const zones: DropZone[] = [
+      ...(rootRef.current?.querySelectorAll<HTMLElement>("[data-sort-bucket]") ?? []),
+    ].map((element) => ({ id: element.dataset.sortBucket ?? "", box: element.getBoundingClientRect() }));
+    return zoneAtPoint(point, zones);
+  };
+
+  const dragHandlers = (item: { id: string; label: string }) =>
+    locked
+      ? {}
+      : {
+          drag: true as const,
+          dragSnapToOrigin: true,
+          dragElastic: 0.2,
+          whileDrag: { scale: 1.06, zIndex: 30 },
+          onPointerDown: () => {
+            justDropped.current = false;
+          },
+          onDragStart: () => {
+            setDragging(item.id);
+            onHasSelection(true);
+          },
+          onDrag: (event: MouseEvent | TouchEvent | PointerEvent) => {
+            const point = clientPoint(event);
+            setOver(point ? zoneAt(point) : null);
+          },
+          onDragEnd: (event: MouseEvent | TouchEvent | PointerEvent) => {
+            justDropped.current = true;
+            const point = clientPoint(event);
+            const bucket = point ? zoneAt(point) : null;
+            if (bucket) file(item.id, bucket);
+            setDragging(null);
+            setOver(null);
+          },
+        };
+
   return (
-    <div className="flex w-full flex-col items-center gap-5">
+    <div ref={rootRef} className="flex w-full flex-col items-center gap-5">
       <p className={PROMPT}>{prompt}</p>
 
       <div className="flex min-h-14 w-full max-w-xl flex-wrap justify-center gap-2">
@@ -342,66 +432,72 @@ export const SortTask = forwardRef<
           <p className="text-sm text-muted-foreground">Every card is filed.</p>
         ) : (
           loose.map((item) => (
-            <button
+            <motion.button
               key={item.id}
               type="button"
               disabled={locked}
               aria-pressed={held === item.id}
+              {...dragHandlers(item)}
               onClick={() => {
+                // A card that was just dropped has already been filed.
+                if (justDropped.current) return;
                 setHeld((current) => (current === item.id ? null : item.id));
                 onHasSelection(true);
               }}
               className={cn(
-                "rounded-2xl border px-4 py-2.5 text-sm font-medium transition-colors",
+                "touch-none rounded-2xl border px-4 py-2.5 text-sm font-medium transition-colors",
                 held === item.id
                   ? "border-2 border-foreground bg-lesson-soft"
                   : "border-lesson-line hover:border-foreground/40",
+                !locked && "cursor-grab active:cursor-grabbing",
+                dragging === item.id && "shadow-lg",
               )}
             >
               {item.label}
-            </button>
+            </motion.button>
           ))
         )}
       </div>
 
       <p className="text-xs text-muted-foreground">
-        {held ? "Now tap the box it belongs in." : "Tap a card, then tap the box it belongs in."}
+        {held
+          ? "Now tap the box it belongs in."
+          : "Drag a card into a box — or tap a card, then tap its box."}
       </p>
 
       <div className="grid w-full max-w-xl gap-3 sm:grid-cols-2">
         {buckets.map((bucket) => {
           const filed = items.filter((item) => placed[item.id] === bucket.id);
           const active = held !== null;
+          const lit = over === bucket.id && dragging !== null;
           return (
             <button
               key={bucket.id}
               type="button"
+              data-sort-bucket={bucket.id}
               // Still clickable with an empty hand: that is how a filed card
               // gets taken back out.
               disabled={locked}
               onClick={(event) => {
                 if (locked) return;
+                if (justDropped.current) {
+                  justDropped.current = false;
+                  return;
+                }
                 // A tap on a card that is already filed takes it back out.
                 const chip = (event.target as HTMLElement).closest("[data-item]");
                 const filedId = chip?.getAttribute("data-item");
                 if (filedId) {
-                  setPlaced((prev) => {
-                    const next = { ...prev };
-                    delete next[filedId];
-                    return next;
-                  });
-                  setWrong([]);
+                  unfile(filedId);
                   return;
                 }
                 if (!held) return;
-                const id = held;
-                setPlaced((prev) => ({ ...prev, [id]: bucket.id }));
-                setHeld(null);
-                setWrong([]);
+                file(held, bucket.id);
               }}
               className={cn(
                 "flex min-h-24 flex-col items-start gap-2 rounded-2xl border-2 border-dashed border-lesson-line p-3 text-left transition-colors",
                 active && "border-foreground/40 hover:border-foreground",
+                lit && "border-solid border-foreground bg-lesson-soft",
               )}
             >
               <span className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
@@ -409,12 +505,14 @@ export const SortTask = forwardRef<
               </span>
               <span className="flex flex-wrap gap-2">
                 {filed.map((item) => (
-                  <span
+                  <motion.span
                     key={item.id}
                     data-item={item.id}
                     title={locked ? undefined : `Take back ${item.label}`}
+                    {...dragHandlers(item)}
                     className={cn(
                       "rounded-xl border px-3 py-1.5 text-sm transition-colors",
+                      !locked && "cursor-grab active:cursor-grabbing",
                       wrong.includes(item.id)
                         ? "border-destructive text-destructive"
                         : solved && placed[item.id] === item.bucket
@@ -423,7 +521,7 @@ export const SortTask = forwardRef<
                     )}
                   >
                     {item.label}
-                  </span>
+                  </motion.span>
                 ))}
               </span>
             </button>
