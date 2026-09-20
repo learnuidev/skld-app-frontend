@@ -414,10 +414,12 @@ export const SortTask = forwardRef<
                     data-item={item.id}
                     title={locked ? undefined : `Take back ${item.label}`}
                     className={cn(
-                      "rounded-xl border px-3 py-1.5 text-sm",
+                      "rounded-xl border px-3 py-1.5 text-sm transition-colors",
                       wrong.includes(item.id)
                         ? "border-destructive text-destructive"
-                        : "border-lesson-line bg-card",
+                        : solved && placed[item.id] === item.bucket
+                          ? "border-lesson-correct bg-lesson-correct-bg text-lesson-correct-fg"
+                          : "border-lesson-line bg-card",
                     )}
                   >
                     {item.label}

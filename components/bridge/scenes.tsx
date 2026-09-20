@@ -754,7 +754,6 @@ function Levels({ highlight, labels }: SceneShapes) {
 /** The words on a bridge drawing: l₀, l, L and h. */
 function Dimensions({ highlight, labels }: SceneShapes) {
   const { fade } = painter({ highlight, labels });
-  const on = (id: string) => highlight?.includes(id) ?? false;
   return (
     <>
       <Plate />
@@ -1002,10 +1001,10 @@ function Frame({ highlight, labels }: SceneShapes) {
         {joint(250, a + 9)}
       </g>
       <g opacity={fade("inclined-leg")}>
-        <polygon points="104,64 132,64 84,118 56,118" fill={PALETTE.charcoal} />
-        <polygon points="188,64 216,64 244,118 216,118" fill={PALETTE.charcoal} />
-        <Deck x1={96} x2={224} y={64} height={9} fill={blockColour(on("inclined-leg"), false)} />
-        <Ground y={118} x1={40} x2={280} />
+        <polygon points={`104,${b + 2} 132,${b + 2} 84,${b + 52} 56,${b + 52}`} fill={PALETTE.charcoal} />
+        <polygon points={`188,${b + 2} 216,${b + 2} 244,${b + 52} 216,${b + 52}`} fill={PALETTE.charcoal} />
+        <Deck x1={96} x2={224} y={b + 2} height={9} fill={blockColour(on("inclined-leg"), false)} />
+        <Ground y={b + 52} x1={40} x2={280} />
       </g>
       <g opacity={fade("continuous-frame")}>
         {[60, 160, 260].map((x) => (
@@ -1016,10 +1015,10 @@ function Frame({ highlight, labels }: SceneShapes) {
       </g>
       {labels ? (
         <>
-          <Tag x={160} y={a - 2 + 46} colour={PALETTE.gray}>
+          <Tag x={160} y={a + 46} colour={PALETTE.gray}>
             portal
           </Tag>
-          <Tag x={160} y={112} colour={PALETTE.gray}>
+          <Tag x={160} y={b + 46} colour={PALETTE.gray}>
             inclined legs
           </Tag>
           <Tag x={160} y={c + 42} colour={PALETTE.gray}>
