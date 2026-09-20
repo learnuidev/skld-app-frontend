@@ -314,6 +314,91 @@ describe("LessonPlayer", () => {
     expect(screen.getByRole("img", { name: /0 answered correctly, 0 answered wrongly/ })).toBeInTheDocument();
   });
 
+  it("keeps the explanation rail's slot in place on every step", async () => {
+    const user = userEvent.setup();
+    renderLesson();
+
+    // The slot beside the card is the row's first child, and it has to be there
+    // on every step: a slot that came and went would take the row's gap with it
+    // and shove the card sideways whenever the learner steps.
+    const slotInPlace = () => {
+      const first = screen.getByRole("main").parentElement?.firstElementChild;
+      return Boolean(
+        first && first !== screen.getByRole("main") && first.classList.contains("overflow-hidden"),
+      );
+    };
+
+    // The heading has nothing to explain.
+    expect(slotInPlace()).toBe(true);
+
+    await user.click(screen.getByRole("button", { name: "Next step" }));
+    await screen.findByRole("button", { name: "Check" });
+    expect(slotInPlace()).toBe(true);
+
+    await user.click(screen.getByRole("button", { name: "Next step" }));
+    await screen.findByText("Now read a rod on your own.");
+    expect(slotInPlace()).toBe(true);
+  });
+
+  it("offers a way out after three wrong answers, and fills the answer in", async () => {
+    const user = userEvent.setup();
+    renderLesson();
+
+    await user.click(primaryButton());
+    // The card's own choices, not the footer's Check button: the footer swaps
+    // first, while the previous step is still animating out.
+    await screen.findByRole("button", { name: "2" });
+
+    /** One wrong answer, then back to a clean board. */
+    const miss = async () => {
+      await user.click(screen.getByRole("button", { name: "2" }));
+      await user.click(screen.getByRole("button", { name: "Check" }));
+    };
+
+    // Two misses: no way out yet, just the chance to try again.
+    await miss();
+    expect(screen.queryByRole("button", { name: "I give up" })).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Try again" }));
+    await waitFor(() => expect(screen.getByRole("button", { name: "2" })).toBeEnabled());
+    await miss();
+    expect(screen.queryByRole("button", { name: "I give up" })).not.toBeInTheDocument();
+
+    // The third one brings it out.
+    await user.click(screen.getByRole("button", { name: "Try again" }));
+    await waitFor(() => expect(screen.getByRole("button", { name: "2" })).toBeEnabled());
+    await miss();
+
+    const giveUp = await screen.findByRole("button", { name: "I give up" });
+    expect(screen.getByRole("button", { name: "Try again" })).toBeInTheDocument();
+
+    await user.click(giveUp);
+
+    // The answer is filled in for the learner...
+    expect(screen.getByRole("button", { name: "1" })).toHaveAttribute("aria-pressed", "true");
+    // ...but nobody pretends it was worked out: no cheer, and the card keeps
+    // its "not right yet" colour.
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
+    expect(card()).toHaveClass("border-lesson-warn");
+    expect(card()).not.toHaveClass("border-lesson-correct");
+
+    // The question is finished with, and the lesson carries on.
+    expect(screen.queryByRole("button", { name: "I give up" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Try again" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Continue" })).toBeInTheDocument();
+
+    // Its dot stays red: it was answered wrongly, not right.
+    expect(
+      screen.getByRole("img", { name: "Questions: 0 answered correctly, 1 answered wrongly, 0 not answered" }),
+    ).toBeInTheDocument();
+
+    // Stepping away and back starts the question fresh, like any other step.
+    await user.click(screen.getByRole("button", { name: "Continue" }));
+    await screen.findByText("Now read a rod on your own.");
+    await user.click(screen.getByRole("button", { name: "Previous step" }));
+
+    expect(await screen.findByRole("button", { name: "Check" })).toBeDisabled();
+  });
+
   it("offers the next step when the lesson ends", async () => {
     const user = userEvent.setup();
     renderLesson([{ type: "heading", text: "One step" }]);

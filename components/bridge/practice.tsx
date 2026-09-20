@@ -163,6 +163,10 @@ export const HotspotTask = forwardRef<
         setPicked(null);
         return false;
       },
+      reveal() {
+        setPicked(answer);
+        setMissed([]);
+      },
     }),
     [picked, answer],
   );
@@ -265,6 +269,10 @@ export const ChooseTask = forwardRef<
         setWrong((prev) => (prev.includes(picked) ? prev : [...prev, picked]));
         return false;
       },
+      reveal() {
+        setPicked(answer);
+        setWrong([]);
+      },
     }),
     [picked, answer],
   );
@@ -366,6 +374,11 @@ export const SortTask = forwardRef<
         const missed = items.filter((item) => placed[item.id] !== item.bucket).map((i) => i.id);
         setWrong(missed);
         return missed.length === 0;
+      },
+      reveal() {
+        setPlaced(Object.fromEntries(items.map((item) => [item.id, item.bucket])));
+        setHeld(null);
+        setWrong([]);
       },
     }),
     [complete, items, placed],
@@ -575,6 +588,9 @@ export const OrderTask = forwardRef<
       check() {
         return order.every((item, index) => item.id === items[index]?.id);
       },
+      reveal() {
+        setOrder([...items]);
+      },
     }),
     [order, items],
   );
@@ -684,6 +700,10 @@ export const AssembleTask = forwardRef<
       check() {
         if (!complete) return false;
         return slots.every((slot) => placed[slot.id] === slot.id);
+      },
+      reveal() {
+        setPlaced(Object.fromEntries(slots.map((slot) => [slot.id, slot.id])));
+        setHeld(null);
       },
     }),
     [complete, slots, placed],

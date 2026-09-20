@@ -9,6 +9,11 @@ import { Abacus, digitsToValue, valueToDigits } from "./abacus";
 export interface TaskHandle {
   /** Verify the current selection. Returns true when it is correct. */
   check(): boolean;
+  /**
+   * Fill in the answer, for a learner who has given up. The question is then
+   * showing its answer rather than waiting for one.
+   */
+  reveal(): void;
 }
 
 /** The lesson design's prompt line: bold, centred, a touch larger than body text. */
@@ -184,11 +189,13 @@ export const BuildTask = forwardRef<
     target: number;
     rods?: number;
     solved: boolean;
+    /** The answer was given away rather than worked out. */
+    revealed?: boolean;
     locked?: boolean;
     onHasSelection: (has: boolean) => void;
   }
 >(function BuildTask(
-  { prompt, target, rods = 2, solved, locked = false, onHasSelection },
+  { prompt, target, rods = 2, solved, revealed = false, locked = false, onHasSelection },
   ref,
 ) {
   const [digits, setDigits] = useState<number[]>(() => clearDigits(rods));
@@ -203,8 +210,12 @@ export const BuildTask = forwardRef<
         setWrong(true);
         return false;
       },
+      reveal() {
+        setDigits(valueToDigits(target, rods));
+        setWrong(false);
+      },
     }),
-    [shown, target],
+    [shown, target, rods],
   );
 
   const change = (i: number, d: number) => {
@@ -223,7 +234,7 @@ export const BuildTask = forwardRef<
         label="Your abacus"
       />
       <div className="flex min-h-10 items-center">
-        {solved ? (
+        {solved && !revealed ? (
           <Quip>{`That's ${placeLabel(target)}!`}</Quip>
         ) : wrong ? (
           <p className="rounded-2xl bg-lesson-soft px-4 py-3 text-sm font-medium text-foreground/70">
@@ -243,11 +254,13 @@ export const ReadTask = forwardRef<
     digits: number[];
     choices: number[];
     solved: boolean;
+    /** The answer was given away rather than worked out. */
+    revealed?: boolean;
     locked?: boolean;
     onHasSelection: (has: boolean) => void;
   }
 >(function ReadTask(
-  { prompt, digits, choices, solved, locked = false, onHasSelection },
+  { prompt, digits, choices, solved, revealed = false, locked = false, onHasSelection },
   ref,
 ) {
   const [picked, setPicked] = useState<number | null>(null);
@@ -262,6 +275,10 @@ export const ReadTask = forwardRef<
         if (picked === answer) return true;
         setWrong((prev) => new Set(prev).add(picked));
         return false;
+      },
+      reveal() {
+        setPicked(answer);
+        setWrong(new Set());
       },
     }),
     [picked, answer],
@@ -284,7 +301,7 @@ export const ReadTask = forwardRef<
         }}
       />
       <div className="flex min-h-10 items-center">
-        {solved ? <Quip>{`That's ${placeLabel(answer)}!`}</Quip> : null}
+        {solved && !revealed ? <Quip>{`That's ${placeLabel(answer)}!`}</Quip> : null}
       </div>
     </div>
   );
@@ -297,11 +314,13 @@ export const QuizTask = forwardRef<
     choices: number[];
     answer: number;
     solved: boolean;
+    /** The answer was given away rather than worked out. */
+    revealed?: boolean;
     locked?: boolean;
     onHasSelection: (has: boolean) => void;
   }
 >(function QuizTask(
-  { prompt, choices, answer, solved, locked = false, onHasSelection },
+  { prompt, choices, answer, solved, revealed = false, locked = false, onHasSelection },
   ref,
 ) {
   const [picked, setPicked] = useState<number | null>(null);
@@ -315,6 +334,10 @@ export const QuizTask = forwardRef<
         if (picked === answer) return true;
         setWrong((prev) => new Set(prev).add(picked));
         return false;
+      },
+      reveal() {
+        setPicked(answer);
+        setWrong(new Set());
       },
     }),
     [picked, answer],
@@ -336,7 +359,7 @@ export const QuizTask = forwardRef<
         }}
       />
       <div className="flex min-h-10 items-center">
-        {solved ? <Quip>{`That's ${placeLabel(answer)}!`}</Quip> : null}
+        {solved && !revealed ? <Quip>{`That's ${placeLabel(answer)}!`}</Quip> : null}
       </div>
     </div>
   );

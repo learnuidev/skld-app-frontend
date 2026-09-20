@@ -69,16 +69,25 @@ function useIsDesktop() {
   return isDesktop;
 }
 
+/**
+ * How many wrong checks it takes before a learner may give up and be shown the
+ * answer.
+ */
+const GIVE_UP_AFTER = 3;
+
 /** The step's question, as the tutor would repeat it back. */
 function BlockContent({
   block,
   solved,
+  revealed,
   attempted,
   taskRef,
   onHasSelection,
 }: {
   block: LessonBlock;
   solved: boolean;
+  /** The answer was given away rather than worked out. */
+  revealed: boolean;
   attempted: boolean;
   taskRef: RefObject<TaskHandle | null>;
   onHasSelection: (has: boolean) => void;
@@ -140,6 +149,7 @@ function BlockContent({
           target={block.target}
           rods={block.rods ?? 2}
           solved={solved}
+          revealed={revealed}
           locked={locked}
           onHasSelection={onHasSelection}
         />
@@ -152,6 +162,7 @@ function BlockContent({
           digits={block.digits}
           choices={block.choices}
           solved={solved}
+          revealed={revealed}
           locked={locked}
           onHasSelection={onHasSelection}
         />
@@ -164,6 +175,7 @@ function BlockContent({
           choices={block.choices}
           answer={block.answer}
           solved={solved}
+          revealed={revealed}
           locked={locked}
           onHasSelection={onHasSelection}
         />
@@ -292,6 +304,8 @@ export default function LessonPlayer({
   const [whyIndex, setWhyIndex] = useState(0);
   /** Wrong checks on this step: the second one turns the card yellow. */
   const [misses, setMisses] = useState(0);
+  /** The learner gave up: the answer is on screen and the question is over. */
+  const [revealed, setRevealed] = useState(false);
   /** Steps answered correctly so far — the navbar's sparkle. */
   const [done, setDone] = useState<Set<number>>(new Set());
   /** Steps answered wrongly and not yet put right — the navbar's red dots. */
@@ -307,11 +321,15 @@ export default function LessonPlayer({
   const ready = answered;
   const verdict: Verdict = solved
     ? "correct"
-    : attempted && isTask
-      ? misses >= 2
-        ? "retry"
-        : "incorrect"
-      : "pending";
+    : revealed
+      ? "retry"
+      : attempted && isTask
+        ? misses >= 2
+          ? "retry"
+          : "incorrect"
+        : "pending";
+  /** Three wrong checks in, the tutor stops asking and shows the answer. */
+  const canGiveUp = isTask && attempted && !solved && !revealed && misses >= GIVE_UP_AFTER;
 
   const coursePath = `/courses/${course.slug}`;
 
@@ -332,6 +350,7 @@ export default function LessonPlayer({
       setShowWhy(false);
       setWhyIndex(0);
       setMisses(0);
+      setRevealed(false);
       // Clamped both ways: a step button at either end asks for a step that
       // does not exist, and landing on nothing would blank the card.
       setCurrent(Math.min(Math.max(0, step), total - 1));
@@ -370,6 +389,13 @@ export default function LessonPlayer({
       return;
     }
     advance();
+  };
+
+  /** Give up: the task fills in its own answer and the step is done with. */
+  const giveUp = () => {
+    taskRef.current?.reveal();
+    setRevealed(true);
+    setShowWhy(false);
   };
 
   const startOver = useCallback(() => {
@@ -467,27 +493,31 @@ export default function LessonPlayer({
       />
 
       <div className="flex min-h-0 flex-1 flex-col-reverse gap-3 px-3 pb-3 sm:gap-4 sm:px-8 sm:pb-8 lg:flex-row">
-        {taskBlock?.explanation ? (
-          <motion.div
-            key={current}
-            initial={false}
-            // Beside the card on wide screens, below it on narrow ones — so the
-            // panel claims width there and height here. Either way the card
-            // takes up the slack in step, and the whole row glides.
-            animate={
-              showWhy
-                ? isDesktop
-                  ? { width: RAIL_WIDTH, opacity: 1 }
-                  : { height: "auto", opacity: 1 }
-                : isDesktop
-                  ? { width: 0, opacity: 0 }
-                  : { height: 0, opacity: 0 }
-            }
-            transition={railTransition}
-            aria-hidden={!showWhy}
-            inert={!showWhy}
-            className="shrink-0 overflow-hidden"
-          >
+        {/* The rail's slot stays in the row on every step, even when the step
+            in hand has nothing to explain. A slot that came and went would take
+            the row's gap with it and shove the whole card sideways — a 16px
+            jump every time the learner steps. */}
+        <motion.div
+          key={current}
+          initial={false}
+          // Beside the card on wide screens, below it on narrow ones — so the
+          // panel claims width there and height here. Either way the card
+          // takes up the slack in step, and the whole row glides.
+          animate={
+            showWhy && canAskWhy
+              ? isDesktop
+                ? { width: RAIL_WIDTH, opacity: 1 }
+                : { height: "auto", opacity: 1 }
+              : isDesktop
+                ? { width: 0, opacity: 0 }
+                : { height: 0, opacity: 0 }
+          }
+          transition={railTransition}
+          aria-hidden={!showWhy}
+          inert={!showWhy}
+          className="shrink-0 overflow-hidden"
+        >
+          {taskBlock?.explanation ? (
             <ExplanationRail
               className={isDesktop ? "h-full w-[380px]" : "max-h-[45vh]"}
               steps={whySteps}
@@ -496,8 +526,8 @@ export default function LessonPlayer({
               active={showWhy}
               onClose={() => setShowWhy(false)}
             />
-          </motion.div>
-        ) : null}
+          ) : null}
+        </motion.div>
 
         <main
           className={cn(
@@ -529,7 +559,8 @@ export default function LessonPlayer({
                 >
                   <BlockContent
                     block={block}
-                    solved={solved}
+                    solved={solved || revealed}
+                    revealed={revealed}
                     attempted={attempted}
                     taskRef={taskRef}
                     onHasSelection={setHasSel}
@@ -560,9 +591,16 @@ export default function LessonPlayer({
           </div>
 
           <div className="mx-auto flex w-full max-w-[367px] shrink-0 items-center justify-center gap-2 px-5 pt-4 pb-5">
-            {isTask && attempted && !solved ? (
+            {isTask && attempted && !solved && !revealed ? (
               <PillButton variant="secondary" onClick={retryTask}>
                 Try again
+              </PillButton>
+            ) : null}
+
+            {/* Three wrong answers is enough: show the answer and move on. */}
+            {canGiveUp ? (
+              <PillButton variant="secondary" onClick={giveUp}>
+                I give up
               </PillButton>
             ) : null}
 

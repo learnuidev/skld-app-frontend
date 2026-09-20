@@ -291,6 +291,120 @@ describe("OrderTask", () => {
   });
 });
 
+describe("giving up", () => {
+  /** Press "I give up" on a task: it fills in its own answer. */
+  function giveUp(ref: React.RefObject<TaskHandle | null>) {
+    act(() => ref.current?.reveal());
+  }
+
+  it("fills in the right pin on a hotspot question", () => {
+    const ref = createRef<TaskHandle>();
+    render(
+      <HotspotTask
+        prompt="Tap the bearing."
+        scene="bearings"
+        parts={["main-girder", "bearing", "pier-cap"]}
+        answer="bearing"
+        solved={false}
+        onHasSelection={vi.fn()}
+        ref={ref}
+      />,
+    );
+
+    expect(checked(ref)).toBe(false);
+    giveUp(ref);
+    expect(checked(ref)).toBe(true);
+  });
+
+  it("fills in the right choice on a multiple choice question", () => {
+    const ref = createRef<TaskHandle>();
+    render(
+      <ChooseTask
+        prompt="What limits a cable-stayed span?"
+        choices={["The weight of the stays", "The colour of the tower", "The width of the deck"]}
+        answer={0}
+        solved={false}
+        onHasSelection={vi.fn()}
+        ref={ref}
+      />,
+    );
+
+    giveUp(ref);
+
+    expect(checked(ref)).toBe(true);
+    expect(screen.getByRole("button", { name: "The weight of the stays" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+  });
+
+  it("files every card in the right box", () => {
+    const ref = createRef<TaskHandle>();
+    render(
+      <SortTask
+        prompt="Sort the supports."
+        buckets={[
+          { id: "end", label: "Ends" },
+          { id: "middle", label: "Middle" },
+        ]}
+        items={[
+          { id: "abutment", label: "Abutment", bucket: "end" },
+          { id: "pier", label: "Pier", bucket: "middle" },
+        ]}
+        solved={false}
+        onHasSelection={vi.fn()}
+        ref={ref}
+      />,
+    );
+
+    giveUp(ref);
+
+    expect(checked(ref)).toBe(true);
+    expect(screen.getByText("Every card is filed.")).toBeInTheDocument();
+  });
+
+  it("puts the cards in order", () => {
+    const ref = createRef<TaskHandle>();
+    const items = [
+      { id: "traffic", label: "Traffic" },
+      { id: "deck", label: "Deck" },
+      { id: "ground", label: "Ground" },
+    ];
+    render(<OrderTask prompt="Order the load path." items={items} solved={false} onHasSelection={vi.fn()} ref={ref} />);
+
+    giveUp(ref);
+
+    expect(checked(ref)).toBe(true);
+    expect(screen.getAllByRole("listitem").map((row) => row.textContent?.replace(/^\d+/, "").trim())).toEqual([
+      "Traffic",
+      "Deck",
+      "Ground",
+    ]);
+  });
+
+  it("places every part on the drawing", () => {
+    const ref = createRef<TaskHandle>();
+    render(
+      <AssembleTask
+        prompt="Build the bridge."
+        scene="overview"
+        slots={[
+          { id: "superstructure", label: "Deck", at: [120, 95] },
+          { id: "pier", label: "Pier", at: [202, 131] },
+        ]}
+        solved={false}
+        onHasSelection={vi.fn()}
+        ref={ref}
+      />,
+    );
+
+    giveUp(ref);
+
+    expect(checked(ref)).toBe(true);
+    expect(screen.getByText("Every part is on the bridge.")).toBeInTheDocument();
+  });
+});
+
 describe("zoneAtPoint", () => {
   const zones = [
     { id: "ends", box: { left: 0, top: 0, right: 100, bottom: 50 } },

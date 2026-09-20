@@ -57,6 +57,49 @@ describe("ReadTask", () => {
   });
 });
 
+describe("giving up", () => {
+  it("fills the board in when the learner gives up on a build", async () => {
+    const ref = createRef<TaskHandle>();
+    render(<BuildTask prompt="Build 6 on the abacus." target={6} solved={false} onHasSelection={vi.fn()} ref={ref} />);
+
+    expect(checked(ref)).toBe(false);
+    act(() => ref.current?.reveal());
+    expect(checked(ref)).toBe(true);
+  });
+
+  it("picks the right choice when the learner gives up on a reading", () => {
+    const ref = createRef<TaskHandle>();
+    render(
+      <ReadTask
+        prompt="Which number is this abacus showing?"
+        digits={[1]}
+        choices={[1, 2, 5, 10]}
+        solved={false}
+        onHasSelection={vi.fn()}
+        ref={ref}
+      />,
+    );
+
+    act(() => ref.current?.reveal());
+
+    // The answer is in: the right choice is the one the board is showing.
+    expect(checked(ref)).toBe(true);
+    expect(screen.getByRole("button", { name: "1" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "2" })).toHaveAttribute("aria-pressed", "false");
+  });
+
+  it("picks the right choice when the learner gives up on a quiz", () => {
+    const ref = createRef<TaskHandle>();
+    render(
+      <QuizTask prompt="3 + 1 = ?" choices={[4, 3, 5, 6]} answer={4} solved={false} onHasSelection={vi.fn()} ref={ref} />,
+    );
+
+    act(() => ref.current?.reveal());
+
+    expect(checked(ref)).toBe(true);
+  });
+});
+
 describe("BuildTask", () => {
   const props = {
     prompt: "Build 6 on the abacus.",
