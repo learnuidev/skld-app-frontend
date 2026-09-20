@@ -1,56 +1,13 @@
 "use client";
 
-import { Abacus } from "@/components/abacus/abacus";
-import { DemoPanel } from "@/components/abacus/animated-abacus";
-import { SceneBoard } from "@/components/bridge/scene-board";
+import { LessonVisualView } from "@/components/courses/lesson/figure";
 import { cn } from "@/lib/utils";
-import type { ExplanationStep, ExplanationVisual, LessonExplanation } from "@/modules/course/types";
+import type { ExplanationStep, LessonExplanation } from "@/modules/course/types";
 
 /** The ordered walkthrough behind a "Why?": its steps, or one step built from `text`/`visual`. */
 export function explanationSteps(explanation: LessonExplanation): ExplanationStep[] {
   if (explanation.steps?.length) return explanation.steps;
   return [{ text: explanation.text ?? "", visual: explanation.visual }];
-}
-
-/** The board an explanation step points at, drawn big enough to read from the card. */
-function StepVisual({ visual }: { visual: ExplanationVisual }) {
-  switch (visual.kind) {
-    case "abacus":
-      return <Abacus digits={visual.digits} readOnly scale={0.95} label="Explanation" />;
-    case "abacus-anim":
-      return (
-        <DemoPanel
-          frames={visual.frames}
-          captions={visual.captions}
-          label={visual.label ?? "Example"}
-          scale={0.85}
-          controls
-          loop
-        />
-      );
-    case "scene":
-      return (
-        <div className="flex w-full flex-col items-center gap-3">
-          <SceneBoard
-            scene={visual.scene}
-            highlight={visual.highlight}
-            labels={visual.labels ?? true}
-          />
-          {visual.caption ? (
-            <p className="max-w-md text-center text-sm leading-5 text-muted-foreground">
-              {visual.caption}
-            </p>
-          ) : null}
-        </div>
-      );
-    case "image":
-      return (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={visual.src} alt={visual.alt ?? "Explanation"} className="max-h-72 rounded-xl" />
-      );
-    default:
-      return null;
-  }
 }
 
 /**
@@ -63,7 +20,13 @@ export function ExplanationStage({ step, className }: { step: ExplanationStep; c
 
   return (
     <div className={cn("flex w-full max-w-lg flex-col items-center gap-4", className)}>
-      <StepVisual visual={step.visual} />
+      <LessonVisualView
+        visual={step.visual}
+        scale={step.visual.kind === "abacus" ? 0.95 : 0.85}
+        controls
+        abacusLabel="Explanation"
+        className="max-w-xl"
+      />
     </div>
   );
 }

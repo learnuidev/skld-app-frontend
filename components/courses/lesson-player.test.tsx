@@ -1,6 +1,6 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import LessonPlayer from "@/components/courses/lesson-player";
 import type { LessonBlock } from "@/modules/course/types";
@@ -507,5 +507,148 @@ describe("LessonPlayer", () => {
     await user.click(screen.getByRole("button", { name: "Finish course" }));
 
     expect(push).toHaveBeenCalledWith("/courses/test-course");
+  });
+});
+
+/**
+ * No step is words alone: a heading, a paragraph and a list each put their
+ * figure beside the words, with the caption underneath it.
+ */
+describe("LessonPlayer figures", () => {
+  const figure = {
+    visual: { kind: "diagram" as const, name: "soroban" as const },
+    caption: "Every bead that touches the beam is counting.",
+  };
+
+  it("shows a heading with its figure and caption", () => {
+    renderLesson([{ id: "parts", type: "heading", text: "Meet the parts", figure }]);
+
+    expect(screen.getByRole("heading", { name: "Meet the parts" })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /^A soroban/i })).toBeInTheDocument();
+    expect(screen.getByText("Every bead that touches the beam is counting.")).toBeInTheDocument();
+  });
+
+  it("shows a paragraph with its figure beside the words", () => {
+    renderLesson([
+      { id: "beam", type: "paragraph", text: "Beads that touch the beam count.", figure },
+    ]);
+
+    expect(screen.getByText("Beads that touch the beam count.")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /^A soroban/i })).toBeInTheDocument();
+  });
+
+  it("shows a list with its figure", () => {
+    renderLesson([
+      {
+        id: "parts-list",
+        type: "list",
+        items: ["Beam — the bar across the middle.", "Rods — one per digit."],
+        figure,
+      },
+    ]);
+
+    expect(screen.getByText("Beam — the bar across the middle.")).toBeInTheDocument();
+    expect(screen.getByText("Rods — one per digit.")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /^A soroban/i })).toBeInTheDocument();
+  });
+
+  it("draws whatever the words ask for, not just the diagram", () => {
+    renderLesson([
+      {
+        id: "carrying",
+        type: "paragraph",
+        text: "Ten ones become one ten.",
+        figure: { visual: { kind: "abacus", digits: [0, 1] }, caption: "One bead, one rod left." },
+      },
+    ]);
+
+    expect(screen.getByRole("img", { name: "Abacus" })).toBeInTheDocument();
+    expect(screen.getByText("One bead, one rod left.")).toBeInTheDocument();
+  });
+});
+
+/**
+ * The "Why?" panel sits beside the card on a wide screen and below it on a
+ * narrow one, which means the same slot is measured on both axes. The first
+ * render happens before the media query is read, so the narrow-screen values are
+ * the ones framer-motion writes to the element first — and a wide-screen target
+ * that named only one axis left the other stuck at zero, collapsing the panel
+ * the walkthrough is meant to appear in.
+ */
+describe("LessonPlayer's explanation slot", () => {
+  const original = window.matchMedia;
+
+  const withViewport = (isWide: boolean) => {
+    window.matchMedia = ((query: string) => ({
+      matches: isWide && query.includes("min-width: 1024px"),
+      media: query,
+      onchange: null,
+      addListener: () => {},
+      removeListener: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      dispatchEvent: () => false,
+    })) as typeof window.matchMedia;
+  };
+
+  afterEach(() => {
+    window.matchMedia = original;
+  });
+
+  /** The slot the panel is drawn in: the card's sibling, in the row. */
+  function slot() {
+    const element = screen.getByRole("main").previousElementSibling as HTMLElement | null;
+    if (!element) throw new Error("no slot beside the card");
+    return element;
+  }
+
+  it("gives the panel room on a wide screen once it is opened", async () => {
+    const user = userEvent.setup();
+    withViewport(true);
+    renderLesson(blocksWithBoard);
+
+    // Open the walkthrough: answer, then ask why.
+    await user.click(primaryButton());
+    await user.click(await screen.findByRole("button", { name: "1" }));
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    await user.click(await screen.findByRole("button", { name: "Why?" }));
+
+    // Both axes have to end up roomy: the slot is measured on each, and a stale
+    // zero on either one leaves the panel invisible however wide it is.
+    await waitFor(() => expect(slot().style.height).not.toBe("0px"));
+    await waitFor(() => expect(slot().style.width).not.toBe("0px"));
+    expect(screen.getByRole("complementary", { name: "Why this is the answer" })).toBeInTheDocument();
+  });
+
+  it("gives the panel room below the card on a narrow screen", async () => {
+    const user = userEvent.setup();
+    withViewport(false);
+    renderLesson(blocksWithBoard);
+
+    await user.click(primaryButton());
+    await user.click(await screen.findByRole("button", { name: "1" }));
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    await user.click(await screen.findByRole("button", { name: "Why?" }));
+
+    // Height is what a stacked panel claims; the width is the column's.
+    await waitFor(() => expect(slot().style.height).not.toBe("0px"));
+  });
+
+  it("takes the slot back out of the row when the walkthrough is closed", async () => {
+    const user = userEvent.setup();
+    withViewport(true);
+    renderLesson(blocksWithBoard);
+
+    await user.click(primaryButton());
+    await user.click(await screen.findByRole("button", { name: "1" }));
+    await user.click(screen.getByRole("button", { name: "Check" }));
+    await user.click(await screen.findByRole("button", { name: "Why?" }));
+    await waitFor(() => expect(slot().style.width).not.toBe("0px"));
+
+    await user.click(screen.getByRole("button", { name: "Close explanation" }));
+
+    // Closed beside the card, the slot keeps the row's height but gives up its
+    // width, so the card takes the space back.
+    await waitFor(() => expect(slot().style.width).toBe("0px"));
   });
 });

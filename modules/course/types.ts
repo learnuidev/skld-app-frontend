@@ -72,12 +72,167 @@ export type BridgeScene =
   | "suspension"
   | "composite";
 
-/** An optional visual shown inside an explanation dialog. */
-export type ExplanationVisual =
+/**
+ * Every named concept drawing a step can put on screen: one name per drawing in
+ * `components/courses/figures`, painted in the shared course palette. Each name
+ * is a different idea, and the numbers and words it works with are passed in
+ * beside it —
+ *
+ *  - `soroban`           the whole board, its parts named
+ *  - `one-rod`           one rod drawn large, showing `numbers[0]`
+ *  - `bead-values`       a heaven bead worth 5 and four earth beads worth 1 each
+ *  - `clear-board`       every bead resting away from the beam: the board at zero
+ *  - `place-value`       the rods named by place — ones, tens, hundreds, thousands
+ *  - `zero-rod`          a number with an empty rod inside it (`numbers` = digits)
+ *  - `two-rods`          a two-digit number on two rods (`numbers` = digits)
+ *  - `big-board`         a wide board carrying a big number (`numbers` = digits)
+ *  - `board-vs-numeral`  the board and the same number written as digits
+ *  - `number-line`       the `numbers` marked in order on a line
+ *  - `five-complement`   the pairs that make 5 (1+4, 2+3)
+ *  - `ten-complement`    the pairs that make 10
+ *  - `carry-over`        ten ones becoming one bead on the next rod
+ *  - `borrow-ten`        one ten broken back into ten ones
+ *  - `column-add`        two numbers added down the columns (`numbers` = [a, b])
+ *  - `column-subtract`   one number taken from another (`numbers` = [a, b])
+ *  - `money`             notes and coins held as beads (`numbers` = the amount)
+ *  - `compare-methods`   one sum worked twice, on paper and on the beads (`numbers` = [a, b])
+ *  - `multiply-array`    rows × columns of dots (`numbers` = [rows, columns])
+ *  - `multiply-table`    the 9×9 table with one fact picked out (`numbers` = [a, b])
+ *  - `divide-share`      a pile shared into equal groups (`numbers` = [total, groups])
+ *  - `remainder`         equal groups and what is left over (`numbers` = [total, groups])
+ *  - `square-grid`       an n×n square of dots (`numbers[0]` = n)
+ *  - `root-between`      a square root between two perfect squares (`numbers[0]` = n)
+ *  - `running-total`     a column of numbers and the total it runs to
+ *  - `da-baizi`          1+2+3+… climbing to 100
+ *  - `mental-board`      the board drawn as a ghost: the picture in the mind
+ *  - `photo-snap`        a real board captured as a mental picture
+ *  - `image-to-number`   beads on one side, the number they make on the other
+ *  - `ghost-carry`       a carry happening on the ghost board
+ *  - `flash-drill`       a number shown for a moment and then gone
+ *  - `listening-drill`   numbers arriving one at a time into the board
+ *  - `two-rods-at-once`  two rods moved together in one motion
+ *  - `vivid-image`       a sharp mental board beside a blurred one
+ *  - `focus-lamp`        a lamp on the board while distractions sit in the dark
+ *  - `numerals`         一 二 三 beside 1 2 3 (`labels` = the characters)
+ *  - `wan`               the character 万 with the zeros it stands for
+ *  - `unit-ladder`       个 十 百 千 万 亿 兆 climbing, right to left
+ *  - `groups-of-four`    digits split into groups of four, each group named
+ *  - `zero-in-group`     零 written inside a group of digits
+ *  - `koujue`            a card of the spoken formulas, 口诀
+ *  - `chinese-board`     the traditional two-and-five suanpan beside the modern one
+ *  - `fingers`           thumb and index working the beads
+ *  - `kan-xinsuan`       a number seen and read straight into the mind, 看心算
+ *  - `ting-xinsuan`      numbers heard and read straight into the mind, 听心算
+ *  - `number-sprint`     a run of numbers feeding one board
+ *  - `speed-clock`       a stopwatch beside the board
+ *  - `progress-ladder`   three rungs: see it, picture it, speed it up
+ *  - `daily-practice`    a week of practice marks
+ *  - `level-check`       a checklist card with the level's ticks
+ *  - `championship`      a medal for the final challenge
+ *  - `accuracy-target`   a target: hits near the middle, misses outside
+ *  - `drill-rhythm`      a beat with numbers arriving on it
+ *  - `exam-paper`        a timed paper of sums
+ */
+export const DIAGRAM_NAMES = [
+  "soroban",
+  "one-rod",
+  "bead-values",
+  "clear-board",
+  "place-value",
+  "zero-rod",
+  "two-rods",
+  "big-board",
+  "board-vs-numeral",
+  "number-line",
+  "five-complement",
+  "ten-complement",
+  "carry-over",
+  "borrow-ten",
+  "column-add",
+  "column-subtract",
+  "money",
+  "compare-methods",
+  "multiply-array",
+  "multiply-table",
+  "divide-share",
+  "remainder",
+  "square-grid",
+  "root-between",
+  "running-total",
+  "da-baizi",
+  "mental-board",
+  "photo-snap",
+  "image-to-number",
+  "ghost-carry",
+  "flash-drill",
+  "listening-drill",
+  "two-rods-at-once",
+  "vivid-image",
+  "focus-lamp",
+  "numerals",
+  "wan",
+  "unit-ladder",
+  "groups-of-four",
+  "zero-in-group",
+  "koujue",
+  "chinese-board",
+  "fingers",
+  "kan-xinsuan",
+  "ting-xinsuan",
+  "number-sprint",
+  "speed-clock",
+  "progress-ladder",
+  "daily-practice",
+  "level-check",
+  "championship",
+  "accuracy-target",
+  "drill-rhythm",
+  "exam-paper",
+] as const;
+
+export type DiagramName = (typeof DIAGRAM_NAMES)[number];
+
+/**
+ * A concept drawing named by content rather than authored in it: the geometry
+ * lives in `components/courses/figures`, exactly as a bridge scene names its
+ * drawing. The drawing decides what its `numbers` and `labels` mean.
+ */
+export interface DiagramVisual {
+  kind: "diagram";
+  name: DiagramName;
+  /** The numbers the drawing works with — digits, counts, addends. */
+  numbers?: number[];
+  /** Short words the drawing writes, when the drawing does not fix them itself. */
+  labels?: string[];
+  /** Whether the drawing writes its own part names. Defaults to true. */
+  named?: boolean;
+}
+
+/**
+ * The drawings a step can show: the live board, a bridge scene, a named concept
+ * diagram, or an image. Text steps, "Why?" walkthroughs and bridge content all
+ * draw from this one set, so a learner meets the same pictures everywhere.
+ */
+export type LessonVisual =
   | { kind: "abacus"; digits: number[] }
   | ({ kind: "abacus-anim" } & AbacusDemo)
   | { kind: "scene"; scene: BridgeScene; highlight?: string[]; labels?: boolean; caption?: string }
+  | DiagramVisual
   | { kind: "image"; src: string; alt?: string };
+
+/** An optional visual shown inside an explanation dialog. */
+export type ExplanationVisual = LessonVisual;
+
+/**
+ * A picture a text step puts beside its words. Every heading, paragraph and
+ * list in a lesson carries one, so no step is words alone.
+ */
+export interface LessonFigure {
+  /** What to draw. */
+  visual: LessonVisual;
+  /** One line under the drawing: what to look at, never what the text says. */
+  caption?: string;
+}
 
 /** One animated step of an explanation walkthrough. */
 export interface ExplanationStep {
@@ -101,9 +256,9 @@ export interface LessonExplanation {
  * `/courses/<course>/<level>/<lesson>/<id>`.
  */
 export type LessonBlock =
-  | { id: string; type: "heading"; text: string }
-  | { id: string; type: "paragraph"; text: string; demo?: AbacusDemo }
-  | { id: string; type: "list"; items: string[] }
+  | { id: string; type: "heading"; text: string; figure?: LessonFigure }
+  | { id: string; type: "paragraph"; text: string; demo?: AbacusDemo; figure?: LessonFigure }
+  | { id: string; type: "list"; items: string[]; figure?: LessonFigure }
   | { id: string; type: "explore"; label: string; rods: number; initial: number[] }
   | { id: string; type: "build"; prompt: string; target: number; rods?: number; explanation?: LessonExplanation }
   | { id: string; type: "read"; prompt: string; digits: number[]; choices: number[]; explanation?: LessonExplanation }

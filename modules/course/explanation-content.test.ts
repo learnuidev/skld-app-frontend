@@ -65,17 +65,10 @@ function endBoard(visual: ExplanationStep["visual"]): number[] | null {
 }
 const courses = Object.entries(courseContentRegistry);
 
-/**
- * Courses whose walkthroughs are all boarded. The others still have text-only
- * steps, so their completeness is not asserted yet — their boards, where they
- * exist, are checked like everyone else's.
- */
-const FULLY_BOARDED = new Set(["understanding-abacus"]);
-
 describe.each(courses)("%s explanation boards", (course, levels) => {
   const walkthroughs = walkthroughsOf(levels);
 
-  it.skipIf(!FULLY_BOARDED.has(course))("gives every instruction a board to point at", () => {
+  it("gives every instruction a board to point at", () => {
     const missing = walkthroughs.flatMap(({ where, steps }) =>
       steps.filter((step) => !step.visual).map((step) => `${where}: ${step.text}`),
     );
@@ -95,6 +88,9 @@ describe.each(courses)("%s explanation boards", (course, levels) => {
           if (!visual.src) problems.push(`${context}: image without a src`);
           return;
         }
+
+        // Concept diagrams are drawings, not boards; the figures suite checks them.
+        if (visual.kind === "diagram") return;
 
         // Bridge drawings are not abacus boards; their own suite checks them.
         if (visual.kind === "scene") return;
@@ -130,7 +126,9 @@ describe.each(courses)("%s explanation boards", (course, levels) => {
 
       steps.forEach((step, s) => {
         const { visual } = step;
-        if (!visual || visual.kind === "image" || visual.kind === "scene") return;
+        if (!visual || visual.kind === "image" || visual.kind === "scene" || visual.kind === "diagram") {
+          return;
+        }
         const boards = visual.kind === "abacus" ? [visual.digits] : visual.frames;
         boards.forEach((board, f) => {
           if (board.length !== rods) {

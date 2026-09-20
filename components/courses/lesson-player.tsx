@@ -27,6 +27,7 @@ import { SpanPlayground } from "@/components/bridge/span-playground";
 import { LessonNavBar, type QuestionMark } from "@/components/courses/lesson/nav-bar";
 import { ExplanationRail } from "@/components/courses/lesson/explanation-rail";
 import { ExplanationStage, explanationSteps } from "@/components/courses/lesson/explanation-stage";
+import { TextFigure } from "@/components/courses/lesson/figure";
 import { PillButton } from "@/components/courses/lesson/pill-button";
 import { Button } from "@/components/ui/button";
 import {
@@ -106,34 +107,48 @@ function BlockContent({
   switch (block.type) {
     case "heading":
       return (
-        <h2 className="text-center text-2xl font-bold tracking-tight sm:text-[1.75rem] sm:leading-tight">
-          {block.text}
-        </h2>
+        <div className="flex flex-col items-center gap-8">
+          <h2 className="text-center text-2xl font-bold tracking-tight sm:text-[1.75rem] sm:leading-tight">
+            {block.text}
+          </h2>
+          {block.figure ? (
+            <TextFigure figure={block.figure} scale={0.68} className="max-w-sm" />
+          ) : null}
+        </div>
       );
-    case "paragraph":
-      // With an example animation, split into two columns: text | animation.
-      if (block.demo) {
+    case "paragraph": {
+      // Beside an example animation or a figure, the text takes one column and
+      // the picture the other; on a narrow card the picture goes underneath.
+      const beside = block.demo ? (
+        <DemoPanel
+          frames={block.demo.frames}
+          captions={block.demo.captions}
+          label={block.demo.label ?? "Example"}
+          scale={0.75}
+        />
+      ) : block.figure ? (
+        <TextFigure figure={block.figure} className="mx-auto max-w-md" />
+      ) : null;
+
+      if (!beside) {
         return (
-          <div className="grid gap-6 sm:grid-cols-2 sm:items-center sm:gap-8 lg:gap-16">
-            <p className="mx-auto max-w-4xl text-center text-base leading-6 text-foreground/85 sm:mx-0 sm:max-w-none sm:text-left sm:text-lg sm:leading-7">
-              {block.text}
-            </p>
-            <DemoPanel
-              frames={block.demo.frames}
-              captions={block.demo.captions}
-              label={block.demo.label ?? "Example"}
-              scale={0.75}
-            />
-          </div>
+          <p className="mx-auto max-w-xl text-center text-base leading-6 text-foreground/85 sm:text-lg sm:leading-7">
+            {block.text}
+          </p>
         );
       }
+
       return (
-        <p className="mx-auto max-w-xl text-center text-base leading-6 text-foreground/85 sm:text-lg sm:leading-7">
-          {block.text}
-        </p>
+        <div className="grid gap-8 sm:grid-cols-2 sm:items-center sm:gap-8 lg:gap-12">
+          <p className="mx-auto max-w-4xl text-center text-base leading-6 text-foreground/85 sm:mx-0 sm:max-w-none sm:text-left sm:text-lg sm:leading-7">
+            {block.text}
+          </p>
+          {beside}
+        </div>
       );
-    case "list":
-      return (
+    }
+    case "list": {
+      const items = (
         <ul className="mx-auto max-w-xl space-y-4">
           {block.items.map((item) => (
             <li key={item} className="flex items-start gap-3 text-base leading-6 sm:text-lg">
@@ -143,6 +158,16 @@ function BlockContent({
           ))}
         </ul>
       );
+
+      if (!block.figure) return items;
+
+      return (
+        <div className="grid gap-8 sm:grid-cols-2 sm:items-center sm:gap-8 lg:gap-12">
+          {items}
+          <TextFigure figure={block.figure} className="mx-auto max-w-md" />
+        </div>
+      );
+    }
     case "explore":
       return (
         <div className="flex flex-col items-center gap-5">
@@ -574,14 +599,21 @@ export default function LessonPlayer({
           // Beside the card on wide screens, below it on narrow ones — so the
           // panel claims width there and height here. Either way the card
           // takes up the slack in step, and the whole row glides.
+          //
+          // Both axes are named on every step, and that is the point: the first
+          // render happens before the media query is read, so the narrow-screen
+          // target is the one framer-motion writes to the element. A wide-screen
+          // target that mentioned only `width` would leave that first `height: 0`
+          // in place, and the panel — the whole "Why?" walkthrough — would stay
+          // collapsed to nothing beside the card.
           animate={
             showWhy && canAskWhy
               ? isDesktop
-                ? { width: RAIL_WIDTH, opacity: 1 }
-                : { height: "auto", opacity: 1 }
+                ? { width: RAIL_WIDTH, height: "auto", opacity: 1 }
+                : { width: "auto", height: "auto", opacity: 1 }
               : isDesktop
-                ? { width: 0, opacity: 0 }
-                : { height: 0, opacity: 0 }
+                ? { width: 0, height: "auto", opacity: 0 }
+                : { width: "auto", height: 0, opacity: 0 }
           }
           transition={railTransition}
           aria-hidden={!showWhy}
