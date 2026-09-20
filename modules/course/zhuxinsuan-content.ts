@@ -304,7 +304,7 @@ export const zhuxinsuanContent: CourseContentMap = {
         id: "warm-up-read",
         type: "read",
         prompt: "Warm up: what number is this 档 showing?",
-        digits: [3, 1],
+        digits: [1, 3],
         choices: [13, 31, 4, 30],
         explanation: {
           steps: [
@@ -312,14 +312,14 @@ export const zhuxinsuanContent: CourseContentMap = {
               text: "The tens 档 shows 3.",
               visual: {
                 kind: "abacus",
-                digits: [0, 1],
+                digits: [0, 3],
               },
             },
             {
               text: "The ones 档 shows 1, so the number is 31.",
               visual: {
                 kind: "abacus",
-                digits: [3, 1],
+                digits: [1, 3],
               },
             },
           ],
@@ -835,7 +835,7 @@ export const zhuxinsuanContent: CourseContentMap = {
         id: "read-two-rods-together",
         type: "read",
         prompt: "Now read two 档 together.",
-        digits: [4, 1],
+        digits: [1, 4],
         choices: [14, 41, 5, 40],
         explanation: {
           steps: [
@@ -843,14 +843,14 @@ export const zhuxinsuanContent: CourseContentMap = {
               text: "The tens 档 shows 4.",
               visual: {
                 kind: "abacus",
-                digits: [0, 1],
+                digits: [0, 4],
               },
             },
             {
               text: "The ones 档 shows 1, so the two-rod number is 41.",
               visual: {
                 kind: "abacus",
-                digits: [4, 1],
+                digits: [1, 4],
               },
             },
           ],
@@ -3276,7 +3276,7 @@ export const zhuxinsuanContent: CourseContentMap = {
         figure: {
           visual: {
             kind: "diagram",
-            name: "listening-drill",
+            name: "running-total",
             numbers: [34, 27, 18],
           },
           caption: "One number a second leaves no time to write anything down.",
@@ -3371,7 +3371,7 @@ export const zhuxinsuanContent: CourseContentMap = {
               text: "Add the first two: 15 + 25 = 40.",
               visual: {
                 kind: "diagram",
-                name: "listening-drill",
+                name: "running-total",
                 numbers: [15, 25, 40],
               },
             },
@@ -5521,7 +5521,7 @@ export const zhuxinsuanContent: CourseContentMap = {
         id: "read-a-mental-board",
         type: "read",
         prompt: "Now read a board you should be able to hold with your eyes closed.",
-        digits: [5, 1],
+        digits: [1, 5],
         choices: [15, 51, 11, 10],
         explanation: {
           steps: [
@@ -5529,14 +5529,14 @@ export const zhuxinsuanContent: CourseContentMap = {
               text: "The tens 档 shows 5.",
               visual: {
                 kind: "abacus",
-                digits: [0, 1],
+                digits: [0, 5],
               },
             },
             {
               text: "The ones 档 shows 1, so the number is 51.",
               visual: {
                 kind: "abacus",
-                digits: [5, 1],
+                digits: [1, 5],
               },
             },
           ],
@@ -5968,7 +5968,7 @@ export const zhuxinsuanContent: CourseContentMap = {
               text: "The flash set is four 25s.",
               visual: {
                 kind: "diagram",
-                name: "number-sprint",
+                name: "running-total",
                 numbers: [25, 25, 25, 25],
               },
             },

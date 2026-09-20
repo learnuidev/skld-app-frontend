@@ -194,7 +194,7 @@ export const anzanContent: CourseContentMap = {
         id: "one-more-photo",
         type: "read",
         prompt: "One more photo. What number does this board show?",
-        digits: [6, 2],
+        digits: [2, 6],
         choices: [26, 62, 20, 24],
         explanation: {
           steps: [
@@ -202,14 +202,14 @@ export const anzanContent: CourseContentMap = {
               text: "Read the rods left to right: the first rod shows 6.",
               visual: {
                 kind: "abacus",
-                digits: [6, 0],
+                digits: [0, 6],
               },
             },
             {
               text: "The second rod shows 2, so the board reads 62.",
               visual: {
                 kind: "abacus",
-                digits: [6, 2],
+                digits: [2, 6],
               },
             },
           ],
@@ -315,7 +315,7 @@ export const anzanContent: CourseContentMap = {
         id: "read-51-on-the-board",
         type: "read",
         prompt: "Read the number your mental board is showing.",
-        digits: [5, 1],
+        digits: [1, 5],
         choices: [15, 51, 12, 10],
         explanation: {
           steps: [
@@ -323,14 +323,14 @@ export const anzanContent: CourseContentMap = {
               text: "Read the tens rod first: a heaven bead there is 5 tens.",
               visual: {
                 kind: "abacus",
-                digits: [0, 1],
+                digits: [0, 5],
               },
             },
             {
               text: "The ones rod shows 1, so the number is 51.",
               visual: {
                 kind: "abacus",
-                digits: [5, 1],
+                digits: [1, 5],
               },
             },
           ],
@@ -340,7 +340,7 @@ export const anzanContent: CourseContentMap = {
         id: "read-3-on-the-board",
         type: "read",
         prompt: "What about this one?",
-        digits: [0, 3],
+        digits: [3, 0],
         choices: [30, 3, 33, 300],
         explanation: {
           steps: [
@@ -349,7 +349,7 @@ export const anzanContent: CourseContentMap = {
               visual: {
                 kind: "diagram",
                 name: "place-value",
-                numbers: [0, 3],
+                numbers: [3, 0],
                 labels: ["ones", "tens"],
               },
             },
@@ -357,7 +357,7 @@ export const anzanContent: CourseContentMap = {
               text: "The ones rod shows 3, so the number is 3.",
               visual: {
                 kind: "abacus",
-                digits: [0, 3],
+                digits: [3, 0],
               },
             },
           ],
@@ -367,7 +367,7 @@ export const anzanContent: CourseContentMap = {
         id: "read-247-on-the-board",
         type: "read",
         prompt: "Now read a three-rod board.",
-        digits: [2, 4, 7],
+        digits: [7, 4, 2],
         choices: [742, 247, 724, 274],
         explanation: {
           steps: [
@@ -382,14 +382,14 @@ export const anzanContent: CourseContentMap = {
               text: "Then the tens rod gives 4, and the ones rod gives 7.",
               visual: {
                 kind: "abacus",
-                digits: [0, 4, 2],
+                digits: [7, 4, 2],
               },
             },
             {
               text: "Together that makes 247.",
               visual: {
                 kind: "abacus",
-                digits: [2, 4, 7],
+                digits: [7, 4, 2],
               },
             },
           ],
@@ -478,23 +478,22 @@ export const anzanContent: CourseContentMap = {
         id: "read-4-on-the-board",
         type: "read",
         prompt: "And this one?",
-        digits: [0, 4],
+        digits: [4, 0],
         choices: [40, 4, 44, 400],
         explanation: {
           steps: [
             {
               text: "The left rod is empty, so it is just a leading zero.",
               visual: {
-                kind: "diagram",
-                name: "zero-rod",
-                numbers: [0, 4],
+                kind: "abacus",
+                digits: [4, 0],
               },
             },
             {
               text: "The ones rod shows 4, which is the whole number.",
               visual: {
                 kind: "abacus",
-                digits: [0, 4],
+                digits: [4, 0],
               },
             },
           ],
@@ -2577,7 +2576,7 @@ export const anzanContent: CourseContentMap = {
               text: "31 plus 25 is 56.",
               visual: {
                 kind: "diagram",
-                name: "number-sprint",
+                name: "running-total",
                 numbers: [31, 25, 44],
               },
             },
@@ -3660,7 +3659,7 @@ export const anzanContent: CourseContentMap = {
               text: "Start the running total at 6, then add 14, 9, 21, and 7 to reach 57.",
               visual: {
                 kind: "diagram",
-                name: "number-sprint",
+                name: "running-total",
                 numbers: [6, 14, 9, 21, 7],
               },
             },
