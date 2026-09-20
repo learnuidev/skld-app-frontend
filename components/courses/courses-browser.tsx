@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 
 import { LearningPathRow } from "@/components/courses/learning-path-row";
+import { SearchBox } from "@/components/search/search-box";
 import { readProgress } from "@/modules/course/progress";
 import type { PathCourse, PathWithCourses } from "@/modules/course/paths";
 
@@ -131,28 +132,11 @@ export function CoursesBrowser({ paths, defaultStarred }: CoursesBrowserProps) {
             </p>
           </div>
 
-          <form
-            role="search"
-            onSubmit={(event) => event.preventDefault()}
+          <SearchBox
+            label="Search lessons and learning paths"
             className="w-full lg:w-[340px] lg:shrink-0"
-          >
-            <div className="flex w-full items-center gap-2 rounded-full border-2 border-border bg-card py-1 pl-4 pr-1 transition-colors focus-within:border-ring hover:border-ring">
-              <input
-                type="search"
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="What do you want to learn?"
-                aria-label="Search learning paths"
-                className="min-w-0 flex-1 bg-transparent py-2 text-sm outline-none placeholder:text-muted-foreground [&::-webkit-search-cancel-button]:appearance-none"
-              />
-              <button
-                type="submit"
-                className="shrink-0 rounded-full bg-muted px-3.5 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Ask
-              </button>
-            </div>
-          </form>
+            onQueryChange={setQuery}
+          />
         </div>
       </header>
 

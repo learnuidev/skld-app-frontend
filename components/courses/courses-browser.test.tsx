@@ -1,9 +1,23 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { CoursesBrowser } from "@/components/courses/courses-browser";
 import type { PathWithCourses } from "@/modules/course/paths";
+
+// The page's search field is a real search box: it asks the server as the
+// learner types. Here it is answered with nothing, since these tests are about
+// the paths underneath it.
+vi.mock("next/navigation", () => ({
+  useRouter: () => ({ push: vi.fn() }),
+}));
+
+beforeEach(() => {
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async () => ({ ok: true, json: async () => ({ results: [] }) }) as Response),
+  );
+});
 
 function makeCourse(slug: string, title: string, lessonCount = 10) {
   return {
@@ -67,7 +81,7 @@ describe("CoursesBrowser", () => {
     renderBrowser();
     await screen.findByRole("region", { name: "Your learning paths" });
 
-    await userEvent.type(screen.getByRole("searchbox", { name: "Search learning paths" }), "anzan");
+    await userEvent.type(screen.getByRole("combobox", { name: "Search lessons and learning paths" }), "anzan");
 
     expect(screen.queryByText("Middle School Math")).not.toBeInTheDocument();
     expect(screen.getByText("Anzan: Mental Math")).toBeInTheDocument();
@@ -78,7 +92,7 @@ describe("CoursesBrowser", () => {
     renderBrowser();
     await screen.findByRole("region", { name: "Your learning paths" });
 
-    await userEvent.type(screen.getByRole("searchbox", { name: "Search learning paths" }), "zzz");
+    await userEvent.type(screen.getByRole("combobox", { name: "Search lessons and learning paths" }), "zzz");
 
     expect(screen.getByText(/no learning paths match/i)).toBeInTheDocument();
     expect(screen.queryByRole("region", { name: "Your learning paths" })).not.toBeInTheDocument();

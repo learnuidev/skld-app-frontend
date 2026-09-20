@@ -195,21 +195,19 @@ export const courseCatalog: CourseSummary[] = [
   },
 ];
 
+/**
+ * Every course with authored lessons, in the order the catalog lists them.
+ * `courseCatalog` also carries courses that are still being built and have no
+ * levels to play; this is the list of the ones that do.
+ */
+export const availableCourses: Course[] = [
+  bridgeEngineeringCourse,
+  understandingAbacusCourse,
+  anzanCourse,
+  zhuxinsuanCourse,
+  chineseNumbersCourse,
+];
+
 export function getCourseBySlug(slug: string): Course | undefined {
-  if (slug === bridgeEngineeringCourse.slug) {
-    return bridgeEngineeringCourse;
-  }
-  if (slug === understandingAbacusCourse.slug) {
-    return understandingAbacusCourse;
-  }
-  if (slug === anzanCourse.slug) {
-    return anzanCourse;
-  }
-  if (slug === zhuxinsuanCourse.slug) {
-    return zhuxinsuanCourse;
-  }
-  if (slug === chineseNumbersCourse.slug) {
-    return chineseNumbersCourse;
-  }
-  return undefined;
+  return availableCourses.find((course) => course.slug === slug);
 }

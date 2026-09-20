@@ -1263,6 +1263,13 @@ export const bridgeEngineeringContent: CourseContentMap = {
           "Three arch bridges seen from the side: the deck on top, the deck at the bottom chord, and the deck through the middle of the arch.",
       },
       {
+        id: "tour-the-three-deck-positions",
+        type: "parts",
+        prompt: "Take the tour: tap each pin and read where its deck sits.",
+        scene: "deck-position",
+        hint: "Three pins, three bridges. Tap one to find where the traffic runs in that structure.",
+      },
+      {
         id: "structure-above-traffic",
         type: "hotspot",
         prompt: "Tap the bridge where part of the structure stands above the traffic.",
@@ -1346,6 +1353,13 @@ export const bridgeEngineeringContent: CourseContentMap = {
             highlight: ["cantilever"],
           },
         ],
+      },
+      {
+        id: "tour-the-three-beam-bridges",
+        type: "parts",
+        prompt: "Take the tour: tap each pin and name the three beam bridges.",
+        scene: "beam",
+        hint: "Three pins, one per drawing: simply supported on top, continuous in the middle, cantilever at the bottom.",
       },
       {
         id: "sort-beam-bridges",
@@ -1443,6 +1457,13 @@ export const bridgeEngineeringContent: CourseContentMap = {
           "Above: an arch in compression, pushing outwards at its feet. Below: a tied arch, where a tie between the feet balances that thrust.",
       },
       {
+        id: "tour-the-arch-bridge",
+        type: "parts",
+        prompt: "Take the tour: tap each pin on the arch bridge.",
+        scene: "arch",
+        hint: "Four pins: the ring, the deck it carries, the thrust at its foot, and the tie that cancels it.",
+      },
+      {
         id: "pushes-into-the-ground",
         type: "hotspot",
         prompt: "Tap the force an arch bridge pushes into the ground.",
@@ -1536,6 +1557,13 @@ export const bridgeEngineeringContent: CourseContentMap = {
           "Portal frame, inclined-leg frame, and continuous frame. The yellow squares are the rigid joints, where pier and beam are cast as one.",
       },
       {
+        id: "tour-the-rigid-frames",
+        type: "parts",
+        prompt: "Take the tour: tap each pin on the rigid frames.",
+        scene: "frame",
+        hint: "Four pins: the portal, inclined-leg and continuous frames, and the rigid joint they all depend on.",
+      },
+      {
         id: "different-from-beam-bridge",
         type: "hotspot",
         prompt: "Tap the joint that makes a rigid frame different from a beam bridge.",
@@ -1622,6 +1650,13 @@ export const bridgeEngineeringContent: CourseContentMap = {
         scene: "cable-stayed",
         caption:
           "The stays pull the girder upwards at many points, like a row of invisible piers. That is why a cable-stayed girder can be lighter and span further than a beam.",
+      },
+      {
+        id: "tour-the-cable-stayed-bridge",
+        type: "parts",
+        prompt: "Take the tour: tap each pin on the cable-stayed bridge.",
+        scene: "cable-stayed",
+        hint: "Five pins: the tower, the stays, the girder they hold, the anchor, and the support the stays stand in for.",
       },
       {
         id: "lifts-the-girder",
@@ -1741,6 +1776,13 @@ export const bridgeEngineeringContent: CourseContentMap = {
         scene: "suspension",
         caption:
           "The force path is clear: deck → hangers → main cable → towers → foundations, with the anchorages holding the cable's pull at each end.",
+      },
+      {
+        id: "tour-the-suspension-bridge",
+        type: "parts",
+        prompt: "Take the tour: tap each pin on the suspension bridge.",
+        scene: "suspension",
+        hint: "Five pins: the towers, the main cable, the hangers, the stiffening girder they lift, and the anchorages that hold the cable.",
       },
       {
         id: "stops-cable-pulling-towers",

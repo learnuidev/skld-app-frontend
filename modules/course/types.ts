@@ -219,3 +219,27 @@ export type ArtName =
   | "suanpan"
   | "numerals"
   | "bridge";
+
+/** What a search hit is about. The dropdown labels every row with this. */
+export type SearchKind = "course" | "level" | "lesson" | "step";
+
+/**
+ * One row of search results: something the learner can open, with enough of its
+ * own words to show why it matched. **Note:** this type is shared with the
+ * browser, so it must stay free of imports — the index behind it lives in
+ * `search.ts` and is built on the server.
+ */
+export interface SearchHit {
+  kind: SearchKind;
+  /** What the row is called. */
+  title: string;
+  /** The words that matched, quoted back as one line of context. */
+  snippet: string;
+  /** Where the row goes — a real page, straight to the step when it has one. */
+  href: string;
+  courseTitle: string;
+  /** Empty on course hits, which sit above the levels. */
+  levelName: string;
+  lessonTitle: string;
+  score: number;
+}
