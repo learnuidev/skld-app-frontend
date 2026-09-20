@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import type { TaskHandle } from "@/components/abacus/practice";
+import { PALETTE } from "@/components/courses/illustrations/palette";
 import {
   AssembleTask,
   ChooseTask,
@@ -54,6 +55,64 @@ describe("PartsExplore", () => {
     expect(screen.getAllByRole("button")).toHaveLength(2);
     expect(screen.getByText("0 of 2 parts found")).toBeInTheDocument();
   });
+
+  it("keeps the green tick for the part in hand and greys the parts read before", async () => {
+    const user = userEvent.setup();
+    render(<PartsExplore prompt="Tap each pin." scene="bearings" />);
+
+    await user.click(screen.getByRole("button", { name: "Part 1" }));
+    await user.click(screen.getByRole("button", { name: "Part 2" }));
+
+    // The part being read carries the one green tick.
+    const reading = screen.getByRole("button", { name: "Bearing" });
+    expect(reading).toHaveClass("bg-lesson-correct");
+    expect(reading).toHaveAttribute("aria-pressed", "true");
+
+    // The part read a moment ago keeps its tick, but goes quiet grey.
+    const earlier = screen.getByRole("button", { name: "Main girder" });
+    expect(earlier).not.toHaveClass("bg-lesson-correct");
+    expect(earlier).toHaveStyle({ borderColor: PALETTE.gray });
+    expect(earlier).toHaveAttribute("aria-pressed", "false");
+
+    // The pills under the drawing say the same thing: one green, the rest grey.
+    expect(screen.getByText("Bearing")).toHaveClass("bg-lesson-correct-bg");
+    expect(screen.getByText("Main girder")).not.toHaveClass("bg-lesson-correct-bg");
+    expect(screen.getByText("Main girder")).toHaveClass("bg-lesson-soft");
+
+    // Tapping the earlier one moves the green tick back to it.
+    await user.click(earlier);
+
+    expect(screen.getByRole("button", { name: "Main girder" })).toHaveClass("bg-lesson-correct");
+    expect(screen.getByRole("button", { name: "Bearing" })).not.toHaveClass("bg-lesson-correct");
+    expect(screen.getByText("Main girder")).toHaveClass("bg-lesson-correct-bg");
+    expect(screen.getByText("Bearing")).toHaveClass("bg-lesson-soft");
+  });
+
+  it("lets a part that has been found be tapped again to read it", async () => {
+    const user = userEvent.setup();
+    render(<PartsExplore prompt="Tap each pin." scene="bearings" />);
+
+    // Find two parts: the last one read is the one on screen.
+    await user.click(screen.getByRole("button", { name: "Part 1" }));
+    await user.click(screen.getByRole("button", { name: "Part 2" }));
+    expect(screen.getByText("2 of 4 parts found")).toBeInTheDocument();
+    expect(screen.getByText("Bearing.")).toBeInTheDocument();
+
+    // The first one is already found, and its pin still answers a tap.
+    await user.click(screen.getByRole("button", { name: "Main girder" }));
+
+    expect(screen.getByText("Main girder.")).toBeInTheDocument();
+    // Reading it again costs nothing: the count and the ticks stand.
+    expect(screen.getByText("2 of 4 parts found")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Main girder" })).toHaveAttribute(
+      "aria-pressed",
+      "true",
+    );
+    expect(screen.getByRole("button", { name: "Bearing" })).toHaveAttribute(
+      "aria-pressed",
+      "false",
+    );
+  });
 });
 
 describe("HotspotTask", () => {
@@ -65,6 +124,22 @@ describe("HotspotTask", () => {
     solved: false,
     onHasSelection: vi.fn(),
   };
+
+  it("ends on a label rather than another button once solved", () => {
+    render(
+      <HotspotTask
+        prompt="Tap the bearing."
+        scene="bearings"
+        parts={["main-girder", "bearing", "pier-cap"]}
+        answer="bearing"
+        solved
+        onHasSelection={vi.fn()}
+      />,
+    );
+
+    expect(screen.queryByRole("button", { name: "Bearing" })).not.toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Bearing" })).toBeInTheDocument();
+  });
 
   it("tells the player there is something to check once a pin is tapped", async () => {
     const user = userEvent.setup();

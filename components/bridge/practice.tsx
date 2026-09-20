@@ -84,6 +84,9 @@ export function PartsExplore({
         pins={pins}
         picked={active?.id ?? null}
         solved={found}
+        // A part already found stays tappable: reading an earlier one again
+        // should not cost the learner their place in the tour.
+        revisitable
         onPick={tap}
         className="max-w-xl"
       />
@@ -91,14 +94,19 @@ export function PartsExplore({
       <div className="flex flex-wrap justify-center gap-2">
         {pins.map((part) => {
           const seen = found.includes(part.id);
+          const selected = active?.id === part.id;
           return (
             <span
               key={part.id}
               className={cn(
                 "rounded-full border px-3 py-1.5 text-sm font-medium transition-colors",
-                seen
+                // The pill being read takes the bright note; a part already
+                // read stays quiet beside it, like its tick on the drawing.
+                selected
                   ? "border-lesson-correct bg-lesson-correct-bg text-lesson-correct-fg"
-                  : "border-lesson-line text-muted-foreground",
+                  : seen
+                    ? "border-lesson-line bg-lesson-soft text-foreground/70"
+                    : "border-lesson-line text-muted-foreground",
               )}
             >
               {seen ? part.label : "?"}
