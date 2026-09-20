@@ -59,6 +59,11 @@ function blockColour(lit: boolean, dark: boolean) {
   return dark ? PALETTE.charcoal : PALETTE.ink;
 }
 
+/** A surface layer — paving, waterproofing — a quiet wash until it is the subject. */
+function washColour(lit: boolean) {
+  return lit ? PALETTE.yellow : PALETTE.butter;
+}
+
 function Water({ y, x1 = 0, x2 = SCENE_WIDTH }: { y: number; x1?: number; x2?: number }) {
   return (
     <g>
@@ -442,10 +447,11 @@ function Superstructure({ highlight, labels }: SceneShapes) {
         <line x1={98} y1={58} x2={98} y2={68} stroke={blockColour(on("railing"), true)} strokeWidth={2.4} />
       </g>
       <g opacity={fade("paving")}>
-        <rect x={30} y={68} width={260} height={7} fill={blockColour(on("paving"), false)} />
+        <rect x={30} y={68} width={260} height={7} fill={washColour(on("paving"))} />
       </g>
       <g opacity={fade("deck-slab")}>
-        <rect x={30} y={75} width={260} height={10} fill={blockColour(on("deck-slab"), false)} />
+        {/* A shade lighter than the girder, so the three layers read apart. */}
+        <rect x={30} y={75} width={260} height={10} fill={blockColour(on("deck-slab"), true)} />
       </g>
       <g opacity={fade("main-girder")}>
         <rect x={30} y={85} width={260} height={22} fill={blockColour(on("main-girder"), false)} />
@@ -558,7 +564,7 @@ function Supports({ highlight, labels }: SceneShapes) {
           <Tag x={18} y={100}>
             embankment
           </Tag>
-          <Tag x={60} y={130}>
+          <Tag x={60} y={130} colour={PALETTE.paper}>
             abutment
           </Tag>
           <Tag x={102} y={162}>
@@ -649,7 +655,7 @@ function Fittings({ highlight, labels }: SceneShapes) {
         <circle cx={251} cy={60} r={4} fill={PALETTE.yellow} opacity={0.8} />
       </g>
       <g opacity={fade("paving")}>
-        <rect x={20} y={88} width={280} height={9} fill={blockColour(on("paving"), false)} />
+        <rect x={20} y={88} width={280} height={9} fill={washColour(on("paving"))} />
       </g>
       <g opacity={fade("drain")}>
         <line x1={128} y1={94} x2={128} y2={126} stroke={blockColour(on("drain"), true)} strokeWidth={3} />
@@ -674,7 +680,7 @@ function Fittings({ highlight, labels }: SceneShapes) {
           <Tag x={40} y={62}>
             railing
           </Tag>
-          <Tag x={80} y={112} colour={PALETTE.paper}>
+          <Tag x={78} y={93}>
             paving
           </Tag>
           <Tag x={168} y={78} anchor="start" colour={PALETTE.yellowDeep}>
@@ -850,7 +856,7 @@ function DeckPosition({ highlight, labels }: SceneShapes) {
           <Tag x={160} y={b + 22}>
             through
           </Tag>
-          <Tag x={160} y={c + 14}>
+          <Tag x={160} y={c + 18}>
             half-through
           </Tag>
         </>
@@ -1120,7 +1126,7 @@ function Suspension({ highlight, labels }: SceneShapes) {
       </g>
       <g opacity={fade("main-cable")}>
         <path
-          d={`M 12 60 L 84 ${top} Q 160 ${control} 236 ${top} L 308 60`}
+          d={`M 15 126 L 84 ${top} Q 160 ${control} 236 ${top} L 305 126`}
           fill="none"
           stroke={on("main-cable") ? PALETTE.yellowDeep : PALETTE.ink}
           strokeWidth={on("main-cable") ? 6 : 4.5}
@@ -1131,12 +1137,13 @@ function Suspension({ highlight, labels }: SceneShapes) {
         <Support cx={84} top={top - 6} bottom={152} topWidth={12} bottomWidth={20} fill={blockColour(on("tower"), true)} />
         <Support cx={236} top={top - 6} bottom={152} topWidth={12} bottomWidth={20} fill={blockColour(on("tower"), true)} />
       </g>
-      <g opacity={fade("anchorage")}>
-        <rect x={2} y={44} width={26} height={46} rx={3} fill={blockColour(on("anchorage"), true)} />
-        <rect x={292} y={44} width={26} height={46} rx={3} fill={blockColour(on("anchorage"), true)} />
-      </g>
       <g opacity={fade("stiffening-girder")}>
         <rect x={18} y={deckY} width={284} height={12} fill={blockColour(on("stiffening-girder"), false)} />
+      </g>
+      <g opacity={fade("anchorage")}>
+        {/* The block the cable's pull is tied down into, standing on the bank. */}
+        <rect x={0} y={122} width={30} height={30} rx={3} fill={blockColour(on("anchorage"), true)} />
+        <rect x={290} y={122} width={30} height={30} rx={3} fill={blockColour(on("anchorage"), true)} />
       </g>
       {labels ? (
         <>
@@ -1267,7 +1274,7 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
       id: "span",
       label: "Span",
       note: "The clear opening the bridge crosses, measured from one support to the next.",
-      at: [160, 118],
+      at: [160, 124],
     },
     {
       id: "bearing",
@@ -1653,7 +1660,7 @@ export const SCENE_PARTS: Record<BridgeScene, ScenePart[]> = {
       id: "anchorage",
       label: "Anchorage",
       note: "A huge block that holds the end of the main cable. Without it the cable would simply pull the towers over.",
-      at: [15, 66],
+      at: [15, 138],
     },
   ],
   composite: [

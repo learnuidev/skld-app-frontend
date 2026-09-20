@@ -91,7 +91,7 @@ describe("Bridge Engineering, in the lesson player", () => {
 
     expect(card()).toHaveClass("border-lesson-correct");
     expect(screen.getByRole("button", { name: "Continue" })).toHaveClass("bg-lesson-correct");
-    // A explained question offers the walkthrough behind it.
+    // An explained question offers the walkthrough behind it.
     expect(screen.getByRole("button", { name: "Why?" })).toBeInTheDocument();
   });
 
@@ -135,9 +135,17 @@ describe("Bridge Engineering, in the lesson player", () => {
 
     expect(await screen.findByText(/put every part where it belongs/i)).toBeInTheDocument();
 
-    for (const part of ["Deck", "Pier", "Abutment", "Foundation"]) {
+    // The spots are numbered, not named: the learner has to judge from the drawing.
+    const placement: [string, string][] = [
+      ["Deck", "Empty spot 1"],
+      ["Pier", "Empty spot 2"],
+      ["Abutment", "Empty spot 3"],
+      ["Foundation", "Empty spot 4"],
+    ];
+
+    for (const [part, spot] of placement) {
       await user.click(screen.getByRole("button", { name: part }));
-      await user.click(screen.getByRole("button", { name: `Place a part at ${part}'s spot` }));
+      await user.click(screen.getByRole("button", { name: spot }));
     }
 
     expect(screen.getByText("Every part is on the bridge.")).toBeInTheDocument();

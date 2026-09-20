@@ -14,6 +14,21 @@ export interface TaskHandle {
 /** The lesson design's prompt line: bold, centred, a touch larger than body text. */
 const PROMPT = "text-center text-[1.15625rem] leading-[1.5] font-bold";
 
+/**
+ * The tutor's short cheer once an answer lands — the same bubble the "Why?"
+ * walkthrough speaks in, so a right answer sounds like the tutor talking.
+ */
+function Quip({ children }: { children: string }) {
+  return (
+    <p
+      role="status"
+      className="rounded-2xl border border-lesson-quip-line bg-lesson-quip px-4 py-2 text-sm font-medium text-foreground"
+    >
+      {children}
+    </p>
+  );
+}
+
 function clearDigits(rods: number) {
   return valueToDigits(0, rods);
 }
@@ -207,8 +222,10 @@ export const BuildTask = forwardRef<
         readOnly={solved || locked}
         label="Your abacus"
       />
-      <div className="flex h-10 items-center">
-        {wrong ? (
+      <div className="flex min-h-10 items-center">
+        {solved ? (
+          <Quip>{`That's ${placeLabel(target)}!`}</Quip>
+        ) : wrong ? (
           <p className="rounded-2xl bg-lesson-soft px-4 py-3 text-sm font-medium text-foreground/70">
             That board shows {placeLabel(shown)}. Remember: heaven = 5, earth
             beads = 1.
@@ -266,6 +283,9 @@ export const ReadTask = forwardRef<
           onHasSelection(true);
         }}
       />
+      <div className="flex min-h-10 items-center">
+        {solved ? <Quip>{`That's ${placeLabel(answer)}!`}</Quip> : null}
+      </div>
     </div>
   );
 });
@@ -315,6 +335,9 @@ export const QuizTask = forwardRef<
           onHasSelection(true);
         }}
       />
+      <div className="flex min-h-10 items-center">
+        {solved ? <Quip>{`That's ${placeLabel(answer)}!`}</Quip> : null}
+      </div>
     </div>
   );
 });

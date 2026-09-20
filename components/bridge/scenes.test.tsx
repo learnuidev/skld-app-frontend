@@ -24,6 +24,50 @@ function painted(container: HTMLElement, fill: string) {
   return [...container.querySelectorAll(`[fill="${fill}"]`)];
 }
 
+/** The corners a shape occupies, in scene coordinates. */
+function corners(shape: Element): [number, number][] {
+  const read = (attribute: string) => {
+    const raw = shape.getAttribute(attribute);
+    return raw === null ? null : Number(raw);
+  };
+  const at = (a: string, b: string): [number, number][] => [
+    [read(a) ?? 0, read(b) ?? 0],
+  ];
+
+  switch (shape.tagName) {
+    case "rect": {
+      const [x, y] = [read("x") ?? 0, read("y") ?? 0];
+      return [
+        [x, y],
+        [x + (read("width") ?? 0), y + (read("height") ?? 0)],
+      ];
+    }
+    case "line":
+      return [
+        [read("x1") ?? 0, read("y1") ?? 0],
+        [read("x2") ?? 0, read("y2") ?? 0],
+      ];
+    case "circle": {
+      const [cx, cy, r] = [read("cx") ?? 0, read("cy") ?? 0, read("r") ?? 0];
+      return [
+        [cx - r, cy - r],
+        [cx + r, cy + r],
+      ];
+    }
+    case "polygon": {
+      const numbers = (shape.getAttribute("points") ?? "")
+        .split(/[\s,]+/)
+        .map(Number)
+        .filter(Number.isFinite);
+      const out: [number, number][] = [];
+      for (let i = 0; i + 1 < numbers.length; i += 2) out.push([numbers[i], numbers[i + 1]]);
+      return out;
+    }
+    default:
+      return at("x", "y");
+  }
+}
+
 describe("bridge scenes", () => {
   it("draws something for every named scene", () => {
     for (const name of NAMES) {
@@ -58,6 +102,31 @@ describe("bridge scenes", () => {
     const labels = NAMES.map((name) => SCENE_LABELS[name]);
 
     expect(new Set(labels).size).toBe(labels.length);
+  });
+
+  it("keeps every shape inside the drawing, so nothing is cut off", () => {
+    // A shape may overhang the frame by a hair; anything more is a mistake.
+    const slack = 8;
+    const problems: string[] = [];
+
+    for (const name of NAMES) {
+      const { container, unmount } = draw(name);
+
+      for (const shape of container.querySelectorAll("rect, line, circle, polygon, text")) {
+        for (const [x, y] of corners(shape)) {
+          if (x < -slack || x > SCENE_WIDTH + slack) {
+            problems.push(`${name}: ${shape.tagName} reaches x=${x}`);
+          }
+          if (y < -slack || y > SCENE_HEIGHT + slack) {
+            problems.push(`${name}: ${shape.tagName} reaches y=${y}`);
+          }
+        }
+      }
+
+      unmount();
+    }
+
+    expect(problems).toEqual([]);
   });
 
   it("draws the part it is told to point at in the bright note", () => {

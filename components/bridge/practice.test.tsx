@@ -251,7 +251,7 @@ describe("AssembleTask", () => {
     expect(ref.current?.check()).toBe(false);
 
     await user.click(screen.getByRole("button", { name: "Deck" }));
-    await user.click(screen.getByRole("button", { name: "Place a part at Deck's spot" }));
+    await user.click(screen.getByRole("button", { name: "Empty spot 1" }));
 
     expect(ref.current?.check()).toBe(false);
   });
@@ -262,9 +262,9 @@ describe("AssembleTask", () => {
     render(<AssembleTask {...props} ref={ref} />);
 
     await user.click(screen.getByRole("button", { name: "Deck" }));
-    await user.click(screen.getByRole("button", { name: "Place a part at Deck's spot" }));
+    await user.click(screen.getByRole("button", { name: "Empty spot 1" }));
     await user.click(screen.getByRole("button", { name: "Pier" }));
-    await user.click(screen.getByRole("button", { name: "Place a part at Pier's spot" }));
+    await user.click(screen.getByRole("button", { name: "Empty spot 2" }));
 
     expect(screen.getByRole("button", { name: "Take back Deck" })).toBeInTheDocument();
     expect(checked(ref)).toBe(true);
@@ -275,7 +275,7 @@ describe("AssembleTask", () => {
     render(<AssembleTask {...props} ref={createRef<TaskHandle>()} />);
 
     await user.click(screen.getByRole("button", { name: "Deck" }));
-    await user.click(screen.getByRole("button", { name: "Place a part at Deck's spot" }));
+    await user.click(screen.getByRole("button", { name: "Empty spot 1" }));
     await user.click(screen.getByRole("button", { name: "Take back Deck" }));
 
     expect(screen.queryByRole("button", { name: "Take back Deck" })).not.toBeInTheDocument();

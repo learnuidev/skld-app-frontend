@@ -86,10 +86,13 @@ export function SceneBoard({
         } as const;
 
         const className = cn(
-          "absolute z-10 flex size-6 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 text-xs font-bold tabular-nums shadow-sm transition-colors sm:size-7",
+          // Small enough on a phone that two neighbouring pins stay apart.
+          "absolute z-10 flex size-5 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 text-[10px] font-bold tabular-nums shadow-sm transition-colors sm:size-7 sm:text-xs",
           isSolved && "border-lesson-correct bg-lesson-correct text-white",
           isRuledOut && "border-lesson-line bg-card text-muted-foreground opacity-60 line-through",
-          interactive ? "cursor-pointer hover:bg-yellow-200" : "cursor-default",
+          // The pins keep the palette's own colours, so the hover is a wash
+          // rather than a new colour.
+          interactive ? "cursor-pointer hover:brightness-90" : "cursor-default",
         );
 
         const face = isSolved ? <Check className="size-3.5" aria-hidden /> : index + 1;

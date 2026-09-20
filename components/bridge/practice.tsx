@@ -559,14 +559,16 @@ export const AssembleTask = forwardRef<
 
       <div className="relative w-full max-w-xl">
         <SceneBoard scene={scene} highlight={Object.values(placed)} labels={solved} locked />
-        {slots.map((slot) => {
+        {slots.map((slot, index) => {
           const filled = slot.id in placed;
           return (
             <button
               key={slot.id}
               type="button"
               disabled={locked}
-              aria-label={filled ? `Take back ${slot.label}` : `Place a part at ${slot.label}'s spot`}
+              // An empty spot is named by its place in the list, never by the
+              // part that belongs on it — that is the question.
+              aria-label={filled ? `Take back ${slot.label}` : `Empty spot ${index + 1}`}
               onClick={() => {
                 if (locked) return;
                 if (filled) {
