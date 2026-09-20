@@ -20,6 +20,11 @@ export interface SceneBoardProps {
   solved?: string[];
   /** Pins the learner has ruled out: still numbered, but greyed and inert. */
   ruledOut?: string[];
+  /**
+   * Whether a pin that has already been answered keeps taking taps. A guided
+   * tour wants this: the learner can go back and read an earlier part again.
+   */
+  revisitable?: boolean;
   /** Pins lit up in the bright note, in addition to `picked`. */
   highlight?: string[];
   /** Names written on the drawing. */
@@ -42,6 +47,7 @@ export function SceneBoard({
   picked = null,
   solved = [],
   ruledOut = [],
+  revisitable = false,
   highlight = [],
   labels = false,
   onPick,
