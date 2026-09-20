@@ -1,0 +1,22 @@
+[
+  {
+    "time": "00:17",
+    "title": "Bridge Engineering Materials and Their Development History",
+    "description": "The course introduces the fundamentals of bridge engineering, including overall bridge planning, design procedures, bridge deck layout and construction, and bridge functions. It discusses steel and concrete as two important structural materials, explains their applications and development in bridge construction, and introduces four emerging material types at the forefront of bridge engineering. The course also emphasizes the importance of considering structural durability when selecting construction materials. By reviewing the use of timber and stone in ancient Chinese bridges alongside modern materials, it presents the historical development and technological progress of bridge engineering materials."
+  },
+  {
+    "time": "02:47",
+    "title": "Types and Applications of Bridge Steel",
+    "description": "Steel and concrete are widely used in bridge construction. Based on their applications, bridge steel can be categorized as steel for structural systems, steel for reinforced-concrete and prestressed-concrete structures, and cable materials for cable-stayed and suspension bridges. Structural steel is selected according to its mechanical properties and chemical composition to withstand heavy loads. Common categories include carbon structural steel and low-alloy high-strength structural steel. Steel used in large bridges is also classified for highway or railway applications according to environmental conditions and load requirements."
+  },
+  {
+    "time": "05:07",
+    "title": "Development and Grade Definition of Bridge Steel",
+    "description": "Bridge steel has developed from carbon-manganese steel toward high-performance steel. The course explains steel grade designations using Q355qD as an example: Q indicates the yield-point classification, 355 represents the yield strength, q identifies bridge steel, and D indicates the quality grade. Bridge steel is generally produced as killed steel or special killed steel to achieve improved consistency and performance."
+  },
+  {
+    "time": "07:47",
+    "title": "The Importance and Development of High-Performance Bridge Steel",
+    "description": "High-performance steel has become increasingly important for meeting the safety and reliability requirements of modern bridge structures. In addition to high strength and low weight, it must provide excellent low-temperature toughness, weldability, and corrosion resistance. The course examines the limitations of traditional high-strength bridge steel and explains how high-performance steel can improve structural performance, service life, and construction quality. It highlights the importance of toughness and weldability and discusses weathering steel, which resists atmospheric corrosion and may see broader use in future bridge engineering. The course also introduces ordinary reinforcing steel and prestressed reinforcing steel, describing their characteristics and applications. Overall, it emphasizes continued steel research and development and the movement toward higher-performance, more environmentally sustainable bridge materials."
+  }
+]

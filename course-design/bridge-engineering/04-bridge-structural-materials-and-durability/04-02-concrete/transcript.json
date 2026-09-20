@@ -1,0 +1,638 @@
+[
+  {
+    "start": "00:17",
+    "input": "Hello students"
+  },
+  {
+    "start": "00:18",
+    "input": "Welcome back to Bridge Engineering"
+  },
+  {
+    "start": "00:21",
+    "input": "Classroom on Bridge Structural Materials and Durability"
+  },
+  {
+    "start": "00:25",
+    "input": "Let's review what we learned in the last lesson."
+  },
+  {
+    "start": "00:29",
+    "input": "Last lesson we learned about the grades and properties of structural steel used in bridge construction."
+  },
+  {
+    "start": "00:35",
+    "input": "And the types of ordinary steel bars and prestressed steel bars"
+  },
+  {
+    "start": "00:38",
+    "input": "Performance and applications, etc."
+  },
+  {
+    "start": "00:41",
+    "input": "Next, we will continue to learn about another important structural material for bridge structures—concrete."
+  },
+  {
+    "start": "00:48",
+    "input": "The main focus is on the strength of concrete."
+  },
+  {
+    "start": "00:50",
+    "input": "Deformation properties and elastic modulus"
+  },
+  {
+    "start": "00:53",
+    "input": "The quality requirements for concrete in bridge engineering mainly include workability."
+  },
+  {
+    "start": "01:00",
+    "input": "strength"
+  },
+  {
+    "start": "01:01",
+    "input": "Durability and economy"
+  },
+  {
+    "start": "01:03",
+    "input": "Performance characteristics include slump."
+  },
+  {
+    "start": "01:06",
+    "input": "Cohesiveness"
+  },
+  {
+    "start": "01:07",
+    "input": "Water retention"
+  },
+  {
+    "start": "01:09",
+    "input": "Condensation time"
+  },
+  {
+    "start": "01:10",
+    "input": "ductility, etc."
+  },
+  {
+    "start": "01:12",
+    "input": "Strength includes cubic compressive strength"
+  },
+  {
+    "start": "01:15",
+    "input": "Axial tensile strength"
+  },
+  {
+    "start": "01:16",
+    "input": "Axial compressive strength, etc."
+  },
+  {
+    "start": "01:19",
+    "input": "Durability includes concrete's resistance to carbonation."
+  },
+  {
+    "start": "01:22",
+    "input": "Chloride corrosion"
+  },
+  {
+    "start": "01:24",
+    "input": "freeze-thaw damage"
+  },
+  {
+    "start": "01:25",
+    "input": "Reinforcing steel corrosion and other capabilities"
+  },
+  {
+    "start": "01:28",
+    "input": "In addition to meeting the three requirements mentioned above, economic efficiency should also be considered."
+  },
+  {
+    "start": "01:33",
+    "input": "Under normal circumstances"
+  },
+  {
+    "start": "01:35",
+    "input": "Like steel"
+  },
+  {
+    "start": "01:36",
+    "input": "Strength and durability are the main indicators for evaluating the quality of concrete."
+  },
+  {
+    "start": "01:42",
+    "input": "The cubic compressive strength of concrete is a very important strength value."
+  },
+  {
+    "start": "01:48",
+    "input": "Because it is the basis for classifying concrete strength grades."
+  },
+  {
+    "start": "01:53",
+    "input": "The standard specimen is a cube with a side length of 150 mm."
+  },
+  {
+    "start": "01:58",
+    "input": "According to the \"Code for Design of Concrete Structures\""
+  },
+  {
+    "start": "02:02",
+    "input": "It can be divided into 14 levels, from C15 to C80."
+  },
+  {
+    "start": "02:07",
+    "input": "The axial tensile strength of concrete is a key factor in structural design."
+  },
+  {
+    "start": "02:11",
+    "input": "Key indicators for determining the crack resistance of concrete"
+  },
+  {
+    "start": "02:15",
+    "input": "It can also be used to indirectly measure other mechanical properties of concrete."
+  },
+  {
+    "start": "02:20",
+    "input": "For example, the punching shear strength of concrete."
+  },
+  {
+    "start": "02:23",
+    "input": "Bond strength between concrete and steel reinforcement, etc."
+  },
+  {
+    "start": "02:27",
+    "input": "The axial tensile strength test also uses a cube with a side length of 150 mm as the standard specimen."
+  },
+  {
+    "start": "02:34",
+    "input": "What we need to pay attention to is"
+  },
+  {
+    "start": "02:36",
+    "input": "The axial tensile strength of concrete is much lower than its cubic strength."
+  },
+  {
+    "start": "02:41",
+    "input": "It is only about 1/8 to 1/18 of the latter."
+  },
+  {
+    "start": "02:45",
+    "input": "Moreover, this ratio decreases as the compressive strength grade of concrete increases."
+  },
+  {
+    "start": "02:52",
+    "input": "In other words, the increase in tensile strength of concrete is slower than the increase in compressive strength."
+  },
+  {
+    "start": "02:59",
+    "input": "The axial compressive strength of concrete is also known as the prism strength."
+  },
+  {
+    "start": "03:04",
+    "input": "In actual engineering structures, most reinforced concrete compression members are prisms or cylinders."
+  },
+  {
+    "start": "03:12",
+    "input": "In order to ensure that the measured compressive strength of concrete is close to the actual stress condition of the concrete structure."
+  },
+  {
+    "start": "03:19",
+    "input": "As shown in the figure above"
+  },
+  {
+    "start": "03:21",
+    "input": "axial compressive strength of concrete"
+  },
+  {
+    "start": "03:24",
+    "input": "A prism measuring 150mm × 150mm × 300mm was used as the standard specimen."
+  },
+  {
+    "start": "03:30",
+    "input": "At the same time, students should pay special attention"
+  },
+  {
+    "start": "03:33",
+    "input": "Calculation of axially compressed members in reinforced concrete structural design"
+  },
+  {
+    "start": "03:38",
+    "input": "(such as the web members of a column truss)"
+  },
+  {
+    "start": "03:41",
+    "input": "The axial compressive strength of concrete should be used as the basis for calculation."
+  },
+  {
+    "start": "03:46",
+    "input": "Instead of cubic compressive strength"
+  },
+  {
+    "start": "03:49",
+    "input": "The relationship between the two is"
+  },
+  {
+    "start": "03:51",
+    "input": "The axial compressive strength is approximately 0.7 to 0.8 times the cubic compressive strength."
+  },
+  {
+    "start": "03:58",
+    "input": "When we are doing structural design"
+  },
+  {
+    "start": "04:00",
+    "input": "It is not based on the standard tensile strength of concrete."
+  },
+  {
+    "start": "04:03",
+    "input": "Calculation of compressive strength"
+  },
+  {
+    "start": "04:05",
+    "input": "The reason is in concrete structures"
+  },
+  {
+    "start": "04:08",
+    "input": "Components are usually subjected to axial forces"
+  },
+  {
+    "start": "04:11",
+    "input": "Bending moment"
+  },
+  {
+    "start": "04:12",
+    "input": "The combined action of different internal forces such as shear force and torque"
+  },
+  {
+    "start": "04:16",
+    "input": "therefore"
+  },
+  {
+    "start": "04:17",
+    "input": "Concrete is more often subjected to biaxial or triaxial stress."
+  },
+  {
+    "start": "04:23",
+    "input": "Under combined stress state"
+  },
+  {
+    "start": "04:25",
+    "input": "The strength of concrete varies significantly."
+  },
+  {
+    "start": "04:28",
+    "input": "Furthermore, considering the dispersion of concrete strength in actual engineering projects"
+  },
+  {
+    "start": "04:33",
+    "input": "Therefore, in structural design"
+  },
+  {
+    "start": "04:35",
+    "input": "It can be done using mathematical statistics methods."
+  },
+  {
+    "start": "04:38",
+    "input": "Choose a certain guarantee rate to reduce the standard strength."
+  },
+  {
+    "start": "04:44",
+    "input": "Axial compressive strength of concrete"
+  },
+  {
+    "start": "04:47",
+    "input": "Standard value of axial tensile strength"
+  },
+  {
+    "start": "04:49",
+    "input": "You can convert using the following two formulas."
+  },
+  {
+    "start": "04:53",
+    "input": "To determine its corresponding standard strength value"
+  },
+  {
+    "start": "04:57",
+    "input": "The meaning and values ​​of the relevant symbols in the formula can be found in the \"Code for Design of Concrete Structures\"."
+  },
+  {
+    "start": "05:04",
+    "input": "Explanation of relevant clauses in the \"Design Specifications for Highway Reinforced Concrete and Prestressed Concrete Bridges and Culverts\""
+  },
+  {
+    "start": "05:13",
+    "input": "The standard value of concrete strength calculated using the formula above."
+  },
+  {
+    "start": "05:17",
+    "input": "Divide by the concrete material partial factor of 1.45."
+  },
+  {
+    "start": "05:21",
+    "input": "That is, the design value of concrete strength is obtained."
+  },
+  {
+    "start": "05:25",
+    "input": "In the \"Design Specifications for Highway Reinforced Concrete and Prestressed Concrete Bridges and Culverts\""
+  },
+  {
+    "start": "05:30",
+    "input": "Between C25 and C80"
+  },
+  {
+    "start": "05:32",
+    "input": "Upgraded to 5MPa"
+  },
+  {
+    "start": "05:35",
+    "input": "The corresponding standard and design values ​​for concrete strength are provided."
+  },
+  {
+    "start": "05:39",
+    "input": "In special circumstances"
+  },
+  {
+    "start": "05:41",
+    "input": "Structural component calculation or verification"
+  },
+  {
+    "start": "05:44",
+    "input": "When the concrete strength grade cannot be rounded up"
+  },
+  {
+    "start": "05:47",
+    "input": "Then the solution can be calculated using the given formula."
+  },
+  {
+    "start": "05:53",
+    "input": "The concrete strength grade should meet the requirements of the specifications."
+  },
+  {
+    "start": "05:58",
+    "input": "Plain concrete structure"
+  },
+  {
+    "start": "06:00",
+    "input": "The concrete strength grade shall not be lower than C15."
+  },
+  {
+    "start": "06:04",
+    "input": "reinforced concrete components"
+  },
+  {
+    "start": "06:06",
+    "input": "Not less than C25"
+  },
+  {
+    "start": "06:08",
+    "input": "If steel bars with a strength standard value of 400MPa or higher are used..."
+  },
+  {
+    "start": "06:13",
+    "input": "It cannot be lower than C30"
+  },
+  {
+    "start": "06:15",
+    "input": "Prestressed concrete members not lower than C40"
+  },
+  {
+    "start": "06:19",
+    "input": "Concrete deformation can be divided into two categories."
+  },
+  {
+    "start": "06:23",
+    "input": "One type is deformation under load."
+  },
+  {
+    "start": "06:26",
+    "input": "Such as the deformation of monotonic short-term loading"
+  },
+  {
+    "start": "06:29",
+    "input": "Deformation under long-term loading and deformation under repeated loading"
+  },
+  {
+    "start": "06:35",
+    "input": "Another type of deformation is unrelated to the force applied."
+  },
+  {
+    "start": "06:38",
+    "input": "This is called volume deformation."
+  },
+  {
+    "start": "06:40",
+    "input": "Such as the shrinkage of concrete and the expansion and deformation caused by temperature changes."
+  },
+  {
+    "start": "06:45",
+    "input": "We consider the long-term action of the load"
+  },
+  {
+    "start": "06:48",
+    "input": "Stress remains constant but strain in concrete"
+  },
+  {
+    "start": "06:51",
+    "input": "The phenomenon of creep increasing over time is called concrete creep."
+  },
+  {
+    "start": "06:57",
+    "input": "Additionally, during cement hydration and concrete hardening in air..."
+  },
+  {
+    "start": "07:02",
+    "input": "Both will reduce the volume of concrete."
+  },
+  {
+    "start": "07:05",
+    "input": "This phenomenon is called contraction."
+  },
+  {
+    "start": "07:08",
+    "input": "Because the shrinkage and creep of concrete can introduce additional internal forces into statically indeterminate structures."
+  },
+  {
+    "start": "07:14",
+    "input": "It will also cause prestress loss in prestressed structures."
+  },
+  {
+    "start": "07:19",
+    "input": "Close attention must be paid to the design calculations."
+  },
+  {
+    "start": "07:23",
+    "input": "From the stress-strain curve of concrete under pressure shown in the figure, we can see that..."
+  },
+  {
+    "start": "07:30",
+    "input": "Because concrete is a man-made material"
+  },
+  {
+    "start": "07:33",
+    "input": "Heterogeneous multiphase composite materials"
+  },
+  {
+    "start": "07:36",
+    "input": "It is not a perfectly elastic body."
+  },
+  {
+    "start": "07:39",
+    "input": "It is a type of elasto-plastic material."
+  },
+  {
+    "start": "07:41",
+    "input": "When subjected to force, it produces recoverable elastic deformation."
+  },
+  {
+    "start": "07:46",
+    "input": "It also produces irreversible plastic deformation."
+  },
+  {
+    "start": "07:49",
+    "input": "In monotony"
+  },
+  {
+    "start": "07:51",
+    "input": "The stress-strain relationship under short-term loading is not linear."
+  },
+  {
+    "start": "07:55",
+    "input": "Instead, it is a curve as shown in the figure."
+  },
+  {
+    "start": "07:59",
+    "input": "The stress-strain ratio varies with the stress in the concrete."
+  },
+  {
+    "start": "08:04",
+    "input": "Therefore, the elastic modulus of concrete is much more complex than that of steel."
+  },
+  {
+    "start": "08:10",
+    "input": "The elastic modulus of concrete is measured in standard specimens of concrete prisms."
+  },
+  {
+    "start": "08:15",
+    "input": "The ratio of the specified compressive stress value obtained by standard test methods to its corresponding compressive strain value"
+  },
+  {
+    "start": "08:22",
+    "input": "According to relevant Chinese standards, the following method should be used to determine the elastic modulus Ec of concrete."
+  },
+  {
+    "start": "08:29",
+    "input": "The experiment used prism specimens."
+  },
+  {
+    "start": "08:32",
+    "input": "The upper limit of stress is taken as 0.5 times the axial compressive strength of concrete."
+  },
+  {
+    "start": "08:38",
+    "input": "Then uninstall to zero."
+  },
+  {
+    "start": "08:39",
+    "input": "Repeat the loading and unloading process up to 5 times."
+  },
+  {
+    "start": "08:43",
+    "input": "10 times"
+  },
+  {
+    "start": "08:44",
+    "input": "At this point, the deformation has basically stabilized."
+  },
+  {
+    "start": "08:48",
+    "input": "The stress-strain curve is close to a straight line."
+  },
+  {
+    "start": "08:51",
+    "input": "As shown in the right figure"
+  },
+  {
+    "start": "08:54",
+    "input": "The slope of this straight line is used as the value of the elastic modulus of concrete."
+  },
+  {
+    "start": "08:59",
+    "input": "Besides using the experimental methods mentioned above to determine the elastic modulus of concrete,"
+  },
+  {
+    "start": "09:05",
+    "input": "Statistical analysis of the experimental values ​​of elastic modulus of concrete at different grades"
+  },
+  {
+    "start": "09:11",
+    "input": "An empirical formula for the elastic modulus can also be given."
+  },
+  {
+    "start": "09:15",
+    "input": "We learned about the compressive modulus of elasticity of concrete."
+  },
+  {
+    "start": "09:19",
+    "input": "How should its tensile modulus of elasticity be calculated?"
+  },
+  {
+    "start": "09:23",
+    "input": "Then we discovered"
+  },
+  {
+    "start": "09:24",
+    "input": "The ratio of the tensile modulus of elasticity to the compressive modulus of elasticity of concrete is 0.82 to 1.12."
+  },
+  {
+    "start": "09:32",
+    "input": "The average is approximately 0.995, close to 1."
+  },
+  {
+    "start": "09:36",
+    "input": "therefore"
+  },
+  {
+    "start": "09:37",
+    "input": "The standard approximates the tensile modulus of elasticity to be equal to the compressive modulus of elasticity."
+  },
+  {
+    "start": "09:45",
+    "input": "Now the concrete is under pressure"
+  },
+  {
+    "start": "09:48",
+    "input": "Everyone knows how to calculate the tensile modulus of elasticity."
+  },
+  {
+    "start": "09:51",
+    "input": "How then is the shear modulus of concrete determined?"
+  },
+  {
+    "start": "09:55",
+    "input": "According to elasticity theory"
+  },
+  {
+    "start": "09:57",
+    "input": "Relationship between shear modulus and elastic modulus"
+  },
+  {
+    "start": "10:00",
+    "input": "The shear modulus is equal to the sum of the elastic modulus divided by the Poisson's ratio of concrete + 1, and then multiplied by 2."
+  },
+  {
+    "start": "10:10",
+    "input": "When Poisson's ratio is 0.2"
+  },
+  {
+    "start": "10:13",
+    "input": "The formula yields a shear modulus that is exactly 0.4 times the elastic modulus."
+  },
+  {
+    "start": "10:21",
+    "input": "alright"
+  },
+  {
+    "start": "10:21",
+    "input": "That concludes our discussion on concrete."
+  },
+  {
+    "start": "10:24",
+    "input": "Goodbye, classmates"
+  }
+]

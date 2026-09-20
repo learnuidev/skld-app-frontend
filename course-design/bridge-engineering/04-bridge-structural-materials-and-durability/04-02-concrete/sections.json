@@ -1,0 +1,17 @@
+[
+  {
+    "time": "00:17",
+    "title": "Concrete in Bridge Engineering: Properties, Applications, and Quality Assessment",
+    "description": "The course examines concrete as an essential structural material in bridge engineering, focusing on its strength, deformation properties, modulus of elasticity, and durability. It explains concrete workability characteristics such as slump, cohesion, and water retention, and introduces concrete strength grades and testing methods. Particular attention is given to standard specimen dimensions and classification criteria for cubic compressive strength and axial tensile strength. The course also discusses concrete durability and resistance to different environmental erosion conditions. It concludes that bridge design and construction must consider both the technical performance and economic viability of concrete to achieve cost-effective results."
+  },
+  {
+    "time": "02:59",
+    "title": "Axial Compressive Strength of Concrete and Its Application in Structural Design",
+    "description": "The course explains the axial compressive strength of concrete and its relationship to prism strength, cube compressive strength, standard strength values, and design values. It discusses the application of these properties in the design of axially compressed members and reinforced-concrete structures, including the effects of biaxial and triaxial stress states. The course also addresses the variation of concrete strength in engineering practice and the strength reductions applied during structural design. Additional topics include requirements for selecting concrete strength grades, stress-related and volumetric deformation, creep, shrinkage, the influence of internal forces in statically indeterminate structures, and prestress loss in prestressed-concrete structures."
+  },
+  {
+    "time": "07:23",
+    "title": "Understanding the Elastic Behavior of Concrete and Its Modulus Calculation",
+    "description": "Concrete is a heterogeneous, multiphase composite material with both elastic and plastic behavior. Its deformation under stress includes recoverable elastic deformation and irreversible plastic deformation. The elastic modulus is influenced by multiple factors and is commonly determined through axial compression tests on prism specimens, using repeated loading and unloading to establish a stable stress-strain relationship. The tensile elastic modulus is generally considered approximately equal to the compressive elastic modulus. The course also explains that the shear modulus can be calculated from the elastic modulus and Poisson's ratio, providing a foundation for understanding and applying concrete material properties in structural engineering."
+  }
+]

@@ -1,0 +1,1026 @@
+[
+  {
+    "start": "00:17",
+    "input": "Hello students"
+  },
+  {
+    "start": "00:18",
+    "input": "Welcome to the Bridge Engineering class at Kunming University of Science and Technology."
+  },
+  {
+    "start": "00:22",
+    "input": "Based on the previous learning"
+  },
+  {
+    "start": "00:24",
+    "input": "People have gained some understanding of the composition and classification of bridges."
+  },
+  {
+    "start": "00:28",
+    "input": "Starting today, we will begin learning about the detailed construction of bridges."
+  },
+  {
+    "start": "00:33",
+    "input": "First, there's the layout and construction of the bridge deck."
+  },
+  {
+    "start": "00:37",
+    "input": "Bridge deck construction typically includes bridge deck pavement."
+  },
+  {
+    "start": "00:41",
+    "input": "Waterproofing and Drainage System"
+  },
+  {
+    "start": "00:43",
+    "input": "Bridge deck expansion joints"
+  },
+  {
+    "start": "00:44",
+    "input": "sidewalk"
+  },
+  {
+    "start": "00:46",
+    "input": "Edge Stone"
+  },
+  {
+    "start": "00:47",
+    "input": "railing"
+  },
+  {
+    "start": "00:48",
+    "input": "Guardrails and lighting poles, etc."
+  },
+  {
+    "start": "00:51",
+    "input": "The bridge deck structure is mostly exposed."
+  },
+  {
+    "start": "00:53",
+    "input": "Direct contact with the outside world"
+  },
+  {
+    "start": "00:55",
+    "input": "It plays a protective role for the main structure of the bridge."
+  },
+  {
+    "start": "00:59",
+    "input": "It also plays an important role in driving safety and the aesthetics of bridges."
+  },
+  {
+    "start": "01:05",
+    "input": "Next, we will study bridge deck paving in detail."
+  },
+  {
+    "start": "01:09",
+    "input": "Waterproofing and Drainage System"
+  },
+  {
+    "start": "01:11",
+    "input": "Bridge deck expansion joints"
+  },
+  {
+    "start": "01:12",
+    "input": "sidewalk"
+  },
+  {
+    "start": "01:13",
+    "input": "Specific construction of lampposts and safety protection measures"
+  },
+  {
+    "start": "01:18",
+    "input": "First is the bridge deck paving."
+  },
+  {
+    "start": "01:20",
+    "input": "Bridge deck paving is also known as roadway paving."
+  },
+  {
+    "start": "01:23",
+    "input": "or bridge deck protective layer"
+  },
+  {
+    "start": "01:26",
+    "input": "It is the part that is directly affected by the wheels or pedestrians."
+  },
+  {
+    "start": "01:30",
+    "input": "Its main function is to protect the main structure of the bridge."
+  },
+  {
+    "start": "01:34",
+    "input": "Including preventing vehicle tires from directly wearing down the driveway slab."
+  },
+  {
+    "start": "01:39",
+    "input": "To prevent the main beam from being eroded by rainwater."
+  },
+  {
+    "start": "01:42",
+    "input": "It can disperse concentrated loads on vehicle wheels, etc."
+  },
+  {
+    "start": "01:47",
+    "input": "And to meet the normal functional requirements of the bridge."
+  },
+  {
+    "start": "01:50",
+    "input": "Layout and aesthetic requirements"
+  },
+  {
+    "start": "01:53",
+    "input": "therefore"
+  },
+  {
+    "start": "01:54",
+    "input": "Bridge deck paving is required to be rutting resistant."
+  },
+  {
+    "start": "01:57",
+    "input": "Driving comfort"
+  },
+  {
+    "start": "01:58",
+    "input": "Anti-slip and wear-resistant"
+  },
+  {
+    "start": "02:00",
+    "input": "Low-temperature cracking"
+  },
+  {
+    "start": "02:01",
+    "input": "impermeable"
+  },
+  {
+    "start": "02:02",
+    "input": "Good stiffness and other properties"
+  },
+  {
+    "start": "02:05",
+    "input": "Currently, two common methods are used for bridge deck paving."
+  },
+  {
+    "start": "02:09",
+    "input": "One type is cement concrete or asphalt concrete pavement with a waterproof layer."
+  },
+  {
+    "start": "02:14",
+    "input": "This type of paving is mainly used where waterproofing requirements are high."
+  },
+  {
+    "start": "02:18",
+    "input": "Or on bridges where the bridge deck is located in the tension zone of the structure and cracks may occur."
+  },
+  {
+    "start": "02:25",
+    "input": "Flexible adhesive or coating waterproofing layers are often used."
+  },
+  {
+    "start": "02:30",
+    "input": "The waterproof layer is installed between the cast-in-place monolithic concrete and the asphalt concrete pavement on the bridge deck."
+  },
+  {
+    "start": "02:38",
+    "input": "The second category is waterproof concrete paving."
+  },
+  {
+    "start": "02:41",
+    "input": "For bridges located in non-freezing areas"
+  },
+  {
+    "start": "02:44",
+    "input": "A waterproof concrete layer of at least 80mm thickness can be laid on the bridge deck as a pavement layer."
+  },
+  {
+    "start": "02:52",
+    "input": "The grade of waterproof concrete is generally not lower than that of bridge deck concrete."
+  },
+  {
+    "start": "02:58",
+    "input": "Generally, no additional surface layer is required on top of it."
+  },
+  {
+    "start": "03:01",
+    "input": "However, in order to extend the service life of the bridge deck"
+  },
+  {
+    "start": "03:04",
+    "input": "It is advisable to lay a 20-30mm thick layer on top."
+  },
+  {
+    "start": "03:08",
+    "input": "Asphalt surface treatment as a repairable wearing layer"
+  },
+  {
+    "start": "03:12",
+    "input": "According to the General Specification"
+  },
+  {
+    "start": "03:15",
+    "input": "The concrete bridge deck pavement must have sufficient density."
+  },
+  {
+    "start": "03:20",
+    "input": "The thickness should not be less than 80mm"
+  },
+  {
+    "start": "03:23",
+    "input": "The concrete strength grade should not be lower than C40."
+  },
+  {
+    "start": "03:28",
+    "input": "Steel mesh should be installed inside the cement concrete bridge deck pavement."
+  },
+  {
+    "start": "03:32",
+    "input": "The diameter of the reinforcing bar shall not be less than 8mm"
+  },
+  {
+    "start": "03:35",
+    "input": "Spacing no more than 100mm"
+  },
+  {
+    "start": "03:39",
+    "input": "Cement concrete bridge deck pavement should meet the following requirements"
+  },
+  {
+    "start": "03:41",
+    "input": "Relevant provisions of the \"Specifications for Design of Cement Concrete Pavement of Highway\" (JTG D40-2011)"
+  },
+  {
+    "start": "03:46",
+    "input": "Asphalt concrete bridge deck paving should meet the following requirements"
+  },
+  {
+    "start": "03:48",
+    "input": "Relevant provisions of the \"Specifications for Design of Asphalt Pavement of Highway\" (JTG D50-2017)"
+  },
+  {
+    "start": "03:54",
+    "input": "Next, we will learn about bridge deck waterproofing and drainage systems."
+  },
+  {
+    "start": "04:00",
+    "input": "The main function of the bridge deck waterproofing and drainage system is"
+  },
+  {
+    "start": "04:03",
+    "input": "To prevent water infiltration from affecting the structural durability of the bridge"
+  },
+  {
+    "start": "04:09",
+    "input": "Ensure smooth traffic flow on the bridge."
+  },
+  {
+    "start": "04:11",
+    "input": "Safety"
+  },
+  {
+    "start": "04:13",
+    "input": "Waterproofing of the bridge deck is mainly achieved by installing a waterproof layer."
+  },
+  {
+    "start": "04:19",
+    "input": "The drainage system mainly consists of the longitudinal and transverse slopes of the bridge deck."
+  },
+  {
+    "start": "04:22",
+    "input": "Composed of a certain number of drainage pipes and drain pipes, etc."
+  },
+  {
+    "start": "04:27",
+    "input": "The bridge deck drainage system should be compatible with the bridge structure and the drainage conditions beneath it."
+  },
+  {
+    "start": "04:34",
+    "input": "The drainage system of large and extra-large bridges should be coordinated with the bridge deck pavement design."
+  },
+  {
+    "start": "04:41",
+    "input": "When the longitudinal slope of the bridge deck is less than 0.5%"
+  },
+  {
+    "start": "04:46",
+    "input": "Longitudinal drainage trenches should be installed along the lower edge of the bridge deck pavement."
+  },
+  {
+    "start": "04:53",
+    "input": "Bridge deck drainage should meet the requirements"
+  },
+  {
+    "start": "04:55",
+    "input": "Relevant provisions of the \"Specifications for Highway Drainage Design\" (JTG/T D33-2012)"
+  },
+  {
+    "start": "05:00",
+    "input": "The function of the waterproof layer is to prevent rainwater from seeping through the paving layer."
+  },
+  {
+    "start": "05:05",
+    "input": "Collected and discharged into the drainage system (drain pipe)"
+  },
+  {
+    "start": "05:10",
+    "input": "The waterproof layer of the bridge deck is placed under the bridge deck pavement layer."
+  },
+  {
+    "start": "05:15",
+    "input": "current"
+  },
+  {
+    "start": "05:15",
+    "input": "The following two types of waterproofing layers are commonly used in bridges."
+  },
+  {
+    "start": "05:20",
+    "input": "(1) Apply waterproof material"
+  },
+  {
+    "start": "05:23",
+    "input": "(2) Laying asphalt or modified asphalt waterproof membrane"
+  },
+  {
+    "start": "05:29",
+    "input": "The bridge deck should have sufficient longitudinal spacing."
+  },
+  {
+    "start": "05:31",
+    "input": "Lateral slope"
+  },
+  {
+    "start": "05:32",
+    "input": "So that rainwater can be drained quickly"
+  },
+  {
+    "start": "05:35",
+    "input": "Prevent or reduce rainwater penetration into the pavement layer"
+  },
+  {
+    "start": "05:39",
+    "input": "This protects the roadway panels."
+  },
+  {
+    "start": "05:42",
+    "input": "Extend the service life of bridges"
+  },
+  {
+    "start": "05:45",
+    "input": "The transverse drainage slope of the bridge deck should be consistent with the transverse slope of the road surface."
+  },
+  {
+    "start": "05:50",
+    "input": "When a sidewalk is provided"
+  },
+  {
+    "start": "05:53",
+    "input": "Sidewalks should have a cross slope of 0.5% to 1.5% towards the roadway."
+  },
+  {
+    "start": "06:00",
+    "input": "The road surface of the driving lane generally adopts a parabolic cross slope."
+  },
+  {
+    "start": "06:04",
+    "input": "The sidewalks are straight."
+  },
+  {
+    "start": "06:09",
+    "input": "Bridge deck cross slopes typically come in the following four configurations."
+  },
+  {
+    "start": "06:14",
+    "input": "(1) To save paving materials and reduce dead load"
+  },
+  {
+    "start": "06:18",
+    "input": "The top of the pier can be made inclined."
+  },
+  {
+    "start": "06:22",
+    "input": "The cross slope is set directly on the top of the pier."
+  },
+  {
+    "start": "06:25",
+    "input": "This causes the bridge superstructure to tilt in both directions."
+  },
+  {
+    "start": "06:29",
+    "input": "at this time"
+  },
+  {
+    "start": "06:30",
+    "input": "The pavement layer is made of uniform thickness across the entire width of the bridge."
+  },
+  {
+    "start": "06:34",
+    "input": "As shown in Figure (a)"
+  },
+  {
+    "start": "06:37",
+    "input": "(2) For bridges with narrow widths"
+  },
+  {
+    "start": "06:41",
+    "input": "It can be passed directly above the main beam."
+  },
+  {
+    "start": "06:43",
+    "input": "The thickness of the cast-in-place monolithic concrete is used to achieve the cross slope setting."
+  },
+  {
+    "start": "06:49",
+    "input": "As shown in Figure (b)"
+  },
+  {
+    "start": "06:52",
+    "input": "(3) For prefabricated bridges located on the transition curve section of the route"
+  },
+  {
+    "start": "06:58",
+    "input": "The inclination of the pier cannot fully meet the requirements for cross slope setting."
+  },
+  {
+    "start": "07:03",
+    "input": "The height of the pad stone on the top surface of the pier cap needs to be adjusted to achieve the cross slope setting."
+  },
+  {
+    "start": "07:08",
+    "input": "As shown in Figure (c)"
+  },
+  {
+    "start": "07:12",
+    "input": "(4) For wide cast-in-place bridges"
+  },
+  {
+    "start": "07:15",
+    "input": "The driveway slabs can be set according to the direction of the cross slope."
+  },
+  {
+    "start": "07:20",
+    "input": "As shown in Figure (d)"
+  },
+  {
+    "start": "07:24",
+    "input": "Drainage pipes commonly used on beam bridges should ideally be installed at the edge of the bridge deck's driving lanes."
+  },
+  {
+    "start": "07:30",
+    "input": "They can be arranged symmetrically on both sides of the driving lane."
+  },
+  {
+    "start": "07:34",
+    "input": "They can also be arranged in an alternating pattern."
+  },
+  {
+    "start": "07:36",
+    "input": "Drain pipes can also be installed under sidewalks."
+  },
+  {
+    "start": "07:40",
+    "input": "Water on the bridge deck flows into the drainage holes through inlets located on the sides of the curbs or sidewalk components."
+  },
+  {
+    "start": "07:48",
+    "input": "For urban bridges"
+  },
+  {
+    "start": "07:49",
+    "input": "Or a bridge crosses the highway"
+  },
+  {
+    "start": "07:51",
+    "input": "railway"
+  },
+  {
+    "start": "07:52",
+    "input": "Navigable rivers and other rivers or reservoirs with environmental protection requirements"
+  },
+  {
+    "start": "07:57",
+    "input": "To ensure traffic flow under the bridge"
+  },
+  {
+    "start": "07:59",
+    "input": "The need for pedestrian safety and environmental protection"
+  },
+  {
+    "start": "08:02",
+    "input": "A closed drainage system should be installed, similar to that used in buildings."
+  },
+  {
+    "start": "08:06",
+    "input": "Rainwater flowing into the drainpipe is collected into the longitudinal drainpipe or drainage ditch."
+  },
+  {
+    "start": "08:12",
+    "input": "And through the vertical drainage pipes located at the pier."
+  },
+  {
+    "start": "08:15",
+    "input": "流入地面排水设施或河流中"
+  },
+  {
+    "start": "08:20",
+    "input": "泄水管可采用铸铁管"
+  },
+  {
+    "start": "08:22",
+    "input": "PVC管或复合材料管等"
+  },
+  {
+    "start": "08:26",
+    "input": "排水管一般采用铸铁管"
+  },
+  {
+    "start": "08:28",
+    "input": "PVC管"
+  },
+  {
+    "start": "08:29",
+    "input": "PE管"
+  },
+  {
+    "start": "08:30",
+    "input": "玻璃钢管或钢管"
+  },
+  {
+    "start": "08:33",
+    "input": "其内径应等于或大于泄水管的内径"
+  },
+  {
+    "start": "08:37",
+    "input": "排水槽宜采用铝"
+  },
+  {
+    "start": "08:39",
+    "input": "钢或玻璃钢材料"
+  },
+  {
+    "start": "08:43",
+    "input": "其横截面为矩形或U形"
+  },
+  {
+    "start": "08:46",
+    "input": "宽度和深度均不宜小于20cm"
+  },
+  {
+    "start": "08:50",
+    "input": "纵向排水管或排水槽的坡度不得小于0.5%"
+  },
+  {
+    "start": "08:56",
+    "input": "桥梁伸缩缝"
+  },
+  {
+    "start": "08:59",
+    "input": "为保证在气温变化"
+  },
+  {
+    "start": "09:01",
+    "input": "混凝土收缩与徐变以及荷载作用等因素影响下"
+  },
+  {
+    "start": "09:06",
+    "input": "桥跨结构能够按静力图式自由地变形"
+  },
+  {
+    "start": "09:10",
+    "input": "并保证车辆平稳通过"
+  },
+  {
+    "start": "09:12",
+    "input": "应在两相邻梁端之间"
+  },
+  {
+    "start": "09:14",
+    "input": "梁端与桥台背墙之间设置伸缩缝装置"
+  },
+  {
+    "start": "09:20",
+    "input": "桥梁伸缩装置直接暴露在大气中"
+  },
+  {
+    "start": "09:24",
+    "input": "承受车辆"
+  },
+  {
+    "start": "09:25",
+    "input": "人群荷载的反复作用"
+  },
+  {
+    "start": "09:28",
+    "input": "很小的缺陷和不足就会引起跳车等不良现象"
+  },
+  {
+    "start": "09:34",
+    "input": "从而使其承受很大的冲击"
+  },
+  {
+    "start": "09:37",
+    "input": "甚至影响到桥梁结构本身和通行者的安全"
+  },
+  {
+    "start": "09:41",
+    "input": "是桥梁结构中最易损坏又较难修缮的部位"
+  },
+  {
+    "start": "09:46",
+    "input": "那么对伸缩缝有哪些要求呢"
+  },
+  {
+    "start": "09:49",
+    "input": "（1）能够满足桥梁自由伸缩的要求"
+  },
+  {
+    "start": "09:53",
+    "input": "保证有足够的伸缩量"
+  },
+  {
+    "start": "09:57",
+    "input": "（2）伸缩缝装置牢固可靠"
+  },
+  {
+    "start": "09:59",
+    "input": "与桥梁结构连为整体"
+  },
+  {
+    "start": "10:02",
+    "input": "抗冲击"
+  },
+  {
+    "start": "10:03",
+    "input": "经久耐用"
+  },
+  {
+    "start": "10:05",
+    "input": "（3）车辆行驶过程应平顺"
+  },
+  {
+    "start": "10:09",
+    "input": "无突跳和噪声"
+  },
+  {
+    "start": "10:12",
+    "input": "（4）具有能够安全防水和排水的构造"
+  },
+  {
+    "start": "10:17",
+    "input": "有效防止雨水渗入"
+  },
+  {
+    "start": "10:20",
+    "input": "（5）能有效防止垃圾渗入阻塞"
+  },
+  {
+    "start": "10:24",
+    "input": "（6）构造简单"
+  },
+  {
+    "start": "10:26",
+    "input": "施工"
+  },
+  {
+    "start": "10:27",
+    "input": "安装方便"
+  },
+  {
+    "start": "10:28",
+    "input": "且养护"
+  },
+  {
+    "start": "10:29",
+    "input": "护理与更换方便"
+  },
+  {
+    "start": "10:32",
+    "input": "（7）价廉"
+  },
+  {
+    "start": "10:35",
+    "input": "伸缩缝的类型有以下几种形式："
+  },
+  {
+    "start": "10:39",
+    "input": "对接式"
+  },
+  {
+    "start": "10:40",
+    "input": "剪切式"
+  },
+  {
+    "start": "10:42",
+    "input": "钢制支承式"
+  },
+  {
+    "start": "10:44",
+    "input": "模数支承式"
+  },
+  {
+    "start": "10:46",
+    "input": "无缝式TST弹性装置"
+  },
+  {
+    "start": "10:50",
+    "input": "下面介绍两种特殊的伸缩缝形式"
+  },
+  {
+    "start": "10:53",
+    "input": "一种是桥面连续"
+  },
+  {
+    "start": "10:56",
+    "input": "在多跨简支梁桥中"
+  },
+  {
+    "start": "10:58",
+    "input": "为了减少伸缩缝数量"
+  },
+  {
+    "start": "11:00",
+    "input": "使得行车更为顺畅"
+  },
+  {
+    "start": "11:03",
+    "input": "可将2～7跨一联做成桥面连续构造"
+  },
+  {
+    "start": "11:08",
+    "input": "在每一联两端设置伸缩缝"
+  },
+  {
+    "start": "11:11",
+    "input": "但主梁受力还是简支"
+  },
+  {
+    "start": "11:15",
+    "input": "桥面连续特指桥面混凝土铺装施工中"
+  },
+  {
+    "start": "11:19",
+    "input": "在墩顶铺装加强段"
+  },
+  {
+    "start": "11:21",
+    "input": "免去两跨简支桥之间安装伸缩缝的麻烦"
+  },
+  {
+    "start": "11:26",
+    "input": "桥面连续实际就是桥面铺装的一部分"
+  },
+  {
+    "start": "11:31",
+    "input": "第二种是无缝式桥梁"
+  },
+  {
+    "start": "11:34",
+    "input": "指通过采用整体式墩帽"
+  },
+  {
+    "start": "11:36",
+    "input": "连续的桥跨"
+  },
+  {
+    "start": "11:38",
+    "input": "活载作用下结构连续等方式取消了桥墩处接缝的桥梁结构"
+  },
+  {
+    "start": "11:45",
+    "input": "主要分为以下四种"
+  },
+  {
+    "start": "11:47",
+    "input": "①柔性拱桥"
+  },
+  {
+    "start": "11:50",
+    "input": "②具有滑动接缝的无缝桥梁结构"
+  },
+  {
+    "start": "11:54",
+    "input": "③无台式桥梁结构"
+  },
+  {
+    "start": "11:57",
+    "input": "④整体式桥台结构"
+  },
+  {
+    "start": "12:01",
+    "input": "最后是人行道"
+  },
+  {
+    "start": "12:03",
+    "input": "灯柱及安全措施"
+  },
+  {
+    "start": "12:06",
+    "input": "城市桥梁一般均应设置人行道"
+  },
+  {
+    "start": "12:10",
+    "input": "高速公路上的桥梁不宜设人行道"
+  },
+  {
+    "start": "12:13",
+    "input": "一二三四级公路上桥梁的桥上人行道的设置"
+  },
+  {
+    "start": "12:19",
+    "input": "应根据需要而定"
+  },
+  {
+    "start": "12:21",
+    "input": "人行道的宽度由行人的交通量决定"
+  },
+  {
+    "start": "12:25",
+    "input": "其宽度1.0m"
+  },
+  {
+    "start": "12:27",
+    "input": "当宽度大于1.0m时"
+  },
+  {
+    "start": "12:29",
+    "input": "按0.5m的倍数增加"
+  },
+  {
+    "start": "12:32",
+    "input": "安全带的构造跟人行道类似"
+  },
+  {
+    "start": "12:36",
+    "input": "只是比人行道窄"
+  },
+  {
+    "start": "12:38",
+    "input": "随着社会经济的发展和人们安全意识的提高"
+  },
+  {
+    "start": "12:42",
+    "input": "安全带逐渐被护栏取代"
+  },
+  {
+    "start": "12:47",
+    "input": "栏杆是桥上的一种安全防护设施"
+  },
+  {
+    "start": "12:51",
+    "input": "要求既要坚固耐用"
+  },
+  {
+    "start": "12:54",
+    "input": "又要经济美观"
+  },
+  {
+    "start": "12:56",
+    "input": "人行道或安全带外侧的栏杆高度不应小于1.10m"
+  },
+  {
+    "start": "13:02",
+    "input": "栏杆构件间的最大净间距不得大于14cm"
+  },
+  {
+    "start": "13:08",
+    "input": "且不宜采用横线条栏杆"
+  },
+  {
+    "start": "13:12",
+    "input": "自行车道栏杆高度不应小于1.40m"
+  },
+  {
+    "start": "13:16",
+    "input": "伸缩缝处的栏杆要能自由变形"
+  },
+  {
+    "start": "13:21",
+    "input": "在城市桥上及城郊行人和车辆较多的公路桥上"
+  },
+  {
+    "start": "13:26",
+    "input": "均应设置照明设施"
+  },
+  {
+    "start": "13:29",
+    "input": "一般采用柱灯在桥面上照明"
+  },
+  {
+    "start": "13:32",
+    "input": "根据人行道宽度及桥面照度要求"
+  },
+  {
+    "start": "13:36",
+    "input": "灯杆宜设置在人行道外侧栏杆处"
+  },
+  {
+    "start": "13:41",
+    "input": "当人行道较宽时"
+  },
+  {
+    "start": "13:43",
+    "input": "灯杆可设置在人行道内侧或分隔带中"
+  },
+  {
+    "start": "13:48",
+    "input": "杆座边缘距车行道路面的净距不应小于 0.25m"
+  },
+  {
+    "start": "13:54",
+    "input": "照明用灯一般高出车道5m左右"
+  },
+  {
+    "start": "14:00",
+    "input": "各等级公路桥梁必须设置路侧护栏"
+  },
+  {
+    "start": "14:04",
+    "input": "高速公路"
+  },
+  {
+    "start": "14:05",
+    "input": "一级公路桥梁须设置中央分隔带护栏"
+  },
+  {
+    "start": "14:09",
+    "input": "护栏的主要作用在于封闭沿线两侧"
+  },
+  {
+    "start": "14:14",
+    "input": "不使人畜与非机动车辆闯入公路"
+  },
+  {
+    "start": "14:18",
+    "input": "诱导视线"
+  },
+  {
+    "start": "14:19",
+    "input": "起到一些轮廓标的作用"
+  },
+  {
+    "start": "14:23",
+    "input": "使车辆尽量在路幅之内行驶"
+  },
+  {
+    "start": "14:25",
+    "input": "并给驾驶员以安全感"
+  },
+  {
+    "start": "14:28",
+    "input": "同时还具有吸收碰撞能量"
+  },
+  {
+    "start": "14:31",
+    "input": "迫使失控车辆改变方向并使其恢复到原有行驶方向"
+  },
+  {
+    "start": "14:37",
+    "input": "防止其越出桥外或跌落桥下的作用"
+  },
+  {
+    "start": "14:42",
+    "input": "桥梁护栏按防护性能分为刚性护栏"
+  },
+  {
+    "start": "14:45",
+    "input": "半刚性护栏和柔性护栏"
+  },
+  {
+    "start": "14:48",
+    "input": "左图中的混凝土护栏就属于刚性护栏"
+  },
+  {
+    "start": "14:52",
+    "input": "车辆碰撞后基本不变形"
+  },
+  {
+    "start": "14:55",
+    "input": "波形梁护栏是半刚性护栏的主要代表形式"
+  },
+  {
+    "start": "15:00",
+    "input": "车辆碰撞后有一定的变形"
+  },
+  {
+    "start": "15:02",
+    "input": "又具有一定强度和刚度"
+  },
+  {
+    "start": "15:06",
+    "input": "通过今天的学习"
+  },
+  {
+    "start": "15:07",
+    "input": "大家了解了桥面的布置和相关构造"
+  },
+  {
+    "start": "15:11",
+    "input": "下节课我们将学习桥梁上的作用"
+  },
+  {
+    "start": "15:14",
+    "input": "同学们"
+  },
+  {
+    "start": "15:15",
+    "input": "我们下次课见"
+  }
+]
